@@ -1,0 +1,23 @@
+{
+  "name": "coreboys",
+  "version": "1.0.0",
+  "main": "Coreboy.js",
+  "engines": {
+    "node": "12.17.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bufferutil": "^4.0.3",
+    "express": "^4.17.1",
+    "permessage-deflate": "^0.1.7",
+    "utf-8-validate": "^5.0.5",
+    "websocket-extensions": "^0.1.4",
+    "ws": "^7.4.5"
+  },
+  "description": ""
+}
