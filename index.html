@@ -49,17 +49,17 @@
 
             <div id="dog-image-container">
 
-                <canvas hidden="true" id="tempcanvas" width="1280" height="720"></canvas>
                 <canvas id="canvas" width="1280" height="720"></canvas>
-
+                <canvas hidden = "true" id="tempcanvas" width="2500" height="500"></canvas>
                 <script>
 
                     ////////////// //////////////////////////////////console.log(HOST)
                     let pick = -1
+                    let meshX = 10
 
 
+                    // let meshtoggle = 0
                     let boys = []
-                    let fightlogged = 0
                     let strarr = []
                     let selectors = []
                     let characterbuttons = []
@@ -75,12 +75,15 @@
                     //qqqqq
                     let humanPlayers = 1004
                     let AItoggle = 0
+                    let meshtoggle = 0
+                    let meshRun = 0
+                    let meshLearn = 0
+                    let fightlogged = 0
 
                     let stock = 0
-                    let ws
+                    let HOST = location.origin.replace(/^http/, 'ws')
+                    let ws = new WebSocket(HOST);
                     if (AItoggle == 0) {
-                        let HOST = location.origin.replace(/^http/, 'ws')
-                        ws = new WebSocket(HOST);
                     }
                     let connectionnumber = -1
                     let start = 0
@@ -347,6 +350,592 @@
                     let TIP_engine = {}
                     let XS_engine
                     let YS_engine
+                    let mutationrate =1/21111
+
+
+        class Perceptron {
+            constructor(inputs, layer, outputcount = 0, override = 0) {
+                if(override == 0){
+                this.inputs = [...inputs]
+                this.weights = []
+                this.bias = 0 //this.weight()*2 // 0 // (Math.random() - .5) * 10
+                for (let t = 0; t < this.inputs.length; t++) {
+                    this.weights.push(this.weight())
+                }
+                this.value = this.compute()
+                this.error = 0
+                // if(Math.random()<.1){
+                //     this.dropped = Math.floor(Math.random()*2)
+                // }else{
+                //     this.dropped = 0
+                // }
+                this.dropped = 0
+                this.momentum = .0010 // 0.001
+                this.gradient = .001 //Math.random()
+                this.layer = layer
+                this.biasMomentum = .0010//.001
+                this.biasGradient = .0010//.001
+                //  this.outputWeightsIndex = Array(outputcount);   
+                }else{
+
+                    let keys = Object.keys(override)
+                    for(let t =0;t<keys.length;t++){
+                        this[keys[t]] = override[keys[t]]
+                    }
+
+                }
+            }
+            compute() {
+                let value = this.bias
+                for (let t = 0; t < this.inputs.length; t++) {
+                    value += this.inputs[t] * this.weights[t]
+                }
+                return (value)
+            }
+            lognormalize(output){
+                return (1/(1+Math.pow(Math.E, (output*-1))))
+            }
+            weight() {
+                return 1
+                // return .01
+                // return (Math.random()-.5) * 1
+            }
+            clone(inputs) {
+                let clone = new Perceptron(inputs, this.layer)
+                clone.inputs = [...inputs]
+                clone.weights = [...this.weights]
+                clone.bias = this.bias
+                clone.value = clone.compute()
+                clone.biasMomentum = this.biasMomentum
+                clone.gradient = this.gradient
+                clone.biasGradient = this.biasGradient
+                clone.momentum = this.momentum
+                return clone
+            }
+            mutate() {
+                for (let t = 0; t < this.weights.length; t++) {
+                    if (Math.random() < mutationrate) {
+                        this.weights[t] += (.05 * (Math.random() - .5))
+                    }
+                    // if (Math.random() < mutationrate) {
+                    //     // this.weights[t] *= -1
+                    // }
+                    // if (Math.random() < mutationrate) {
+                    //     // this.weights[t] *= 0
+                    // }
+                    // if (Math.random() < mutationrate) {
+                    //     // this.weights[t] = this.weight()
+                    // }
+                    // if (Math.random() < mutationrate) {
+                    //     // this.weights[t] *= 1 + ((Math.random() - .5) * .5)
+                    // }
+                }
+
+                if (Math.random() < mutationrate) {
+                        this.bias += (.05 * (Math.random() - .5))
+                }
+        }
+    }
+        class GenNN {
+            constructor(inputs, layercount, layersetupArray, outputs = 2, override = 0) {
+                if (override == 0) {
+                    this.longInputs = []
+                    this.longErrors = []
+                    this.name = getRandomColor()
+                    this.fitness = 0
+                    this.correct = 0
+                    this.wrong = 0
+                    this.parent = this.name
+                    this.generation = 0
+                    this.inputs = [...inputs]
+                    this.layercount = layercount
+                    this.layersetupArray = [...layersetupArray]
+                    this.tempinputs = [...inputs]
+                    this.structure = []
+                    this.prev_momentum = 0
+                    this.lr = .5
+                    this.iterations = 1
+                    this.optimizerParams = {}
+                    this.optimizerParams.alpha = .005
+                    this.optimizerParams.beta1 = .05
+                    this.optimizerParams.beta2 = .15
+                    this.gradients = []
+                    this.adjustments = []
+                    for (let t = 0; t < this.layercount; t++) {
+                        let nodes = []
+                        for (let k = 0; k < this.layersetupArray[t]; k++) {
+                            if(typeof this.layersetupArray[t+1] !== "undefined"){
+                                let node = new Perceptron([...this.tempinputs], t, this.layersetupArray[t+1])
+                                nodes.push(node)
+                            }else{
+                                let node = new Perceptron([...this.tempinputs], t, 0)
+                                nodes.push(node)
+                            }
+                        }
+                        this.structure.push(nodes)
+                        this.tempinputs = []
+                        this.tempclone = []
+                        for (let g = 0; g < this.structure[this.structure.length - 1].length; g++) {
+                            this.tempinputs.push(this.structure[this.structure.length - 1][g].value)
+                            this.tempclone.push(this.structure[this.structure.length - 1][g].value)
+                        }
+                        for (let n = 0; n < this.tempinputs.length; n++) {
+                            this.tempinputs[n] = this.normalize(this.tempinputs[n], Math.min(...this.tempclone), Math.max(...this.tempclone)) //optional
+                        }
+                    }
+                    this.outputs = this.layersetupArray[this.layersetupArray.length - 1]
+                    this.outputMagnitudes = []
+                    this.outputMagnitudesClone = []
+                    this.outputMagnitudesCloneSpare = []
+                    for (let t = 0; t < this.outputs; t++) {
+                        this.outputMagnitudes.push(this.tempclone[t])
+                        this.outputMagnitudesClone.push(this.tempclone[t])
+                        this.outputMagnitudesCloneSpare.push(this.tempclone[t])
+                    }
+
+                    this.outputSum = 0
+                    for (let t = 0; t < this.outputs; t++) {
+                        this.outputMagnitudesClone[t] = this.normalize(this.outputMagnitudesClone[t], Math.min(...this.outputMagnitudesCloneSpare), Math.max(...this.outputMagnitudesCloneSpare))
+                        // this.outputMagnitudesClone[t] = this.truenormalize(this.outputMagnitudesClone[t], Math.min(...this.outputMagnitudesCloneSpare), Math.max(...this.outputMagnitudesCloneSpare))
+                    }
+                    for (let t = 0; t < this.outputs; t++) {
+                        this.outputMagnitudes[t] = this.normalize(this.outputMagnitudes[t], Math.min(...this.outputMagnitudesCloneSpare), Math.max(...this.outputMagnitudesCloneSpare))
+                        this.outputMagnitudes[t] = this.lognormalize(this.outputMagnitudes[t], Math.min(...this.outputMagnitudesClone), Math.max(...this.outputMagnitudesClone))
+                        this.outputSum += this.outputMagnitudes[t]
+                    }
+                    if (this.outputSum != 0) {
+                        this.outputSum = 1 / this.outputSum
+                    } else {
+                        this.outputSum = 0
+                    }
+                    for (let t = 0; t < this.outputs; t++) {
+                        this.outputMagnitudes[t] *= this.outputSum
+                    }
+                    this.outputcheck = 0
+                    for (let t = 0; t < this.outputs; t++) {
+                        this.outputcheck += this.outputMagnitudes[t]
+                    }
+                    if (this.outputcheck == 0) {
+                        this.outputMagnitudes[this.outputMagnitudesCloneSpare.indexOf(Math.max(...this.outputMagnitudesCloneSpare))] = 1
+                    }
+
+                    this.r = Math.round(Math.random()*255)
+                    this.g = Math.round(Math.random()*255)
+                    this.b = Math.round(Math.random()*255)
+                if(this.r <16){
+                    this.r = 16
+                }
+                if(this.g <16){
+                    this.g = 16
+                }
+                if(this.b <16){
+                    this.b = 16
+                }
+                    this.name = `#${this.r.toString(16)}${this.g.toString(16)}${this.b.toString(16)}`
+                } else {
+                    // console.log(override)
+                    let keys = Object.keys(override)
+                    for(let t =0;t<keys.length;t++){
+                        this[keys[t]] = override[keys[t]]
+                    }
+
+                    for (let t = 0; t < this.structure.length; t++) {
+                    for (let k = 0; k < this.structure[t].length; k++) {
+                        this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
+                    }
+                }
+
+                    // this = override
+                }
+            }
+            clone() {
+                let clone = new GenNN(this.inputs, this.layercount, this.layersetupArray, 4, this)
+                // for (let t = 0; t < this.structure.length; t++) {
+                //     for (let k = 0; k < this.structure[t].length; k++) {
+                //         for (let p = 0; p < this.structure[t][k].weights.length; p++) {
+                //             clone.structure[t][k].weights[p] = this.structure[t][k].weights[p]
+                //             clone.structure[t][k].bias = this.structure[t][k].bias
+                //         }
+                //     }
+                // }
+                clone.generation = this.generation + 1
+                if(this.r <16){
+                    this.r = 16
+                }
+                if(this.g <16){
+                    this.g = 16
+                }
+                if(this.b <16){
+                    this.b = 16
+                }
+                clone.r = this.r
+                clone.g = this.g
+                clone.b = this.b
+                clone.longErrors = [...this.longErrors]
+                clone.longInputs = [...this.longInputs]
+                clone.parent = this.name
+                clone.name = `#${clone.r.toString(16)}${clone.g.toString(16)}${clone.b.toString(16)}`
+                // console.log(clone)
+                return clone
+            }
+            freshClone() {
+                let clone = new GenNN(this.inputs, this.layercount, this.layersetupArray, 4, this)
+                // for (let t = 0; t < this.structure.length; t++) {
+                //     for (let k = 0; k < this.structure[t].length; k++) {
+                //         for (let p = 0; p < this.structure[t][k].weights.length; p++) {
+                //             clone.structure[t][k].weights[p] = this.structure[t][k].weights[p]
+                //             clone.structure[t][k].bias = this.structure[t][k].bias
+                //         }
+                //     }
+                // }
+                clone.generation = this.generation + 1
+                if(this.r <16){
+                    this.r = 16
+                }
+                if(this.g <16){
+                    this.g = 16
+                }
+                if(this.b <16){
+                    this.b = 16
+                }
+                clone.r = this.r
+                clone.g = this.g
+                clone.b = this.b
+                clone.longErrors = []
+                clone.longInputs = []
+                clone.parent = this.name
+                clone.name = `#${clone.r.toString(16)}${clone.g.toString(16)}${clone.b.toString(16)}`
+                return clone
+            }
+            mutate() {
+
+                this.r = Math.round(Math.max(Math.min((this.r + ((Math.random() - .5) * 36)), 255), 0))
+                this.g = Math.round(Math.max(Math.min((this.g + ((Math.random() - .5) * 36)), 255), 0))
+                this.b = Math.round(Math.max(Math.min((this.b + ((Math.random() - .5) * 36)), 255), 0))
+                if(this.r <16){
+                    this.r = 16
+                }
+                if(this.g <16){
+                    this.g = 16
+                }
+                if(this.b <16){
+                    this.b = 16
+                }
+
+                this.name = `#${this.r.toString(16)}${this.g.toString(16)}${this.b.toString(16)}`
+                for (let t = 0; t < this.structure.length; t++) {
+                    for (let k = 0; k < this.structure[t].length; k++) {
+                        this.structure[t][k].mutate()
+                    }
+                }
+                this.changeInputs(this.inputs)
+            }
+            bigErrorReduce(){
+
+                let bigerror = 0
+                for(let i = 0;i<this.longInputs.length;i++){
+                    let error = 0
+                    this.changeInputs(this.longInputs[i])
+                    for(let t = 0;t<this.longErrors[i].length;t++){
+                    if(t<3){
+                    error+=Math.round(Math.abs(this.longErrors[i][t]-this.outputMagnitudes[t]))*2
+                    }else{
+                    error+=Math.abs(this.longErrors[i][t]-this.outputMagnitudes[t])
+                    }
+
+                    }
+                    bigerror += error
+                }
+                this.error = (bigerror)
+                // console.log(bigerror)
+
+            }
+            calculateError(errors){
+                let error = 0
+                this.errors = errors
+                this.dropoffs = []
+                for(let t = 0;t<errors.length;t++){
+                    // console.log(this.outputMagnitudes[t])
+                    if(t<3){
+                        this.dropoffs.push([errors[t], this.outputMagnitudes[t], Math.abs(errors[t]-this.outputMagnitudes[t])*2])
+                    error+=Math.round(Math.abs(errors[t]-this.outputMagnitudes[t]))*2//*(errors[t]-this.outputMagnitudes[t])  //notround?
+                    }else{
+                    this.dropoffs.push([errors[t], this.outputMagnitudes[t], Math.abs(errors[t]-this.outputMagnitudes[t])])
+                    error+=Math.abs(errors[t]-this.outputMagnitudes[t])//*(errors[t]-this.outputMagnitudes[t])  //notround?
+                    }
+                }
+                this.error = (error)
+            }
+            
+            reduceWrapper(errors, index){
+
+            if(meshLearn == 1){
+
+            let clone1 = this.clone()
+            clone1.mutate()
+            console.log(clone1)
+            clone1.bigErrorReduce()
+            this.bigErrorReduce()
+            let failsafe = 0
+            while(((this.error)/this.longErrors.length) > ((clone1.error)/this.longErrors.length)-.00001){
+                failsafe++
+                if(failsafe > 10){
+                    break
+                }
+                clone1 =  this.clone()
+            clone1.mutate()
+            clone1.bigErrorReduce()
+            }
+
+            if(((this.error)/this.longErrors.length) > ((clone1.error)/this.longErrors.length)-.00001){
+                console.log(this.error, clone1.error)
+                let keys = Object.keys(clone1)
+                for(let t =0;t<keys.length;t++){
+                    this[keys[t]] = clone1[keys[t]]
+                }
+
+                for (let t = 0; t < this.structure.length; t++) {
+                for (let k = 0; k < this.structure[t].length; k++) {
+                    this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
+                }
+            }
+            // console.log(this.error)
+            // canvas_context.fillText(this.error, 200,200)
+            console.log(this)
+            }
+
+                meshX+=5
+            canvas_context.fillText(this.error, 200,200)
+            let circle = new Circle(meshX, (this.error*50)/this.longErrors.length, 2.5, this.name)
+            temp_context.beginPath()
+            temp_context.fillStyle = "#FFFF00"
+            temp_context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2)
+            temp_context.fill()
+            // temp_context.stroke()
+            if(meshX> tempcanvas.width){
+                meshX = 10
+                temp_context.clearRect(0,0,tempcanvas.width, tempcanvas.height)
+            }
+
+            // if(keysPressed['n']){
+                console.log(this)
+            // }
+            }
+            }
+            errorReduce(errors, index){
+
+                if(meshLearn == 1){
+
+                    if(index == 0){
+                let clone1 = this.clone()
+                clone1.mutate()
+                clone1.changeInputs(this.inputs)
+                clone1.calculateError(errors)
+                this.calculateError(errors)
+                let failsafe = 0
+                while(this.error > clone1.error){
+                    failsafe++
+                    if(failsafe > 10){
+                        break
+                    }
+                    clone1 =  this.clone()
+                clone1.mutate()
+                clone1.changeInputs(this.inputs)
+                clone1.calculateError(errors)
+                }
+
+                if(this.error > clone1.error){
+
+                    let keys = Object.keys(clone1)
+                    for(let t =0;t<keys.length;t++){
+                        this[keys[t]] = clone1[keys[t]]
+                    }
+
+                    for (let t = 0; t < this.structure.length; t++) {
+                    for (let k = 0; k < this.structure[t].length; k++) {
+                        this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
+                    }
+                }
+                // console.log(this.error)
+                // canvas_context.fillText(this.error, 200,200)
+                }
+
+                    meshX+=.5
+                canvas_context.fillText(this.error, 200,200)
+                let circle = new Circle(meshX, this.error*20, .5, this.name)
+                temp_context.beginPath()
+                temp_context.fillStyle = "#FFFF00"
+                temp_context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2)
+                temp_context.fill()
+                // temp_context.stroke()
+                if(meshX> tempcanvas.width){
+                    meshX = 10
+                    temp_context.clearRect(0,0,tempcanvas.width, tempcanvas.height)
+                }
+
+                if(keysPressed['n']){
+                    console.log(boys[index])
+                }
+                }else{
+
+
+                let clone1 = this.clone()
+                clone1.mutate()
+                clone1.changeInputs(this.inputs)
+                clone1.calculateError(errors)
+                this.calculateError(errors)
+                let failsafe = 0
+                while(this.error > clone1.error){
+                    failsafe++
+                    if(failsafe > 3){
+                        break
+                    }
+                    clone1 =  this.clone()
+                clone1.mutate()
+                clone1.changeInputs(this.inputs)
+                clone1.calculateError(errors)
+                }
+
+                if(this.error > clone1.error){
+
+                    let keys = Object.keys(clone1)
+                    for(let t =0;t<keys.length;t++){
+                        this[keys[t]] = clone1[keys[t]]
+                    }
+
+                    for (let t = 0; t < this.structure.length; t++) {
+                    for (let k = 0; k < this.structure[t].length; k++) {
+                        this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
+                    }
+                }
+                // console.log(this.error)
+                // canvas_context.fillText(this.error, 200,200)
+                }
+
+                    // meshX+=.01
+                canvas_context.fillText(this.error, 200,300)
+                let circle = new Circle(meshX, this.error*20, .5, this.name)
+                temp_context.beginPath()
+                temp_context.fillStyle = "#FF00FF"
+                temp_context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2)
+                temp_context.fill()
+                // temp_context.stroke()
+                if(meshX> tempcanvas.width){
+                    meshX = 10
+                    temp_context.clearRect(0,0,tempcanvas.width, tempcanvas.height)
+                }
+
+                }
+                
+                if(keysPressed['m']){
+                    console.log(boys[index])
+                }
+                // console.log(this.error)
+                }
+            }
+            changeInputs(inputs) {
+                this.inputs = [...inputs]
+                this.tempinputs = [...inputs]
+                this.structureclone = []
+                for (let t = 0; t < this.structure.length; t++) {
+                    this.structureclone[t] = []
+                    for (let k = 0; k < this.structure[t].length; k++) {
+                        this.structureclone[t].push(this.structure[t][k].clone(this.tempinputs))
+                    }
+                    this.tempinputs = []
+                    this.tempclone = []
+                    for (let g = 0; g < this.structureclone[this.structureclone.length - 1].length; g++) {
+                        this.tempinputs.push(this.structureclone[this.structureclone.length - 1][g].value)
+                        this.tempclone.push(this.structureclone[this.structureclone.length - 1][g].value)
+                    }
+                    for (let n = 0; n < this.tempinputs.length; n++) {
+                        this.tempinputs[n] = this.normalize(this.tempinputs[n], Math.min(...this.tempclone), Math.max(...this.tempclone))//optional
+                    }
+                }
+                this.outputs = this.layersetupArray[this.layersetupArray.length - 1]
+                this.outputMagnitudes = []
+                this.outputMagnitudesClone = []
+                this.outputMagnitudesCloneSpare = []
+                for (let t = 0; t < this.outputs; t++) {
+                    this.outputMagnitudes.push(this.tempclone[t])
+                    this.outputMagnitudesClone.push(this.tempclone[t])
+                    this.outputMagnitudesCloneSpare.push(this.tempclone[t])
+                }
+                this.outputSum = 0
+                for (let t = 0; t < this.outputs; t++) {
+                    this.outputMagnitudesClone[t] = this.normalize(this.outputMagnitudesClone[t], Math.min(...this.outputMagnitudesCloneSpare), Math.max(...this.outputMagnitudesCloneSpare))
+                }
+                for (let t = 0; t < this.outputs; t++) {
+                    this.outputMagnitudes[t] = this.normalize(this.outputMagnitudes[t], Math.min(...this.outputMagnitudesCloneSpare), Math.max(...this.outputMagnitudesCloneSpare))
+                        this.outputMagnitudes[t] = this.lognormalize(this.outputMagnitudes[t], Math.min(...this.outputMagnitudesClone), Math.max(...this.outputMagnitudesClone))
+                    this.outputSum += this.outputMagnitudes[t]
+                }
+                this.structure = this.structureclone
+                for(let t = 0;t<this.outputMagnitudes.length;t++){
+                    // let circle = new Circle(200+(t*350), 400, 30, "#FFFFFF")
+                    // canvas_context.globalAlpha = this.outputMagnitudes[t]
+                    // circle.draw()
+                    // canvas_context.font = "40px arial"
+                    // if(t==0){
+                    //     canvas_context.fillText('jump', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==1){
+                    //     canvas_context.fillText('left', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==2){
+                    //     canvas_context.fillText('right', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==3){
+                    //     canvas_context.fillText('degrip', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==4){
+                    //     canvas_context.fillText('upattack', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==5){
+                    //     canvas_context.fillText('downattack', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==6){
+                    //     canvas_context.fillText('sidesmash', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==7){
+                    //     canvas_context.fillText('rightattack', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==8){
+                    //     canvas_context.fillText('leftattack', circle.x-40, circle.y + 70)
+                    // }
+                    // if(t==9){
+                    //     canvas_context.fillText('shield', circle.x-40, circle.y + 70)
+                    // }
+                    // canvas_context.globalAlpha = 1
+                }
+            }
+            lognormalize(output) {
+                if(output > 1){
+                    return 1
+                }
+                if(output < 0){
+                    return 0
+                }
+                return output
+                // return (1/(1+Math.pow(Math.E, (output*-1))))
+            }
+            normalize(val, min, max) {
+                return Math.max(val, 0)
+            }
+            truenormalize(val, min, max) {
+                if (min < 0) {
+                    max += 0 - min;
+                    val += 0 - min;
+                    min = 0;
+                }
+                val = val - min;
+                max = max - min;
+                if (max == 0) {
+                    max = .0000001
+                }
+                return val / max
+            }
+        }
                     class Point {
                         constructor(x, y) {
                             this.x = parseFloat(x)
@@ -2570,7 +3159,7 @@
                                     // temp_context.arc(this.radius, this.radius, this.radius * .5, 0, 2 * Math.PI)
                                     // temp_context.fill()
                                     // temp_context.restore()
-                                    canvas_context.drawImage(tempcanvas, 0, 0, tempcanvas.width, tempcanvas.height, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+                                    // canvas_context.drawImage(tempcanvas, 0, 0, tempcanvas.width, tempcanvas.height, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
                                     // canvas_context.stroke();
                                     // temp_context.globalCompositeOperation = 'source-over'
                                 }
@@ -3759,6 +4348,7 @@
                     }
 
                     function invertColorx(hex) {
+                        return getRandomColor()
                         if (typeof hex == "undefined") {
                             return getRandomColor()
                         }
@@ -3770,6 +4360,7 @@
                             hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
                         }
                         if (hex.length !== 6) {
+                        return getRandomColor()
                             throw new Error('Invalid HEX color.');
                         }
                         // invert color components
@@ -3792,6 +4383,7 @@
                             hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
                         }
                         if (hex.length !== 6) {
+                        return getRandomColor()
                             throw new Error('Invalid HEX color.');
                         }
                         // invert color components
@@ -3861,6 +4453,8 @@
                     let setup_canvas = document.getElementById('canvas') //getting canvas from document
                     let formname = document.getElementById('fname') //getting canvas from document
                     let tempcanvas = document.getElementById('tempcanvas')
+                    // tempcanvas.height = 1200
+                    // tempcanvas.width 1200
                     let temp_context = tempcanvas.getContext("2d")
                     tempcanvas.style.background = "#000000"
                     ////////////////////////console.log(tempcanvas)
@@ -3961,6 +4555,8 @@
 
                         constructor() {
                             this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 1410 * (invscale * .4)), new Brick(2450 * (invscale * .4), 1470 * (invscale * .4), 1000 * (invscale * .4)), new Brick(1480 * (invscale * .4), 1200 * (invscale * .4), 400 * (invscale * .4)), new Brick(550 * (invscale * .4), 1470 * (invscale * .4), 750 * (invscale * .4))]
+                            // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 400 * (invscale * .4))]
+                           
                             // this.bricks = [new Brick(1440, 1760, 200), new Brick(1040, 1760, 200), new Brick(640, 1760, 200), new Brick(240, 1760, 200)]
                             // for(let t = 0;t<5;t++){
                             //     this.bricks.push(new Brick(Math.random()*invscale*canvas.width, Math.random()*invscale*canvas.height, 300))
@@ -3978,7 +4574,7 @@
                     }
 
                     class Brick {
-                        constructor(x, y, width = 900, height = 60) {
+                        constructor(x, y, width = 200, height = 60) {
                             this.center = new Point(x, y)
                             this.width = width
                             this.height = height
@@ -5220,6 +5816,20 @@
                     class Boy {
                         constructor(controller, args = 0) {
                             if (args == 0) {
+                                if(AItoggle == 1){
+                                    if(meshtoggle == 1){
+                                        if(boys.length == 1){
+                                        this.meshinputs = []
+                                    for(let t = 0;t<200;t++){
+                                        this.meshinputs.push(Math.random()-.5)
+                                    }
+                                    // console.log(coreboyvcoreboymesh)
+                                    //bakedcoreboy
+                                    //overnight
+                                    this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10], 10)
+                                    }
+                                }
+                                }
                                 this.ping = 0
                                 this.shotIDs = []
                                 this.struck = 0
@@ -5242,6 +5852,10 @@
                                 this.amomu = 0
                                 this.amom = 0
                                 this.dmom = 0
+                                this.wmove = 0
+                                this.amove = 0
+                                this.dmove = 0
+                                this.exgrip = 0
                                 this.fleeing = 0
                                 this.face = 0
                                 this.screwshot = 0
@@ -5267,6 +5881,7 @@
                                 this.grounded = 0
                                 this.frame = 0
                                 this.jumping = 1
+                                this.jumpcount = 100
 
                                 this.color = getRandomColor()
                                 this.body = new Circle(400 + (Math.random() * 2560), 500, 37, this.color)
@@ -5322,7 +5937,7 @@
                                 this.lefthand.fired = 0
                                 this.shield = 0
                                 this.shieldpower = 100
-                                this.breaktimer = 0
+                                this.breaktimer = -1
                                 this.bodyx = this.body.x
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     this.nodes[t].gravity = this.gravity // lmao
@@ -5545,20 +6160,28 @@
                         copy() {
                             let obj = {}
                             obj.kill = 1
-                            obj.striker = this.striker
+                            obj.striker = 10000//this.striker
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
                             //////////////////////console.log("caseF")
 
                             let copy = new Boy(this.controller)
+                            if(this.hasOwnProperty("mesh")){
+                            this.mesh.reduceWrapper()
+
+
+
+                            copy.mesh = this.mesh.freshClone(this.meshinputs)
+                            // copy.mesh.mutate()
+                            }
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
                             if (this.inactive == 1) {
                                 copy.inactive = 1
                             } copy.serverID = this.serverID
-                            copy.striker = this.striker
+                            copy.striker = 10000 //this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
                             return copy
@@ -6242,7 +6865,82 @@
                                 }
                             }
                         }
+                        meshCompute(){
 
+                            if(AItoggle == 1){
+                                    if(meshtoggle == 1 && this.hasOwnProperty('mesh')){
+                                if(boys.length == 2){
+                                this.meshinputs =  []
+                                        this.meshinputs.push(this.damage)
+                                        this.meshinputs.push(Math.max(this.breaktimer,-1))
+                                        this.meshinputs.push(this.grounded)
+                                        this.meshinputs.push(this.shield)
+                                        this.meshinputs.push(this.shieldpower)
+                                        this.meshinputs.push(this.lefthand.anchored)
+                                        this.meshinputs.push(this.righthand.anchored)
+                                        this.meshinputs.push(Math.max(this.lefthand.fired, 0))
+                                        this.meshinputs.push(Math.max(this.righthand.fired,0))
+                                        this.meshinputs.push(Math.max(this.body.fired,0))
+                                        this.meshinputs.push(Math.max(this.blasting,0))
+                                        this.meshinputs.push(this.face)
+                                        this.meshinputs.push(this.jumping)
+                                        this.meshinputs.push(Math.max(this.jumpcount, -20))
+                                        this.meshinputs.push(this.safe)
+                                        for(let k = 0;k<this.nodes.length;k++){
+
+                                        let x = (this.nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                        let y = (this.nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(this.nodes[k].radius)
+                                        this.meshinputs.push(this.nodes[k].xmom)
+                                        this.meshinputs.push(this.nodes[k].ymom)
+                                        }
+
+
+
+                                for(let t  = 0;t<boys.length;t++){
+                                    if(this!=boys[t]){
+                                        this.meshinputs.push(boys[t].damage)
+                                        this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
+                                        this.meshinputs.push(boys[t].grounded)
+                                        this.meshinputs.push(boys[t].shield)
+                                        this.meshinputs.push(boys[t].shieldpower)
+                                        this.meshinputs.push(boys[t].lefthand.anchored)
+                                        this.meshinputs.push(boys[t].righthand.anchored)
+                                        this.meshinputs.push(Math.max(boys[t].lefthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].righthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].body.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].blasting,0))
+                                        this.meshinputs.push(boys[t].face)
+                                        this.meshinputs.push(boys[t].jumping)
+                                        this.meshinputs.push(Math.max(boys[t].jumpcount, -20))
+                                        this.meshinputs.push(boys[t].safe)
+                                        for(let k = 0;k<boys[t].nodes.length;k++){
+                                            let x = (boys[t].nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                            let y = (boys[t].nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+
+
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(boys[t].nodes[k].radius)
+                                        this.meshinputs.push(boys[t].nodes[k].xmom)
+                                        this.meshinputs.push(boys[t].nodes[k].ymom)
+                                        }
+                                    }
+                                }
+                                this.mesh.changeInputs(this.meshinputs)
+                                for(let t = 0;t<this.meshinputs.length;t++){
+                                    if(isNaN(this.meshinputs[t])){
+                                        this.meshinputs[t] = 0
+                                    }
+                                }
+                                // this.mesh.longInputs.push([...this.meshinputs])
+
+                                }
+                            }
+                        }
+                        }
                         AImove(object, speed) {
                             if (object == this.body) {
                                 this.amom--
@@ -6254,7 +6952,7 @@
                             this.amove = 0
                             this.dmove = 0
                             if (Math.random() < .0015) {
-                                this.fleeing = 1
+                                // this.fleeing = 1 //aitesting
                             }
                             if (this.charge > 90) {
                                 this.fleeing = 0
@@ -6887,6 +7585,48 @@
                                         this.amove = 1
                                     }
                                 }
+
+                                if(object == this.body){
+                                    if(this.hasOwnProperty('mesh')){
+                                    this.meshCompute()
+
+                                if(meshRun == 1){
+
+                                    if (object == this.body) {
+                                this.errors = [this.wmove, this.dmove, this.amove, this.exgrip] 
+                                this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                if(isNaN(this.dmove)){
+                                    this.dmove = 0
+                                }
+                                if(isNaN(this.amove)){
+                                    this.amove = 0
+                                }
+                                this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                    this.screwshot = 1
+                                    this.downspike = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                    this.downspike = 1
+                                    this.screwshot = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                    this.hortsmash = 1
+                                    this.screwshot = 0
+                                    this.downspike = 0
+                                }
+                                this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                            }
+                        }
+                        }
+                    }
+                                
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -6904,6 +7644,8 @@
                                         }
                                     }
                                 }
+                                
+                                if(!this.hasOwnProperty('mesh')){
                                 if (this.dmove == 1) {
                                     this.face = 1
                                     if (object == this.body) {
@@ -6923,14 +7665,49 @@
                                         this.righthand.x -= speed
                                         this.lefthand.x -= speed
                                     }
-                                    if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                    if (this.lefthand.anchored == 1) {
                                         this.degripl()
                                         this.jumping = 1
                                     }
                                 }
+                            }else{
+
+
+
+                                if(this.dmove > this.amove){
+                                    if (object == this.body) {
+                                    this.face = 1
+                                        object.x += speed//*this.dmove
+                                        this.righthand.x += speed//*this.dmove
+                                        this.lefthand.x += speed//*this.dmove
+                                    }
+                                    if (this.righthand.anchored == 1) {
+                                        this.degripl()
+                                        this.jumping = 1
+                                    }
+                                }else if(this.dmove < this.amove){
+                                    if (object == this.body) {
+                                    this.face = -1
+                                        object.x -= speed//*this.amove
+                                        this.righthand.x -= speed//*this.amove
+                                        this.lefthand.x -= speed//*this.amove
+                                    }
+                                    if ( this.lefthand.anchored == 1) {
+                                        this.degripl()
+                                        this.jumping = 1
+                                    }
+                                }
+                            }
                                 if (this.exgrip == 1) {
                                     this.righthand.anchored = 0
                                     this.lefthand.anchored = 0
+                                }
+                            }else{
+
+                                if(this.hasOwnProperty('mesh')){
+                                    if (object == this.body) {
+                                    this.errors = [this.wmove, this.dmove, this.amove, this.exgrip] 
+                                    }
                                 }
                             }
                         }
@@ -7209,6 +7986,7 @@
                             if (this.serverID == serverID || AItoggle == 1) {
                                 this.shielddraw = 0
                             }
+
                             if (this.storeshield == 1) {
                                 if (this.breaktimer < 0) {
                                     if (this.grounded == 1) {
@@ -7227,7 +8005,44 @@
 
                             if (this.breaktimer <= 0 && this.shield == 0) {
 
-
+                                if(meshRun == 1){
+                                    if(this.hasOwnProperty('mesh')){
+                                this.errors.push(this.screwshot)
+                                this.errors.push(this.downspike)
+                                this.errors.push(this.hortsmash) 
+                                this.errors.push(this.rightshot)
+                                this.errors.push(this.leftshot)
+                                this.errors.push(this.storeshield)
+                                    this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                    this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                    this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                    if(isNaN(this.dmove)){
+                                        this.dmove = 0
+                                    }
+                                    if(isNaN(this.amove)){
+                                        this.amove = 0
+                                    }
+                                    this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                    if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                        this.screwshot = 1
+                                        this.downspike = 0
+                                        this.hortsmash = 0
+                                    }
+                                    if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                        this.downspike = 1
+                                        this.screwshot = 0
+                                        this.hortsmash = 0
+                                    }
+                                    if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                        this.hortsmash = 1
+                                        this.screwshot = 0
+                                        this.downspike = 0
+                                    }
+                                    this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                    this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                    this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                            }
+                        }
 
                                 if (this.downspike == 1) {
                                     if (this.lefthand.fired <= 0) {
@@ -7273,6 +8088,42 @@
                                     this.screwshot = 0
                                 }
 
+                                if(AItoggle == 1){
+                                    if(meshtoggle == 1&& this.hasOwnProperty('mesh')){
+                                if(meshRun == 1){
+                                    this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                if(isNaN(this.dmove)){
+                                    this.dmove = 0
+                                }
+                                if(isNaN(this.amove)){
+                                    this.amove = 0
+                                }
+                                this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                    this.screwshot = 1
+                                    this.downspike = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                    this.downspike = 1
+                                    this.screwshot = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                    this.hortsmash = 1
+                                    this.screwshot = 0
+                                    this.downspike = 0
+                                }
+                                this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                                }
+                            }
+                        }
+
+
                                 if (this.screwshot == 1) {
                                     if (this.righthand.fired <= 0) {
                                         if (this.righthand.anchored == 0) {
@@ -7311,7 +8162,42 @@
                                     }
                                 }
 
+                            }else{
+
+                                if(meshRun == 1){
+                                    
+                                    if(this.hasOwnProperty('mesh')){
+                                    this.errors.push(this.screwshot)
+                                    this.errors.push(this.downspike)
+                                    this.errors.push(this.hortsmash) 
+                                    this.errors.push(this.rightshot)
+                                    this.errors.push(this.leftshot)
+                                    this.errors.push(this.storeshield)
+                                    }
+                                }
                             }
+
+                            if(meshLearn == 1){
+                                    
+                                if(this.hasOwnProperty('mesh')){
+                                    if(this.hasOwnProperty('meshinputs')){
+                                    if(this.hasOwnProperty('errors')){
+                                for(let t = 0;t<this.meshinputs.length;t++){
+                                    if(isNaN(this.meshinputs[t])){
+                                        this.meshinputs[t] = 0
+                                    }
+                                }
+                                        this.mesh.longInputs.push([...this.meshinputs])
+                                for(let t = 0;t<this.errors.length;t++){
+                                    if(isNaN(this.errors[t])){
+                                        this.errors[t] = 0
+                                    }
+                                }
+                                        this.mesh.longErrors.push([...this.errors])
+                                    }
+                                }
+                            }
+                                }
                         }
                         degripl() {
                             if (this.inactive == 1) {
@@ -7379,6 +8265,11 @@
                             if (this.inactive == 1) {
                                 return
                             }
+                            if(this.hasOwnProperty('mesh')){
+                                if(keysPressed['p']){
+                                    this.mesh.mutate()
+                                }
+                            }
                             if (this.serverID == serverID || AItoggle == 1) {
                                 this.playername = formname.value
                             }
@@ -7425,9 +8316,16 @@
                             this.collideStage()
                             for (let t = 0; t < this.links.length; t++) {
                                 this.links[t].color = invertColor(this.body.color)
+                                if(this.hasOwnProperty('mesh')){
+                                this.links[t].color =  invertColor(this.mesh.name)
+                                }
                                 this.links[t].draw()
                             }
                             for (let t = 0; t < this.nodes.length; t++) {
+
+                                if(this.hasOwnProperty('mesh')){
+                                this.nodes[t].color = this.mesh.name
+                                }
                                 this.nodes[t].draw()
                             }
 
@@ -7483,7 +8381,6 @@
                                 this.body.symom = 0
                             }
                             // if (this.controller == 0) {
-
                             if (boys.indexOf(this) <= humanPlayers) {
                                 if (this.breaktimer < 0) {
                                     this.playerMove(this.body, this.speed, this.gamepad)
@@ -7507,7 +8404,47 @@
                                         this.AImove(this.lefthand, this.speed, this.gamepad)
                                     }
                                     this.doubleJump()
+                                }else{
+
+                                    if(this.hasOwnProperty('mesh')){
+                                    this.meshCompute()
+
+                                if(meshRun == 1){
+
+                                this.errors = [this.wmove, this.dmove, this.amove, this.exgrip] 
+                                this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                if(isNaN(this.dmove)){
+                                    this.dmove = 0
                                 }
+                                if(isNaN(this.amove)){
+                                    this.amove = 0
+                                }
+                                this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                    this.screwshot = 1
+                                    this.downspike = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                    this.downspike = 1
+                                    this.screwshot = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                    this.hortsmash = 1
+                                    this.screwshot = 0
+                                    this.downspike = 0
+                                }
+                                this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                            }
+
+                                }
+
+                            }
                             }
                             // }
 
@@ -7607,6 +8544,10 @@
                                 this.fightcontrol()
                             } else {
                                 this.AI()
+
+                            if(this.hasOwnProperty('mesh')){
+                                // this.mesh.errorReduce(this.errors, boys.indexOf(this))
+                            }
                             }
                             // }
                             if (this.breaktimer > 0) {
@@ -7635,6 +8576,17 @@
                     class Mass {
                         constructor(controller, args = 0) {
                             if (args == 0) {
+                                if(AItoggle == 1){
+                                    if(meshtoggle == 1){
+                                        if(boys.length == 0){
+                                        this.meshinputs = []
+                                    for(let t = 0;t<200;t++){
+                                        this.meshinputs.push(Math.random()-.5)
+                                    }
+                                    this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10])
+                                    }
+                                }
+                                }
                                 this.ping = 0
                                 this.shotIDs = []
                                 this.struck = 0
@@ -7673,7 +8625,7 @@
                                 }
                                 this.shield = 0
                                 this.shieldpower = 100
-                                this.breaktimer = 0
+                                this.breaktimer = -1
                                 this.screwangle = 0
                                 this.charge = 0
                                 this.shots = []
@@ -7994,6 +8946,10 @@
                             //////////////////////console.log("caseF")
 
                             let copy = new Mass(this.controller)
+                            if(this.hasOwnProperty("mesh")){
+                            copy.mesh = this.mesh.clone(this.meshinputs)
+                            copy.mesh.mutate()
+                            }
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
@@ -9118,6 +10074,116 @@
                                         this.amove = 1
                                     }
                                 }
+
+
+
+
+
+                            if(AItoggle == 1){
+                                if(meshtoggle == 1&& this.hasOwnProperty('mesh')){
+                                if(boys.length == 2){
+                                this.meshinputs =  []
+
+
+                                this.meshinputs.push(this.damage)
+this.meshinputs.push(Math.max(this.breaktimer,-1))
+                                        this.meshinputs.push(this.grounded)
+                                        this.meshinputs.push(this.shield)
+                                        this.meshinputs.push(this.shieldpower)
+                                        this.meshinputs.push(this.lefthand.anchored)
+                                        this.meshinputs.push(this.righthand.anchored)
+                                        this.meshinputs.push(Math.max(this.lefthand.fired, 0))
+                                        this.meshinputs.push(Math.max(this.righthand.fired,0))
+                                        this.meshinputs.push(Math.max(this.body.fired,0))
+                                        this.meshinputs.push(Math.max(this.blasting,0))
+                                        this.meshinputs.push(this.face)
+                                        this.meshinputs.push(this.jumping)
+                                        this.meshinputs.push(Math.max(this.jumpcount, -20))
+                                        this.meshinputs.push(this.safe)
+                                        for(let k = 0;k<this.nodes.length;k++){
+
+                                            let x = (this.nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                            let y = (this.nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(this.nodes[k].radius)
+                                        this.meshinputs.push(this.nodes[k].xmom)
+                                        this.meshinputs.push(this.nodes[k].ymom)
+                                        }
+
+
+
+                                for(let t  = 0;t<boys.length;t++){
+                                    if(this!=boys[t]){
+                                        this.meshinputs.push(boys[t].damage)
+this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
+                                        this.meshinputs.push(boys[t].grounded)
+                                        this.meshinputs.push(boys[t].shield)
+                                        this.meshinputs.push(boys[t].shieldpower)
+                                        this.meshinputs.push(boys[t].lefthand.anchored)
+                                        this.meshinputs.push(boys[t].righthand.anchored)
+                                        this.meshinputs.push(Math.max(boys[t].lefthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].righthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].body.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].blasting,0))
+                                        this.meshinputs.push(boys[t].face)
+                                        this.meshinputs.push(boys[t].jumping)
+                                        this.meshinputs.push(Math.max(boys[t].jumpcount, -20))
+                                        this.meshinputs.push(boys[t].safe)
+                                        for(let k = 0;k<boys[t].nodes.length;k++){
+                                            let x = (boys[t].nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                            let y = (boys[t].nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+
+
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(boys[t].nodes[k].radius)
+                                        this.meshinputs.push(boys[t].nodes[k].xmom)
+                                        this.meshinputs.push(boys[t].nodes[k].ymom)
+                                        }
+                                    }
+                                }
+
+                                this.mesh.changeInputs(this.meshinputs)
+                                let errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
+                                // this.mesh.errorReduce(errors, boys.indexOf(this))
+                                if(keysPressed['r']){
+                                console.log(this.mesh)
+                                }
+                                }
+
+                                if(meshRun == 1){
+                                this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                if(isNaN(this.dmove)){
+                                    this.dmove = 0
+                                }
+                                if(isNaN(this.amove)){
+                                    this.amove = 0
+                                }
+                                this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                    this.screwshot = 1
+                                    this.downspike = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                    this.downspike = 1
+                                    this.screwshot = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                    this.hortsmash = 1
+                                    this.screwshot = 0
+                                    this.downspike = 0
+                                }
+                                this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                            }
+                            }
+                        }
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -9135,6 +10201,8 @@
                                         }
                                     }
                                 }
+
+                                if(!this.hasOwnProperty('mesh')){
                                 if (this.dmove == 1) {
                                     this.face = 1
                                     if (object == this.body) {
@@ -9147,10 +10215,6 @@
                                         this.jumping = 1
                                     }
                                 }
-                                // if (keysPressed['s']) {
-                                //     object.y += speed
-                                //     this.degrip()
-                                // }
                                 if (this.amove == 1) {
                                     this.face = -1
                                     if (object == this.body) {
@@ -9158,12 +10222,39 @@
                                         this.righthand.x -= speed
                                         this.lefthand.x -= speed
                                     }
+                                    if (this.lefthand.anchored == 1) {
+                                        this.degripl()
+                                        this.jumping = 1
+                                    }
+                                }
+                            }else{
+
+                                    if (object == this.body) {
+                                        object.x += speed*this.dmove
+                                        this.righthand.x += speed*this.dmove
+                                        this.lefthand.x += speed*this.dmove
+                                    }
+                                    if (object == this.body) {
+                                        object.x -= speed*this.amove
+                                        this.righthand.x -= speed*this.amove
+                                        this.lefthand.x -= speed*this.amove
+                                    }
+
+
+                                if(this.dmove > this.amove){
+                                    this.face = 1
+                                    if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                        this.degripl()
+                                        this.jumping = 1
+                                    }
+                                }else{
+                                    this.face = -1
                                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
                                         this.degripl()
                                         this.jumping = 1
                                     }
                                 }
-
+                            }
 
                                 // if (typeof (controller.gamepad.axesStatus[1]) != 'undefined') {
                                 // if (controller.gamepad.axesStatus[0] > .1) {
@@ -9381,6 +10472,7 @@
                                 this.screwshot = 1
                             }
 
+
                             for (let t = 0; t < boys.length; t++) {
                                 if (this != boys[t] && boys[t]) {
                                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -9399,6 +10491,114 @@
                             if (this.serverID == serverID || AItoggle == 1) {
                                 this.shielddraw = 0
                             }
+
+                            if(AItoggle == 1){
+                                    if(meshtoggle == 1&& this.hasOwnProperty('mesh')){
+                                if(boys.length == 2){
+                                this.meshinputs =  []
+
+
+                                this.meshinputs.push(this.damage)
+this.meshinputs.push(Math.max(this.breaktimer,-1))
+                                        this.meshinputs.push(this.grounded)
+                                        this.meshinputs.push(this.shield)
+                                        this.meshinputs.push(this.shieldpower)
+                                        this.meshinputs.push(this.lefthand.anchored)
+                                        this.meshinputs.push(this.righthand.anchored)
+                                        this.meshinputs.push(Math.max(this.lefthand.fired, 0))
+                                        this.meshinputs.push(Math.max(this.righthand.fired,0))
+                                        this.meshinputs.push(Math.max(this.body.fired,0))
+                                        this.meshinputs.push(Math.max(this.blasting,0))
+                                        this.meshinputs.push(this.face)
+                                        this.meshinputs.push(this.jumping)
+                                        this.meshinputs.push(Math.max(this.jumpcount, -20))
+                                        this.meshinputs.push(this.safe)
+                                        for(let k = 0;k<this.nodes.length;k++){
+
+                                            let x = (this.nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                            let y = (this.nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(this.nodes[k].radius)
+                                        this.meshinputs.push(this.nodes[k].xmom)
+                                        this.meshinputs.push(this.nodes[k].ymom)
+                                        }
+
+
+
+                                for(let t  = 0;t<boys.length;t++){
+                                    if(this!=boys[t]){
+                                        this.meshinputs.push(boys[t].damage)
+this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
+                                        this.meshinputs.push(boys[t].grounded)
+                                        this.meshinputs.push(boys[t].shield)
+                                        this.meshinputs.push(boys[t].shieldpower)
+                                        this.meshinputs.push(boys[t].lefthand.anchored)
+                                        this.meshinputs.push(boys[t].righthand.anchored)
+                                        this.meshinputs.push(Math.max(boys[t].lefthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].righthand.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].body.fired,0))
+                                        this.meshinputs.push(Math.max(boys[t].blasting,0))
+                                        this.meshinputs.push(boys[t].face)
+                                        this.meshinputs.push(boys[t].jumping)
+                                        this.meshinputs.push(Math.max(boys[t].jumpcount, -20))
+                                        this.meshinputs.push(boys[t].safe)
+                                        for(let k = 0;k<boys[t].nodes.length;k++){
+                                            let x = (boys[t].nodes[k].x-(canvas.width*(invscale*.5)))/(canvas.width*(invscale*.5))
+                                            let y = (boys[t].nodes[k].y-(canvas.height*(invscale*.5)))/(canvas.height*(invscale*.5))
+
+
+                                        this.meshinputs.push(x)
+                                        this.meshinputs.push(y)
+                                        this.meshinputs.push(boys[t].nodes[k].radius)
+                                        this.meshinputs.push(boys[t].nodes[k].xmom)
+                                        this.meshinputs.push(boys[t].nodes[k].ymom)
+                                        }
+                                    }
+                                }
+                                this.mesh.changeInputs(this.meshinputs)
+
+                                let errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
+                                // this.mesh.errorReduce(errors, boys.indexOf(this))
+                                if(keysPressed['r']){
+                                console.log(JSON.stringify(this.mesh))
+                                console.log((this.mesh))
+                                console.log((this))
+                                }
+                                }
+
+                                if(meshRun == 1){
+                                this.wmove = Math.round(this.mesh.outputMagnitudes[0])
+                                this.amove = Math.round(this.mesh.outputMagnitudes[1])
+                                this.dmove = Math.round(this.mesh.outputMagnitudes[2])
+                                if(isNaN(this.dmove)){
+                                    this.dmove = 0
+                                }
+                                if(isNaN(this.amove)){
+                                    this.amove = 0
+                                }
+                                this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[4] )){
+                                    this.screwshot = 1
+                                    this.downspike = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[5] )){
+                                    this.downspike = 1
+                                    this.screwshot = 0
+                                    this.hortsmash = 0
+                                }
+                                if(Math.max(this.mesh.outputMagnitudes[4],this.mesh.outputMagnitudes[5],this.mesh.outputMagnitudes[6]) == (this.mesh.outputMagnitudes[6] )){
+                                    this.hortsmash = 1
+                                    this.screwshot = 0
+                                    this.downspike = 0
+                                }
+                                this.rightshot = Math.round(this.mesh.outputMagnitudes[7])
+                                this.leftshot = Math.round(this.mesh.outputMagnitudes[8])
+                                this.storeshield = Math.round(this.mesh.outputMagnitudes[9])
+                            }
+                            }
+                        }
                             if (this.storeshield == 1) {
                                 if (this.breaktimer < 0) {
                                     if (this.grounded == 1) {
@@ -9419,6 +10619,10 @@
                             }
                             if (this.breaktimer <= 0 && this.shield == 0) {
 
+                                if(this.hasOwnProperty('mesh')){
+
+                                }else{
+
                                 if (this.body.y < 950) {
                                     this.wmove = 0
                                     this.screwshot = 0
@@ -9428,6 +10632,7 @@
                                         this.wmove = 0
                                         this.screwshot = 0
                                     }
+                                }
                                 }
                                 if (this.screwshot == 1) {
                                     if (this.body.fired <= 0) {
@@ -9879,9 +11084,15 @@
                             this.collideStage()
                             for (let t = 0; t < this.links.length; t++) {
                                 this.links[t].color = invertColor(this.body.color)
+                                if(this.hasOwnProperty('mesh')){
+                                this.links[t].color =  invertColor(this.mesh.name)
+                                }
                                 this.links[t].draw()
                             }
                             for (let t = 0; t < this.nodes.length; t++) {
+                                if(this.hasOwnProperty('mesh')){
+                                this.nodes[t].color = this.mesh.name
+                                }
                                 this.nodes[t].draw()
                             }
 
@@ -11648,6 +12859,9 @@
                                         this.amove = 1
                                     }
                                 }
+
+
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -11768,6 +12982,11 @@
                             if (Math.random() < .1) {
                                 this.hortsmash = 0
                             }
+
+
+
+
+                            
                             for (let t = 0; t < boys.length; t++) {
                                 if (this != boys[t] && boys[t]) {
 
@@ -30084,6 +31303,7 @@
                                 this.grounded = 0
                                 this.frame = 0
                                 this.jumping = 1
+                                this.jumpcount = 100
 
                                 this.color = getRandomColor()
                                 this.body = new ShotF(400 + (Math.random() * 2560), 500, 60, this.color)
@@ -35746,7 +36966,7 @@
                             //     }
                             // }
 
-                            flopper++
+                            flopper++ //aitesting
                             canvas_context.clearRect(0, 0, canvas.width * 4, canvas.height * 4)
 
                             for (let t = boys.length - 1; t >= 0; t--) {
@@ -35807,6 +37027,9 @@
                                         if (drops[t] < stock) {
                                             if (t != boys[t].striker) {
                                                 // if(AItoggle == 0){
+                                                if(boys[boys[t].striker].hasOwnProperty("mesh")){
+                                                    mutationrate *= .99
+                                                }
                                                 scores[boys[t].striker]++
                                                 // }else{
                                                 // scores[t]++
