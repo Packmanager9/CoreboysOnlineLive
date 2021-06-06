@@ -74,16 +74,17 @@
                     let worldcounter = 0
                     //qqqqq
                     let humanPlayers = 1004
-                    let AItoggle = 0
+                    let AItoggle = 1
                     let meshtoggle = 0
                     let meshRun = 0
                     let meshLearn = 0
                     let fightlogged = 0
 
                     let stock = 0
-                    let HOST = location.origin.replace(/^http/, 'ws')
-                    let ws = new WebSocket(HOST);
+                    let ws
                     if (AItoggle == 0) {
+                    let HOST = location.origin.replace(/^http/, 'ws')
+                    ws = new WebSocket(HOST);
                     }
                     let connectionnumber = -1
                     let start = 0
@@ -6261,6 +6262,11 @@
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -9070,6 +9076,11 @@
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -11770,6 +11781,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -14358,6 +14374,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -16750,6 +16771,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -17991,6 +18017,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -20671,6 +20702,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -23557,6 +23593,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -26117,6 +26158,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -28885,6 +28931,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -31679,6 +31730,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
@@ -34507,6 +34563,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             }
                         }
                         shotcleaner() {
+                            for (let t = 0; t < this.shots.length; t++) {
+  if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+this.shots[t].marked = 1
+}
+}
                             if (this.shotIDs.length > 100) {
                                 this.shotIDs.splice(0, 50)
                             }
