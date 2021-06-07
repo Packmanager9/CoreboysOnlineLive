@@ -4570,6 +4570,13 @@
                             //     boys[1].body.ymom = 0
                             // }
                             for (let t = 0; t < selectors.length; t++) {
+                                if(selectors[t].body.anchored === 2){
+                                    for(let k = 0;k<characterbuttons.length;k++){
+                                        if(characterbuttons[k].isPointInside(selectors[t].body)){
+                                            descriptor.index = k
+                                        }
+                                    }
+                                }
                                 selectors[t].body.anchored = 0
                             }
                             window.removeEventListener("pointermove", continued_stimuli);
@@ -4581,6 +4588,16 @@
                             TIP_engine.x = XS_engine * invscale
                             TIP_engine.y = YS_engine * invscale
                             TIP_engine.body = TIP_engine
+
+                            for (let t = 0; t < selectors.length; t++) {
+                                if(selectors[t].body.anchored === 2){
+                                    for(let k = 0;k<characterbuttons.length;k++){
+                                        if(characterbuttons[k].isPointInside(selectors[t].body)){
+                                            descriptor.index = k
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -9074,9 +9091,87 @@ armfixstorage.ycomp = this.body.ymom
                         }
                     }
 
+                    class Descriptor {
+                        constructor(){
+                            this.string = ''
+                            this.index = -1
+                            this.xpointer = 50
+                            this.ypointer = 1600
+                        }
+                        draw(){
+                            if(this.index == 0){
+                                this.string = "Mass"
+                            }
+                            if(this.index == 1){
+                                this.string = "Coreboy"
+                            }
+                            if(this.index == 2){
+                                this.string = "Blastgirl"
+                            }
+                            if(this.index == 3){
+                                this.string = "Jox"
+                            }
+                            if(this.index == 4){
+                                this.string = "Scorched Mass"
+                            }
+                            if(this.index == 5){
+                                this.string = "Adobrasig Man: A man of the times, six arms and sixty fingers. His dexterity allows him to operate the most complicated of the suits. A super-cooled helium membrane gives Adobrasig Man a force-reflective counter attack (J/X)."
+                            }
+                            if(this.index == 6){
+                                this.string = "Princess GeGeGeGee: A hoyden through and through despite her advanced corpulence. "
+                            }
+                            if(this.index == 7){
+                                this.string = "Rhopho"
+                            }
+                            if(this.index == 8){
+                                this.string = "Banandroid: An 'android' constructed from lab-cultured bull sperm whale brain tissue. Grown to command a prototypical gravity manipulation suit, Banandroid exhibits extreme aggression. Banandroid is equipped with a tetrad of charged energy cannons (L/B), a personal gravity nullifier (J/X), and powerful upwards (I/Y) and downward (K/A) punches."
+                            }
+                            if(this.index == 9){
+                                this.string = "Funky Bunkstanks"
+                            }
+                            if(this.index == 10){
+                                this.string = "Training Dummy"
+                            }
+                            if(this.index == 11){
+                                this.string = "Doctor Soto"
+                            }
+                            if(this.index == 12){
+                                this.string = "Joule: More machine than human, Joule individually commands the exact poisitioning of the nanobots forming its signature move 'The Sievert Storm'. Joule prevents its own irradiation simply by pointing the gamma beam of each nanobot away from itself. Joule directs the sievert storm with its forward punch (L/B), down punch (K/A), and up punch (I/Y). Joule can amplify the sievert storm using its own powercells (J/X), however this severely hinders its self powered movement."
+                            }
+                            // if(counter == 0){
+                                this.measure()
+                                
+
+                            // }
+                        
+                        }
+                        measure(){
+                            this.ypointer = 1600
+                            this.xpointer = 50
+                            canvas_context.font = "40px Arial";
+                            let stoarr = this.string.split(' ')
+                            let stostring = ''
+                            for(let t = 0;t<stoarr.length;t++){
+                                let width = canvas_context.measureText(stostring +' '+ stoarr[t]).width
+                                if(width > canvas.width * invscale * .85){
+                                    canvas_context.fillText(stostring  +' '+ stoarr[t], this.xpointer, this.ypointer)
+                                    this.ypointer += 60
+                                    stostring = ''
+                                }else{
+                                    stostring = stostring + " " + stoarr[t]
+                                    if(t == stoarr.length-1){
+                                    canvas_context.fillText(stostring, this.xpointer, this.ypointer)
+                                    }
+                                }
+                            }
+                            // console.log(this)
+                        }       
+
+                    }
+
                     class Selector {
                         constructor() {
-                            this.body = new Circle(400 + (selectors.length * 200), 400, 45, getRandomLightColor())
+                            this.body = new Circle(100 + (selectors.length * 300), 160, 45, getRandomLightColor())
                             this.num = selectors.length + 1
                         }
                         draw() {
@@ -38262,8 +38357,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
                                                         } else {
-                                                            this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 200)) + (boys[t].shots[k].xmom * baselaunch)) * 2
-                                                            this.body.ymom = (((boys[t].shots[k].ymom * (this.damage / 200)) + (boys[t].shots[k].ymom * baselaunch)) * 2) - (10 * (this.damage / 200))
+                                                            this.body.xmom = ((boys[t].shots[k].xmom * (this.damage /232)) + (boys[t].shots[k].xmom * baselaunch)) * 2
+                                                            this.body.ymom = (((boys[t].shots[k].ymom * (this.damage /232)) + (boys[t].shots[k].ymom * baselaunch)) * 2) - (10 * (this.damage /232))
                                                             this.damage += (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 2
                                                             this.breaktimer = 0
                                                         }
@@ -38289,8 +38384,8 @@ armfixstorage.ycomp = this.body.ymom
                                                             if (this.shield == 1) {
                                                                 this.shieldpower -= (Math.abs(boys[t].bananahand.xmom) + Math.abs(boys[t].bananahand.ymom)) / 11
                                                             } else {
-                                                                this.body.xmom = 1 * ((boys[t].bananahand.xmom * (this.damage / 200)) + (boys[t].bananahand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                                this.body.ymom = 1 * (((boys[t].bananahand.ymom * (this.damage / 200)) + (boys[t].bananahand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.xmom = 1 * ((boys[t].bananahand.xmom * (this.damage /232)) + (boys[t].bananahand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.ymom = 1 * (((boys[t].bananahand.ymom * (this.damage /232)) + (boys[t].bananahand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.damage += 1 * ((Math.abs(boys[t].bananahand.xmom) + Math.abs(boys[t].bananahand.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.breaktimer = 0
                                                             }
@@ -38329,8 +38424,8 @@ armfixstorage.ycomp = this.body.ymom
                                                             if (this.shield == 1) {
                                                                 this.shieldpower -= (Math.abs(boys[t].middlehand.xmom) + Math.abs(boys[t].middlehand.ymom)) / 11
                                                             } else {
-                                                                this.body.xmom = 1 * ((boys[t].middlehand.xmom * (this.damage / 200)) + (boys[t].middlehand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                                this.body.ymom = 1 * (((boys[t].middlehand.ymom * (this.damage / 200)) + (boys[t].middlehand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.xmom = 1 * ((boys[t].middlehand.xmom * (this.damage /232)) + (boys[t].middlehand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.ymom = 1 * (((boys[t].middlehand.ymom * (this.damage /232)) + (boys[t].middlehand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.damage += 1 * ((Math.abs(boys[t].middlehand.xmom) + Math.abs(boys[t].middlehand.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.breaktimer = 0
                                                             }
@@ -38405,8 +38500,8 @@ armfixstorage.ycomp = this.body.ymom
                                                             if (this.shield == 1) {
                                                                 this.shieldpower -= (Math.abs(boys[t].righthand2.xmom) + Math.abs(boys[t].righthand2.ymom)) / 11
                                                             } else {
-                                                                this.body.xmom = .3333 * ((boys[t].righthand2.xmom * (this.damage / 200)) + (boys[t].righthand2.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                                this.body.ymom = .3333 * (((boys[t].righthand2.ymom * (this.damage / 200)) + (boys[t].righthand2.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.xmom = .3333 * ((boys[t].righthand2.xmom * (this.damage /232)) + (boys[t].righthand2.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                                this.body.ymom = .3333 * (((boys[t].righthand2.ymom * (this.damage /232)) + (boys[t].righthand2.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.damage += .3333 * ((Math.abs(boys[t].righthand2.xmom) + Math.abs(boys[t].righthand2.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                                 this.breaktimer = 0
                                                             }
@@ -38441,8 +38536,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= .3333 * (Math.abs(boys[t].lefthand2.xmom) + Math.abs(boys[t].lefthand2.ymom)) / 11
                                                         } else {
-                                                            this.body.xmom = .3333 * ((boys[t].lefthand2.xmom * (this.damage / 200)) + (boys[t].lefthand2.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                            this.body.ymom = .3333 * (((boys[t].lefthand2.ymom * (this.damage / 200)) + (boys[t].lefthand2.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.xmom = .3333 * ((boys[t].lefthand2.xmom * (this.damage /232)) + (boys[t].lefthand2.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = .3333 * (((boys[t].lefthand2.ymom * (this.damage /232)) + (boys[t].lefthand2.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.damage += .3333 * ((Math.abs(boys[t].lefthand2.xmom) + Math.abs(boys[t].lefthand2.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
@@ -38476,8 +38571,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= .3333 * (Math.abs(boys[t].righthand3.xmom) + Math.abs(boys[t].righthand3.ymom)) / 11
                                                         } else {
-                                                            this.body.xmom = .3333 * ((boys[t].righthand3.xmom * (this.damage / 200)) + (boys[t].righthand3.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                            this.body.ymom = .3333 * (((boys[t].righthand3.ymom * (this.damage / 200)) + (boys[t].righthand3.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.xmom = .3333 * ((boys[t].righthand3.xmom * (this.damage /232)) + (boys[t].righthand3.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = .3333 * (((boys[t].righthand3.ymom * (this.damage /232)) + (boys[t].righthand3.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.damage += .3333 * ((Math.abs(boys[t].righthand3.xmom) + Math.abs(boys[t].righthand3.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
@@ -38510,8 +38605,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= .3333 * (Math.abs(boys[t].lefthand3.xmom) + Math.abs(boys[t].lefthand3.ymom)) / 11
                                                         } else {
-                                                            this.body.xmom = .3333 * ((boys[t].lefthand3.xmom * (this.damage / 200)) + (boys[t].lefthand3.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                            this.body.ymom = .3333 * (((boys[t].lefthand3.ymom * (this.damage / 200)) + (boys[t].lefthand3.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.xmom = .3333 * ((boys[t].lefthand3.xmom * (this.damage /232)) + (boys[t].lefthand3.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = .3333 * (((boys[t].lefthand3.ymom * (this.damage /232)) + (boys[t].lefthand3.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.damage += .3333 * ((Math.abs(boys[t].lefthand3.xmom) + Math.abs(boys[t].lefthand3.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
@@ -38547,8 +38642,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].righthand.xmom) + Math.abs(boys[t].righthand.ymom)) / 11
                                                         } else {
-                                                            this.body.xmom = ((boys[t].righthand.xmom * (this.damage / 200)) + (boys[t].righthand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
-                                                            this.body.ymom = (((boys[t].righthand.ymom * (this.damage / 200)) + (boys[t].righthand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.xmom = ((boys[t].righthand.xmom * (this.damage /232)) + (boys[t].righthand.xmom * baselaunch)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].righthand.ymom * (this.damage /232)) + (boys[t].righthand.ymom * baselaunch)) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.damage += ((Math.abs(boys[t].righthand.xmom) + Math.abs(boys[t].righthand.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
@@ -38581,8 +38676,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage /232)) + (boys[t].lefthand.xmom * baselaunch)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage /232)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
                                                             this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
                                                             this.breaktimer = 0
                                                         }
@@ -38615,8 +38710,8 @@ armfixstorage.ycomp = this.body.ymom
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
+                                                            this.body.xmom = (boys[t].body.xmom * (this.damage /232)) + (boys[t].body.xmom * baselaunch) * 2
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage /232)) + (boys[t].body.ymom * baselaunch)) * 2)
                                                             this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
                                                             this.breaktimer = 0
                                                         }
@@ -40664,6 +40759,7 @@ armfixstorage.ycomp = this.body.ymom
 
 
 
+                    let descriptor = new Descriptor()
 
 
 
@@ -40685,21 +40781,25 @@ armfixstorage.ycomp = this.body.ymom
                     let counter = 0
                     let sender = 0
                     let bumper = 0
+                
+                    let screenadjustx = -400
+                    let screenadjusty = -200
 
-
-                    let massSelector = new Shot(700, 700, 200, "#FF0000")
-                    let boySelector = new Circle(1200, 700, 200, "#00FF00")
-                    let blastSelector = new Shotb(1700, 700, 200, "#FF00FF")
-                    let joxSelector = new ShotC(2200, 700, 200, "#BBBBBB")
-                    let scorchSelector = new ShotD(2700, 700, 200, "#0000FF")
-                    let asigSelector = new Circle(950, 1110, 200, "#FFAA00")
-                    let prinSelector = new ShotP(1450, 1110, 200, "#FFFF00")
-                    let rhophoSelector = new ShotR(1950, 1110, 200, "#00FFFF")
-                    let banandroidSelector = new ShotN(2450, 1110, 200, "#FFFF00")
-                    let funkySelector = new ShotF(700, 1520, 200, "#FFAAFF")
-                    let dummySelector = new Circle(1200, 1520, 200, "#FFFFFF")
-                    let doctorSelector = new ShotZ(1700, 1520, 200, "#FFFFFF")
-                    let jouleSelector = new ShotJ(2200, 1520, 200, getRandomLightColor())
+                    let massSelector = new Shot(screenadjustx+700, 700+screenadjusty, 200, "#FF0000")
+                    let boySelector = new Circle(screenadjustx+1200, 700+screenadjusty, 200, "#00FF00")
+                    let blastSelector = new Shotb(screenadjustx+1700, 700+screenadjusty, 200, "#FF00FF")
+                    let joxSelector = new ShotC(screenadjustx+2200, 700+screenadjusty, 200, "#BBBBBB")
+                    let scorchSelector = new ShotD(screenadjustx+2700, 700+screenadjusty, 200, "#0000FF")
+                    screenadjusty += -30
+                    let asigSelector = new Circle(screenadjustx+950, 1110+screenadjusty, 200, "#FFAA00")
+                    let prinSelector = new ShotP(screenadjustx+1450, 1110+screenadjusty, 200, "#FFFF00")
+                    let rhophoSelector = new ShotR(screenadjustx+1950, 1110+screenadjusty, 200, "#00FFFF")
+                    let banandroidSelector = new ShotN(screenadjustx+2450, 1110+screenadjusty, 200, "#FFFF00")
+                    screenadjusty += -30
+                    let funkySelector = new ShotF(screenadjustx+700, 1520+screenadjusty, 200, "#FFAAFF")
+                    let dummySelector = new Circle(screenadjustx+1200, 1520+screenadjusty, 200, "#FFFFFF")
+                    let doctorSelector = new ShotZ(screenadjustx+1700, 1520+screenadjusty, 200, "#FFFFFF")
+                    let jouleSelector = new ShotJ(screenadjustx+2200, 1520+screenadjusty, 200, getRandomLightColor())
                     characterbuttons.push(massSelector)
                     characterbuttons.push(boySelector)
                     characterbuttons.push(blastSelector)
@@ -40824,7 +40924,7 @@ armfixstorage.ycomp = this.body.ymom
                         }
 
                         if (counter == 1) {
-                            // JumpIn(boys[0])
+                            JumpIn(boys[0])
 
                             if (AItoggle == 0) {
 
@@ -41314,6 +41414,7 @@ armfixstorage.ycomp = this.body.ymom
                             // gametheme.play()
                             canvas_context.clearRect(0, 0, canvas.width * invscale, canvas.height * invscale)
 
+                            descriptor.draw()
 
                             massSelector.draw()
                             boySelector.draw()
@@ -41397,7 +41498,7 @@ armfixstorage.ycomp = this.body.ymom
 
                             canvas_context.font = "60px arial"
                             canvas_context.fillStyle = "white"
-                            canvas_context.fillText(`Press Space to Start`, 1000, 300)
+                            canvas_context.fillText(`Press Space to Start`, 50, 60)
                             if (keysPressed[' ']) {
                                 let wet = boys.length
                                 for (let t = 0; t < selectors.length; t++) {
