@@ -41522,21 +41522,28 @@ armfixstorage.ycomp = this.body.ymom
                                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
                                                         this.shotIDs.push(boys[t].shots[k].id)
-                                                        if (AItoggle == 0) {
-                                                            this.striker = boys[t].serverID
-                                                        } else if (AItoggle == 1) {
-                                                            this.striker = t
-                                                        }
-                                                        this.struck = 1
-                                                        if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
+                                                        if (this.reflecting <= 0) {
+                                                            if (AItoggle == 0) {
+                                                                this.striker = boys[t].serverID
+                                                            } else if (AItoggle == 1) {
+                                                                this.striker = t
+                                                            }
+                                                            this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
+                                                            } else {
+                                                                this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 200)) + (boys[t].shots[k].xmom * baselaunch)) * 2
+                                                                this.body.ymom = (((boys[t].shots[k].ymom * (this.damage / 200)) + (boys[t].shots[k].ymom * baselaunch)) * 2) - (10 * (this.damage / 200))
+                                                                this.damage += (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 2
+                                                                this.breaktimer = 0
+                                                            }
+                                                            boys[t].shots[k].marked = 1
                                                         } else {
-                                                            this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 171)) + (boys[t].shots[k].xmom * baselaunch)) * 2
-                                                            this.body.ymom = (((boys[t].shots[k].ymom * (this.damage / 171)) + (boys[t].shots[k].ymom * baselaunch)) * 2) - (10 * (this.damage / 171))
-                                                            this.damage += (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 2
-                                                            this.breaktimer = 0
+                                                            boys[t].shots[k].ymom *= -1
+                                                            boys[t].shots[k].xmom *= -1
+                                                            this.shots.push(boys[t].shots[k])
+                                                            boys[t].shots.splice(k, 1)
                                                         }
-                                                        boys[t].shots[k].marked = 1
                                                     }
                                                 }
                                             }
