@@ -40952,7 +40952,9 @@ armfixstorage.ycomp = this.body.ymom
                                 }
                             }
 
+                            if (this.serverID == serverID || AItoggle == 1) {
                             this.radball.frictiveMove()
+                            }
                             if(this.radball.fired < -100){
                                 this.radball.anchored = 1
                             }else{
