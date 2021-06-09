@@ -5259,7 +5259,11 @@ function padZero(str, len) {
                     class Stage {
 
                         constructor() {
-                            this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 1410 * (invscale * .4)), new Brick(2450 * (invscale * .4), 1470 * (invscale * .4), 1000 * (invscale * .4)), new Brick(1480 * (invscale * .4), 1200 * (invscale * .4), 400 * (invscale * .4)), new Brick(550 * (invscale * .4), 1470 * (invscale * .4), 750 * (invscale * .4))]
+                            //standard
+                            // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 1410 * (invscale * .4)), new Brick(2450 * (invscale * .4), 1470 * (invscale * .4), 1000 * (invscale * .4)), new Brick(1480 * (invscale * .4), 1200 * (invscale * .4), 400 * (invscale * .4)), new Brick(550 * (invscale * .4), 1470 * (invscale * .4), 750 * (invscale * .4))]
+                         
+                            //split floor
+                            this.bricks = [new Brick(850, 1500, 700), new Brick(2950, 1500, 700),new Brick(1050, 2100, 900), new Brick(2750, 2100, 900) ]
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 400 * (invscale * .4))]
                            
                             // this.bricks = [new Brick(1440, 1760, 200), new Brick(1040, 1760, 200), new Brick(640, 1760, 200), new Brick(240, 1760, 200)]
@@ -5285,7 +5289,7 @@ function padZero(str, len) {
                             this.height = height
                             this.edgeleft = new Circle(x - (width * .5), y, 4, "cyan")
                             this.edgeright = new Circle(x + (width * .5), y, 4, "blue")
-                            this.link = new Line(this.edgeleft.x - 5, this.edgeleft.y, this.edgeright.x + 5, this.edgeright.y, getRandomColor(), height * 2)
+                            this.link = new Line(this.edgeleft.x - 5, this.edgeleft.y, this.edgeright.x + 5, this.edgeright.y, "#FFFFFF", height * 2)
                             this.shape = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
                             this.edgeleft = new Circle(x - (width * .5), y - (height * 1), 16, "cyan")
                             this.edgeright = new Circle(x + (width * .5), y - (height * 1), 16, "blue")
@@ -38555,7 +38559,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom -= this.speed * 3
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -38609,7 +38613,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom -= this.speed * 3
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -39232,7 +39236,7 @@ if (boys[t].hasOwnProperty('radball')) {
                             if (this.serverID == serverID || AItoggle == 1) {
                                 if (keysPressed['w']) {
                                     this.jumping = 1
-                                    object.ymom = -speed * 2
+                                    object.ymom = -speed * 3
                                     this.jumpcount = 100 - this.jumpreduction
                                 } else {
                                     if (typeof object != 'undefined') {
@@ -39240,7 +39244,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom -= this.speed * 3
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
