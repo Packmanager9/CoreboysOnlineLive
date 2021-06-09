@@ -5267,9 +5267,11 @@ function padZero(str, len) {
                             // this.bricks = [new Brick(850, 1500, 700), new Brick(2950, 1500, 700),new Brick(1050, 2100, 900), new Brick(2750, 2100, 900) ]
 
                             //wide floor
-                            this.bricks = [new Brick(850, 1500, 700), new Brick(2950, 1500, 700),new Brick(1900, 2100, 2160)]
+                            this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
 
-                            this.walls = [new Wall(1900, 1000, 200, 800)]
+                            this.walls = [new Wall(1900, 1200, 200, 500)]
+
+                            // this.walls = []
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 400 * (invscale * .4))]
                            
                             // this.bricks = [new Brick(1440, 1760, 200), new Brick(1040, 1760, 200), new Brick(640, 1760, 200), new Brick(240, 1760, 200)]
@@ -5342,6 +5344,51 @@ function padZero(str, len) {
                             }
 
                             if(this.shape.doesPerimeterTouch(circle)){
+                                if(circle == player.righthand ||circle == player.righthand2 ||circle == player.righthand3){
+                                 if(circle.xmom > 0){
+                                    if(player.rightshoulder.x < this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                if(circle.xmom < 0){
+                                    if(player.rightshoulder.x > this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                }else if(circle == player.lefthand ||circle == player.lefthand2 ||circle == player.lefthand3){
+                                    if(circle.xmom > 0){
+                                    if(player.leftshoulder.x < this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                if(circle.xmom < 0){
+                                    if(player.leftshoulder.x > this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                 }else if(circle == player.middlehand){
+                                    if(circle.xmom > 0){
+                                    if(player.middleshoulder.x < this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                if(circle.xmom < 0){
+                                    if(player.middleshoulder.x > this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                 }else if(circle == player.bananahand){
+                                    if(circle.xmom > 0){
+                                    if(player.bananashoulder.x < this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                if(circle.xmom < 0){
+                                    if(player.bananashoulder.x > this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                 }else{
                                 if(circle.xmom > 0){
                                     if(circle.x < this.center.x){
                                         circle.xmom*=-1
@@ -5351,6 +5398,7 @@ function padZero(str, len) {
                                     if(circle.x > this.center.x){
                                         circle.xmom*=-1
                                     }
+                                }
                                 }
                             if(this.topcap.y > circle.y){
                                 if(circle == player.body){
@@ -45060,7 +45108,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 whosUp = new Kessler(boys.length)
                             } else {
                                 if (fightlogged == 0) {
-                                    //console.log(strarr)
+                                    console.log(strarr)
                                     fightlogged = 1
                                 }
                                 whosUp = new Dummy(boys.length)
