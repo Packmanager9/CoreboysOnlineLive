@@ -41493,7 +41493,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
                                             //////////////////////////console.log(object.ymom,this.body.ymom)
-                                            object.ymom -= this.speed * 3
+                                            object.ymom -= this.speed * 4
                                             //////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
@@ -41548,7 +41548,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom -= this.speed * 4
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -42204,10 +42204,10 @@ if (boys[t].hasOwnProperty('radball')) {
                             }
                             if (this.wmove == 1) {
                                 this.jumping = 1
-                                this.body.ymom = -this.speed * 3
-                                this.lefthand.ymom = -this.speed * 3
-                                this.righthand.ymom = -this.speed * 3
-                                this.middlehand.ymom = -this.speed * 3
+                                this.body.ymom = -this.speed * 4
+                                this.lefthand.ymom = -this.speed * 4
+                                this.righthand.ymom = -this.speed * 4
+                                this.middlehand.ymom = -this.speed * 4
                                 this.jumpcount = 100
 
                             }
@@ -42216,7 +42216,7 @@ if (boys[t].hasOwnProperty('radball')) {
                             if (this.serverID == serverID || AItoggle == 1) {
                                 if (keysPressed['w']) {
                                     this.jumping = 1
-                                    object.ymom = -this.speed * 3
+                                    object.ymom = -this.speed * 4
                                     this.jumpcount = 100 - this.jumpreduction
                                 } else {
                                     if (typeof object != 'undefined') {
@@ -42224,7 +42224,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 3
+                                                    object.ymom -= this.speed * 4
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -42871,17 +42871,17 @@ if (boys[t].hasOwnProperty('radball')) {
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
-                                        object.ymom -= speed * 2
+                                        object.ymom -= speed * 4
                                     } else {
                                         if (this.lefthand.anchored == 1) {
                                             this.degripl()
                                             this.jumping = 1
-                                            object.ymom -= speed
+                                            object.ymom -= speed*2
                                         }
                                         if (this.righthand.anchored == 1) {
                                             this.degripr()
                                             this.jumping = 1
-                                            object.ymom -= speed
+                                            object.ymom -= speed*2
                                         }
                                     }
                                 }
