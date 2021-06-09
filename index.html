@@ -5316,6 +5316,8 @@ function padZero(str, len) {
                             //         // player.shots[t].marked = 1
                             //     }
                             // }
+
+
                             if (circle == player.rightshoulder) {
                                 return
                             }
@@ -5341,6 +5343,12 @@ function padZero(str, len) {
                                 return
                             }
 
+                            let floorchecklink = new LineOP(circle, this.center)
+                            if(floorchecklink.sqrDis() > (this.width*.65)*(this.width*.65)){
+                                return
+                            }
+
+                            
                             if (circle.doesPerimeterTouch(this.edgeleft)) {
                                 if (circle == player.righthand) {
                                     if (circle.anchored >= -1) {
@@ -7033,7 +7041,38 @@ armfixstorage.ycomp = this.body.ymom
                                                     }
                                                 }
                                             }
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
 
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
                                                 continue
@@ -7126,38 +7165,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
 
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
-                                            }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
                                                 boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
@@ -9993,6 +10001,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -10082,38 +10122,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -12758,6 +12766,39 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -12847,38 +12888,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -15421,6 +15430,39 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -15510,38 +15552,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -17874,6 +17884,39 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -17962,38 +18005,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                     }
                                                 }
                                             }
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -19181,6 +19192,39 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -19270,38 +19314,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -21930,11 +21942,8 @@ armfixstorage.ycomp = this.body.ymom
                                     }
 
 
-                                    let enemycheckline = new LineOP(this.body, boys[t].body)
-                                            if(enemycheckline.sqrDis() > 310000){
-                                                continue
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
+
+                                    if (boys[t].hasOwnProperty('radball')) {
                                                 if ( boys[t].radball.isPointInside(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -21965,6 +21974,10 @@ if (boys[t].hasOwnProperty('radball')) {
                                                             }
                                                             this.fixupshoulder()
                                                 }
+                                            }
+                                    let enemycheckline = new LineOP(this.body, boys[t].body)
+                                            if(enemycheckline.sqrDis() > 310000){
+                                                continue
                                             }
                                     if (typeof boys[t].lefthand2 != "undefined") {
                                         boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -24883,6 +24896,39 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -24972,38 +25018,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -27511,6 +27525,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -27600,38 +27646,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -30344,6 +30358,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -30433,38 +30479,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -33198,6 +33212,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -33287,38 +33333,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -36093,6 +36107,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -36182,38 +36228,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -38825,6 +38839,38 @@ armfixstorage.ycomp = this.body.ymom
                                                 }
                                             }
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
 
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
@@ -38915,38 +38961,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
@@ -41799,6 +41813,38 @@ armfixstorage.ycomp = this.body.ymom
                                             }
 
 
+                                            if (boys[t].hasOwnProperty('radball')) {
+                                                if ( boys[t].radball.isPointInside(this.body)) {
+                                                    if (AItoggle == 0) {
+                                                        this.striker = boys[t].serverID
+                                                    } else if (AItoggle == 1) {
+                                                        this.striker = t
+                                                    }
+                                                    this.struck = 1
+                                                            if (this.shield == 1) {
+                                                                this.shieldpower -= 5
+                                                            } else {
+                                                                this.damage += 73.5/boys[t].radball.radius
+                                                                this.breaktimer = -1
+                                                            }
+
+                                                            //this.shotIDs.push(boys[t].radball.id)
+                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
+                                                                this.lefthand.anchored = -20
+                                                                this.righthand.anchored = -20
+                                                            }
+                                                            if (this.body.ymom < -vsmashlimit) {
+                                                                this.body.ymom = -vsmashlimit
+                                                            }
+                                                            if (this.body.ymom > vsmashlimit) {
+                                                                this.body.ymom = vsmashlimit
+                                                            }
+                                                            if (this.serverID == serverID || AItoggle == 1) {
+                                                                this.body.move()
+                                                            }
+                                                            this.fixupshoulder()
+                                                }
+                                            }
                                           
                                             let enemycheckline = new LineOP(this.body, boys[t].body)
                                             if(enemycheckline.sqrDis() > 310000){
@@ -41888,38 +41934,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 }
                                             }
 
-                                            }
-if (boys[t].hasOwnProperty('radball')) {
-                                                if ( boys[t].radball.isPointInside(this.body)) {
-                                                    if (AItoggle == 0) {
-                                                        this.striker = boys[t].serverID
-                                                    } else if (AItoggle == 1) {
-                                                        this.striker = t
-                                                    }
-                                                    this.struck = 1
-                                                            if (this.shield == 1) {
-                                                                this.shieldpower -= 5
-                                                            } else {
-                                                                this.damage += 73.5/boys[t].radball.radius
-                                                                this.breaktimer = -1
-                                                            }
-
-                                                            //this.shotIDs.push(boys[t].radball.id)
-                                                            if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                                this.lefthand.anchored = -20
-                                                                this.righthand.anchored = -20
-                                                            }
-                                                            if (this.body.ymom < -vsmashlimit) {
-                                                                this.body.ymom = -vsmashlimit
-                                                            }
-                                                            if (this.body.ymom > vsmashlimit) {
-                                                                this.body.ymom = vsmashlimit
-                                                            }
-                                                            if (this.serverID == serverID || AItoggle == 1) {
-                                                                this.body.move()
-                                                            }
-                                                            this.fixupshoulder()
-                                                }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
                                                 boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
