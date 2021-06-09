@@ -22208,7 +22208,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
                                         }
                                     }
-
+}
                                     if (boys[t].righthand.fired > 14) {
                                     boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
                                     if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
@@ -22253,7 +22253,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
                                         }
                                     } 
-                                }
+                                    }
                                     if (boys[t].lefthand.fired > 14) {
                                     boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
                                      if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
@@ -22296,7 +22296,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
                                         }
                                     }
-                                }
+                                    }
 
                                 if (boys[t].body.fired > 0) {
                                     if (boys[t].body.fired > 0 && boys[t].body.doesPerimeterTouch(this.body)) {
@@ -22357,7 +22357,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             ws.send(JSON.stringify(obj))
                                         }
                                     }
-                                }
+                                
                             }
                         }
 
@@ -44252,6 +44252,8 @@ if (boys[t].hasOwnProperty('radball')) {
                             }
                             stage.draw()
 
+
+                        if(AItoggle == 1){
                             if (flopper % 2 == 0) {
                                 for (let t = 0; t < boys.length; t++) {
                                     if (boys[t]) {
@@ -44269,7 +44271,7 @@ if (boys[t].hasOwnProperty('radball')) {
                                     }
                                 }
                             }
-
+                        }
                             if (flopper % 2 == 0) {
                                 for (let t = boys.length - 1; t >= 0; t--) {
                                     if (boys[t]) {
