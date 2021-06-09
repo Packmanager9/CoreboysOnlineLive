@@ -56,6 +56,7 @@
                     ////////////// ////////////////////////////////////console.log(HOST)
                     let pick = -1
                     let meshX = 10
+                    let armgranularity = 7
 
 
                     // let meshtoggle = 0
@@ -1183,7 +1184,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -1288,7 +1289,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -1388,7 +1389,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -1493,7 +1494,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -1595,7 +1596,7 @@
                             this.fired = parseFloat(fired)
                             this.flip = 0
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -1707,7 +1708,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -1810,7 +1811,7 @@
                             this.fired = parseFloat(fired)
                             this.flip = 0
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -1924,7 +1925,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2027,7 +2028,7 @@
                             this.fired = parseFloat(fired)
                             this.flip = 0
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -2138,7 +2139,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2239,7 +2240,7 @@
                             this.symom = 0
                             this.fired = parseFloat(fired)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -2342,7 +2343,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2442,7 +2443,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -2486,7 +2487,7 @@
                             }
                             // canvas_context.closePath()
                         }
-                        move() {
+                        move(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2545,7 +2546,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2645,7 +2646,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -2747,7 +2748,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -2847,7 +2848,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -2958,7 +2959,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.anchored !== 1) {
                                 this.x += this.xmom
                                 this.y += this.ymom
@@ -3036,7 +3037,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -3183,7 +3184,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.anchored !== 1) {
                                 this.x += this.xmom
                                 this.y += this.ymom
@@ -3263,7 +3264,7 @@
                             this.marked = parseFloat(marked)
                             this.angle = parseFloat(angle)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -3413,7 +3414,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.anchored !== 1) {
                                 this.x += this.xmom
                                 this.y += this.ymom
@@ -3528,7 +3529,7 @@
                             this.marked = parseFloat(marked)
                             this.angle = parseFloat(angle)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -3665,7 +3666,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.anchored !== 1) {
                                 this.x += this.xmom
                                 this.y += this.ymom
@@ -3744,7 +3745,7 @@
                             this.marked = parseFloat(marked)
                             this.angle = parseFloat(angle)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -3886,7 +3887,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.anchored !== 1) {
                                 this.x += this.xmom
                                 this.y += this.ymom
@@ -3964,7 +3965,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -4065,7 +4066,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -4165,7 +4166,7 @@
                             this.fired = parseFloat(fired)
                             this.marked = parseFloat(marked)
                         }
-                        smove() {
+                        smove(player) {
                             this.x += this.sxmom
                             this.y += this.symom
                         }
@@ -4266,7 +4267,7 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
-                        frictiveMove() {
+                        frictiveMove(player) {
                             if (this.reflect == 1) {
                                 if (this.x + this.radius > canvas.width) {
                                     if (this.xmom > 0) {
@@ -5267,6 +5268,8 @@ function padZero(str, len) {
 
                             //wide floor
                             this.bricks = [new Brick(850, 1500, 700), new Brick(2950, 1500, 700),new Brick(1900, 2100, 2160)]
+
+                            this.walls = [new Wall(1900, 1000, 200, 800)]
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 400 * (invscale * .4))]
                            
                             // this.bricks = [new Brick(1440, 1760, 200), new Brick(1040, 1760, 200), new Brick(640, 1760, 200), new Brick(240, 1760, 200)]
@@ -5282,7 +5285,95 @@ function padZero(str, len) {
                             for (let t = 0; t < this.bricks.length; t++) {
                                 this.bricks[t].draw()
                             }
+                            for (let t = 0; t < this.walls.length; t++) {
+                                this.walls[t].draw()
+                            }
                         }
+                    }
+
+                    class Wall {
+                        constructor(x, y, width = 200, height = 400) {
+                            this.center = new Point(x, y)
+                            this.width = width
+                            this.height = height
+                            this.topcap = new Circle(this.center.x, this.center.y-(this.height*.5), this.width*.5, "#FFFFFF")
+                            this.basecap = new Circle(this.center.x, this.center.y+(this.height*.5), this.width*.5, "#FFFFFF")
+                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
+                            this.shape.shapes.push(this.topcap)
+                            this.shape.shapes.push(this.basecap)
+                            this.link = new LineOP(this.topcap, this.basecap, "#FFFFFF",  this.width)
+
+                        }
+                        doesPerimeterTouch(circle, player){
+                            if(circle == player.body){
+                                for(let t = 0;t<player.shots.length;t++){
+                                    if(this.shape.doesPerimeterTouch(player.shots[t])){
+                                        player.shots[t].marked = 1
+                                    }
+                                }
+                            }
+                            if (circle == player.rightshoulder) {
+                                return
+                            }
+                            if (circle == player.leftshoulder) {
+                                return
+                            }
+                            if (circle == player.rightshoulder2) {
+                                return
+                            }
+                            if (circle == player.leftshoulder2) {
+                                return
+                            }
+                            if (circle == player.rightshoulder3) {
+                                return
+                            }
+                            if (circle == player.leftshoulder3) {
+                                return
+                            }
+                            if (circle == player.middleshoulder) {
+                                return
+                            }
+                            if (circle == player.radball) {
+                                return
+                            }
+                            let floorchecklink = new LineOP(circle, this.center)
+                            if(floorchecklink.sqrDis() > (this.height*.85)*(this.height*.85)){
+                                return
+                            }
+
+                            if(this.shape.doesPerimeterTouch(circle)){
+                                if(circle.xmom > 0){
+                                    if(circle.x < this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                                if(circle.xmom < 0){
+                                    if(circle.x > this.center.x){
+                                        circle.xmom*=-1
+                                    }
+                                }
+                            if(this.topcap.y > circle.y){
+                                if(circle == player.body){
+                                    player.grounded = 1
+                                    if(player.body.ymom > 0){
+                                        player.body.ymom = 0
+                                    }
+                                }
+                            }
+                            }
+                            while(this.shape.doesPerimeterTouch(circle)){
+                                circle.x -= (this.center.x-circle.x)/1000
+                                circle.y -= (this.center.y-circle.y)/10000
+                            }
+
+                        }
+                        draw() {
+                            this.link.draw()
+                            this.topcap.draw()
+                            this.basecap.draw()
+                            // this.shape.draw()
+                        }
+
                     }
 
                     class Brick {
@@ -5348,7 +5439,7 @@ function padZero(str, len) {
                                 return
                             }
 
-                            
+
                             if (circle.doesPerimeterTouch(this.edgeleft)) {
                                 if (circle == player.righthand) {
                                     if (circle.anchored >= -1) {
@@ -7081,7 +7172,7 @@ armfixstorage.ycomp = this.body.ymom
                                           
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -7124,7 +7215,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -7167,10 +7258,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -7316,7 +7407,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -7355,7 +7446,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         }
 
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                             if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -9050,6 +9141,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -9301,10 +9398,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -10040,7 +10137,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -10082,7 +10179,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -10124,10 +10221,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -10272,7 +10369,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -10312,7 +10409,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
 
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 // ////////////// //////////////////////////////////////console.log(this, boys[t])
@@ -11975,6 +12072,12 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -12202,10 +12305,10 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
 
@@ -12806,7 +12909,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -12848,7 +12951,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -12890,10 +12993,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -13039,7 +13142,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -13079,7 +13182,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                             
                                             if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
@@ -14640,6 +14743,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -14861,10 +14970,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
 
@@ -15470,7 +15579,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -15512,7 +15621,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -15554,10 +15663,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -15703,7 +15812,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -15742,7 +15851,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         }
                                             if (boys[t].lefthand.fired > 14) {
 
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
 
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
@@ -17135,6 +17244,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -17378,10 +17493,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -17924,7 +18039,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -17966,7 +18081,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -18007,10 +18122,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -18167,7 +18282,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -18209,7 +18324,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         }
                                             if (boys[t].lefthand.fired > 14) {
 
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -18408,7 +18523,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     this.springs[t].balance()
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].move()
+                                    this.nodes[t].move(this)
                                 }
                             }
 
@@ -18446,6 +18561,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             for (let t = 0; t < stage.bricks.length; t++) {
                                 for (let k = 0; k < this.nodes.length; k++) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
                             this.fixupshoulder()
@@ -19232,7 +19353,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -19274,7 +19395,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -19316,10 +19437,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -19469,7 +19590,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -19508,7 +19629,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                                 if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -20931,6 +21052,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -21190,10 +21317,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -21980,10 +22107,10 @@ armfixstorage.ycomp = this.body.ymom
                                                 continue
                                             }
                                     if (typeof boys[t].lefthand2 != "undefined") {
-                                        boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                        boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                        boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                        boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                        boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                        boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                        boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                        boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                         if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                             if (AItoggle == 0) {
                                                 this.striker = boys[t].serverID
@@ -22143,7 +22270,7 @@ armfixstorage.ycomp = this.body.ymom
                                   
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                        boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                        boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                         if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                             if (AItoggle == 0) {
                                                 this.striker = boys[t].serverID
@@ -22185,7 +22312,7 @@ if (boys[t].bananahand.fired > 14) {
                                     }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                        boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                        boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                         if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                             if (AItoggle == 0) {
                                                 this.striker = boys[t].serverID
@@ -22226,7 +22353,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     }
 }
                                     if (boys[t].righthand.fired > 14) {
-                                    boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                    boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                     if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                         if (AItoggle == 0) {
                                             this.striker = boys[t].serverID
@@ -22271,7 +22398,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     } 
                                     }
                                     if (boys[t].lefthand.fired > 14) {
-                                    boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                    boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                      if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                         if (AItoggle == 0) {
                                             this.striker = boys[t].serverID
@@ -24011,6 +24138,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -24252,10 +24385,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             if (this.lefthand.anchored <= 0) {
@@ -24936,7 +25069,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -24978,7 +25111,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -25020,10 +25153,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -25168,7 +25301,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -25206,7 +25339,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
 
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
@@ -26710,6 +26843,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -26935,10 +27074,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
@@ -27564,7 +27703,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -27606,7 +27745,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -27648,10 +27787,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -27795,7 +27934,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -27833,7 +27972,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -29470,6 +29609,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -29677,9 +29822,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             } else {
                                 if (this.pounding == 1) {
                                     this.pounding = 0
-                                    let shot1 = new ShotC(this.body.x, this.body.y + this.body.radius, 20, "#00FF00", this.speed * 2, 0)
+                                    let shot1 = new ShotC(this.body.x, this.body.y + this.body.radius, 21, "#00FF00", this.speed * 2, 0)
                                     shot1.life = 50
-                                    let shot2 = new ShotC(this.body.x, this.body.y + this.body.radius, 20, "#00FF00", - this.speed * 2, 0)
+                                    let shot2 = new ShotC(this.body.x, this.body.y + this.body.radius, 21, "#00FF00", - this.speed * 2, 0)
                                     shot2.life = 50
                                     this.shots.push(shot1)
                                     this.shots.push(shot2)
@@ -29720,10 +29865,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
@@ -29865,8 +30010,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 this.bananashoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 4, "#FF0000", 0, 0, .999)
                                 this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 32, "#FF0000", 0, 0, .85)
                                 this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 32, "#FF0000", 0, 0, .85)
-                                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 20, "#FF0000", 0, 0, .85)
-                                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 20, "#FF0000", 0, 0, .85)
+                                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 20.5, "#FF0000", 0, 0, .85)
+                                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 20.5, "#FF0000", 0, 0, .85)
                                 this.nodes.push(this.leftshoulder)
                                 this.nodes.push(this.rightshoulder)
                                 this.nodes.push(this.middleshoulder)
@@ -30397,7 +30542,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -30439,7 +30584,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -30481,10 +30626,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -30628,7 +30773,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -30666,7 +30811,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                                 if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -32389,6 +32534,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -32506,7 +32657,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     if (this.face == -1) {
                                         x -= this.body.radius * .7
                                     }
-                                    canvas_context.fillRect(x - 10, (link.y1 - this.body.radius * .1) - 10, 20, 20)
+                                    canvas_context.fillRect(x - 11.5, (link.y1 - this.body.radius * .1) - 11.5, 23, 23)
                                 }
                             }
 
@@ -32632,9 +32783,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             } else {
                                 if (this.pounding == 1) {
                                     this.pounding = 0
-                                    let shot1 = new ShotC(this.body.x, this.body.y + this.body.radius, 20, "#00FF00", this.speed * 2, 0)
+                                    let shot1 = new ShotC(this.body.x, this.body.y + this.body.radius, 21, "#00FF00", this.speed * 2, 0)
                                     shot1.life = 50
-                                    let shot2 = new ShotC(this.body.x, this.body.y + this.body.radius, 20, "#00FF00", - this.speed * 2, 0)
+                                    let shot2 = new ShotC(this.body.x, this.body.y + this.body.radius, 21, "#00FF00", - this.speed * 2, 0)
                                     shot2.life = 50
                                     this.shots.push(shot1)
                                     this.shots.push(shot2)
@@ -32683,10 +32834,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
@@ -33251,7 +33402,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -33293,7 +33444,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -33335,10 +33486,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -33483,7 +33634,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -33521,7 +33672,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -35092,6 +35243,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -35393,10 +35550,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -36146,7 +36303,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -36188,7 +36345,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -36230,10 +36387,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -36383,7 +36540,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -36422,7 +36579,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -37911,6 +38068,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             let x = this.body.x - xb
                             let y = this.body.y - yb
                             for (let t = 0; t < this.bullets.length; t++) {
@@ -38264,10 +38427,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -38879,7 +39042,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -38921,7 +39084,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -38963,10 +39126,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -39112,7 +39275,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -39150,7 +39313,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             } 
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -40892,6 +41055,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -41165,12 +41334,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     if(this.nodes[t]!=this.radball){
-                                        this.nodes[t].frictiveMove()
+                                        this.nodes[t].frictiveMove(this)
                                     }
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     if(this.nodes[t]!=this.radball){
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                     }
                                 }
                             }
@@ -41852,7 +42021,7 @@ armfixstorage.ycomp = this.body.ymom
                                             }
  if (boys[t].hasOwnProperty('bananahand')) {
 if (boys[t].bananahand.fired > 14) {
-                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, 20, boys[t].bananashoulder.radius)
+                                                boys[t].bananahands = castBetween(boys[t].bananashoulder, boys[t].bananahand, armgranularity, boys[t].bananashoulder.radius)
                                                 if (boys[t].bananahands.doesPerimeterTouch(this.body) || boys[t].bananahand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -41894,7 +42063,7 @@ if (boys[t].bananahand.fired > 14) {
                                             }
 if (boys[t].hasOwnProperty('middlehand')) {
  if (boys[t].middlehand.fired > 14) {
-                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, 20, boys[t].middleshoulder.radius)
+                                                boys[t].middlehands = castBetween(boys[t].middleshoulder, boys[t].middlehand, armgranularity, boys[t].middleshoulder.radius)
                                                 if (boys[t].middlehands.doesPerimeterTouch(this.body) || boys[t].middlehand.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -41936,10 +42105,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                             if (typeof boys[t].lefthand2 != "undefined") {
-                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, 20, boys[t].leftshoulder2.radius)
-                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, 20, boys[t].rightshoulder2.radius)
-                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, 20, boys[t].leftshoulder3.radius)
-                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, 20, boys[t].rightshoulder3.radius)
+                                                boys[t].lefthands2 = castBetween(boys[t].leftshoulder2, boys[t].lefthand2, armgranularity, boys[t].leftshoulder2.radius)
+                                                boys[t].righthands2 = castBetween(boys[t].rightshoulder2, boys[t].righthand2, armgranularity, boys[t].rightshoulder2.radius)
+                                                boys[t].lefthands3 = castBetween(boys[t].leftshoulder3, boys[t].lefthand3, armgranularity, boys[t].leftshoulder3.radius)
+                                                boys[t].righthands3 = castBetween(boys[t].rightshoulder3, boys[t].righthand3, armgranularity, boys[t].rightshoulder3.radius)
                                                 if (boys[t].righthands2.doesPerimeterTouch(this.body) || boys[t].righthand2.doesPerimeterTouch(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -42083,7 +42252,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
 
                                             if (boys[t].righthand.fired > 14) {
-                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, 20, boys[t].rightshoulder.radius)
+                                            boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].rightshoulder.radius)
                                             if (boys[t].righthands.doesPerimeterTouch(this.body) || boys[t].righthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -42121,7 +42290,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             }
                                         }
                                             if (boys[t].lefthand.fired > 14) {
-                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, 20, boys[t].leftshoulder.radius)
+                                            boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
@@ -43694,6 +43863,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     stage.bricks[t].doesPerimeterTouch(this.nodes[k], this)
                                 }
                             }
+
+                            for (let t = 0; t < stage.walls.length; t++) {
+                                for (let k = 0; k < this.nodes.length; k++) {
+                                    stage.walls[t].doesPerimeterTouch(this.nodes[k], this)
+                                }
+                            }
                             this.fixupshoulder()
                             //this.enemycollide()
                         }
@@ -43945,10 +44120,10 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                             if (this.serverID == serverID || AItoggle == 1) {
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].frictiveMove()
+                                    this.nodes[t].frictiveMove(this)
                                 }
                                 for (let t = 0; t < this.nodes.length; t++) {
-                                    this.nodes[t].smove()
+                                    this.nodes[t].smove(this)
                                 }
                             }
                             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
@@ -44847,8 +45022,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         }
 
                         // canvas_context.fillText(`${worldcounter}`, 50, 500)
-
-
                     }
 
                     function JumpIn(fighter) {
