@@ -58,7 +58,10 @@
                     let meshX = 10
                     let armgranularity = 7
 
-
+                    let camerax = 0
+                    let cameray = 0
+                    let cameraxsum = 0
+                    let cameraysum = 0
                     // let meshtoggle = 0
                     let boys = []
                     let strarr = []
@@ -75,7 +78,9 @@
                     let worldcounter = 0
                     //qqqqq
                     let humanPlayers = 1004
-                    let AItoggle = 0
+                    let AItoggle = 1
+                    let campaignToggle = 0
+                    let cameraLocked = 0
                     let meshtoggle = 0
                     let meshRun = 0
                     let meshLearn = 0
@@ -5260,6 +5265,36 @@ function padZero(str, len) {
                     class Stage {
 
                         constructor() {
+                            if(campaignToggle == 1){
+                                this.bricks = []
+                                this.walls = []
+                                this.triggers = []
+                                for(let k = 0;k<10;k++){
+                                this.bricks.push(new Brick(850+(k*(14*1400)), 1600, 700))
+                                this.bricks.push(new Brick(2950+(k*(14*1400)), 1600, 700))
+                                this.bricks.push(new Brick(1900+(k*(14*1400)), 2100, 2160))
+                                this.walls.push(new Wall(1900+(k*(14*1400)), 1200, 200, 500))
+                                this.triggers.push(new Circle(1900+(k*(14*1400)), 1600, 2000, "#FF000044"))
+
+                                    for(let t = 3;t<14;t++){
+                                    let brick = new Brick(t*1400, 1500, 400)
+                                    this.bricks.push(brick)
+                                }
+                                for(let t = 4;t<14;t++){
+                                    let brick = new Wall(t*1300, 1500, 200, 400)
+                                    this.walls.push(brick)
+                                }
+
+                                }
+
+                                
+
+
+
+                            }else{
+                                this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
+                                this.walls = [new Wall(1900, 1200, 200, 500)]
+                              }
                             //standard
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 1410 * (invscale * .4)), new Brick(2450 * (invscale * .4), 1470 * (invscale * .4), 1000 * (invscale * .4)), new Brick(1480 * (invscale * .4), 1200 * (invscale * .4), 400 * (invscale * .4)), new Brick(550 * (invscale * .4), 1470 * (invscale * .4), 750 * (invscale * .4))]
                          
@@ -5267,9 +5302,6 @@ function padZero(str, len) {
                             // this.bricks = [new Brick(850, 1500, 700), new Brick(2950, 1500, 700),new Brick(1050, 2100, 900), new Brick(2750, 2100, 900) ]
 
                             //wide floor
-                            this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
-
-                            this.walls = [new Wall(1900, 1200, 200, 500)]
 
                             // this.walls = []
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 400 * (invscale * .4))]
@@ -5290,6 +5322,20 @@ function padZero(str, len) {
                             for (let t = 0; t < this.walls.length; t++) {
                                 this.walls[t].draw()
                             }
+                            if(campaignToggle == 1){
+                            // for (let t = 0; t < this.triggers.length; t++) {
+                            //     this.triggers[t].draw()
+                            // }
+                            for (let t = 0; t < this.triggers.length; t++) {
+                                if(this.triggers[t].isPointInside(boys[0].body)){
+                                    CreatePlayer(boys.length)
+                                    boys[1].body.x = boys[0].body.x + 2000
+                                    boys[1].body.y = boys[0].body.y 
+                                    this.triggers.splice(t,1)
+                                    humanPlayers = 0
+                                }
+                            }
+                        }
                         }
                     }
 
@@ -7126,7 +7172,9 @@ function padZero(str, len) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -10090,7 +10138,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -12861,7 +12911,9 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -15524,7 +15576,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -17990,7 +18044,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -19304,7 +19360,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -22057,7 +22115,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -25016,7 +25076,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -27651,7 +27713,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -30490,7 +30554,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -33355,7 +33421,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -36255,7 +36323,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -38995,7 +39065,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -41962,7 +42034,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         shotcleaner() {
                             for (let t = 0; t < this.shots.length; t++) {
   if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
+if(campaignToggle == 0){
 this.shots[t].marked = 1
+}
 }
 }
                             if (this.shotIDs.length > 100) {
@@ -44380,6 +44454,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         }
 
                         if (counter == 1) {
+                            if(boys.length >= 1){
+                                if(campaignToggle == 1){
+                                    camerax = boys[0].body.x
+                                    cameray = boys[0].body.y
+                                }
+                            }
                             // JumpIn(boys[0])
 
                             if (AItoggle == 0) {
@@ -44483,7 +44563,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             // }
 
                             flopper++ //aitesting
-                            canvas_context.clearRect(0, 0, canvas.width * 4, canvas.height * 4)
+                            canvas_context.clearRect(-canvas.width*100, -canvas.width*100, canvas.width*200, canvas.width*200)
 
                             for (let t = boys.length - 1; t >= 0; t--) {
                                 if (boys[t]) {
@@ -44526,7 +44606,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
                             }
 
-                            for (let t = 0; t < boys.length; t++) {
+                            if(campaignToggle == 0){
+                                for (let t = 0; t < boys.length; t++) {
                                 if (boys[t]) {
                                     boys[t].body.color = colors[t]
                                     boys[t].draw()
@@ -44534,13 +44615,30 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     ////////////////////////console.log(boys)
                                 }
                             }
+                            }else{
+
+                            for (let t = 0; t < boys.length; t++) {
+                                if (boys[t]) {
+                                    boys[t].body.color = colors[t]
+                                    if(t == 0){
+                                        let x = boys[t].body.x
+                                        let y = boys[t].body.y
+                                        boys[t].draw()
+                                    }else{
+                                        boys[t].draw()
+                                    }
+                                    
+                                } 
+                            }
+                            }
+
 
                             for (let t = 0; t < boys.length; t++) {
 
                                 if (!boys[t]) {
                                     continue
                                 }
-                                if (boys[t].body.y > (1440 * (invscale * .5)) || boys[t].body.x < 0 || boys[t].body.x > (2560 * (invscale * .5)) || boys[t].body.y < 0) {
+                                if ((boys[t].body.y > (1440 * (invscale * .5)) || boys[t].body.x < 0 || boys[t].body.x > (2560 * (invscale * .5)) || boys[t].body.y < 0)  && campaignToggle == 0) {
                                     if (stock > 0) {
                                         if (drops[t] < stock) {
                                             if (t != boys[t].striker) {
@@ -44596,6 +44694,71 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         // }
                                         // }
                                     }
+                                }else if(campaignToggle == 1 && (boys[t].body.y < -100 || boys[t].body.y > (1440 * (invscale * .5))  || Math.abs(boys[t].body.x - boys[0].body.x) > 4000)){
+                                    if (stock > 0) {
+                                        if (drops[t] < stock) {
+                                            if (t != boys[t].striker) {
+                                                // if(AItoggle == 0){
+                                                if(boys[boys[t].striker].hasOwnProperty("mesh")){
+                                                    mutationrate *= .99
+                                                }
+                                                scores[boys[t].striker]++
+                                                // }else{
+                                                // scores[t]++
+                                                // }
+                                            }
+                                            drops[t]++
+                                        }
+                                    } else {
+                                        if (t != boys[t].striker) {
+                                            // if(AItoggle == 0){
+                                            scores[boys[t].striker]++
+                                            // }else{
+                                            // scores[t]++
+                                            // }
+                                        }
+                                        drops[t]++
+                                    }
+                                    if (boys[t].go !== 1) {
+                                        boys[t].go = 1
+                                        if (boys[t].body.y < 0) {
+                                            boom[t] = new ExplosionTop(boys[t].body.x, boys[t].body.color)
+                                        } else if (boys[t].body.y > canvas.height * invscale) {
+                                            boom[t] = new Explosion(boys[t].body.x, boys[t].body.color)
+                                        } else if (boys[t].body.x < 0) {
+                                            boom[t] = new ExplosionRight(boys[t].body.y, boys[t].body.color)
+                                        } else if (boys[t].body.x > canvas.width * invscale) {
+                                            boom[t] = new ExplosionLeft(boys[t].body.y, boys[t].body.color)
+                                        } else {
+                                            boom[t] = new Circle(0, 0, 0, "transparent")
+                                        }
+                                        boys[t].body.x = - 100000
+                                        boys[t].body.y = - 100000
+
+                                        if (boys[t].serverID == serverID || AItoggle == 1) {
+
+                                            if (stock > 0) {
+                                                if (drops[t] < stock) {
+                                                    if(t == 0){
+                                                        boys[t] = boys[t].copy()
+                                                    }else{
+                                                        boys.splice(t,1)
+                                                    }
+                                                } else {
+                                                    boys[t].body.y = (canvas.height * invscale * 10)
+                                                }
+                                            } else {
+                                                    if(t == 0){
+                                                boys[t] = boys[t].copy()
+                                                    }else{
+                                                        boys.splice(t,1)
+                                                    }
+                                            }
+                                        }
+                                        // }
+                                        // }
+                                    }
+
                                 }
                                 if (boom.length <= t) {
                                     boom.push(new Circle(0, 0, 0, "transparent"))
@@ -44870,9 +45033,20 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
                             }
                             // gametheme.pause()
+
+                            if(boys.length >= 1){
+                            if(campaignToggle == 1){
+                                if(cameraLocked == 0){
+                                    cameraxsum += boys[0].body.x-camerax
+                                    cameraysum += boys[0].body.y-cameray
+                                    canvas_context.translate(camerax-boys[0].body.x,cameray-boys[0].body.y)
+
+                                }
+                            }
+                        }
                         } else {
                             // gametheme.play()
-                            canvas_context.clearRect(0, 0, canvas.width * invscale, canvas.height * invscale)
+                            canvas_context.clearRect(-canvas.width*100, -canvas.width*100, canvas.width*200, canvas.width*200)
 
                             descriptor.draw()
 
@@ -45058,6 +45232,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     counter = 1
                                 }
                                 counter = 1
+                                if(campaignToggle == 1){
+                                    if(boys.length > 0){
+                                        canvas_context.translate((canvas.width*(invscale*.5))-boys[0].body.x, boys[0].body.y)
+                                    }
+                                }
                                 if (boys.length == 1) {
                                     // coreboy = new Mass(boys.length)
                                     // coreboy.body.color = "#ffffff"
