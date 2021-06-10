@@ -5266,22 +5266,23 @@ function padZero(str, len) {
 
                         constructor() {
                             if(campaignToggle == 1){
+                                this.playerrunner = 0
                                 this.bricks = []
                                 this.walls = []
                                 this.triggers = []
-                                for(let k = 0;k<10;k++){
-                                this.bricks.push(new Brick(850+(k*(14*1400)), 1600, 700))
-                                this.bricks.push(new Brick(2950+(k*(14*1400)), 1600, 700))
-                                this.bricks.push(new Brick(1900+(k*(14*1400)), 2100, 2160))
-                                this.walls.push(new Wall(1900+(k*(14*1400)), 1200, 200, 500))
-                                this.triggers.push(new Circle(1900+(k*(14*1400)), 1600, 2000, "#FF000044"))
+                                for(let k = 0;k<14;k++){
+                                this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 500))
+                                this.triggers.push(new Circle(1900+(k*(6*1400)), 1600, 2000, "#FF000044"))
 
-                                    for(let t = 3;t<14;t++){
-                                    let brick = new Brick(t*1400, 1500, 400)
+                                    for(let t = 3;t<7;t++){
+                                    let brick = new Brick(t*1335 +(k*(6*1400)), 1600, 770)
                                     this.bricks.push(brick)
                                 }
-                                for(let t = 4;t<14;t++){
-                                    let brick = new Wall(t*1300, 1500, 200, 400)
+                                for(let t = 4;t<8;t++){
+                                    let brick = new Wall(t*1100+(k*(6*1400)), 1600, 200, 470)
                                     this.walls.push(brick)
                                 }
 
@@ -5316,24 +5317,40 @@ function padZero(str, len) {
                             // }
                         }
                         draw() {
+                            if(campaignToggle == 1){
+
                             for (let t = 0; t < this.bricks.length; t++) {
-                                this.bricks[t].draw()
+                                if(Math.abs(boys[0].body.x-this.bricks[t].center.x) < 3000){
+                                    this.bricks[t].draw()
+                                }
                             }
                             for (let t = 0; t < this.walls.length; t++) {
+                                if(Math.abs(boys[0].body.x-this.walls[t].center.x) < 3000){
                                 this.walls[t].draw()
+                                }
                             }
-                            if(campaignToggle == 1){
                             // for (let t = 0; t < this.triggers.length; t++) {
                             //     this.triggers[t].draw()
                             // }
                             for (let t = 0; t < this.triggers.length; t++) {
                                 if(this.triggers[t].isPointInside(boys[0].body)){
-                                    CreatePlayer(boys.length)
-                                    boys[1].body.x = boys[0].body.x + 2000
-                                    boys[1].body.y = boys[0].body.y 
+                                    runCampaign(this.playerrunner)
+                                    this.playerrunner++
+                                    for(let f = 0;f<boys[1].nodes.length;f++){
+                                        boys[1].nodes[f].x = boys[0].body.x + 2000
+                                        boys[1].nodes[f].y = boys[0].body.y 
+                                    }
                                     this.triggers.splice(t,1)
                                     humanPlayers = 0
                                 }
+                            }
+                        }else{
+
+                            for (let t = 0; t < this.bricks.length; t++) {
+                                this.bricks[t].draw()
+                            }
+                            for (let t = 0; t < this.walls.length; t++) {
+                                this.walls[t].draw()
                             }
                         }
                         }
@@ -5385,7 +5402,7 @@ function padZero(str, len) {
                                 return
                             }
                             let floorchecklink = new LineOP(circle, this.center)
-                            if(floorchecklink.sqrDis() > (this.height*.85)*(this.height*.85)){
+                            if(floorchecklink.sqrDis() > (this.height*.95)*(this.height*.95)){
                                 return
                             }
 
@@ -21565,8 +21582,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 this.rightshoulder2 = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 10, "#FF0000", 0, 0, .999)
                                 this.leftshoulder3 = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 10, "magenta", 0, 0, .999)
                                 this.rightshoulder3 = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 10, "#FF0000", 0, 0, .999)
-                                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 25, "magenta", 0, 0, .85)
-                                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 25, "#FF0000", 0, 0, .85)
+                                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 30, "magenta", 0, 0, .85)
+                                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 30, "#FF0000", 0, 0, .85)
                                 this.lefthand2 = new Circle(this.leftshoulder2.x, (this.leftshoulder2.y + this.armlength), 20, "magenta", 0, 0, .85)
                                 this.righthand2 = new Circle(this.rightshoulder2.x, (this.rightshoulder2.y + this.armlength), 20, "#FF0000", 0, 0, .85)
                                 this.lefthand3 = new Circle(this.leftshoulder3.x, (this.leftshoulder3.y + this.armlength), 20, "magenta", 0, 0, .85)
@@ -21882,7 +21899,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom -= this.speed * 2.5
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -21936,7 +21953,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom -= this.speed * 2.5
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -22644,7 +22661,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             if (this.serverID == serverID || AItoggle == 1) {
                                 if (keysPressed['w']) {
                                     this.jumping = 1
-                                    object.ymom = -speed * 2
+                                    object.ymom = -speed * 2.5
                                     this.jumpcount = 100 - this.jumpreduction
                                 } else {
                                     if (typeof object != 'undefined') {
@@ -22652,7 +22669,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom -= this.speed * 2.5
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -22871,7 +22888,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 this.rightshoulder.ymom = 0
                                                 this.righthand.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                                 this.righthand.xmom = this.punchspeed * 9
-                                                this.body.ymom -= this.speed * .1275
+                                                this.body.ymom -= this.speed * .1625
                                                 this.righthand.fired = 19
                                                 this.idify()
                                             }
@@ -22881,7 +22898,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.rightshoulder2.ymom = 0
                                             this.righthand2.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.righthand2.xmom = 0
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.righthand2.fired = 20
                                             this.idify()
                                         }
@@ -22890,7 +22907,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.rightshoulder3.ymom = 0
                                             this.righthand3.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.righthand3.xmom = -this.punchspeed * 7
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.righthand3.fired = 21
                                             this.idify()
                                         }
@@ -22900,7 +22917,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 this.leftshoulder.ymom = 0
                                                 this.lefthand.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                                 this.lefthand.xmom = this.punchspeed * -9
-                                                this.body.ymom -= this.speed * .1275
+                                                this.body.ymom -= this.speed * .1625
                                                 this.lefthand.fired = 18
                                                 this.idify()
                                             }
@@ -22910,7 +22927,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.leftshoulder2.ymom = 0
                                             this.lefthand2.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.lefthand2.xmom = 0
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.lefthand2.fired = 19
                                             this.idify()
                                         }
@@ -22919,7 +22936,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.leftshoulder3.ymom = 0
                                             this.lefthand3.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.lefthand3.xmom = -this.punchspeed * -7
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.lefthand3.fired = 19
                                             this.idify()
                                         }
@@ -24063,7 +24080,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.rightshoulder.ymom = 0
                                             this.righthand.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.righthand.xmom = this.punchspeed * 9
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.righthand.fired = 19
                                         }
                                     }
@@ -24072,7 +24089,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.rightshoulder2.ymom = 0
                                         this.righthand2.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                         this.righthand2.xmom = 0
-                                        this.body.ymom -= this.speed * .1275
+                                        this.body.ymom -= this.speed * .1625
                                         this.righthand2.fired = 20
                                     }
                                     if (this.righthand3.fired <= 0) {
@@ -24080,7 +24097,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.rightshoulder3.ymom = 0
                                         this.righthand3.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                         this.righthand3.xmom = -this.punchspeed * 7
-                                        this.body.ymom -= this.speed * .1275
+                                        this.body.ymom -= this.speed * .1625
                                         this.righthand3.fired = 21
                                     }
                                     if (this.lefthand.fired <= 0) {
@@ -24089,7 +24106,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             this.leftshoulder.ymom = 0
                                             this.lefthand.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                             this.lefthand.xmom = this.punchspeed * -9
-                                            this.body.ymom -= this.speed * .1275
+                                            this.body.ymom -= this.speed * .1625
                                             this.lefthand.fired = 18
                                         }
                                     }
@@ -24098,7 +24115,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.leftshoulder2.ymom = 0
                                         this.lefthand2.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                         this.lefthand2.xmom = 0
-                                        this.body.ymom -= this.speed * .1275
+                                        this.body.ymom -= this.speed * .1625
                                         this.lefthand2.fired = 19
                                     }
                                     if (this.lefthand3.fired <= 0) {
@@ -24106,7 +24123,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.leftshoulder3.ymom = 0
                                         this.lefthand3.ymom = (this.punchspeed * 14) + this.body.ymom * 2
                                         this.lefthand3.xmom = -this.punchspeed * -7
-                                        this.body.ymom -= this.speed * .1275
+                                        this.body.ymom -= this.speed * .1625
                                         this.lefthand3.fired = 19
                                     }
                                 }
@@ -24331,6 +24348,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             // if (this.controller == 0) {
                             let link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y, invertColor(this.body.color), this.body.radius * .2)
 
+                            let linewidthsto = canvas_context.lineWidth
                             canvas_context.lineWidth = 15
                             canvas_context.strokeStyle = invertColor(this.body.color)
                             canvas_context.beginPath();
@@ -24342,6 +24360,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             // canvas_context.fillStyle = invertColor(this.body.color)
                             // canvas_context.fill()
                             // link.draw()
+                            canvas_context.lineWidth =linewidthsto
                             if (this.shielddraw == 1) {
                                 this.shild = new Circle(this.body.x, this.body.y, (Math.max((new LineOP(this.body, this.lefthand)).hypotenuse(), (new LineOP(this.body, this.righthand)).hypotenuse())) + this.lefthand.radius, this.body.color + Math.min(Math.round(this.shieldpower + 11), 99))
                                 this.shild.draw()
@@ -44385,6 +44404,45 @@ if (boys[t].hasOwnProperty('middlehand')) {
                     }
 
 
+                    function runCampaign(t) {
+                        let coreboy
+                        let chooser = t
+
+                        ////////////////////////console.log("caseE")
+                        if (chooser == 0) {
+                            coreboy = new Mass(t)
+                        } else if (chooser == 1) {
+                            coreboy = new Boy(t)
+                        } else if (chooser == 2) {
+                            coreboy = new Blastgirl(t)
+                        } else if (chooser == 3) {
+                            coreboy = new Jox(t)
+                        } else if (chooser == 4) {
+                            coreboy = new ScorchedMass(t)
+                        } else if (chooser == 5) {
+                            coreboy = new AsigMan(t)
+                        } else if (chooser == 6) {
+                            coreboy = new Princess(t)
+                        } else if (chooser == 7) {
+                            coreboy = new Rhopho(t)
+                        } else if (chooser == 8) {
+                            coreboy = new Banandroid(t)
+                        } else if (chooser == 9) {
+                            coreboy = new Bunkstanks(t)
+                        } else if (chooser == 10) {
+                            coreboy = new DrSoto(t)
+                        }else if (chooser == 11) {
+                            coreboy = new Joule(t)
+                        }else if (chooser == 12) {
+                            coreboy = new Kessler(t)
+                        }
+                        boys.push(coreboy)
+                        drops.push(0)
+                        scores.push(0)
+                        boom.push(new Circle(0, 0, 1, "transparent"))
+                    }
+
+
 
                     let cleanup = 1
 
@@ -44694,7 +44752,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         // }
                                         // }
                                     }
-                                }else if(campaignToggle == 1 && (boys[t].body.y < -100 || boys[t].body.y > (1440 * (invscale * .5))  || Math.abs(boys[t].body.x - boys[0].body.x) > 4000)){
+                                }else if(campaignToggle == 1 && (boys[t].body.y < -100 || boys[t].body.y > (1540 * (invscale * .5))  || Math.abs(boys[t].body.x - boys[0].body.x) > 4000)){
                                     if (stock > 0) {
                                         if (drops[t] < stock) {
                                             if (t != boys[t].striker) {
