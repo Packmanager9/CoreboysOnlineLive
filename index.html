@@ -80,6 +80,8 @@
                     let humanPlayers = 1004
                     let AItoggle = 0
                     let campaignToggle = 0
+                    let campaigntime = 0
+                    let campaigntimestart = 0
                     let cameraLocked = 0
                     let meshtoggle = 0
                     let meshRun = 0
@@ -4437,6 +4439,13 @@
                         constructor(shapes) {
                             this.shapes = shapes
                         }
+                        shiftRight(num){
+                            // console.log(num)
+                            for (let t = 0; t < this.shapes.length; t++) {
+                                this.shapes[t].x += num
+                                this.shapes[t].color = getRandomColor()
+                            }
+                        }
                         draw() {
                             for (let t = 0; t < this.shapes.length; t++) {
                                 this.shapes[t].draw()
@@ -5267,6 +5276,8 @@ function padZero(str, len) {
                         constructor() {
                             if(campaignToggle == 1){
                                 this.playerrunner = 0
+                                this.walljumper = 6*1400
+                                this.spawnrunner = 900
                                 this.bricks = []
                                 this.walls = []
                                 this.triggers = []
@@ -5286,9 +5297,12 @@ function padZero(str, len) {
                                     this.walls.push(brick)
                                 }
 
+
                                 }
 
                                 
+                                this.block = new Wall(this.walljumper, 1600, 300, 10000)
+                                    this.walls.push(this.block)
 
 
 
@@ -5335,6 +5349,9 @@ function padZero(str, len) {
                             for (let t = 0; t < this.triggers.length; t++) {
                                 if(this.triggers[t].isPointInside(boys[0].body)){
                                     runCampaign(this.playerrunner)
+                                    // this.walljumper += 6*1400
+                                    // this.walls[this.walls.length-1] = new Wall(this.walljumper, 1600, 300, 10000)
+
                                     this.playerrunner++
                                     for(let f = 0;f<boys[1].nodes.length;f++){
                                         boys[1].nodes[f].x = boys[0].body.x + 2000
@@ -5369,11 +5386,19 @@ function padZero(str, len) {
                             this.link = new LineOP(this.topcap, this.basecap, "#FFFFFF",  this.width)
 
                         }
+                        stick(point) {
+                                while (this.shape.doesPerimeterTouch(point)) {
+                                    point.stuck = 1
+                                    point.y--
+                                }
+                        }
                         doesPerimeterTouch(circle, player){
                             if(circle == player.body){
                                 for(let t = 0;t<player.shots.length;t++){
                                     if(this.shape.doesPerimeterTouch(player.shots[t])){
-                                        player.shots[t].marked = 1
+                                        if(player.shots[t].bomb != 1){
+                                            player.shots[t].marked = 1
+                                        }
                                     }
                                 }
                             }
@@ -7110,7 +7135,13 @@ function padZero(str, len) {
                             copy.striker = 10000 //this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -10042,7 +10073,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -12814,7 +12851,13 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -15491,7 +15534,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -18006,7 +18055,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         control() {
                         }
@@ -19264,7 +19319,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -21202,6 +21263,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             for (let k = 0; k < stage.bricks.length; k++) {
                                                 stage.bricks[k].stick(this.shots[t])
                                             }
+                                            for (let k = 0; k < stage.walls.length; k++) {
+                                                stage.walls[k].stick(this.shots[t])
+                                            }
                                             this.shots[t].move()
                                         } else {
                                             if (this.detonate == 1) {
@@ -22025,7 +22089,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         control() {
                             gamepad_control_controller_proto(this.center, this.speed + (this.speed * (this.grounded * .5)), this.controller)
@@ -24950,7 +25020,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -27625,7 +27701,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -30450,7 +30532,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
                             //////////////////////////console.log(copy)
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -33361,7 +33449,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -36229,7 +36323,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -39005,7 +39105,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = 10000 //this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -41946,7 +42052,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            return copy
+                           if(campaignToggle == 1){
+     for(let t = 0;t<copy.nodes.length;t++){
+          copy.nodes[t].x = stage.spawnrunner
+      }
+}
+
+ return copy
                         }
                         fixupshoulder() {
                             if (this.inactive == 1) {
@@ -44435,6 +44547,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             coreboy = new Joule(t)
                         }else if (chooser == 12) {
                             coreboy = new Kessler(t)
+                        }else{
+                            coreboy = new Dummy(t)
                         }
                         boys.push(coreboy)
                         drops.push(0)
@@ -44752,7 +44866,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         // }
                                         // }
                                     }
-                                }else if(campaignToggle == 1 && (boys[t].body.y < -100 || boys[t].body.y > (1540 * (invscale * .5))  || Math.abs(boys[t].body.x - boys[0].body.x) > 4000)){
+                                }else if(campaignToggle == 1 && (boys[t].body.y < -400 || boys[t].body.y > (1540 * (invscale * .5))  || Math.abs(boys[t].body.x - boys[0].body.x) > 4000)){
                                     if (stock > 0) {
                                         if (drops[t] < stock) {
                                             if (t != boys[t].striker) {
@@ -44779,14 +44893,14 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     }
                                     if (boys[t].go !== 1) {
                                         boys[t].go = 1
-                                        if (boys[t].body.y < 0) {
+                                        if (boys[t].body.y < -400) {
                                             boom[t] = new ExplosionTop(boys[t].body.x, boys[t].body.color)
-                                        } else if (boys[t].body.y > canvas.height * invscale) {
+                                        } else if (boys[t].body.y >  (1540 * (invscale * .5))) {
                                             boom[t] = new Explosion(boys[t].body.x, boys[t].body.color)
                                         } else if (boys[t].body.x < 0) {
-                                            boom[t] = new ExplosionRight(boys[t].body.y, boys[t].body.color)
+                                            // boom[t] = new ExplosionRight(boys[t].body.y, boys[t].body.color)
                                         } else if (boys[t].body.x > canvas.width * invscale) {
-                                            boom[t] = new ExplosionLeft(boys[t].body.y, boys[t].body.color)
+                                            // boom[t] = new ExplosionLeft(boys[t].body.y, boys[t].body.color)
                                         } else {
                                             boom[t] = new Circle(0, 0, 0, "transparent")
                                         }
@@ -44801,6 +44915,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         boys[t] = boys[t].copy()
                                                     }else{
                                                         boys.splice(t,1)
+                                                        boys[0].damage = 0
+                                                        scores[1] = 0
+                                                        drops[1] = 0
+                                                        stage.walls[stage.walls.length-1].shape.shiftRight(6*1400)
+                                                        stage.walls[stage.walls.length-1].center.x += (6*1400)
+                                                        stage.spawnrunner += (6*1400)
                                                     }
                                                 } else {
                                                     boys[t].body.y = (canvas.height * invscale * 10)
@@ -44810,6 +44930,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 boys[t] = boys[t].copy()
                                                     }else{
                                                         boys.splice(t,1)
+                                                        scores[1] = 0
+                                                        drops[1] = 0
+                                                        boys[0].damage = 0
+                                                        stage.walls[stage.walls.length-1].shape.shiftRight(6*1400)
+                                                        stage.walls[stage.walls.length-1].center.x += (6*1400)
+                                                        stage.spawnrunner += (6*1400)
+                                                        
                                                     }
                                             }
                                         }
@@ -44845,7 +44972,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                                             }
                                         } else {
-                                            canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
+                                            if(campaignToggle == 0){
+                                                canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
+                                            }else{
+                                                // canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x-(canvas.width*invscale*.5)+20),(boys[0].body.y-(canvas.height*invscale*.5)+ (((t - dropouts) * 61)+170)))
+                                            }
                                         }
                                     }
                                 }
@@ -45099,6 +45230,42 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     cameraysum += boys[0].body.y-cameray
                                     canvas_context.translate(camerax-boys[0].body.x,cameray-boys[0].body.y)
 
+                            canvas_context.font = "60px arial"
+                            canvas_context.fillStyle = "white"
+                            let dropouts = 0
+                            for (let t = 0; t < boys.length; t++) {
+
+                                        canvas_context.font = "60px arial"
+                                        canvas_context.fillStyle = boys[t].body.color
+                                                canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x-(canvas.width*invscale*.5)+20),(boys[0].body.y-(canvas.height*invscale*.5)+ (((t - dropouts) * 61)+170)))
+                            }
+
+
+                            const now = new Date()  
+                                campaigntime = now.getTime()-campaigntimestart
+
+                            let ms = (campaigntime%1000)
+                            let seconds = campaigntime
+                            let minutes = campaigntime
+                            minutes = Math.floor(minutes/60000)
+                            seconds = Math.floor(seconds/1000)%60
+                            if(seconds < 10){
+                                seconds = "0"+seconds
+                            }
+
+                            let roundedms = (ms/1000).toFixed(2)
+                            let rounder = roundedms.split('')
+                           rounder.splice(0,1)
+                          roundedms =  rounder.join('')
+
+                            console.log(campaigntime)
+
+
+                            canvas_context.fillStyle = "white"
+
+                            canvas_context.fillText(`${minutes}:${seconds}${roundedms}`, (boys[0].body.x-(canvas.width*invscale*.5)+20),(boys[0].body.y-(canvas.height*invscale*.5)+ (((boys.length) * 61)+170)))
+
+
                                 }
                             }
                         }
@@ -45290,9 +45457,18 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     counter = 1
                                 }
                                 counter = 1
-                                if(campaignToggle == 1){
+
+
+                                if(campaignToggle == 1){                                
+                                const now = new Date()  
+                                campaigntimestart = now.getTime()
+      
+                                for(let t = 0;t<boys[0].nodes.length;t++){
+                                    boys[0].nodes[t].x = stage.spawnrunner
+                                }
                                     if(boys.length > 0){
                                         canvas_context.translate((canvas.width*(invscale*.5))-boys[0].body.x, boys[0].body.y)
+
                                     }
                                 }
                                 if (boys.length == 1) {
