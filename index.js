@@ -170,6 +170,116 @@ wss.on("connection", ws => {
         games[ws.assigned].removePlayer(ws)
     })
     ws.on("message", data => {
+
+        // if(data == "cleanout"){  
+        //     let deleter = ws.index //check?
+
+        //     let minarr = []
+        //     // for (let t = 0; t < game.length; t++) {
+        //     //     minarr.push(game[t].pair[1])
+        //     // }
+        //     for (let t = 0; t < games[ws.assigned].players.length; t++) {
+        //         minarr.push(games[ws.assigned].players[t].pair[1])
+        //     }
+        //     if (Math.max(...minarr) == -1) {
+        //         ws.pair[1] = 0
+        //     } else {
+        //         if (!minarr.includes(7)) {
+        //             ws.pair[1] = 7
+        //         }
+        //         if (!minarr.includes(6)) {
+        //             ws.pair[1] = 6
+        //         }
+        //         if (!minarr.includes(5)) {
+        //             ws.pair[1] = 5
+        //         }
+        //         if (!minarr.includes(4)) {
+        //             ws.pair[1] = 4
+        //         }
+        //         if (!minarr.includes(3)) {
+        //             ws.pair[1] = 3
+        //         }
+        //         if (!minarr.includes(2)) {
+        //             ws.pair[1] = 2
+        //         }
+        //         if (!minarr.includes(1)) {
+        //             ws.pair[1] = 1
+        //         }
+        //         if (!minarr.includes(0)) {
+        //             ws.pair[1] = 0
+        //         }
+        //     }
+        //     // game.splice(game.indexOf(ws), 1)
+    
+        //     // for (let t = 0; t < game.length; t++) {
+        //     //     let sjon = {
+        //     //         "delete": `${ws.pair[1]}`,
+        //     //         "index": `${t}`,
+        //     //         "length": `${game.length}`
+        //     //     }
+    
+        //         for (let t = 0; t < games[ws.assigned].players.length; t++) {
+        //             let sjon = {
+        //                 "delete": `${ws.pair[1]}`,
+        //                 "index": `${t}`,
+        //                 "length": `${games[ws.assigned].players.length}`
+        //             }
+    
+    
+    
+        //         // let ids = []
+        //         // for (let t = 0; t < game.length; t++) {
+        //         //     if (t != game.indexOf(ws)) {
+        //         //         ids.push(game[t].serverID)
+        //         //     }
+        //         // }
+    
+        //         let ids = []
+        //         for (let t = 0; t < games[ws.assigned].players.length; t++) {
+        //             if (t != games[ws.assigned].players.indexOf(ws)) {
+        //                 ids.push(games[ws.assigned].players[t].serverID)
+        //             }
+        //         }
+        //         sjon.playerIDs = ids
+    
+        //         // game[t].send(JSON.stringify(sjon))
+        //         games[ws.assigned].players[t].send(JSON.stringify(sjon))
+    
+    
+    
+        //         ids = []
+        //         sjon = {
+        //             'clean': '1'
+        //         }
+    
+        //         // for (let t = 0; t < game.length; t++) {
+        //         //     if (t != game.indexOf(ws)) {
+        //         //         ids.push(game[t].serverID)
+        //         //     }
+        //         // }
+    
+        //         for (let t = 0; t < games[ws.assigned].players.length; t++) {
+        //             if (t != games[ws.assigned].players.indexOf(ws)) {
+        //                 ids.push(games[ws.assigned].players[t].serverID)
+        //             }
+        //         }
+        //         sjon.playerIDs = ids
+    
+        //         let data = JSON.stringify(sjon)
+        //         // for (let t = 0; t < game.length; t++) {
+        //         //     game[t].send(data)
+        //         // }
+        //         for (let t = 0; t < games[ws.assigned].players.length; t++) {
+        //             games[ws.assigned].players[t].send(data)
+        //         }
+        //     }
+    
+        //     games[ws.assigned].removePlayer(ws)
+        //     return
+        // }
+
+
+
         if (JSON.parse(data).counter == 1) {
             let sjon = {
                 "counter": `1`,
