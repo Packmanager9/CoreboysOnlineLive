@@ -5837,8 +5837,8 @@ function padZero(str, len) {
                             this.edgeright = new Circle(x + (width * .5), y, 4, "blue")
                             this.link = new Line(this.edgeleft.x - 5, this.edgeleft.y, this.edgeright.x + 5, this.edgeright.y, "#FFFFFF", height * 2)
                             this.shape = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
-                            this.edgeleft = new Circle(x - (width * .5), y - (height * 1), 16, "cyan")
-                            this.edgeright = new Circle(x + (width * .5), y - (height * 1), 16, "blue")
+                            this.edgeleft = new Circle(x - (width * .5), y - (height * 1), 26, "cyan")
+                            this.edgeright = new Circle(x + (width * .5), y - (height * 1), 26, "blue") ///16
                         }
                         stick(point) {
                             if (point.x > this.edgeleft.x && point.x < this.edgeright.x) {
@@ -5888,12 +5888,15 @@ function padZero(str, len) {
 
                             let floorchecklink = new LineOP(circle, this.center)
                             if(floorchecklink.sqrDis() > (this.width*.65)*(this.width*.65)){
+                                // let circ = new Circle(this.center.x, this.center.y,  (this.width*.65), "#FF000011")
+                                // circ.draw()
                                 return
                             }
 
 
-                            if (circle.doesPerimeterTouch(this.edgeleft)) {
-                                if (circle == player.righthand) {
+                            if (circle == player.righthand) {
+                            player.righthands = castBetween(player.rightshoulder, player.righthand, armgranularity, player.righthand.radius)
+                            if (player.righthands.doesPerimeterTouch(this.edgeleft)) {
                                     if (circle.anchored >= -1) {
                                         circle.anchored = 1
                                         circle.anchor = this.edgeleft
@@ -5903,8 +5906,9 @@ function padZero(str, len) {
                                     }
                                 }
                             }
-                            if (circle.doesPerimeterTouch(this.edgeright)) {
-                                if (circle == player.lefthand) {
+                         if (circle == player.lefthand) {
+                            player.lefthands = castBetween(player.leftshoulder, player.lefthand, armgranularity, player.lefthand.radius)
+                            if (player.lefthands.doesPerimeterTouch(this.edgeright)) {
                                     if (circle.anchored >= -1) {
                                         circle.anchored = 1
                                         circle.anchor = this.edgeright
