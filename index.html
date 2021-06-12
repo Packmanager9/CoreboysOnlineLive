@@ -46043,16 +46043,18 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     boom.push(new Circle(0, 0, 1, "transparent"))
                                     scores.push(0)
                                     drops.push(0)
-                                    if(campaignToggle == 0 && AItoggle == 1){
+                                }
 
+                                if(boys.length == 1){
+                                if(campaignToggle == 0 && AItoggle == 1){
                                     let coreboy = new Dummy()
                                     boys.push(coreboy)
                                     coreboy.id = ID
                                     boom.push(new Circle(0, 0, 1, "transparent"))
                                     scores.push(0)
                                     drops.push(0)
-                                    }
                                 }
+                            }
 
                                 if(campaignToggle == 1){                                
                                 const now = new Date()  
