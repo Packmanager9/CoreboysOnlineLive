@@ -27291,10 +27291,10 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
                             if (this.screwtimer == 30) {
                                 this.body.fired = 30
-                                this.body.ymom = vsmashlimit
+                                this.body.ymom = 70
                             } else if (this.screwtimer <= 30) {
                                 if (this.screwtimer > 0) {
-                                    this.body.ymom = vsmashlimit
+                                    this.body.ymom = 70
                                 }
                             }
                             if (this.breaktimer <= 0 && this.shield == 0) {
@@ -27514,10 +27514,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     if (this.screwtimer == 30) {
                                         this.body.fired = 30
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 100
                                     } else if (this.screwtimer <= 30) {
                                         if (this.screwtimer > 0) {
-                                            this.body.ymom = vsmashlimit
+                                            this.body.ymom = 100
                                         }
                                     }
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
@@ -30287,10 +30287,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     if (this.screwtimer == 30) {
                                         this.body.fired = 30
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 75
                                     } else if (this.screwtimer <= 30) {
                                         if (this.screwtimer > 0) {
-                                            this.body.ymom = vsmashlimit
+                                            this.body.ymom = 75
                                         }
                                     }
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
@@ -39506,7 +39506,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.id = controller //boys.length
                                 this.shielddraw = 0
                                 this.gamepad = new Gamepad(controller)
-                                this.jumpreduction = 0
+                                this.jumpreduction = 60
                                 this.shild = new Circle(0, 0, 0, "transparent")
                                 this.shot = {}
                                 this.striker = 10000
