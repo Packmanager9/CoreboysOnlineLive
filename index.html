@@ -4576,6 +4576,13 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 this.length = length
                             }
                         }
+
+                        sqrDis() {
+                            let xdif = this.body.x - this.anchor.x
+                            let ydif = this.body.y - this.anchor.y
+                            let hypotenuse = (xdif * xdif) + (ydif * ydif)
+                            return (hypotenuse)
+                        }
                         balance() {
                             this.str = this.beam.sqrDis()
                             if (this.str < (this.length - 2) * (this.length - 2)) {
@@ -4893,7 +4900,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     onlineButton.color = "#FF0000"
                                     stage = new Stage()
                                     AItoggle = 1
-                                    humanPlayers = 0
+                                    humanPlayers =  0
                                     boys = []
                             socres = []
                             drops = []
@@ -5641,6 +5648,10 @@ function padZero(str, len) {
 
                                 this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
                                 this.walls = [new Wall(1900, 1200, 200, 500)]
+                                // this.walls = []
+                                // for(let t =0;t<100;t++){
+                                //     this.walls.push(new Wall(Math.random()*3000, 1500, 200, 200))
+                                // }
                               }
                             //standard
                             // this.bricks = [new Brick(1490 * (invscale * .4), 1760 * (invscale * .4), 1410 * (invscale * .4)), new Brick(2450 * (invscale * .4), 1470 * (invscale * .4), 1000 * (invscale * .4)), new Brick(1480 * (invscale * .4), 1200 * (invscale * .4), 400 * (invscale * .4)), new Brick(550 * (invscale * .4), 1470 * (invscale * .4), 750 * (invscale * .4))]
@@ -5841,9 +5852,14 @@ function padZero(str, len) {
                             }
                             }
                             let j = 0
+                            let superbreak = 0
                             while(this.shape.doesPerimeterTouch(circle)){
                                 j++
+                                superbreak += 1
                                 if(j > 500){
+                                    break
+                                }
+                                if(superbreak > 500){
                                     break
                                 }
                                 circle.x -= (this.center.x-circle.x)/1000
@@ -36619,7 +36635,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     this.color = "#ff0000"
                                 }
                                 this.body = new ShotZ(400 + (Math.random() * 2560), 500, 65.5, this.color)
-                                this.innerbody = new Circle(400 + (Math.random() * 2560), 500, 40.5, this.color)
+                                this.innerbody = new Circle(400 + (Math.random() * 2560), 500, 42.5, this.color)
 
                                 this.controller = controller
                                 if (this.controller == 0) {
@@ -36815,7 +36831,7 @@ if (this.controller >= 8) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom -= this.speed * 2.5
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -36869,7 +36885,7 @@ if (this.controller >= 8) {
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom -= this.speed * 2.5
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -45594,7 +45610,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     cameray = boys[0].body.y
                                 }
                             }
-                            // JumpIn(boys[0])
+                            //JumpIn(boys[0])
 
                             if (AItoggle == 0) {
 
@@ -46603,7 +46619,7 @@ for(let t = 0;t<this.nodes.length;t++){
 
                     function JumpIn(fighter) {
                         //start with the dummy
-                        if (scores.includes(100)) {
+                        if (scores.includes(1000)) {
                             let str = `${boys[0].name}: ${scores[0]}, ${boys[1].name}: ${scores[1]}`
                             strarr.push(str)
                             scores = [0, 0]
