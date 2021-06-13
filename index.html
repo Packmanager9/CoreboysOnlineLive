@@ -5044,9 +5044,12 @@
                                 canvas_context.translate(boys[0].body.x-(canvas.width*(invscale*.5)), boys[0].body.y- (canvas.height*(invscale*.5)))
                             }
                             boys = []
+                            socres = []
+                            drops = []
 
                             localIDs = []
                                 }
+                                stage = new Stage()
                             }
                             if(counter == 0){
 
@@ -5060,6 +5063,8 @@
                                     stage = new Stage()
                                     AItoggle = 1
                                     boys = []
+                            socres = []
+                            drops = []
                                     ws.close()
                                 }else{
                                     campaignToggle = 0
@@ -5068,6 +5073,8 @@
                                     stage = new Stage()
                                     // AItoggle = 0
                                     boys = []
+                            socres = []
+                            drops = []
                                 }
                                 }
                                 if(AIFightButton.isPointInside(TIP_engine)){
@@ -5078,6 +5085,8 @@
                                     AItoggle = 1
                                     humanPlayers = 0
                                     boys = []
+                            socres = []
+                            drops = []
                                     ws.close()
                                 }else{
                                     // AIFightButton.color = "#FF0000"
@@ -5089,19 +5098,26 @@
                                     // boys = []
                                 }
                                 }
-                        //         if(onlineButton.isPointInside(TIP_engine)){
-
-                        // // ws = new WebSocket(HOST);
-                        // //             socketize(ws)
-                        //             onlineButton.color = "#00FF00"
-                        //             campaignButton.color = "#FF0000"
-                        //             AIFightButton.color = "#FF0000"
-                        //             AItoggle = 0
-                        //             humanPlayers = 1004
-                        //             campaignToggle = 0
-                        //             boys = []
-                        //             localIDs = []
-                        //         }
+                                if(onlineButton.isPointInside(TIP_engine)){
+                                    if(AItoggle == 1){
+                                        // ws.close()
+                                    campaignToggle = 0
+                                    AItoggle = 0
+                                    start = 0
+                                    HOST = location.origin.replace(/^http/, 'ws')
+                                    ws = new WebSocket(HOST);
+                                    socketize(ws)
+                                    onlineButton.color = "#00FF00"
+                                    campaignButton.color = "#FF0000"
+                                    AIFightButton.color = "#FF0000"
+                                    humanPlayers = 1004
+                                    stage = new Stage()
+                                    boys = []
+                                    socres = []
+                                    drops = []
+                                    localIDs = []
+                                    }
+                                }
 
                                 
                             }
@@ -7183,8 +7199,11 @@ function padZero(str, len) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.nodes.push(this.body)
@@ -7279,8 +7298,11 @@ function padZero(str, len) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -10109,8 +10131,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.leftshoulder = new Shot(this.body.x - (this.body.radius + this.shoulderwidth), 350, 10, "magenta", 0, 0, .999)
@@ -10204,8 +10229,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -12910,8 +12938,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 15
@@ -13010,8 +13041,11 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -15597,8 +15631,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 12
@@ -15697,8 +15734,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -18119,8 +18159,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 1
@@ -18219,8 +18262,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -19388,8 +19434,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 34  // 40
@@ -19487,8 +19536,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -21967,8 +22019,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 40
@@ -22107,8 +22162,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.leftshoulder = this.nodes[1]
@@ -25092,8 +25150,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 45
@@ -25193,8 +25254,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -27742,8 +27806,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 28
@@ -27854,8 +27921,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.leftshoulder = this.nodes[1]
                                 this.rightshoulder = this.nodes[2]
@@ -30552,8 +30622,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 40
@@ -30680,8 +30753,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.leftshoulder = this.nodes[1]
                                 this.rightshoulder = this.nodes[2]
@@ -33532,8 +33608,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.nodes.push(this.body)
@@ -33632,8 +33711,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -36263,8 +36345,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 44  // 40
@@ -36377,8 +36462,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -39176,8 +39264,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.nodes.push(this.body)
@@ -39283,8 +39374,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.rightshoulder = this.nodes[2]
                                 this.leftshoulder = this.nodes[1]
@@ -42112,8 +42206,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
 
                                 this.armlength = 24
@@ -42224,8 +42321,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 if (this.controller == 6) {
                                     this.body.color = "#FF00FF"
                                 }
-                                if (this.controller == 7) {
+                                 if (this.controller == 7) {
                                     this.body.color = "#bbbbbb"
+                                }
+if (this.controller >= 8) {
+                                    this.body.color = colors[this.controller]
                                 }
                                 this.leftshoulder = this.nodes[1]
                                 this.rightshoulder = this.nodes[2]
@@ -44863,7 +44963,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
                     function CreatePlayer(t) {
                         let coreboy
-                        let chooser = Math.floor(Math.random() * 13)
+                        let chooser = Math.floor(Math.random() * 16)
 
                         //////////////////////////console.log("caseE")
                         if (chooser == 0) {
@@ -44903,6 +45003,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         let coreboy
                         let chooser = Math.floor(Math.random() * 13)
 
+                        t = Math.floor(Math.random()*16)
                         //////////////////////////console.log("caseE")
                         if (chooser == 0) {
                             coreboy = new Mass(t)
@@ -44931,6 +45032,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         }else if (chooser == 12) {
                             coreboy = new Kessler(t)
                         }
+                        coreboy.body.color = getRandomColor()
                         return coreboy
                     }
 
@@ -45045,10 +45147,14 @@ if (boys[t].hasOwnProperty('middlehand')) {
                     function main() {
                         if (keysPressed['Escape']) {
                             serverID = parseFloat(Math.random().toFixed(7))
-                            ws.close()
-
-                        ws = new WebSocket(HOST);
-                                    socketize(ws)
+                            stage = new Stage()
+                            if(AItoggle == 0){
+                                ws.close()
+                                start = 0
+                                HOST = location.origin.replace(/^http/, 'ws')
+                                ws = new WebSocket(HOST);
+                                socketize(ws)
+                            }
                                                        // ws.send('cleanout')
                             selectors = []
                                 for (let t = 0; t < 15; t++) {
@@ -45064,6 +45170,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
                             }
                             boys = []
+                            socres = []
+                            drops = []
 
                             localIDs = []
                         }
@@ -45765,8 +45873,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             if(onlineButton.color == "#00FF00"){
                             canvas_context.fillText(`Online`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .20))
                             }else{
-                            canvas_context.fillText(`Offline`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .10))
-                            canvas_context.fillText(`(refresh to reset)`, onlineButton.x + (onlineButton.width * .1), onlineButton.y + (onlineButton.width * .20))
+                            canvas_context.fillStyle = "#FFFFFF"
+                            canvas_context.fillText(`Offline`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .15))
+                            // canvas_context.fillText(`(refresh to reset)`, onlineButton.x + (onlineButton.width * .1), onlineButton.y + (onlineButton.width * .20))
                             }
 
                                 
@@ -46042,7 +46151,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
 
                                 if(boys.length == 0){
-                                    let coreboy = genRandomFighter()
+                                    let coreboy = genRandomFighter(boys.length)
                                     boys.push(coreboy)
                                     coreboy.id = ID
                                     boom.push(new Circle(0, 0, 1, "transparent"))
