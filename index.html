@@ -357,10 +357,14 @@
                                         }
 
                                     }
-                                } else {
-                                    if (data.length >= 0) {
+
+
+                                for (let t = 0; t < boys.length; t++) {
+                                    if(typeof boys[t] == "undefined"){
+                                        boys.splice(t,1)
                                     }
                                 }
+
 
                                 if (flopper % 2 == 0) {
                                     for (let t = 0; t < boys.length; t++) {
@@ -375,6 +379,11 @@
                                         }
                                     }
                                 }
+                                } else {
+                                    if (data.length >= 0) {
+                                    }
+                                }
+
                                 // //////////////////////////////////////console.log(boys)
                             })
                             if (AItoggle == 0) {
@@ -45153,6 +45162,12 @@ if (boys[t].hasOwnProperty('middlehand')) {
                     }
 
                     function main() {
+
+                        for (let t = 0; t < boys.length; t++) {
+                                    if(typeof boys[t] == "undefined"){
+                                        boys.splice(t,1)
+                                    }
+                                }
                         if (keysPressed['Escape']) {
                             serverID = parseFloat(Math.random().toFixed(7))
                             stage = new Stage()
@@ -45978,6 +45993,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             canvas_context.font = "60px arial"
                             canvas_context.fillStyle = "white"
                             canvas_context.fillText(`Press Space to Start`, 50, 60)
+                            if(start == 0){
+                            canvas_context.fillText(`Connecting`, 300, 60)
+                            }
                             if (keysPressed[' ']) {
                                 let wet = boys.length
                                 for (let t = 0; t < selectors.length; t++) {
