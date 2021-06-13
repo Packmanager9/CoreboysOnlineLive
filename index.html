@@ -5725,7 +5725,12 @@ function padZero(str, len) {
 
                         }
                         stick(point) {
+                            let j = 0
                                 while (this.shape.doesPerimeterTouch(point)) {
+                                    j++
+                                    if(j>500){
+                                        break
+                                    }
                                     point.stuck = 1
                                     point.y--
                                 }
@@ -5835,7 +5840,12 @@ function padZero(str, len) {
                                 }
                             }
                             }
+                            let j = 0
                             while(this.shape.doesPerimeterTouch(circle)){
+                                j++
+                                if(j > 500){
+                                    break
+                                }
                                 circle.x -= (this.center.x-circle.x)/1000
                                 circle.y -= (this.center.y-circle.y)/10000
                             }
@@ -5864,7 +5874,12 @@ function padZero(str, len) {
                         }
                         stick(point) {
                             if (point.x > this.edgeleft.x && point.x < this.edgeright.x) {
+                                let j = 0
                                 while (this.shape.doesPerimeterTouch(point)) {
+                                    j++
+                                    if(j>300){
+                                        break
+                                    }
                                     point.stuck = 1
                                     point.y--
                                 }
@@ -29973,10 +29988,10 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
                             if (this.screwtimer == 30) {
                                 this.body.fired = 30
-                                this.body.ymom = vsmashlimit
+                                this.body.ymom = 75
                             } else if (this.screwtimer <= 30) {
                                 if (this.screwtimer > 0) {
-                                    this.body.ymom = vsmashlimit
+                                    this.body.ymom = 75
                                 }
                             }
                             if (this.breaktimer <= 0 && this.shield == 0) {
@@ -32858,10 +32873,10 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
                             if (this.screwtimer == 30) {
                                 this.body.fired = 30
-                                this.body.ymom = vsmashlimit
+                                this.body.ymom = 0
                             } else if (this.screwtimer <= 30) {
                                 if (this.screwtimer > 0) {
-                                    this.body.ymom = vsmashlimit
+                                    this.body.ymom = 0
                                 }
                             }
                             if (this.breaktimer <= 0 && this.shield == 0) {
@@ -32969,10 +32984,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                 }
                                 if (this.screwtimer == 30) {
                                     this.body.fired = 30
-                                    this.body.ymom = vsmashlimit
+                                    this.body.ymom = 0
                                 } else if (this.screwtimer <= 30) {
                                     if (this.screwtimer > 0) {
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 0
                                     }
                                 }
 
@@ -33279,10 +33294,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     if (this.screwtimer == 30) {
                                         this.body.fired = 30
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 0
                                     } else if (this.screwtimer <= 30) {
                                         if (this.screwtimer > 0) {
-                                            this.body.ymom = vsmashlimit
+                                            this.body.ymom = 0
                                         }
                                     }
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
@@ -38631,7 +38646,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                     this.detonate = 1
                                                     this.bullets[0].body.x = this.body.x
                                                     this.bullets[0].body.y = this.body.y
-                                                    this.bullets[0].body.ymom = vsmashlimit
+                                                    this.bullets[0].body.ymom = jumplimit*2
                                                     this.bullets[0].body.xmom = 0
                                                     this.shots.push(this.bullets[0].body)
                                                     this.bullets.splice(0, 1)
@@ -38679,7 +38694,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                 this.detonate = 1
                                                 this.bullets[0].body.x = this.body.x
                                                 this.bullets[0].body.y = this.body.y
-                                                this.bullets[0].body.ymom = -vsmashlimit
+                                                this.bullets[0].body.ymom = -jumplimit*2
                                                 this.bullets[0].body.xmom = 0
                                                 this.shots.push(this.bullets[0].body)
                                                 this.bullets.splice(0, 1)
@@ -38866,7 +38881,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                         this.detonate = 1
                                                         this.bullets[0].body.x = this.body.x
                                                         this.bullets[0].body.y = this.body.y
-                                                        this.bullets[0].body.ymom = vsmashlimit
+                                                        this.bullets[0].body.ymom = jumplimit*2
                                                         this.bullets[0].body.xmom = 0
                                                         this.shots.push(this.bullets[0].body)
                                                         this.bullets.splice(0, 1)
@@ -38914,7 +38929,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                     this.detonate = 1
                                                     this.bullets[0].body.x = this.body.x
                                                     this.bullets[0].body.y = this.body.y
-                                                    this.bullets[0].body.ymom = -vsmashlimit
+                                                    this.bullets[0].body.ymom = -jumplimit*2
                                                     this.bullets[0].body.xmom = 0
                                                     this.shots.push(this.bullets[0].body)
                                                     this.bullets.splice(0, 1)
@@ -44263,30 +44278,30 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                             if(this.body.fired == 50){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 40){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 30){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 20){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 10){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 this.body.xmom += this.punchspeed*this.face
                             }
@@ -44571,10 +44586,10 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
                             if (this.screwtimer == 30) {
                                 this.body.fired = 30
-                                this.body.ymom = vsmashlimit
+                                this.body.ymom = 0
                             } else if (this.screwtimer <= 30) {
                                 if (this.screwtimer > 0) {
-                                    this.body.ymom = vsmashlimit
+                                    this.body.ymom = 0
                                 }
                             }
                             if (this.breaktimer <= 0 && this.shield == 0) {
@@ -44622,10 +44637,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     if (this.screwtimer == 30) {
                                         this.body.fired = 30
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 0
                                     } else if (this.screwtimer <= 30) {
                                         if (this.screwtimer > 0) {
-                                            this.body.ymom = vsmashlimit
+                                            this.body.ymom = 0
                                         }
                                     }
                                    if(this.screwshot == 1){
@@ -44740,30 +44755,30 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                             if(this.body.fired == 50){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 40){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 30){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 20){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 
                                 this.body.xmom += this.punchspeed*this.face
                             }
                             if(this.body.fired == 10){
-                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, vsmashlimit*.5)
+                                let shot = new Shot(this.body.x, this.body.y,30-(this.body.fired*.5), this.body.color, this.body.xmom, jumplimit)
                                 this.shots.push(shot)
                                 this.body.xmom += this.punchspeed*this.face
                             }
@@ -44845,10 +44860,10 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     if (this.screwtimer == 30) {
                                         this.body.fired = 30
-                                        this.body.ymom = vsmashlimit
+                                        this.body.ymom = 0
                                     } else if (this.screwtimer <= 30) {
                                         if (this.screwtimer > 0) {
-                                            this.body.ymom = vsmashlimit
+                                            this.body.ymom = 0
                                         }
                                     }
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
