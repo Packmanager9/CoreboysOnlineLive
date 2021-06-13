@@ -5630,31 +5630,216 @@ function padZero(str, len) {
                                 this.walljumper = 6*1400
                                 this.spawnrunner = 900
                                 this.bricks = []
+                                this.trueBricks = []
+                                this.setArenas = []
+                                this.tempBricks = []
+                                this.tempWalls = []
                                 this.walls = []
                                 this.triggers = []
+
+                                this.block = new Wall(this.walljumper, 1600, 300, 10000)
                                 for(let k = 0;k<14;k++){
-                                this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
-                                this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
-                                this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
-                                this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 500))
+                                    
+                                    if(k == 0){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 1){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(1100+(k*(6*1400)), 1600, 1200))
+                                        this.bricks.push(new Brick(2700+(k*(6*1400)), 1600, 1200))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 1900))
+                                        this.walls.push(new Wall(1100-500+(k*(6*1400)), 1800, 200, 200))
+                                        this.walls.push(new Wall(2700+500+(k*(6*1400)), 1800, 200, 200))
+                                        this.tempBricks.push(new Brick(1100+(k*(6*1400)), 1600, 1200))
+                                        this.tempBricks.push(new Brick(2700+(k*(6*1400)), 1600, 1200))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 1900))
+                                        this.tempWalls.push(new Wall(1100-500+(k*(6*1400)), 1800, 200, 200))
+                                        this.tempWalls.push(new Wall(2700+500+(k*(6*1400)), 1800, 200, 200))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 2){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(1100+(k*(6*1400)), 1600, 300))
+                                        this.bricks.push(new Brick(1800+(k*(6*1400)), 1600, 300))
+                                        this.bricks.push(new Brick(2500+(k*(6*1400)), 1600, 300))
+                                        this.bricks.push(new Brick(1000+(k*(6*1400)), 2100, 1000))
+                                        this.bricks.push(new Brick(2600+(k*(6*1400)), 2100, 1000))
+                                        this.tempBricks.push(new Brick(1100+(k*(6*1400)), 1600, 300))
+                                        this.tempBricks.push(new Brick(1800+(k*(6*1400)), 1600, 300))
+                                        this.tempBricks.push(new Brick(2500+(k*(6*1400)), 1600, 300))
+                                        this.tempBricks.push(new Brick(1000+(k*(6*1400)), 2100, 1000))
+                                        this.tempBricks.push(new Brick(2600+(k*(6*1400)), 2100, 1000))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 3){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 500))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempWalls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 500))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 4){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 5){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2760))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2760))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 6){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 700))
+                                        this.walls.push(new Wall(1100+(k*(6*1400)), 1200, 200, 700))
+                                        this.walls.push(new Wall(2700+(k*(6*1400)), 1200, 200, 700))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempWalls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 700))
+                                        this.tempWalls.push(new Wall(1100+(k*(6*1400)), 1200, 200, 700))
+                                        this.tempWalls.push(new Wall(2700+(k*(6*1400)), 1200, 200, 700))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 7){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 1450, 700))
+                                        this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 450))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 1450, 700))
+                                        this.tempWalls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 450))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 8){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        for(let n = 0;n<7;n++){
+                                        this.bricks.push(new Brick((n*350) + 750+(k*(6*1400)), 1600+((n%2)*(400)), 400))
+                                        }
+                                        for(let n = 0;n<7;n++){
+                                        this.tempBricks.push(new Brick((n*350) + 750+(k*(6*1400)), 1600+((n%2)*(400)), 400))
+                                        }
+                                        
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 9){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        for(let n = 0;n<7;n++){
+                                        this.bricks.push(new Brick((n*400) + 650+(k*(6*1400)), 2200+((Math.abs(-3+n))*(-300)), 450))
+                                        }
+                                        for(let n = 0;n<7;n++){
+                                        this.tempBricks.push(new Brick((n*400) + 650+(k*(6*1400)), 2200+((Math.abs(-3+n))*(-300)), 450))
+                                        }
+                                        
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 10){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1700, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1700, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 1700, 200))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempBricks.push(new Brick(850+(k*(6*1400)), 1700, 700))
+                                        this.tempBricks.push(new Brick(2950+(k*(6*1400)), 1700, 700))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 1700, 200))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 11){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        for(let n = 0;n<6;n++){
+                                            this.walls.push(new Wall((n*560) + 500+(k*(6*1400)), 2100, 200, 350))
+                                        }
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        for(let n = 0;n<6;n++){
+                                            this.tempWalls.push(new Wall((n*560) + 500+(k*(6*1400)), 2100, 200, 350))
+                                        }
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 12){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        for(let n = 0;n<2;n++){
+                                            this.walls.push(new Wall((n*3000) + 500+(k*(6*1400)), 2100, 200, 350))
+                                        }
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        for(let n = 0;n<2;n++){
+                                            this.tempWalls.push(new Wall((n*3000) + 500+(k*(6*1400)), 2100, 200, 350))
+                                        }
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else if(k == 13){
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        this.tempBricks.push(new Brick(1900+(k*(6*1400)), 2100, 3000))
+                                        this.tempWalls.push(this.block)
+                                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
+                                    }else{
+                                        this.tempBricks = []
+                                        this.tempWalls = []
+                                        this.bricks.push(new Brick(850+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(2950+(k*(6*1400)), 1600, 700))
+                                        this.bricks.push(new Brick(1900+(k*(6*1400)), 2100, 2160))
+                                        this.walls.push(new Wall(1900+(k*(6*1400)), 1200, 200, 500))
+                                    }
                                 this.triggers.push(new Circle(1900+(k*(6*1400)), 1600, 2000, "#FF000044"))
 
                                     for(let t = 3;t<7;t++){
                                     let brick = new Brick(t*1335 +(k*(6*1400)), 1600, 770)
                                     this.bricks.push(brick)
                                 }
-                                for(let t = 4;t<8;t++){
-                                    let brick = new Wall(t*1100+(k*(6*1400)), 1600, 200, 470)
-                                    this.walls.push(brick)
-                                }
+                                // for(let t = 4;t<8;t++){
+                                //     let brick = new Wall(t*1100+(k*(6*1400)), 1600, 200, 470)
+                                //     this.walls.push(brick)
+                                // }
 
 
                                 }
 
                                 
-                                this.block = new Wall(this.walljumper, 1600, 300, 10000)
-                                    this.walls.push(this.block)
-
+                                this.walls.push(this.block)
+                                this.trueBricks = [...this.bricks]
+                                this.trueWalls = [...this.walls]
 
 
                             }else{
@@ -5685,12 +5870,12 @@ function padZero(str, len) {
                             if(campaignToggle == 1){
 
                             for (let t = 0; t < this.bricks.length; t++) {
-                                if(Math.abs(boys[0].body.x-this.bricks[t].center.x) < 3000){
+                                if(Math.abs(boys[0].body.x-this.bricks[t].center.x) < 3400){
                                     this.bricks[t].draw()
                                 }
                             }
                             for (let t = 0; t < this.walls.length; t++) {
-                                if(Math.abs(boys[0].body.x-this.walls[t].center.x) < 3000){
+                                if(Math.abs(boys[0].body.x-this.walls[t].center.x) < 3400){
                                 this.walls[t].draw()
                                 }
                             }
@@ -5700,6 +5885,8 @@ function padZero(str, len) {
                             for (let t = 0; t < this.triggers.length; t++) {
                                 if(this.triggers[t].isPointInside(boys[0].body)){
                                     runCampaign(this.playerrunner)
+                                    this.bricks = [...this.setArenas[this.playerrunner][0]]
+                                    this.walls = [...this.setArenas[this.playerrunner][1]]
                                     // this.walljumper += 6*1400
                                     // this.walls[this.walls.length-1] = new Wall(this.walljumper, 1600, 300, 10000)
 
@@ -5711,6 +5898,10 @@ function padZero(str, len) {
                                     this.triggers.splice(t,1)
                                     humanPlayers = 0
                                 }
+                            }
+                            if(boys.length == 1){
+                                this.bricks = this.trueBricks
+                                this.walls = this.trueWalls
                             }
                         }else{
 
@@ -7185,7 +7376,7 @@ function padZero(str, len) {
                                 this.springs = []
                                 this.hitboxes = []
                                 this.links = []
-                                this.speed = 11.5
+                                this.speed = 11.5 //11.5
                                 this.punchspeed = 6.5
                                 this.grounded = 0
                                 this.frame = 0
@@ -7968,11 +8159,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -8007,9 +8198,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -8980,6 +9171,23 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     }
                                 }
 
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if(object == this.body){
                                     if(this.hasOwnProperty('mesh')){
                                     this.meshCompute()
@@ -9020,7 +9228,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         }
                         }
                     }
-                                
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -10951,11 +11159,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -10991,9 +11199,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -11642,6 +11850,21 @@ if (boys[t].hasOwnProperty('middlehand')) {
 
 
 
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                             if(AItoggle == 1){
                                 if(meshtoggle == 1&& this.hasOwnProperty('mesh')){
@@ -13740,11 +13963,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -13781,9 +14004,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -14517,6 +14740,21 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
 
 
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
@@ -16426,11 +16664,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -16464,9 +16702,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -17139,6 +17377,24 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.amove = 1
                                     }
                                 }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -18916,13 +19172,13 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
                                                             //shieldaud1.play()
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
                                                             //punchaud1.playbackrate = 2
                                                             //punchaud1.play()
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -18960,9 +19216,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         } else {
                                                             //punchaud1.playbackrate = 2
                                                             //punchaud1.play()
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -20238,11 +20494,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
                                                             //shieldaud1.play()
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) 
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -20278,9 +20534,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                             //shieldaud1.play()
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -20941,6 +21197,23 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.dmove = 1
                                     } else {
                                         this.amove = 1
+                                    }
+                                }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (this.wmove == 1) {
@@ -22675,7 +22948,7 @@ armfixstorage.ycomp = this.body.ymom
                                                 if (this.shield == 1) {
                                                     this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
                                                 } else {
-                                                    this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 171)) + (boys[t].shots[k].xmom * (baselaunch * 1.5))) * 2
+                                                    this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 171)) + (boys[t].shots[k].xmom * (baselaunch * 1.5))) * 2 
                                                     this.body.ymom = (((boys[t].shots[k].ymom * (this.damage / 171)) + (boys[t].shots[k].ymom * (baselaunch * 1.5))) * 2) - (10 * (this.damage / 171))
                                                     this.damage += (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 2
                                                     this.breaktimer = 0
@@ -23027,11 +23300,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             if (!this.shotIDs.includes(boys[t].lefthand.id)) {
 
                                                 if (this.shield == 1) {
-                                                    this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                    this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11)  
                                                 } else {
-                                                    this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * (baselaunch * 1.5))
-                                                    this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * (baselaunch * 1.5))) * 1)
-                                                    this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 7
+                                                    this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * (baselaunch * 1.5))  * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                    this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * (baselaunch * 1.5))) * 1) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                    this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 7) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                     this.breaktimer = 0
                                                 }
                                                 boys[t].lefthand.fired = 14
@@ -23071,9 +23344,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (this.shield == 1) {
                                                     this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                 } else {
-                                                    this.body.xmom = (boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * (baselaunch * 1.5)) * 2
-                                                    this.body.ymom = (((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * (baselaunch * 1.5))) * 2)
-                                                    this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                    this.body.xmom = ((boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * (baselaunch * 1.5)) * 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                    this.body.ymom = ((((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * (baselaunch * 1.5))) * 2)) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                    this.damage +=( ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                 }
                                                 boys[t].body.fired = 0
                                                 this.shotIDs.push(boys[t].body.id)
@@ -24113,6 +24386,23 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.dmove = 1
                                     } else {
                                         this.amove = 1
+                                    }
+                                }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (this.wmove == 1) {
@@ -25987,11 +26277,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -26026,9 +26316,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -26741,6 +27031,40 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.dmove = 1
                                     } else {
                                         this.amove = 1
+                                    }
+                                }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (this.wmove == 1) {
@@ -28636,11 +28960,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -28674,9 +28998,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -29393,6 +29717,25 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.amove = 1
                                     }
                                 }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -31492,11 +31835,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -31530,9 +31873,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -32247,6 +32590,23 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.dmove = 1
                                     } else {
                                         this.amove = 1
+                                    }
+                                }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (this.wmove == 1) {
@@ -34370,11 +34730,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -34409,9 +34769,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -35370,6 +35730,24 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.amove = 1
                                     }
                                 }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -37298,11 +37676,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
                                                             //shieldaud1.play()
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 200)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 200)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -37338,9 +37716,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                             //shieldaud1.play()
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 200)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 200)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -38003,6 +38381,24 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.amove = 1
                                     }
                                 }
+
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -40048,11 +40444,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage /321)) + (boys[t].lefthand.xmom * (baselaunch*.9))
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage /321)) + (boys[t].lefthand.ymom * (baselaunch*.9))) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = ((boys[t].lefthand.xmom * (this.damage /321)) + (boys[t].lefthand.xmom * (baselaunch*.9)))  * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage /321)) + (boys[t].lefthand.ymom * (baselaunch*.9))) * 1)  * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -40086,9 +40482,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage /321)) + (boys[t].body.xmom * (baselaunch*.9)) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage /321)) + (boys[t].body.ymom * (baselaunch*.9))) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage /321)) + (boys[t].body.xmom * (baselaunch*.9)) * 2)  * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom =( (((boys[t].body.ymom * (this.damage /321)) + (boys[t].body.ymom * (baselaunch*.9))) * 2))  * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -40968,6 +41364,21 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
 
 
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
 
                                 for (let t = 0; t < boys.length; t++) {
                                     if (this != boys[t] && boys[t]) {
@@ -41074,6 +41485,23 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                     }
                                 }
 
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if(object == this.body){
                                     if(this.hasOwnProperty('mesh')){
                                     this.meshCompute()
@@ -41114,6 +41542,8 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         }
                         }
                     }
+                                
+
                                 
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
@@ -43043,11 +43473,11 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                 if (boys[t].lefthand.fired > 14) {
                                                     if (!this.shotIDs.includes(boys[t].lefthand.id)) {
                                                         if (this.shield == 1) {
-                                                            this.shieldpower -= (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.shieldpower -= ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                         } else {
-                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * baselaunch)
-                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * baselaunch)) * 1)
-                                                            this.damage += (Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11
+                                                            this.body.xmom = (boys[t].lefthand.xmom * (this.damage / 171)) + (boys[t].lefthand.xmom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].lefthand.ymom * (this.damage / 171)) + (boys[t].lefthand.ymom * baselaunch) * Math.max((1 + (boys[t].blasting / 80)), 1)) * 1)
+                                                            this.damage += ((Math.abs(boys[t].lefthand.xmom) + Math.abs(boys[t].lefthand.ymom)) / 11) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].lefthand.fired = 14
@@ -43081,9 +43511,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                                         if (this.shield == 1) {
                                                             this.shieldpower -= (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 3
                                                         } else {
-                                                            this.body.xmom = (boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * baselaunch) * 2
-                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * baselaunch)) * 2)
-                                                            this.damage += (Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2
+                                                            this.body.xmom = ((boys[t].body.xmom * (this.damage / 171)) + (boys[t].body.xmom * baselaunch) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.body.ymom = (((boys[t].body.ymom * (this.damage / 171)) + (boys[t].body.ymom * baselaunch)) * 2)* Math.max((1 + (boys[t].blasting / 80)), 1)
+                                                            this.damage += ((Math.abs(boys[t].body.xmom) + Math.max(20, Math.abs(boys[t].body.ymom))) / 2) * Math.max((1 + (boys[t].blasting / 80)), 1)
                                                             this.breaktimer = 0
                                                         }
                                                         boys[t].body.fired = 0
@@ -43798,6 +44228,22 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                         this.dmove = 1
                                     } else {
                                         this.amove = 1
+                                    }
+                                }
+
+                                for(let t = 0;t<stage.walls.length;t++){
+                                    if(Math.abs(this.body.x-stage.walls[t].center.x) <= (stage.walls[t].width+(this.body.radius*2))){
+                                        if(Math.abs(this.body.y-stage.walls[t].center.y) <= (stage.walls[t].height+(this.body.radius*2))){
+                                            if(this.body.x > stage.walls[t].center.x){
+                                                if(this.amove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            } if(this.body.x < stage.walls[t].center.x){
+                                                if(this.dmove == 1){
+                                                    this.wmove = 1
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (this.wmove == 1) {
