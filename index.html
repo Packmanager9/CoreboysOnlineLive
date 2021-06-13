@@ -5050,6 +5050,14 @@
                             localIDs = []
                                 }
                                 stage = new Stage()
+
+                            if(AItoggle == 0){
+                                ws.close()
+                                start = 0
+                                HOST = location.origin.replace(/^http/, 'ws')
+                                ws = new WebSocket(HOST);
+                                socketize(ws)
+                            }
                             }
                             if(counter == 0){
 
@@ -5100,7 +5108,7 @@
                                 }
                                 if(onlineButton.isPointInside(TIP_engine)){
                                     if(AItoggle == 1){
-                                        // ws.close()
+                                        ws.close()
                                     campaignToggle = 0
                                     AItoggle = 0
                                     start = 0
@@ -45148,13 +45156,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                         if (keysPressed['Escape']) {
                             serverID = parseFloat(Math.random().toFixed(7))
                             stage = new Stage()
-                            if(AItoggle == 0){
-                                ws.close()
-                                start = 0
-                                HOST = location.origin.replace(/^http/, 'ws')
-                                ws = new WebSocket(HOST);
-                                socketize(ws)
-                            }
                                                        // ws.send('cleanout')
                             selectors = []
                                 for (let t = 0; t < 15; t++) {
@@ -45174,6 +45175,14 @@ if (boys[t].hasOwnProperty('middlehand')) {
                             drops = []
 
                             localIDs = []
+
+                            if(AItoggle == 0){
+                                ws.close()
+                                start = 0
+                                HOST = location.origin.replace(/^http/, 'ws')
+                                ws = new WebSocket(HOST);
+                                socketize(ws)
+                            }
                         }
 
                         for (let t = 0; t < boys.length; t++) {
@@ -45182,7 +45191,6 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 connectionnumber = t
                                 IDaddress = t
                             }
-
                         }
 
                         if (counter == 1) {
