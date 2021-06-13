@@ -45059,7 +45059,9 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                 }
                             counter = 0
                             if(campaignToggle == 1){
+                                if(boys.length > 0){
                                 canvas_context.translate(boys[0].body.x-(canvas.width*(invscale*.5)), boys[0].body.y- (canvas.height*(invscale*.5)))
+                                }
                             }
                             boys = []
 
