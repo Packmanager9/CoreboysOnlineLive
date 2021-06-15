@@ -8621,7 +8621,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                         if (this.face == 1) {
                                             if (this.righthand.fired <= 0) {
                                                 if (this.righthand.anchored == 0) {
-                                                    this.righthand.ymom = 0
+                                                    this.righthand.ymom = 0 + (this.body.ymom * 2)
                                                     this.righthand.xmom = this.punchspeed * 14
                                                     this.righthand.fired = 18
                                                     this.idify()
@@ -8631,7 +8631,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                         if (this.face == -1) {
                                             if (this.lefthand.fired <= 0) {
                                                 if (this.lefthand.anchored == 0) {
-                                                    this.lefthand.ymom = 0
+                                                    this.lefthand.ymom = 0 + (this.body.ymom * 2)
                                                     this.lefthand.xmom = -this.punchspeed * 14
                                                     this.lefthand.fired = 18
                                                     this.idify()
@@ -8644,7 +8644,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
                                         if (this.righthand.fired <= 0) {
                                             if (this.righthand.anchored == 0) {
-                                                this.righthand.ymom = -this.punchspeed * 14
+                                                this.righthand.ymom = -this.punchspeed * 14 + (this.body.ymom * 2)
                                                 this.righthand.xmom = this.punchspeed * 1
                                                 this.righthand.fired = 18
                                                 this.idify()
@@ -8652,7 +8652,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                         }
                                         if (this.lefthand.fired <= 0) {
                                             if (this.lefthand.anchored == 0) {
-                                                this.lefthand.ymom = -this.punchspeed * 14
+                                                this.lefthand.ymom = -this.punchspeed * 14 + (this.body.ymom * 2)
                                                 this.lefthand.xmom = -this.punchspeed * 1
                                                 this.lefthand.fired = 18
                                                 this.idify()
@@ -9922,7 +9922,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     if (this.face == 1) {
                                         if (this.righthand.fired <= 0) {
                                             if (this.righthand.anchored == 0) {
-                                                this.righthand.ymom = 0
+                                                this.righthand.ymom = 0 + (this.body.ymom * 2)
                                                 this.righthand.xmom = this.punchspeed * 14
                                                 this.righthand.fired = 18
                                             }
@@ -9931,7 +9931,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     if (this.face == -1) {
                                         if (this.lefthand.fired <= 0) {
                                             if (this.lefthand.anchored == 0) {
-                                                this.lefthand.ymom = 0
+                                                this.lefthand.ymom = 0 + (this.body.ymom * 2)
                                                 this.lefthand.xmom = -this.punchspeed * 14
                                                 this.lefthand.fired = 18
                                             }
@@ -9983,14 +9983,14 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this.screwshot == 1) {
                                     if (this.righthand.fired <= 0) {
                                         if (this.righthand.anchored == 0) {
-                                            this.righthand.ymom = -this.punchspeed * 14
+                                            this.righthand.ymom = -this.punchspeed * 14 + (this.body.ymom * 2)
                                             this.righthand.xmom = this.punchspeed * 1
                                             this.righthand.fired = 18
                                         }
                                     }
                                     if (this.lefthand.fired <= 0) {
                                         if (this.lefthand.anchored == 0) {
-                                            this.lefthand.ymom = -this.punchspeed * 14
+                                            this.lefthand.ymom = -this.punchspeed * 14 + (this.body.ymom * 2)
                                             this.lefthand.xmom = -this.punchspeed * 1
                                             this.lefthand.fired = 18
                                         }
@@ -12738,7 +12738,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                             this.fleeing = 0
                                             this.rightshoulder.xmom = 0
                                             this.rightshoulder.ymom = 0
-                                            this.righthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                            this.righthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                             this.righthand.xmom = (this.punchspeed * 11.1) //+ this.body.xmom
                                             this.righthand.fired = 18
                                         }
@@ -12748,7 +12748,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                             this.fleeing = 0
                                             this.leftshoulder.xmom = 0
                                             this.leftshoulder.ymom = 0
-                                            this.lefthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                            this.lefthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                             this.lefthand.xmom = -(this.punchspeed * 11.1) //+ this.body.xmom
                                             this.lefthand.fired = 18
                                         }
@@ -13002,7 +13002,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                             if (this.righthand.anchored == 0) {
                                                 this.rightshoulder.xmom = 0
                                                 this.rightshoulder.ymom = 0
-                                                this.righthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                                this.righthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                                 this.righthand.xmom = (this.punchspeed * 11.1) //+ this.body.xmom
                                                 this.righthand.fired = 18
                                                 this.idify()
@@ -13012,7 +13012,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                             if (this.lefthand.anchored == 0) {
                                                 this.leftshoulder.xmom = 0
                                                 this.leftshoulder.ymom = 0
-                                                this.lefthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                                this.lefthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                                 this.lefthand.xmom = -(this.punchspeed * 11.1) //+ this.body.xmom
                                                 this.lefthand.fired = 18
                                                 this.idify()
@@ -21895,7 +21895,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                             this.fleeing = 0
                                             this.rightshoulder.xmom = 0
                                             this.rightshoulder.ymom = 0
-                                            this.righthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                            this.righthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                             this.righthand.xmom = (this.punchspeed * 11.1) //+ this.body.xmom
                                             this.righthand.fired = 18
                                         }
@@ -21905,7 +21905,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                             this.fleeing = 0
                                             this.leftshoulder.xmom = 0
                                             this.leftshoulder.ymom = 0
-                                            this.lefthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                            this.lefthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                             this.lefthand.xmom = -(this.punchspeed * 11.1) //+ this.body.xmom
                                             this.lefthand.fired = 18
                                         }
@@ -22152,7 +22152,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                 this.fleeing = 0
                                                 this.rightshoulder.xmom = 0
                                                 this.rightshoulder.ymom = 0
-                                                this.righthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                                this.righthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                                 this.righthand.xmom = (this.punchspeed * 11.1) //+ this.body.xmom
                                                 this.righthand.fired = 18
                                                 this.idify()
@@ -22163,7 +22163,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                 this.fleeing = 0
                                                 this.leftshoulder.xmom = 0
                                                 this.leftshoulder.ymom = 0
-                                                this.lefthand.ymom = (this.punchspeed * 5) //+ this.body.ymom
+                                                this.lefthand.ymom = (this.punchspeed * 5) + (this.body.ymom * 2)
                                                 this.lefthand.xmom = -(this.punchspeed * 11.1) //+ this.body.xmom
                                                 this.lefthand.fired = 18
                                                 this.idify()
@@ -23923,7 +23923,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
                                         if (this.righthand.fired <= 0) {
                                             if (this.righthand.anchored == 0) {
-                                                this.righthand.ymom = -this.punchspeed * 14
+                                                this.righthand.ymom = -this.punchspeed * 14 
                                                 this.righthand.xmom = 0
                                                 this.righthand.fired = 18
                                                 this.idify()
