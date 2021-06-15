@@ -54,7 +54,7 @@
                 <canvas hidden = "true" id="tempcanvas" width="2500" height="500"></canvas>
                 <script>
 
-                    ////////////// ////////////////////////////////////////console.log(HOST)
+                    ////////////// //////////////////////////////////////////console.log(HOST)
                     let pick = -1
                     let meshX = 10
                     let armgranularity = 7
@@ -173,11 +173,11 @@
                                                 if (counters[y] > 250) {
                                                     if (!(data).playerIDs.includes(boys[y].serverID)) {
                                                         if (boys[y].serverID != serverID) {
-                                                            ////////////////////////////////console.log(localIDs,)
-                                                            ////////////////////////////console.log("caseA", boys[y])
+                                                            //////////////////////////////////console.log(localIDs,)
+                                                            //////////////////////////////console.log("caseA", boys[y])
                                                             localIDs.splice(localIDs.indexOf(boys[y].serverID)) //sus
                                                             boys.splice(y, 1)
-                                                            ////////////////////////////////console.log("snip")
+                                                            //////////////////////////////////console.log("snip")
                                                         }
                                                     }
                                                 }
@@ -198,7 +198,7 @@
                                         }
                                     }
                                 } else if (parseInt(JSON.parse(data).counter) == 1) {
-                                    ////////////////////////////////console.log(data)
+                                    //////////////////////////////////console.log(data)
                                     for (let t = 0; t < boys.length; t++) {
                                         if (boys[t].serverID == parseFloat(JSON.parse(data).index)) {
                                             boys[t].body.xmom += parseFloat(JSON.parse(data).xmom)
@@ -216,10 +216,10 @@
                                         for (let g = 0; g < data.playerIDs.length; g++) {
                                             for (let t = 0; t < boys.length; t++) {
                                                 if (!(data).playerIDs.includes(boys[t].serverID)) {
-                                                    ////////////////////////////console.log("caseB", boys[t])
+                                                    //////////////////////////////console.log("caseB", boys[t])
                                                     localIDs.splice(localIDs.indexOf(boys[t].serverID))//sus
                                                     boys.splice(t, 1)
-                                                    ////////////////////////////////console.log("snip")
+                                                    //////////////////////////////////console.log("snip")
                                                 }
                                             }
                                         }
@@ -247,7 +247,7 @@
                                         tempIDs.push(boys[t].serverID)
                                     }
                                     for (let t = 0; t < data.playerIDs.length; t++) {
-                                        // //////////////////////////console.log(serverID, data.serverID)
+                                        // ////////////////////////////console.log(serverID, data.serverID)
                                         if (serverID != data.serverID) {
                                             let identites = []
                                             for (let g = 0; g < boys.length; g++) {
@@ -255,7 +255,7 @@
                                             }
                                             if (localIDs.includes(data.serverID)) {
                                                 //should prevent sending yourself to yourself?
-                                                // ////////////////////////////console.log("caseG")
+                                                // //////////////////////////////console.log("caseG")
                                                 counters[tempIDs.indexOf(data.serverID)] = 0
                                                 if (data.name == "Coreboy") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Boy(data.id, data)  //data.id?
@@ -305,7 +305,7 @@
                                             } else if (!localIDs.includes(data.serverID)) {
                                                 counters[tempIDs.indexOf(data.serverID)] = 0
                                                 localIDs.push(data.serverID)
-                                                ////////////////////////////console.log("caseC", data)
+                                                //////////////////////////////console.log("caseC", data)
                                                 let newplayer = {}
                                                 if (data.name == "Coreboy") {
                                                     newplayer = new Boy(data.slot)  //data.id?
@@ -385,7 +385,7 @@
                                     }
                                 }
 
-                                // ////////////////////////////////////////console.log(boys)
+                                // //////////////////////////////////////////console.log(boys)
                             })
                             if (AItoggle == 0) {
                                 ws.send(serverID)
@@ -572,7 +572,7 @@
                 }
                     this.name = `#${this.r.toString(16)}${this.g.toString(16)}${this.b.toString(16)}`
                 } else {
-                    // //////console.log(override)
+                    // ////////console.log(override)
                     let keys = Object.keys(override)
                     for(let t =0;t<keys.length;t++){
                         this[keys[t]] = override[keys[t]]
@@ -614,7 +614,7 @@
                 clone.longInputs = [...this.longInputs]
                 clone.parent = this.name
                 clone.name = `#${clone.r.toString(16)}${clone.g.toString(16)}${clone.b.toString(16)}`
-                // //////console.log(clone)
+                // ////////console.log(clone)
                 return clone
             }
             freshClone() {
@@ -686,7 +686,7 @@
                     bigerror += error
                 }
                 this.error = (bigerror)
-                // //////console.log(bigerror)
+                // ////////console.log(bigerror)
 
             }
             calculateError(errors){
@@ -694,7 +694,7 @@
                 this.errors = errors
                 this.dropoffs = []
                 for(let t = 0;t<errors.length;t++){
-                    // //////console.log(this.outputMagnitudes[t])
+                    // ////////console.log(this.outputMagnitudes[t])
                     if(t<3){
                         this.dropoffs.push([errors[t], this.outputMagnitudes[t], Math.abs(errors[t]-this.outputMagnitudes[t])*2])
                     error+=Math.round(Math.abs(errors[t]-this.outputMagnitudes[t]))*2//*(errors[t]-this.outputMagnitudes[t])  //notround?
@@ -712,7 +712,7 @@
 
             let clone1 = this.clone()
             clone1.mutate()
-            //////console.log(clone1)
+            ////////console.log(clone1)
             clone1.bigErrorReduce()
             this.bigErrorReduce()
             let failsafe = 0
@@ -727,7 +727,7 @@
             }
 
             if(((this.error)/this.longErrors.length) > ((clone1.error)/this.longErrors.length)-.00001){
-                //////console.log(this.error, clone1.error)
+                ////////console.log(this.error, clone1.error)
                 let keys = Object.keys(clone1)
                 for(let t =0;t<keys.length;t++){
                     this[keys[t]] = clone1[keys[t]]
@@ -738,9 +738,9 @@
                     this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
                 }
             }
-            // //////console.log(this.error)
+            // ////////console.log(this.error)
             // canvas_context.fillText(this.error, 200,200)
-            //////console.log(this)
+            ////////console.log(this)
             }
 
                 meshX+=5
@@ -757,7 +757,7 @@
             }
 
             // if(keysPressed['n']){
-                //////console.log(this)
+                ////////console.log(this)
             // }
             }
             }
@@ -795,7 +795,7 @@
                         this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
                     }
                 }
-                // //////console.log(this.error)
+                // ////////console.log(this.error)
                 // canvas_context.fillText(this.error, 200,200)
                 }
 
@@ -813,7 +813,7 @@
                 }
 
                 if(keysPressed['n']){
-                    //////console.log(boys[index])
+                    ////////console.log(boys[index])
                 }
                 }else{
 
@@ -847,7 +847,7 @@
                         this.structure[t][k] = new Perceptron(0,0,0, this.structure[t][k])
                     }
                 }
-                // //////console.log(this.error)
+                // ////////console.log(this.error)
                 // canvas_context.fillText(this.error, 200,200)
                 }
 
@@ -867,9 +867,9 @@
                 }
                 
                 if(keysPressed['m']){
-                    //////console.log(boys[index])
+                    ////////console.log(boys[index])
                 }
-                // //////console.log(this.error)
+                // ////////console.log(this.error)
                 }
             }
             changeInputs(inputs) {
@@ -1241,7 +1241,7 @@
                                 canvas_context.fill()
                                 canvas_context.stroke();
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
@@ -1258,7 +1258,12 @@
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1307,7 +1312,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1426,7 +1436,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 canvas_context.fill()
                                 canvas_context.stroke();
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
@@ -1443,7 +1453,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1492,7 +1507,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1611,7 +1631,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 canvas_context.fill()
                                 canvas_context.stroke();
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
@@ -1628,7 +1648,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1688,7 +1713,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                         
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1826,13 +1856,18 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     this.angle+=.1
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -1880,7 +1915,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                         }
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2021,14 +2061,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     this.angle+=(Math.PI)/20
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2077,7 +2122,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                      
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2220,14 +2270,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     // this.angle+=(Math.PI)/20
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2276,7 +2331,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2414,14 +2474,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     this.angle+=.1
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2470,7 +2535,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2598,14 +2668,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2654,7 +2729,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                      
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2766,7 +2846,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 canvas_context.fillStyle = this.color
 
                                 if (Math.random() < .0001) {
-                                    ////////// ////////////////////////////////////////console.log(this)
+                                    ////////// //////////////////////////////////////////console.log(this)
                                 }
                                 if (isFinite(this.x) && isFinite(this.y) && isFinite(this.radius)) {
                                     var gard = canvas_context.createRadialGradient(Math.round(this.x), Math.round(this.y), 0, Math.round(this.x), Math.round(this.y), Math.ceil(Math.max(this.radius - canvas_context.lineWidth, 0)))
@@ -2781,14 +2861,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2837,7 +2922,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -2963,14 +3053,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3019,7 +3114,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                      
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3154,14 +3254,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3210,7 +3315,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                     
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3381,14 +3491,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.closePath();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3437,7 +3552,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                     
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3613,14 +3733,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     // temp_context.globalCompositeOperation = 'source-over'
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3669,7 +3794,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                   
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3867,14 +3997,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     // temp_context.globalCompositeOperation = 'source-over'
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -3922,7 +4057,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                         }
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4089,14 +4229,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     // temp_context.globalCompositeOperation = 'source-over'
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4145,7 +4290,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4270,14 +4420,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                             // canvas_context.closePath()
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4326,7 +4481,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4452,13 +4612,18 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     canvas_context.stroke();
                                 }
                             } else {
-                                // //////////////////////////// ////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                                // //////////////////////////// //////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
                             }
                         }
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4507,7 +4672,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                     
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4609,7 +4779,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                        
                         move(player) {
                             if (this.anchored !== 1) {
-                                for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+                                let fricbreak = 0
+for(let t = 0;t<(Math.abs(this.xmom)+Math.abs(this.ymom));t+=(Math.abs(this.xmom)+Math.abs(this.ymom))*.04){
+fricbreak++
+if(fricbreak > 27){
+break
+}
                                     this.x += this.xmom*.04
                                     this.y += this.ymom*.04
                                     
@@ -4657,7 +4832,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                             this.shapes = shapes
                         }
                         shiftRight(num){
-                            // ////console.log(num)
+                            // //////console.log(num)
                             for (let t = 0; t < this.shapes.length; t++) {
                                 this.shapes[t].x += num
                                 this.shapes[t].color = getRandomColor()
@@ -4771,7 +4946,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                         }
                         balance() {
                             this.str = this.beam.sqrDis()
-
+                            // return
                             if(this.length < 2.1){
                                 this.length = 2.1
                             }
@@ -4783,18 +4958,26 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 this.body.ymom += ((this.body.y - this.anchor.y) / this.length) * 2
                                 this.anchor.xmom -= ((this.body.x - this.anchor.x) / this.length) * 2
                                 this.anchor.ymom -= ((this.body.y - this.anchor.y) / this.length) * 2
-                                this.body.xmom *= .9
-                                this.body.ymom *= .9
-                                this.anchor.xmom *= .9
-                                this.anchor.ymom *= .9
+                                if(Math.abs(this.anchor.xmom)+Math.abs(this.anchor.ymom) > 1){
+                                        this.anchor.xmom *= .9
+                                        this.anchor.ymom *= .9
+                                }
+                                if(Math.abs(this.body.xmom)+Math.abs(this.body.ymom) > 1){
+                                        this.body.xmom *= .9
+                                        this.body.ymom *= .9
+                                }
                                 if (this.anchor.fired < 8 && this.anchor.fired > 0) {
                                     this.anchor.xmom -= ((this.body.x - this.anchor.x) / (this.length)) * 7.66
                                     this.anchor.ymom -= ((this.body.y - this.anchor.y) / (this.length)) * 7.66
                                     if (this.anchor.fired < 6 && this.anchor.fired > 3) {
+                                        if(Math.abs(this.anchor.xmom)+Math.abs(this.anchor.ymom) > 1){
                                         this.anchor.xmom *= .4
                                         this.anchor.ymom *= .4
+                                }
+                                if(Math.abs(this.body.xmom)+Math.abs(this.body.ymom) > 1){
                                         this.body.xmom *= .4
                                         this.body.ymom *= .4
+                                }
                                     }
                                 }
                             } else if (this.str > (this.length * 2) * (this.length * 2)) {
@@ -4814,15 +4997,19 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     this.anchor.xmom += ((this.body.x - this.anchor.x) / (this.length)) * 7.66
                                     this.anchor.ymom += ((this.body.y - this.anchor.y) / (this.length)) * 7.66
                                     if (this.anchor.fired < 6 && this.anchor.fired > 3) {
+                                        if(Math.abs(this.anchor.xmom)+Math.abs(this.anchor.ymom) > 1){
                                         this.anchor.xmom *= .4
                                         this.anchor.ymom *= .4
+                                }
+                                if(Math.abs(this.body.xmom)+Math.abs(this.body.ymom) > 1){
                                         this.body.xmom *= .4
                                         this.body.ymom *= .4
+                                }
                                     }
                                 }
                             } else if (this.str > (this.length + 2) * (this.length + 2)) {
 
-                                // //console.log(this.str, this.length)
+                                // ////console.log(this.str, this.length)
                                 this.body.xmom -= ((this.body.x - this.anchor.x) / (this.length)) * 1.66
                                 this.body.ymom -= ((this.body.y - this.anchor.y) / (this.length)) * 1.66
                                 this.anchor.xmom += ((this.body.x - this.anchor.x) / (this.length)) * 1.66
@@ -4838,10 +5025,15 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     this.anchor.xmom += ((this.body.x - this.anchor.x) / (this.length)) * 5.66
                                     this.anchor.ymom += ((this.body.y - this.anchor.y) / (this.length)) * 5.66
                                     if (this.anchor.fired < 6 && this.anchor.fired > 3) {
+
+                                if(Math.abs(this.anchor.xmom)+Math.abs(this.anchor.ymom) > 1){
                                         this.anchor.xmom *= .4
                                         this.anchor.ymom *= .4
+                                }
+                                if(Math.abs(this.body.xmom)+Math.abs(this.body.ymom) > 1){
                                         this.body.xmom *= .4
                                         this.body.ymom *= .4
+                                }
                                     }
                                 }
                             } else {
@@ -5012,7 +5204,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                             TIP_engine.y = YS_engine * invscale
                             TIP_engine.body = TIP_engine
 
-                            ////////////////// ////////////////////////////////////////console.log(TIP_engine)
+                            ////////////////// //////////////////////////////////////////console.log(TIP_engine)
                             for (let t = 0; t < selectors.length; t++) {
                                 if (selectors[t].body.isPointInside(TIP_engine)) {
                                     selectors[t].body.anchored = 2
@@ -5199,7 +5391,7 @@ for(let k = 0;k<stage.bricks.length;k++){
 
 
                     function gamepad_control_controller_proto(object, speed = 1, controller) { // basic control for objects using the controler
-                        //         //////////////////////////// ////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+                        //         //////////////////////////// //////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
 
                         if (object.self.shield == 0) {
                             if (keysPressed['s']) {
@@ -5313,7 +5505,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                     }
 
                     function gamepad_control_controller_proto_dj(object, speed = 1, controller) { // basic control for objects using the controler
-                        //         //////////////////////////// ////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+                        //         //////////////////////////// //////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
 
 
                         if (keysPressed['w']) {
@@ -5348,7 +5540,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                         }
                     }
                     function gamepad_control(object, speed = 1) { // basic control for objects using the controler
-                        //         //////////////////////////// ////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+                        //         //////////////////////////// //////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
                         if (typeof object.body != 'undefined') {
                             if (typeof (controller.gamepad.axesStatus[1]) != 'undefined') {
                                 if (typeof (controller.gamepad.axesStatus[0]) != 'undefined') {
@@ -5504,7 +5696,7 @@ function padZero(str, len) {
                     }
                     function castBetween(from, to, granularity = 10, radius = 1) { //creates a sort of beam hitbox between two points, with a granularity (number of members over distance), with a radius defined as well
                         let limit = granularity
-                        // //console.log(limit)
+                        // ////console.log(limit)
                         if(limit < 1){
                             limit = 1
                         }
@@ -5539,7 +5731,7 @@ function padZero(str, len) {
                     // tempcanvas.width 1200
                     let temp_context = tempcanvas.getContext("2d")
                     tempcanvas.style.background = "#000000"
-                    //////////////////////////////console.log(tempcanvas)
+                    ////////////////////////////////console.log(tempcanvas)
 
                     setUp(setup_canvas) // setting up canvas refrences, starting timer. 
 
@@ -5604,7 +5796,7 @@ function padZero(str, len) {
                                     }
                                     this.axesStatus = axes;// assign received values
                                     this.buttonsStatus = pressed;
-                                    // //////////////////////////// ////////////////////////////////////////console.log(pressed); // return buttons for debugging purposes
+                                    // //////////////////////////// //////////////////////////////////////////console.log(pressed); // return buttons for debugging purposes
                                     return pressed;
                                 },
                                 buttonPressed: function (button, hold) {
@@ -6175,7 +6367,7 @@ function padZero(str, len) {
                             if (player.righthands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
                                     if (circle.anchored >= -1) {
                                         circle.anchored = 1
-                                // ////console.log("anchired r?")
+                                // //////console.log("anchired r?")
                                         circle.anchor = this.edgeleft
                                     }
                                     if (player.body.y > circle.y) {
@@ -6189,7 +6381,7 @@ function padZero(str, len) {
                                     if (circle.anchored >= -1) {
                                         circle.anchored = 1
 
-                                // ////console.log("anchired l?")
+                                // //////console.log("anchired l?")
                                         circle.anchor = this.edgeright
                                     }
                                     if (player.body.y > circle.y) {
@@ -7373,7 +7565,7 @@ function padZero(str, len) {
                                     for(let t = 0;t<200;t++){
                                         this.meshinputs.push(Math.random()-.5)
                                     }
-                                    // //////console.log(coreboyvcoreboymesh)
+                                    // ////////console.log(coreboyvcoreboymesh)
                                     //bakedcoreboy
                                     //overnight
                                     this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10], 10)
@@ -7508,19 +7700,19 @@ if (this.controller >= 8) {
                                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                                     //  }
                                 }
-                                // ////////////// ////////////////////////////////////////console.log(args)
+                                // ////////////// //////////////////////////////////////////console.log(args)
                                 this.armlength = 30
                                 this.shoulderwidth = 8
                                 this.shotdraw = args['shotdraw']
                                 this.brick = new Brick(1, 1, 1, 1)
-                                // //////////// ////////////////////////////////////////console.log(this.shotdraw)
+                                // //////////// //////////////////////////////////////////console.log(this.shotdraw)
                                 this.jumpcount = args['jumpcount']
 
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -7588,7 +7780,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -7709,7 +7901,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -7720,7 +7912,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Boy(this.controller)
                             if(this.hasOwnProperty("mesh")){
@@ -10306,7 +10498,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                 }
                             }
-                            // //////console.log(this)
+                            // ////////console.log(this)
                         }       
 
                     }
@@ -10468,17 +10660,17 @@ if (this.controller >= 8) {
                                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                                     //  }
                                 }
-                                // ////////////// ////////////////////////////////////////console.log(args)
+                                // ////////////// //////////////////////////////////////////console.log(args)
                                 this.shotdraw = args['shotdraw']
                                 this.brick = new Brick(1, 1, 1, 1)
-                                // //////////// ////////////////////////////////////////console.log(this.shotdraw)
+                                // //////////// //////////////////////////////////////////console.log(this.shotdraw)
                                 this.jumpcount = args['jumpcount']
 
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -10548,7 +10740,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -10690,7 +10882,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -10701,7 +10893,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Mass(this.controller)
                             if(this.hasOwnProperty("mesh")){
@@ -11213,7 +11405,7 @@ if (boys[t].hasOwnProperty('middlehand')) {
                                             boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
 
                                              if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
-                                                // ////////////// //////////////////////////////////////////console.log(this, boys[t])
+                                                // ////////////// ////////////////////////////////////////////console.log(this, boys[t])
                                                 if (AItoggle == 0) {
                                                     this.striker = boys[t].serverID
                                                 } else if (AItoggle == 1) {
@@ -11331,7 +11523,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.lefthand.ymom = -this.speed * 2
                                 this.righthand.ymom = -this.speed * 2
                                 this.jumpcount = 100
-                                //////////////////// ////////////////////////////////////////console.log(this)
+                                //////////////////// //////////////////////////////////////////console.log(this)
                             }
                         }
                         doubleJump() {
@@ -11786,7 +11978,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this.safe == 0) {
                                     this.screwshot = 1
                                     if (this.body.x > (this.brick.center.x)) {
-                                        ////////////////////////// ////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                                        ////////////////////////// //////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
@@ -12003,7 +12195,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                 let errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
                                 // this.mesh.errorReduce(errors, boys.indexOf(this))
                                 if(keysPressed['r']){
-                                //////console.log(this.mesh)
+                                ////////console.log(this.mesh)
                                 }
                                 }
 
@@ -12416,9 +12608,9 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                 let errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
                                 // this.mesh.errorReduce(errors, boys.indexOf(this))
                                 if(keysPressed['r']){
-                                //////console.log(JSON.stringify(this.mesh))
-                                //////console.log((this.mesh))
-                                //////console.log((this))
+                                ////////console.log(JSON.stringify(this.mesh))
+                                ////////console.log((this.mesh))
+                                ////////console.log((this))
                                 }
                                 }
 
@@ -12825,7 +13017,7 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
                                     }
                                 } else {
                                     if (Math.random() < .001) {
-                                        //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                        //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                     }
                                 }
                             }
@@ -13312,7 +13504,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -13381,7 +13573,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -13502,7 +13694,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -13513,7 +13705,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Blastgirl(this.controller)
                             copy.id = this.id
@@ -16028,7 +16220,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotC(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -16095,7 +16287,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -16215,7 +16407,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -16226,7 +16418,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Jox(this.controller)
                             copy.id = this.id
@@ -18583,7 +18775,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -18653,7 +18845,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -18775,7 +18967,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -18786,7 +18978,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Dummy(this.controller)
                             copy.id = this.id
@@ -19870,7 +20062,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotD(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -19939,7 +20131,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -20060,7 +20252,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -20071,7 +20263,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new ScorchedMass(this.controller)
                             copy.id = this.id
@@ -20703,7 +20895,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.lefthand.ymom = -this.speed * 2
                                 this.righthand.ymom = -this.speed * 2
                                 this.jumpcount = 100
-                                //////////////////// ////////////////////////////////////////console.log(this)
+                                //////////////////// //////////////////////////////////////////console.log(this)
                             }
                         }
                         doJump(object, speed) {
@@ -21181,7 +21373,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this.safe == 0) {
                                     this.screwshot = 1
                                     if (this.body.x > (this.brick.center.x)) {
-                                        ////////////////////////// ////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                                        ////////////////////////// //////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
@@ -22523,7 +22715,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -22623,7 +22815,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.rightarm)
 
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -22745,7 +22937,7 @@ if (this.controller >= 8) {
                         //         }
                         //     } else {
                         //         if (Math.random() < .001) {
-                        //             //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                        //             //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                         //         }
                         //     }
                         // }
@@ -22863,7 +23055,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -22878,7 +23070,7 @@ if (this.controller >= 8) {
                             if (this.inactive == 1) {
                                 return
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new AsigMan(this.controller)
                             copy.id = this.id
@@ -23904,7 +24096,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this != boys[t] && boys[t]) {
                                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + 35)) {
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseA")
+                                        //////////////// //////////////////////////////////////////console.log("caseA")
                                     }
 
                                     if (this.fleeing == 0) {
@@ -23925,7 +24117,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
                                         if (Math.random() < .2) {
                                             this.wmove = 1
-                                            //////////////// ////////////////////////////////////////console.log("caseB")
+                                            //////////////// //////////////////////////////////////////console.log("caseB")
                                         }
                                         if (Math.random() < .1) {
                                             this.dmove = 1
@@ -24047,7 +24239,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     this.dmove = 1
                                     this.downspike = 1
                                     this.wmove = 1
-                                    //////////////// ////////////////////////////////////////console.log("caseC")
+                                    //////////////// //////////////////////////////////////////console.log("caseC")
                                 }
                                 if (this.under == 2) {
                                     this.amove = 1
@@ -24056,7 +24248,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     this.dmove = 0
                                     this.wmove = 1
                                     this.downspike = 1
-                                    //////////////// ////////////////////////////////////////console.log("caseD")
+                                    //////////////// //////////////////////////////////////////console.log("caseD")
                                 }
                             }
                             this.exgrip = 0
@@ -24089,7 +24281,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.dmove = 1
                                 if (Math.random() < .5) {
                                     this.wmove = 1
-                                    //////////////// ////////////////////////////////////////console.log("caseE")
+                                    //////////////// //////////////////////////////////////////console.log("caseE")
                                 }
                                 this.amove = 0
                                 this.amom = 0
@@ -24107,7 +24299,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.dmom = 0
                                 this.amove = 1
                                 this.wmove = 1
-                                //////////////// ////////////////////////////////////////console.log("caseF")
+                                //////////////// //////////////////////////////////////////console.log("caseF")
                                 this.dmove = 0
                             } else {
                                 if (this.amomu > 0) {
@@ -24126,14 +24318,14 @@ for(let t = 0;t<this.nodes.length;t++){
                                     this.amove = 1
                                     this.dmove = 0
                                     this.wmove = 1
-                                    //////////////// ////////////////////////////////////////console.log("caseG")
+                                    //////////////// //////////////////////////////////////////console.log("caseG")
                                     this.amomu = 0
                                     this.dmomu = 0
                                 } else {
                                     this.amove = 0
                                     this.dmove = 1
                                     this.wmove = 1
-                                    //////////////// ////////////////////////////////////////console.log("caseH")
+                                    //////////////// //////////////////////////////////////////console.log("caseH")
                                     this.amomu = 0
                                     this.dmomu = 0
                                 }
@@ -24176,7 +24368,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                                 this.downspike = 1
                                                                 this.wmove = 1
                                                             }
-                                                            //////////////// ////////////////////////////////////////console.log("caseI", cancel)
+                                                            //////////////// //////////////////////////////////////////console.log("caseI", cancel)
                                                         } else {
                                                             this.brick = this.bricksto
                                                         }
@@ -24192,7 +24384,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                                 this.downspike = 1
                                                                 this.wmove = 1
                                                             }
-                                                            //////////////// ////////////////////////////////////////console.log("caseJ", cancel)
+                                                            //////////////// //////////////////////////////////////////console.log("caseJ", cancel)
                                                         } else {
                                                             this.brick = this.bricksto
                                                         }
@@ -24232,7 +24424,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                 this.downspike = 1
                                                 this.wmove = 1
                                             }
-                                            //////////////// ////////////////////////////////////////console.log("caseK", cancel)
+                                            //////////////// //////////////////////////////////////////console.log("caseK", cancel)
                                         }
                                     } else {
                                         let xdisL = Math.abs(this.brick.edgeleft.x - (this.body.x + (this.body.radius * 1.1)))
@@ -24247,7 +24439,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                 this.wmove = 1
                                             }
                                             //problem2
-                                            //////////////// ////////////////////////////////////////console.log("caseL", cancel)
+                                            //////////////// //////////////////////////////////////////console.log("caseL", cancel)
                                         }
                                     }
 
@@ -24265,14 +24457,14 @@ for(let t = 0;t<this.nodes.length;t++){
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseM")
+                                        //////////////// //////////////////////////////////////////console.log("caseM")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     } else {
                                         this.amove = 0
                                         this.dmove = 1
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseN")
+                                        //////////////// //////////////////////////////////////////console.log("caseN")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     }
@@ -24305,7 +24497,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                         this.storeshield = 1
                                                     } else {
                                                         this.wmove = 1
-                                                        //////////////// ////////////////////////////////////////console.log("caseO")
+                                                        //////////////// //////////////////////////////////////////console.log("caseO")
                                                     }
                                                 } else {
                                                     if (this.body.x < boys[t].shots[g].x) {
@@ -24363,7 +24555,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                         }
                                                         if (this.under == 0) {
                                                             this.wmove = 1
-                                                            //////////////// ////////////////////////////////////////console.log("caseP")
+                                                            //////////////// //////////////////////////////////////////console.log("caseP")
                                                             this.downspike = 1
                                                         }
                                                     }
@@ -24378,14 +24570,14 @@ for(let t = 0;t<this.nodes.length;t++){
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseQ")
+                                        //////////////// //////////////////////////////////////////console.log("caseQ")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     } else {
                                         this.amove = 0
                                         this.dmove = 1
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseR")
+                                        //////////////// //////////////////////////////////////////console.log("caseR")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     }
@@ -24406,7 +24598,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                         this.storeshield = 1
                                                     } else {
                                                         this.wmove = 1
-                                                        //////////////// ////////////////////////////////////////console.log("caseS")
+                                                        //////////////// //////////////////////////////////////////console.log("caseS")
                                                     }
                                                 } else {
                                                     if (this.body.x < boys[t].shots[g].x) {
@@ -24465,7 +24657,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                         }
                                                         if (this.under == 0) {
                                                             this.wmove = 1
-                                                            //////////////// ////////////////////////////////////////console.log("caseT")
+                                                            //////////////// //////////////////////////////////////////console.log("caseT")
                                                             this.downspike = 1
                                                         }
                                                     }
@@ -24480,14 +24672,14 @@ for(let t = 0;t<this.nodes.length;t++){
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseU")
+                                        //////////////// //////////////////////////////////////////console.log("caseU")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     } else {
                                         this.amove = 0
                                         this.dmove = 1
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////console.log("caseV")
+                                        //////////////// //////////////////////////////////////////console.log("caseV")
                                         this.amomu = 0
                                         this.dmomu = 0
                                     }
@@ -24635,7 +24827,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x > boys[t].body.x) {
                                             if (this.face == -1) {
                                                 if (Math.abs(this.body.x - boys[t].body.x) < 212) {
-                                                    // ////////////// ////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
+                                                    // ////////////// //////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
                                                     if (this.fleeing != 1) {
                                                         this.leftshot = 1
                                                     }
@@ -24649,7 +24841,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x < boys[t].body.x) {
                                             if (this.face == 1) {
                                                 if (Math.abs(this.body.x - boys[t].body.x) < 212) {
-                                                    // ////////////// ////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
+                                                    // ////////////// //////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
                                                     if (this.fleeing != 1) {
                                                         this.rightshot = 1
                                                     }
@@ -24883,7 +25075,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                                     }
                                                     if (this.under == 0) {
                                                         this.wmove = 1
-                                                        //////////////// ////////////////////////////////////////console.log("caseX")
+                                                        //////////////// //////////////////////////////////////////console.log("caseX")
                                                         this.downspike = 1
                                                     }
                                                 }
@@ -25639,7 +25831,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotP(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -25709,7 +25901,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -25830,7 +26022,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -25841,7 +26033,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Princess(this.controller)
                             copy.id = this.id
@@ -28352,7 +28544,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotR(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -28441,13 +28633,13 @@ if (this.controller >= 8) {
                                 this.springs.push(this.rightarm)
                                 this.springs.push(this.middlearm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
                                 }
                             }
-                            ////////////////////////////////console.log(this)
+                            //////////////////////////////////console.log(this)
                         }
 
                         playerMove(object) {
@@ -28465,9 +28657,9 @@ if (this.controller >= 8) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                             object.ymom -= this.speed * 2
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -28566,7 +28758,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -28577,7 +28769,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Rhopho(this.controller)
                             copy.id = this.id
@@ -31214,7 +31406,7 @@ if (this.controller >= 8) {
 
                                     }
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
 
                                     this.nodes[t].id = idsto
@@ -31311,13 +31503,13 @@ if (this.controller >= 8) {
                                 this.springs.push(this.middlearm)
                                 this.springs.push(this.bananarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
                                 }
                             }
-                            ////////////////////////////////console.log(this)
+                            //////////////////////////////////console.log(this)
                         }
 
                         playerMove(object) {
@@ -31335,9 +31527,9 @@ if (this.controller >= 8) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                             object.ymom -= this.speed * 2
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -31436,7 +31628,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -31447,7 +31639,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Banandroid(this.controller)
                             copy.id = this.id
@@ -31460,7 +31652,7 @@ if (this.controller >= 8) {
                             copy.striker = this.striker
                             copy.drops = this.drops + 1
                             copy.knocks = this.knocks
-                            //////////////////////////////console.log(copy)
+                            ////////////////////////////////console.log(copy)
                            if(campaignToggle == 1){
      for(let t = 0;t<copy.nodes.length;t++){
           copy.nodes[t].x = stage.spawnrunner
@@ -33997,7 +34189,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.middlehand.ymom += this.gravity
                                 this.bananahand.ymom += this.gravity
                             } else {
-                                //////////////////////////////console.log("hum")
+                                ////////////////////////////////console.log("hum")
                                 if (this.body.ymom > 0) {
                                     this.body.ymom = 0
                                 }
@@ -34188,12 +34380,12 @@ if (this.controller >= 8) {
                                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                                     //  }
                                 }
-                                // ////////////// ////////////////////////////////////////console.log(args)
+                                // ////////////// //////////////////////////////////////////console.log(args)
                                 this.armlength = 45
                                 this.shoulderwidth = 18
                                 this.shotdraw = args['shotdraw']
                                 this.brick = new Brick(1, 1, 1, 1)
-                                // //////////// ////////////////////////////////////////console.log(this.shotdraw)
+                                // //////////// //////////////////////////////////////////console.log(this.shotdraw)
                                 this.jumpcount = args['jumpcount']
 
                                 for (let t = 0; t < this.nodes.length; t++) {
@@ -34204,7 +34396,7 @@ if (this.controller >= 8) {
                                         this.nodes[t] = new ShotE(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     }
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -34272,7 +34464,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -34393,7 +34585,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -34404,7 +34596,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Bunkstanks(this.controller)
                             copy.id = this.id
@@ -36589,7 +36781,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             let leftshape2 = (castBetween(leftnodebottom, leftnodebottoms, 4, 4))
                             leftshape1.shapes.unshift(this.leftshoulder)
                             leftshape2.shapes.push(this.lefthand)
-                            // //////////////////////console.log(leftshape1, leftshape2)
+                            // ////////////////////////console.log(leftshape1, leftshape2)
                             this.invcolor = invertColor(this.body.color)
                             canvas_context.lineWidth = 8
                             canvas_context.strokeStyle = this.invcolor
@@ -36614,7 +36806,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             let rightshape2 = (castBetween(rightnodebottom, rightnodebottoms, 4, 4))
                             rightshape1.shapes.unshift(this.rightshoulder)
                             rightshape2.shapes.push(this.righthand)
-                            // //////////////////////console.log(rightshape1, rightshape2)
+                            // ////////////////////////console.log(rightshape1, rightshape2)
                             canvas_context.beginPath()
 
                             for (let t = 0; t < rightshape1.shapes.length; t++) {
@@ -36962,7 +37154,7 @@ if (this.controller >= 8) {
                                 this.target.body = {}
                             } else {
 
-                                ////////////////////console.log(args)
+                                //////////////////////console.log(args)
                                 let keys = Object.keys(args)
                                 for (let t = 0; t < keys.length; t++) {
                                     this[keys[t]] = args[keys[t]]
@@ -36975,7 +37167,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotZ(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -36986,12 +37178,12 @@ if (this.controller >= 8) {
 
                                 }
                                 for (let t = 0; t < this.bullets.length; t++) {
-                                    ////////////////////console.log(this.bullets[t], "pre")
+                                    //////////////////////console.log(this.bullets[t], "pre")
                                     let idsto = this.bullets[t].id
                                     this.bullets[t] = new Bullet(this.bullets[t].body.x, this.bullets[t].body.y, this.bullets[t].body.radius, this.bullets[t].body.color)
                                     this.bullets[t].body = new CircleS(this.bullets[t].body.x, this.bullets[t].body.y, this.bullets[t].body.radius, this.bullets[t].body.color, this.bullets[t].body.xmom, this.bullets[t].body.ymom, this.bullets[t].body.friction)
                                     this.bullets[t].body.id = idsto
-                                    ////////////////////console.log(this.bullets[t], "post")
+                                    //////////////////////console.log(this.bullets[t], "post")
 
                                 }
                                 this.id = args["id"]
@@ -37053,7 +37245,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -37174,7 +37366,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -37261,7 +37453,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -37306,7 +37498,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -37317,7 +37509,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new DrSoto(this.controller)
                             copy.id = this.id
@@ -37951,7 +38143,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.lefthand.ymom = -this.speed * 2
                                 this.righthand.ymom = -this.speed * 2
                                 this.jumpcount = 100
-                                //////////////////// ////////////////////////////////////////console.log(this)
+                                //////////////////// //////////////////////////////////////////console.log(this)
                             }
                         }
                         doJump(object, speed) {
@@ -38429,7 +38621,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this.safe == 0) {
                                     // this.screwshot = 1
                                     if (this.body.x > (this.brick.center.x)) {
-                                        ////////////////////////// ////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                                        ////////////////////////// //////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                                         this.amove = 1
                                         this.dmove = 0
                                         this.wmove = 1
@@ -39393,7 +39585,7 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                                         }
-                                        // ////////////////////console.log(this.bullets[t])
+                                        // //////////////////////console.log(this.bullets[t])
                                         for (let k = 0; k < this.bullets.length; k++) {
                                             if (k != t) {
 
@@ -39766,7 +39958,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     for(let t = 0;t<200;t++){
                                         this.meshinputs.push(Math.random()-.5)
                                     }
-                                    // //////console.log(coreboyvcoreboymesh)
+                                    // ////////console.log(coreboyvcoreboymesh)
                                     //bakedcoreboy
                                     //overnight
                                     this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10], 10)
@@ -39905,12 +40097,12 @@ if (this.controller >= 8) {
                                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                                     //  }
                                 }
-                                // ////////////// ////////////////////////////////////////console.log(args)
+                                // ////////////// //////////////////////////////////////////console.log(args)
                                 this.armlength = 36
                                 this.shoulderwidth = 12
                                 this.shotdraw = args['shotdraw']
                                 this.brick = new Brick(1, 1, 1, 1)
-                                // //////////// ////////////////////////////////////////console.log(this.shotdraw)
+                                // //////////// //////////////////////////////////////////console.log(this.shotdraw)
                                 this.jumpcount = args['jumpcount']
 
                                 for (let t = 0; t < this.nodes.length; t++) {
@@ -39927,7 +40119,7 @@ if (this.controller >= 8) {
                                         }
                                     }
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -39978,7 +40170,7 @@ if (this.controller >= 8) {
                                 if(this.radball.color.length != 7){
                                     this.radball.color = "#00FF00"
                                 }
-                                //////console.log(this.radball)
+                                ////////console.log(this.radball)
 
                                 this.leftcollar = new LineOP(this.leftshoulder, this.body, this.nodes[0].color, 8)
                                 this.rightcollar = new LineOP(this.rightshoulder, this.body, this.nodes[0].color, 8)
@@ -40001,7 +40193,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.leftarm)
                                 this.springs.push(this.rightarm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
@@ -40122,7 +40314,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -40133,7 +40325,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Joule(this.controller)
                             if(this.hasOwnProperty("mesh")){
@@ -42918,7 +43110,7 @@ if (this.controller >= 8) {
                                     let idsto = this.nodes[t].id
                                     this.nodes[t] = new ShotG(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired,this.nodes[t].angle)
                                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                                        ////////////////////////////console.log("vanish break", this.nodes[t])
+                                        //////////////////////////////console.log("vanish break", this.nodes[t])
                                     }
                                     this.nodes[t].id = idsto
                                 }
@@ -43007,13 +43199,13 @@ if (this.controller >= 8) {
                                 this.springs.push(this.rightarm)
                                 this.springs.push(this.middlearm)
                                 // if(this.righthand.fired > 0){
-                                //     // //////////// ////////////////////////////////////////console.log(this.righthand.fired)
+                                //     // //////////// //////////////////////////////////////////console.log(this.righthand.fired)
                                 // }
                                 for (let t = 0; t < this.nodes.length; t++) {
                                     // this.nodes[t].self = this
                                 }
                             }
-                            ////////////////////////////////console.log(this)
+                            //////////////////////////////////console.log(this)
                         }
 
                         playerMove(object) {
@@ -43031,9 +43223,9 @@ if (this.controller >= 8) {
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                             object.ymom -= this.speed * 4
-                                            ////////////////////////////////console.log(object.ymom,this.body.ymom)
+                                            //////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -43132,7 +43324,7 @@ if (this.controller >= 8) {
                                 }
                             } else {
                                 if (Math.random() < .001) {
-                                    //////////////// ////////////////////////////////////////console.log(this.body.color, color)
+                                    //////////////// //////////////////////////////////////////console.log(this.body.color, color)
                                 }
                             }
                         }
@@ -43143,7 +43335,7 @@ if (this.controller >= 8) {
                             if (AItoggle == 0) {
                                 ws.send(JSON.stringify(obj))
                             }
-                            ////////////////////////////console.log("caseF")
+                            //////////////////////////////console.log("caseF")
 
                             let copy = new Kessler(this.controller)
                             copy.id = this.id
@@ -45633,7 +45825,7 @@ for(let t = 0;t<this.nodes.length;t++){
                         let coreboy
                         let chooser = Math.floor(Math.random() * 16)
 
-                        ////////////////////////////console.log("caseE")
+                        //////////////////////////////console.log("caseE")
                         if (chooser == 0) {
                             coreboy = new Mass(t)
                         } else if (chooser == 1) {
@@ -45672,7 +45864,7 @@ for(let t = 0;t<this.nodes.length;t++){
                         let chooser = Math.floor(Math.random() * 13)
 
                         t = Math.floor(Math.random()*16)
-                        ////////////////////////////console.log("caseE")
+                        //////////////////////////////console.log("caseE")
                         if (chooser == 0) {
                             coreboy = new Mass(t)
                         } else if (chooser == 1) {
@@ -45709,7 +45901,7 @@ for(let t = 0;t<this.nodes.length;t++){
                         let coreboy
                         let chooser = t
 
-                        ////////////////////////////console.log("caseE")
+                        //////////////////////////////console.log("caseE")
                         if (chooser == 0) {
                             coreboy = new Mass(t)
                         } else if (chooser == 1) {
@@ -45777,7 +45969,7 @@ for(let t = 0;t<this.nodes.length;t++){
                     //             miss2.push(kets1[t])
                     //         }
                     // }
-                    ////////////////////////////////console.log(miss, miss2)
+                    //////////////////////////////////console.log(miss, miss2)
 
                     function roughSizeOfObject(object) {
 
@@ -46024,7 +46216,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                     boys[t].draw()
                                 } else {
-                                    ////////////////////////////console.log(boys)
+                                    //////////////////////////////console.log(boys)
                                 }
                             }
                             }else{
@@ -46279,7 +46471,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                             }
                                         }
 
-                                        // ////////////// ////////////////////////////////////////console.log(keys)
+                                        // ////////////// //////////////////////////////////////////console.log(keys)
                                         delete Json.springs
                                         delete Json.links
                                         delete Json.rightarm
@@ -46365,7 +46557,7 @@ for(let t = 0;t<this.nodes.length;t++){
 
                                             }
                                         }
-                                        ////////// ////////////////////////////////////////console.log("sending")
+                                        ////////// //////////////////////////////////////////console.log("sending")
 
 
                                         // delete Json.color
@@ -46429,13 +46621,13 @@ for(let t = 0;t<this.nodes.length;t++){
 
                                         if (bumper == 0) {
                                             bumper = 1
-                                            // //////////////////console.log(Json)
-                                            //////////////console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
-                                            //////////////console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
-                                            //////////////////////console.log(Object.keys(Json))
+                                            // ////////////////////console.log(Json)
+                                            ////////////////console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
+                                            ////////////////console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
+                                            ////////////////////////console.log(Object.keys(Json))
                                         }
                                         if (keysPressed['l']) {
-                                            //////////////////////console.log((Json))
+                                            ////////////////////////console.log((Json))
                                         }
 
                                         if (AItoggle == 0) {
@@ -46455,9 +46647,9 @@ for(let t = 0;t<this.nodes.length;t++){
                                         // for(let f = 0;f<boys[t].nodes.length;f++){
                                         //     boys[t].nodes[f].self =boys[t]
                                         // }
-                                        //////////// ////////////////////////////////////////console.log(boys[IDaddress].id, ID)
+                                        //////////// //////////////////////////////////////////console.log(boys[IDaddress].id, ID)
                                     } else {
-                                        //////////// ////////////////////////////////////////console.log(boys[IDaddress].id, ID)
+                                        //////////// //////////////////////////////////////////console.log(boys[IDaddress].id, ID)
                                     }
 
                                     // for (let t = boys.length - 1; t >= 0; t--) {
@@ -46472,7 +46664,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             if(boys.length >= 1){
                             if(campaignToggle == 1){
                                 if(cameraLocked == 0){
-                                    // ////console.log("whea")
+                                    // //////console.log("whea")
                                     cameraxsum += boys[0].body.x-camerax
                                     cameraysum += boys[0].body.y-cameray
                                     canvas_context.translate(camerax-boys[0].body.x,cameray-boys[0].body.y)
@@ -46505,7 +46697,7 @@ for(let t = 0;t<this.nodes.length;t++){
                            rounder.splice(0,1)
                           roundedms =  rounder.join('')
 
-                            // ////console.log(campaigntime)
+                            // //////console.log(campaigntime)
 
 
                             canvas_context.fillStyle = "white"
@@ -46658,7 +46850,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                     for (let k = 0; k < characterbuttons.length; k++) {
                                         if (characterbuttons[k].isPointInside(selectors[t].body)) {
                                             let coreboy
-                                            ////////////////////////////console.log("caseD")
+                                            //////////////////////////////console.log("caseD")
                                             if (k == 0) {
 
                                                 coreboy = new Mass(boys.length)
