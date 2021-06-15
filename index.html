@@ -16604,6 +16604,7 @@ armfixstorage.ycomp = this.body.ymom
                                                         } else {
                                                             boys[t].shots[k].ymom *= -1
                                                             boys[t].shots[k].xmom *= -1
+                                                            boys[t].shots[k].marked = 0
                                                             this.shots.push(boys[t].shots[k])
                                                             boys[t].shots.splice(k, 1)
                                                         }
