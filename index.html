@@ -12340,6 +12340,8 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
 
 
                             this.righthand.fired--
+
+                            this.blasting = this.body.fired
                             this.body.fired--
                             this.lefthand.fired--
 
@@ -12860,6 +12862,8 @@ this.meshinputs.push(Math.max(boys[t].breaktimer,-1))
 
 
                             this.righthand.fired--
+
+                            this.blasting = this.body.fired
                             this.body.fired--
                             this.lefthand.fired--
 
@@ -20011,8 +20015,8 @@ if (this.controller >= 8) {
                                 this.springs = []
                                 this.hitboxes = []
                                 this.links = []
-                                this.speed = 12.5
-                                this.punchspeed = 6.1 // 5 // 5.7
+                                this.speed = 12.8 //12.5
+                                this.punchspeed = 7.1 // 5 // 5.7 //6.1
                                 this.frame = 0
                                 this.grounded = 0
                                 this.jumping = 1
@@ -21602,6 +21606,8 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                             this.righthand.fired--
+
+                            this.blasting = this.body.fired
                             this.body.fired--
                             this.lefthand.fired--
 
@@ -22011,6 +22017,7 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                             this.righthand.fired--
+                            this.blasting = this.body.fired
                             this.body.fired--
                             this.lefthand.fired--
 
@@ -22384,7 +22391,6 @@ for(let t = 0;t<this.nodes.length;t++){
                             if (this.inactive == 1) {
                                 return
                             }
-
                             if (this.righthand.anchored == 1) {
                                 if (this.body.x > this.righthand.x) {
                                     this.righthand.anchored = -10
