@@ -46754,14 +46754,58 @@ for(let t = 0;t<this.nodes.length;t++){
                                         delete Json.nograv
 
 
+                                        //new
+                                        delete Json.pick
+                                        delete Json.shield
+                                        delete Json.reflecting
+                                        delete Json.struck
+                                        Json = JSON.stringify(Json)
+                                        Json = JSON.parse(Json)
+                                        for(let y = 0;y<Json.nodes.length;y++){
+                                            if(y != 0){
+                                            delete Json.nodes[y].color
+                                            }
+                                            delete Json.nodes[y].sxmom
+                                            delete Json.nodes[y].symom
+                                            delete Json.nodes[y].strokeWidth
+                                            delete Json.nodes[y].strokeColor
+                                            delete Json.nodes[y].self
+                                            delete Json.nodes[y].marked
+                                            delete Json.nodes[y].reflect
+                                            delete Json.nodes[y].gravity
+                                            delete Json.nodes[y].friction
+                                            delete Json.nodes[y].areaX
+                                            delete Json.nodes[y].areaY
+                                            delete Json.nodes[y].anchored
+                                            delete Json.nodes[y].anchor
+                                            delete Json.nodes[y].string
+                                        }
+                                        for(let y = 0;y<Json.shots.length;y++){
+                                            delete Json.shots[y].sxmom
+                                            delete Json.shots[y].symom
+                                            delete Json.shots[y].strokeWidth
+                                            delete Json.shots[y].strokeColor
+                                            delete Json.shots[y].self
+                                            delete Json.shots[y].marked
+                                            delete Json.shots[y].reflect
+                                            delete Json.shots[y].gravity
+                                            delete Json.shots[y].areaX
+                                            delete Json.shots[y].areaY
+                                            delete Json.shots[y].anchored
+                                            delete Json.shots[y].friction
+                                            delete Json.shots[y].anchor
+                                            delete Json.shots[y].string
+                                        }
+                                        delete Json.shot
+
 
 
                                         if (bumper == 0) {
                                             bumper = 1
-                                            // ////////////////////console.log(Json)
-                                            ////////////////console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
-                                            ////////////////console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
-                                            ////////////////////////console.log(Object.keys(Json))
+                                            // console.log((Json))
+                                            // console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
+                                            // console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
+                                            // console.log(Object.keys(Json))
                                         }
                                         if (keysPressed['l']) {
                                             ////////////////////////console.log((Json))
