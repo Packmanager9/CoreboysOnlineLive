@@ -4859,6 +4859,14 @@ for(let k = 0;k<stage.bricks.length;k++){
                             }
                             return false
                         }
+                        innerShape(point) {
+                            for (let t = 0; t < this.shapes.length; t++) {
+                                if (this.shapes[t].doesPerimeterTouch(point)) {
+                                    return this.shapes[t]
+                                }
+                            }
+                            return false
+                        }
                         isInsideOf(box) {
                             for (let t = 0; t < this.shapes.length; t++) {
                                 if (box.isPointInside(this.shapes[t])) {
@@ -6127,15 +6135,20 @@ function padZero(str, len) {
                     }
 
                     class Wall {
-                        constructor(x, y, width = 200, height = 400) {
+                        constructor(x, y, width = 200, height = 600) {
+                            width = 200
+                            // height = 1600
                             this.center = new Point(x, y)
                             this.width = width
                             this.height = height
                             this.topcap = new Circle(this.center.x, this.center.y-(this.height*.5), this.width*.5, "#FFFFFF")
                             this.basecap = new Circle(this.center.x, this.center.y+(this.height*.5), this.width*.5, "#FFFFFF")
-                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
+                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 0.41, width*.5)
+                            this.shape2 = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
                             this.shape.shapes.push(this.topcap)
                             this.shape.shapes.push(this.basecap)
+                            this.shape2.shapes.push(this.topcap)
+                            this.shape2.shapes.push(this.basecap)
                             this.link = new LineOP(this.topcap, this.basecap, "#FFFFFF",  this.width)
 
                         }
@@ -6189,62 +6202,67 @@ function padZero(str, len) {
                                 return
                             }
 
+
                             if(this.shape.doesPerimeterTouch(circle)){
                                 if(circle == player.righthand ||circle == player.righthand2 ||circle == player.righthand3){
-                                 if(circle.xmom > 0){
                                     if(player.rightshoulder.x < this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x > this.center.x){
+                                            circle.x = player.rightshoulder.x
+                                        }
                                     }
-                                }
-                                if(circle.xmom < 0){
                                     if(player.rightshoulder.x > this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x < this.center.x){
+                                            circle.x = player.rightshoulder.x
+                                        }
                                     }
-                                }
                                 }else if(circle == player.lefthand ||circle == player.lefthand2 ||circle == player.lefthand3){
-                                    if(circle.xmom > 0){
                                     if(player.leftshoulder.x < this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x > this.center.x){
+                                            circle.x = player.leftshoulder.x
+                                        }
                                     }
-                                }
-                                if(circle.xmom < 0){
                                     if(player.leftshoulder.x > this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x < this.center.x){
+                                            circle.x = player.leftshoulder.x
+                                        }
                                     }
-                                }
                                  }else if(circle == player.middlehand){
-                                    if(circle.xmom > 0){
                                     if(player.middleshoulder.x < this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x > this.center.x){
+                                            circle.x = player.middleshoulder.x
+                                        }
                                     }
-                                }
-                                if(circle.xmom < 0){
                                     if(player.middleshoulder.x > this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x < this.center.x){
+                                            circle.x = player.middleshoulder.x
+                                        }
                                     }
-                                }
                                  }else if(circle == player.bananahand){
-                                    if(circle.xmom > 0){
                                     if(player.bananashoulder.x < this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x > this.center.x){
+                                            circle.x = player.middleshoulder.x
+                                        }
                                     }
-                                }
-                                if(circle.xmom < 0){
                                     if(player.bananashoulder.x > this.center.x){
                                         circle.xmom*=-1
+                                        if(circle.x < this.center.x){
+                                            circle.x = player.middleshoulder.x
+                                        }
                                     }
-                                }
                                  }else{
-                                if(circle.xmom > 0){
                                     if(circle.x < this.center.x){
                                         circle.xmom*=-1
                                     }
-                                }
-                                if(circle.xmom < 0){
                                     if(circle.x > this.center.x){
                                         circle.xmom*=-1
                                     }
-                                }
                                 }
                             if(this.topcap.y > circle.y){
                                 if(circle == player.body){
@@ -6268,18 +6286,31 @@ function padZero(str, len) {
                             }
                             let j = 0
                             let superbreak = 0
-                            while(this.shape.doesPerimeterTouch(circle)){
-                                j++
-                                superbreak += 1
-                                if(j > 100){
-                                    break
-                                }
-                                if(superbreak > 500){
-                                    break
-                                }
-                                circle.x -= (this.center.x-circle.x)/1000
-                                circle.y -= (this.center.y-circle.y)/10000
+
+
+
+                            let stagepoint = this.shape2.innerShape(circle)
+                            if(stagepoint != false){
+                                let dis = (stagepoint.radius+circle.radius)-(new LineOP(circle, stagepoint).hypotenuse())
+                                let angle = new LineOP(circle, stagepoint).angle()
+                                circle.x += dis*(Math.cos(angle))*.99
+                                circle.y += dis*(Math.sin(angle))*.99
                             }
+
+
+
+                            // while(this.shape.doesPerimeterTouch(circle)){
+                            //     j++
+                            //     superbreak += 1
+                            //     if(j > 100){
+                            //         break
+                            //     }
+                            //     if(superbreak > 500){
+                            //         break
+                            //     }
+                            //     circle.x -= (this.center.x-circle.x)/1000
+                            //     circle.y -= (this.center.y-circle.y)/10000
+                            // }
 
                         }
                         draw() {
@@ -6292,7 +6323,7 @@ function padZero(str, len) {
                     }
 
                     class Brick {
-                        constructor(x, y, width = 200, height = 60) {
+                        constructor(x, y, width = 200, height = 45) {
                             this.center = new Point(x, y)
                             this.width = width
                             this.height = height
@@ -6300,6 +6331,7 @@ function padZero(str, len) {
                             this.edgeright = new Circle(x + (width * .5), y, 4, "blue")
                             this.link = new Line(this.edgeleft.x - 5, this.edgeleft.y, this.edgeright.x + 5, this.edgeright.y, "#FFFFFF", height * 2)
                             this.shape = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
+                            this.shape2 = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
                             this.edgeleft = new Circle(x - (width * .5), y - (height * 1), 26, "cyan")
                             this.edgeright = new Circle(x + (width * .5), y - (height * 1), 26, "blue") ///16
                         }
@@ -6360,6 +6392,7 @@ function padZero(str, len) {
                                 // circ.draw()
                                 return
                             }
+
 
 
                             if (circle == player.righthand) {
@@ -6897,6 +6930,16 @@ function padZero(str, len) {
                                     }
                                 }
                             }
+
+                            // let stagepoint = this.shape2.innerShape(circle)
+                            // if(stagepoint != false){
+                            //     let dis = (stagepoint.radius+circle.radius)-(new LineOP(circle, stagepoint).hypotenuse())
+                            //     let angle = new LineOP(circle, stagepoint).angle()
+                            //     if(circle.x+circle.radius > this.edgeleft.x && circle.x-circle.radius < this.edgeright){
+                            //         circle.x += dis*(Math.cos(angle))
+                            //     }
+                            //     circle.y += dis*(Math.sin(angle))
+                            // }
 
 
                             let j = 0
@@ -7442,6 +7485,93 @@ function padZero(str, len) {
                             // this.edgeleft.draw()
                             // this.edgeright.draw()
                         }
+                        // doesPerimeterTouch(circle, player){
+
+                        //     if (circle == player.rightshoulder) {
+                        //         return
+                        //     }
+                        //     if (circle == player.leftshoulder) {
+                        //         return
+                        //     }
+                        //     if (circle == player.rightshoulder2) {
+                        //         return
+                        //     }
+                        //     if (circle == player.leftshoulder2) {
+                        //         return
+                        //     }
+                        //     if (circle == player.rightshoulder3) {
+                        //         return
+                        //     }
+                        //     if (circle == player.leftshoulder3) {
+                        //         return
+                        //     }
+                        //     if (circle == player.middleshoulder) {
+                        //         return
+                        //     }
+                        //     if (circle == player.radball) {
+                        //         return
+                        //     }
+
+                        //     let floorchecklink = new LineOP(circle, this.center)
+                        //     if(floorchecklink.sqrDis() > (this.width*.65)*(this.width*.65)){
+                        //         // let circ = new Circle(this.center.x, this.center.y,  (this.width*.65), "#FF000011")
+                        //         // circ.draw()
+                        //         return
+                        //     }
+
+
+                        //     if (circle == player.righthand) {
+                        //     player.righthands = castBetween(player.rightshoulder, player.righthand, armgranularity, player.righthand.radius)
+                        //     if (player.righthands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
+                        //             if (circle.anchored >= -1) {
+                        //                 circle.anchored = 1
+                        //         // //////console.log("anchired r?")
+                        //                 circle.anchor = this.edgeleft
+                        //             }
+                        //             if (player.body.y > circle.y) {
+                        //                 circle.x--
+                        //             }
+                        //         }
+                        //     }
+                        //  if (circle == player.lefthand) {
+                        //     player.lefthands = castBetween(player.leftshoulder, player.lefthand, armgranularity, player.lefthand.radius)
+                        //     if (player.lefthands.doesPerimeterTouch(this.edgeright) || circle.doesPerimeterTouch(this.edgeright)) {
+                        //             if (circle.anchored >= -1) {
+                        //                 circle.anchored = 1
+
+                        //         // //////console.log("anchired l?")
+                        //                 circle.anchor = this.edgeright
+                        //             }
+                        //             if (player.body.y > circle.y) {
+                        //                 circle.x++
+                        //             }
+                        //         }
+                        //     }
+
+                        //     let stagepoint = this.shape.innerShape(circle)
+                        //     if(stagepoint != false){
+                        //         let dis = (stagepoint.radius+circle.radius)-(new LineOP(circle, stagepoint).hypotenuse())
+                        //         let angle = new LineOP(circle, stagepoint).angle()
+                        //         if(circle.x > this.edgeleft.x && circle.x < this.edgeright){
+                        //             circle.x += dis*(Math.cos(angle))
+                        //         }
+                        //         circle.y += dis*(Math.sin(angle))
+                        //         if(player.jumping == 1 && circle == player.body){
+                        //             circle.ymom = 0
+                        //         }else{
+                        //             circle.ymom *= (Math.sin(angle)*.6)
+                        //         }
+                        //         if(circle == player.body){
+                        //             if(circle.ymom >= 0){
+                        //                 player.grounded = 1
+                        //                 player.jumping = 0
+                        //             }
+                        //         }
+                        //     }
+
+
+
+                        // }
                     }
 
                     let stage = new Stage()
