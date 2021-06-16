@@ -6143,7 +6143,7 @@ function padZero(str, len) {
                             this.height = height
                             this.topcap = new Circle(this.center.x, this.center.y-(this.height*.5), this.width*.5, "#FFFFFF")
                             this.basecap = new Circle(this.center.x, this.center.y+(this.height*.5), this.width*.5, "#FFFFFF")
-                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 0.41, width*.5)
+                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
                             // this.shape2 = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
                             this.shape.shapes.push(this.topcap)
                             this.shape.shapes.push(this.basecap)
