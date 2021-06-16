@@ -6144,7 +6144,7 @@ function padZero(str, len) {
                             this.topcap = new Circle(this.center.x, this.center.y-(this.height*.5), this.width*.5, "#FFFFFF")
                             this.basecap = new Circle(this.center.x, this.center.y+(this.height*.5), this.width*.5, "#FFFFFF")
                             this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 0.41, width*.5)
-                            this.shape2 = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
+                            // this.shape2 = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
                             this.shape.shapes.push(this.topcap)
                             this.shape.shapes.push(this.basecap)
                             this.shape2.shapes.push(this.topcap)
@@ -6289,7 +6289,7 @@ function padZero(str, len) {
 
 
 
-                            let stagepoint = this.shape2.innerShape(circle)
+                            let stagepoint = this.shape.innerShape(circle)
                             if(stagepoint != false){
                                 let dis = (stagepoint.radius+circle.radius)-(new LineOP(circle, stagepoint).hypotenuse())
                                 let angle = new LineOP(circle, stagepoint).angle()
