@@ -5275,8 +5275,10 @@ for(let k = 0;k<stage.bricks.length;k++){
                             if(optionsButton.isPointInside(TIP_engine)){
                                 if(optionsToggle == 0){
                                     optionsToggle = 1
+                                    roomSelectionBox.focus = 1
                                 }else{
                                     optionsToggle = 0
+                                    roomSelectionBox.focus = 0
                                 }
                             }
                             if(escapeButton.isPointInside(TIP_engine)){
@@ -5386,11 +5388,12 @@ for(let k = 0;k<stage.bricks.length;k++){
                             }
                             }
 
+                            if(optionsToggle == 1){
                             if(roomSelectionBox.inputbox.isPointInside(TIP_engine)){
-                                console.log("hit")
                                 roomSelectionBox.focus = 1
                             }else{
                                 roomSelectionBox.focus = 0
+                            }
                             }
                         });
                         window.addEventListener('pointermove', continued_stimuli);
@@ -47024,6 +47027,8 @@ for(let t = 0;t<this.nodes.length;t++){
                             canvas_context.fillText(`Click For Options`, optionsButton.x - (optionsButton.radius * .5), optionsButton.y + (optionsButton.radius * 0))
 
                             }else{
+
+                            roomSelectionBox.draw()
                             optionsButton.radius = 100
                             optionsButton.draw()
                             canvas_context.font = "90px arial"
@@ -47044,14 +47049,9 @@ for(let t = 0;t<this.nodes.length;t++){
                             }else{
                             canvas_context.fillStyle = "#FFFFFF"
                             canvas_context.fillText(`Offline`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .15))
-                            // canvas_context.fillText(`(refresh to reset)`, onlineButton.x + (onlineButton.width * .1), onlineButton.y + (onlineButton.width * .20))
                             }
-
-                                
                             }
                             descriptor.draw()
-                            roomSelectionBox.draw()
-
                             massSelector.draw()
                             boySelector.draw()
                             blastSelector.draw()
