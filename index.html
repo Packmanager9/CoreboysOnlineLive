@@ -5220,19 +5220,25 @@ for(let k = 0;k<stage.bricks.length;k++){
                         window.setInterval(function () {
 
                             main()
-                            if(keysPressed['u']){
-                                console.log(boys)
-                            }
 
                         }, 18)
                         document.addEventListener('keydown', (event) => {
                             keysPressed[event.key] = true;
-                            if(event.key == "t"){
-                                messup()
+                            if(event.key == 'Backspace'){
+                                roomSelectionBox.backspace()
+                            }else{
+                                if(roomSelectionBox.focus == 1){
+                                    if(parseInt(event.key,10) > -1 && parseInt(event.key,10) < 10){
+                                        roomSelectionBox.addchar(event.key)
+                                    }
+                                }
                             }
                         });
                         document.addEventListener('keyup', (event) => {
                             delete keysPressed[event.key];
+                            if(roomSelectionBox.lock == event.key){
+                                roomSelectionBox.lock = ''
+                            }
                         });
                         window.addEventListener('pointerdown', e => {
                             FLEX_engine = canvas.getBoundingClientRect();
@@ -5378,6 +5384,13 @@ for(let k = 0;k<stage.bricks.length;k++){
                             if(AItoggle == 0 && campaignToggle == 0){
                                 onlineButton.color = "#00FF00"
                             }
+                            }
+
+                            if(roomSelectionBox.inputbox.isPointInside(TIP_engine)){
+                                console.log("hit")
+                                roomSelectionBox.focus = 1
+                            }else{
+                                roomSelectionBox.focus = 0
                             }
                         });
                         window.addEventListener('pointermove', continued_stimuli);
@@ -5777,13 +5790,11 @@ function padZero(str, len) {
                     setUp(setup_canvas) // setting up canvas refrences, starting timer. 
 
                         function swapRoom(){
-                            console.log("ghghg")
                             let room = parseInt(rooms.value)
                             let Rson = {
                                 "room":`${room}`
                             }
                             ws.send(JSON.stringify(Rson))
-
                         }
 
 
@@ -10692,6 +10703,72 @@ for(let t = 0;t<this.nodes.length;t++){
                         }
                     }
 
+                    class Textinput {
+                        constructor(x,y,w,h){
+                            this.inputbox = new Rectangle(x,y, w, h, "#FFFFFF")
+                            this.string = ""
+                            this.focus = 0
+                            this.neverfocus = 1
+                            this.lock = ''
+                            this.focusindicator = new Rectangle(x,y+(h*.1), w*.03, h*.8, "#000000")
+                            this.flash = -1
+                            this.flashspin = 45
+                            this.flashnum = -1
+                        }
+
+                        measure(){
+                            canvas_context.font = "70px Arial";
+                            canvas_context.fillStyle = "#000000"
+                            let width = canvas_context.measureText(this.string).width
+                            return width
+                        }       
+                        draw(){
+                            this.inputbox.draw()
+                            if(this.neverfocus == 1){
+                            canvas_context.font = "70px Arial"
+                            canvas_context.fillStyle = "#000000"
+                            canvas_context.fillText("Room #", this.inputbox.x + 10, this.inputbox.y + 75)
+                            }else{
+                            canvas_context.font = "70px Arial"
+                            canvas_context.fillStyle = "#000000"
+                            canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+                            }
+                            if(this.focus == 1){
+                                this.neverfocus = 0
+                                this.flashnum++
+                                if(this.flashnum%(this.flashspin+(-15*this.flash)) == 0){
+                                    this.flash*=-1
+                                }
+                                if(this.flash == 1){
+                                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                                    this.focusindicator.draw()
+                                }
+                            }
+                        }
+                        backspace(){
+                            this.string = this.string.split('')
+                            this.string.splice(this.string.length-1, 1)
+                            this.string = this.string.join('')
+                        }
+                        addchar(char){
+                            if(this.string.length < 4){
+                            if(this.lock != char){
+                                this.string+=char
+                                this.lock = char
+                            }
+
+
+                            let room = parseInt(this.string, 10)
+                            let Rson = {
+                                "room":`${room}`
+                            }
+                            ws.send(JSON.stringify(Rson))
+                            }
+                        }
+
+                    }
+
+                    let roomSelectionBox = new Textinput(3300, 700+450, 320, 100)
                     class Mass {
                         constructor(controller, args = 0) {
                             if (args == 0) {
@@ -31503,15 +31580,15 @@ if (this.controller >= 8) {
                                     this.body.color = colors[this.controller]
                                 }
 
-                                this.armlength = 40
+                                this.armlength = 35 //40
                                 this.shoulderwidth = 20
                                 this.damage = 0
                                 this.nodes = []
                                 this.springs = []
                                 this.hitboxes = []
                                 this.links = []
-                                this.speed = 14
-                                this.punchspeed = 6.5
+                                this.speed = 13.5 //14
+                                this.punchspeed = 6.1 // 6.5
                                 this.grounded = 1
                                 this.jumping = 1
 
@@ -31521,10 +31598,10 @@ if (this.controller >= 8) {
                                 this.rightshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 7, "#FF0000", 0, 0, .999)
                                 this.middleshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 4, "#FF0000", 0, 0, .999)
                                 this.bananashoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 4, "#FF0000", 0, 0, .999)
-                                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 32, "#FF0000", 0, 0, .85)
-                                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 32, "#FF0000", 0, 0, .85)
-                                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 20.5, "#FF0000", 0, 0, .85)
-                                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 20.5, "#FF0000", 0, 0, .85)
+                                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 29, "#FF0000", 0, 0, .85)
+                                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 29, "#FF0000", 0, 0, .85)
+                                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 18.5, "#FF0000", 0, 0, .85)
+                                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 18.5, "#FF0000", 0, 0, .85)
                                 this.nodes.push(this.leftshoulder)
                                 this.nodes.push(this.rightshoulder)
                                 this.nodes.push(this.middleshoulder)
@@ -31555,7 +31632,7 @@ if (this.controller >= 8) {
                                 this.springs.push(this.rightarm)
                                 this.springs.push(this.middlearm)
                                 this.springs.push(this.bananarm)
-                                this.gravity = .95
+                                this.gravity = .95 
                                 this.righthand.fired = 0
                                 this.lefthand.fired = 0
                                 this.middlehand.fired = 0
@@ -31602,7 +31679,7 @@ if (this.controller >= 8) {
                                 }
                                 this.id = args["id"]
                                 this.frame = args['frame']
-                                this.armlength = 28
+                                this.armlength = 35
                                 this.shoulderwidth = 20
                                 this.body = this.nodes[0]
                                 this.body.fired = this.nodes[0].fired //overwriting new logic?
@@ -46973,6 +47050,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 
                             }
                             descriptor.draw()
+                            roomSelectionBox.draw()
 
                             massSelector.draw()
                             boySelector.draw()
@@ -47071,6 +47149,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             canvas_context.fillText(`Connecting`, 300, 60)
                             }
                             if (keysPressed[' ']) {
+                                roomSelectionBox.focus = 0
                                 let wet = boys.length
                                 for (let t = 0; t < selectors.length; t++) {
                                     for (let k = 0; k < characterbuttons.length; k++) {
