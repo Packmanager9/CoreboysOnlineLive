@@ -232,7 +232,7 @@
                                     }
 
                                     if(boys.length == 1){
-                                        if(typeof boys[0] == "unefined"){
+                                        if(typeof boys[0] == "undefined"){
                                             createPlayer(0)
                                         }
                                     }
@@ -252,7 +252,7 @@
                                     }
 
                                     if(boys.length == 1){
-                                        if(typeof boys[0] == "unefined"){
+                                        if(typeof boys[0] == "undefined"){
                                             createPlayer(0)
                                         }
                                     }
@@ -46933,10 +46933,10 @@ for(let t = 0;t<this.nodes.length;t++){
 
                                         if (bumper == 0) {
                                             bumper = 1
-                                            // console.log((Json))
-                                            // console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
-                                            // console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
-                                            // console.log(Object.keys(Json))
+                                            console.log((Json))
+                                            console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
+                                            console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
+                                            console.log(Object.keys(Json))
                                         }
                                         if (keysPressed['l']) {
                                             ////////////////////////console.log((Json))
