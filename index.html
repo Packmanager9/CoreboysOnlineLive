@@ -40,6 +40,25 @@
                     controller) to fight. O/RB to shield.</li>
                 <li> Press escape to return to the main menu.</li>
                 <input type="text" id="fname" name="fname" value=""><br>
+                <label for="rooms">Choose a room:</label>
+                <select name="rooms" id="rooms">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                </select>
 
             </ul>
         </aside>
@@ -216,12 +235,19 @@
                                         for (let g = 0; g < data.playerIDs.length; g++) {
                                             for (let t = 0; t < boys.length; t++) {
                                                 if (!(data).playerIDs.includes(boys[t].serverID)) {
+                                                    if(serverID != boys[t].serverID){
                                                     //////////////////////////////console.log("caseB", boys[t])
                                                     localIDs.splice(localIDs.indexOf(boys[t].serverID))//sus
                                                     boys.splice(t, 1)
                                                     //////////////////////////////////console.log("snip")
+                                                    }
                                                 }
                                             }
+                                        }
+                                    }
+                                    if(boys.length == 1){
+                                        if(typeof boys[0] == "unefined"){
+                                            createPlayer(0)
                                         }
                                     }
                                     for (let t = 0; t < boys.length; t++) {
@@ -389,6 +415,7 @@
                             })
                             if (AItoggle == 0) {
                                 ws.send(serverID)
+                                swapRoom()
                             }
                         })
         }
@@ -5193,6 +5220,9 @@ for(let k = 0;k<stage.bricks.length;k++){
                         window.setInterval(function () {
 
                             main()
+                            if(keysPressed['u']){
+                                console.log(boys)
+                            }
 
                         }, 18)
                         document.addEventListener('keydown', (event) => {
@@ -5734,6 +5764,7 @@ function padZero(str, len) {
 
                     let setup_canvas = document.getElementById('canvas') //getting canvas from document
                     let formname = document.getElementById('fname') //getting canvas from document
+                    let rooms = document.getElementById('rooms') //getting canvas from document
                     let tempcanvas = document.getElementById('tempcanvas')
                     // tempcanvas.height = 1200
                     // tempcanvas.width 1200
@@ -5741,7 +5772,21 @@ function padZero(str, len) {
                     tempcanvas.style.background = "#000000"
                     ////////////////////////////////console.log(tempcanvas)
 
+                    rooms.onchange = swapRoom
+
                     setUp(setup_canvas) // setting up canvas refrences, starting timer. 
+
+                        function swapRoom(){
+                            console.log("ghghg")
+                            let room = parseInt(rooms.value)
+                            let Rson = {
+                                "room":`${room}`
+                            }
+                            ws.send(JSON.stringify(Rson))
+
+                        }
+
+
 
                     class Gamepad {
                         constructor(num) {
