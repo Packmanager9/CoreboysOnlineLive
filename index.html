@@ -231,6 +231,11 @@
                                         data.playerIDs[t] = parseFloat((data).playerIDs[t])
                                     }
 
+                                    if(boys.length == 1){
+                                        if(typeof boys[0] == "unefined"){
+                                            createPlayer(0)
+                                        }
+                                    }
                                     for (let q = 0; q < data.playerIDs.length; q++) {
                                         for (let g = 0; g < data.playerIDs.length; g++) {
                                             for (let t = 0; t < boys.length; t++) {
@@ -245,6 +250,7 @@
                                             }
                                         }
                                     }
+
                                     if(boys.length == 1){
                                         if(typeof boys[0] == "unefined"){
                                             createPlayer(0)
