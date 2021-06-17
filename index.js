@@ -48,7 +48,7 @@ class Game {
     swapRoom(player, room){
         this.players.splice(this.players.indexOf(player), 1)
         player.assigned = room
-        console.log(room)
+        // console.log(room)
         games[room].addPlayer(player)
     }
 
