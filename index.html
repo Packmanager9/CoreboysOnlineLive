@@ -5321,7 +5321,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                 canvas_context.translate(boys[0].body.x-(canvas.width*(invscale*.5)), boys[0].body.y- (canvas.height*(invscale*.5)))
                             }
                             boys = []
-                            socres = []
+                            scores = []
                             drops = []
 
                             localIDs = []
@@ -5349,7 +5349,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     stage = new Stage(MapSelect)
                                     AItoggle = 1
                                     boys = []
-                            socres = []
+                            scores = []
                             drops = []
                                     ws.close()
                                 }else{
@@ -5359,7 +5359,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     stage = new Stage(MapSelect)
                                     // AItoggle = 0
                                     boys = []
-                            socres = []
+                            scores = []
                             drops = []
                                 }
                                 }
@@ -5371,7 +5371,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     AItoggle = 1
                                     humanPlayers = 0
                                     boys = []
-                            socres = []
+                            scores = []
                             drops = []
                                     ws.close()
                                 }else{
@@ -5399,7 +5399,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     humanPlayers = 1004
                                     stage = new Stage(MapSelect)
                                     boys = []
-                                    socres = []
+                                    scores = []
                                     drops = []
                                     localIDs = []
                                     }
@@ -5833,7 +5833,7 @@ function padZero(str, len) {
                     setUp(setup_canvas) // setting up canvas refrences, starting timer. 
 
                         function swapRoom(){
-                            let room = parseInt(rooms.value)
+                            let room = roomSelectionBox.rooms
                             let Rson = {
                                 "room":`${room}`
                             }
@@ -10989,6 +10989,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             this.flash = -1
                             this.flashspin = 45
                             this.flashnum = -1
+                            this.rooms = 0
                             this.primes = [2,3,5,7,11,13,17,19,23,31,37,41,43,53,59,61,67,71,73,79,83,89,97, 101, 103, 107, 109, 113, 127, 131,137,139,149, 151, 157]
                         }
 
@@ -11025,9 +11026,18 @@ for(let t = 0;t<this.nodes.length;t++){
                             this.string = this.string.split('')
                             this.string.splice(this.string.length-1, 1)
                             this.string = this.string.join('')
+                            let room = parseInt(this.string, 10) 
+                            if(this.string.length == 0){
+                                room = 0
+                            }
+                            let Rson = {
+                                "room":`${(0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect}`
+                            }
+                            this.rooms = (0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect
+                            ws.send(JSON.stringify(Rson))
                         }
                         addchar(char){
-                            if(this.string.length < 2){
+                            if(this.string.length < 3){
                             if(this.lock != char){
                                 this.string+=char
                                 this.lock = char
@@ -11035,31 +11045,11 @@ for(let t = 0;t<this.nodes.length;t++){
                             if(this.string.length == 0 || this.string == "0"){
                                 this.string = "1"
                             }
-                            let room = parseInt(this.string, 10)*(this.primes[MapSelect])
-                            if(`${room+`${MapSelect}`}` == '5117'){
-                                if(MapSelect == 17){
-                                    room = 51
-                                }else{
-                                    room = 163
-                                }
-                            }
-                            if(`${room+`${MapSelect}`}` == '2613'){
-                                if(MapSelect == 13){
-                                    room = 263
-                                }else{
-                                    room = 26
-                                }
-                            }
-                            if(`${room+`${MapSelect}`}` == '113113'){
-                                if(MapSelect == 13){
-                                    room = 167
-                                }else{
-                                    room = 173
-                                }
-                            }
+                            let room = parseInt(this.string, 10) 
                             let Rson = {
-                                "room":`${room+`${MapSelect}`}`
+                                "room":`${(0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect}`
                             }
+                            this.rooms = (0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect
                             ws.send(JSON.stringify(Rson))
                             }
                         }
@@ -46582,7 +46572,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 mapSelectToggle = 0
                             }else{
 
-                                serverID = parseFloat(Math.random().toFixed(7))
+                            serverID = parseFloat(Math.random().toFixed(7))
                             stage = new Stage(MapSelect)
                                                        // ws.send('cleanout')
                             selectors = []
@@ -46599,7 +46589,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 }
                             }
                             boys = []
-                            socres = []
+                            scores = []
                             drops = []
 
                             localIDs = []

@@ -53,7 +53,7 @@ class Game {
 
 }
 
-for (let t = 0; t < 1554335; t++) {
+for (let t = 0; t < 535131; t++) {
     games.push(new Game())
 }
 
@@ -142,7 +142,7 @@ wss.on("connection", ws => {
     })
     ws.on("message", data => {
         if (JSON.parse(data).room > -1) {
-
+            // console.log(data)
 
             if(true===true){
             let minarr = []
