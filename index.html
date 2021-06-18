@@ -233,7 +233,13 @@
 
                                     if(boys.length == 1){
                                         if(typeof boys[0] == "undefined"){
-                                            createPlayer(0)
+                                            CreatePlayer(0)
+                                        }
+                                    }
+
+                                    for (let t = 0; t < boys.length; t++) {
+                                        if(typeof boys[t] == "undefined"){
+                                            boys.splice(t,1)
                                         }
                                     }
                                     for (let q = 0; q < data.playerIDs.length; q++) {
@@ -253,7 +259,13 @@
 
                                     if(boys.length == 1){
                                         if(typeof boys[0] == "undefined"){
-                                            createPlayer(0)
+                                            CreatePlayer(0)
+                                        }
+                                    }
+
+                                    for (let t = 0; t < boys.length; t++) {
+                                        if(typeof boys[t] == "undefined"){
+                                            boys.splice(t,1)
                                         }
                                     }
                                     for (let t = 0; t < boys.length; t++) {
@@ -6124,7 +6136,7 @@ function padZero(str, len) {
                                 // this.walls = [new Wall(400, 1200, 200, 3000), new Wall(3000, 1200, 200, 3000)]
                                 // this.bricks = [new Brick(1900, 2100, 4160), new Brick(1900, 200, 4160)]
 
-                                this.bricks = [new Brick(850, 1600*Math.random(), 700), new Brick(2950, 1600*Math.random(), 700),new Brick(1900, 2100*Math.random(), 2160)]
+                                this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
                                 this.walls = [new Wall(1900, 1200, 200, 500)]
                                 // this.walls = []
                                 // this.bricks = []
