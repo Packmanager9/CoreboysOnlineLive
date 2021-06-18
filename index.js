@@ -27,17 +27,9 @@ let boys = []
 // const wss = new WebSocket.Server({port: 8082})
 
 let games = []
-let game = []
-
-
-
-
 class Game {
     constructor() {
         this.players = []
-    }
-    updatePlayers(data) {
-
     }
     removePlayer(player) {
         this.players.splice(this.players.indexOf(player), 1)
@@ -52,7 +44,6 @@ class Game {
     }
 
 }
-
 for (let t = 0; t < 535131; t++) {
     games.push(new Game())
 }
