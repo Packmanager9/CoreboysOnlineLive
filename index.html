@@ -5218,7 +5218,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                             return color;
                         }
                     }
-                    function setUp(canvas_pass, style = "#000000") {
+                    function setUp(canvas_pass, style = "#090909") {
                         canvas = canvas_pass
                         canvas_context = canvas.getContext('2d');
                         canvas.style.background = style
@@ -5231,7 +5231,9 @@ for(let k = 0;k<stage.bricks.length;k++){
                         document.addEventListener('keydown', (event) => {
                             keysPressed[event.key] = true;
                             if(event.key == 'Backspace'){
-                                roomSelectionBox.backspace()
+                                if(roomSelectionBox.focus == 1){
+                                    roomSelectionBox.backspace()
+                                }
                             }else{
                                 if(roomSelectionBox.focus == 1){
                                     if(parseInt(event.key,10) > -1 && parseInt(event.key,10) < 10){
