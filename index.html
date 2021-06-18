@@ -5320,7 +5320,7 @@
                                 }
                                 if (counter == 1) {
                                     counter = 0
-                                    if (campaignToggle == 1 || minigameSelected == 0) {
+                                    if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
                                     }
                                     boys = []
@@ -5963,6 +5963,7 @@
                         constructor(MapToggle = 0) {
                                 this.spawnrunner = 900
                                 this.obstacles = []
+                                this.lines = []
                             // MapToggle-=1
                             if (campaignToggle == 1) {
                                 this.playerrunner = 0
@@ -6384,6 +6385,20 @@
                                         this.obstacles.push(circ)
                                     }
                                     this.bricks.push(new Brick(1900, 50000, 10000))
+                                }else if (MapToggle == 1001) {
+                                    let ragdoll = new Dummy(0)
+                                    ragdoll.body.x = 600
+                                    ragdoll.body.y = 1000
+                                    for(let t = -10;t<1000;t++){
+                                        let line = new Line(t*500, -100000, t*500, 100000, getRandomColor(), 4)
+                                        this.lines.push(line)
+                                    }
+                                    boys.push(ragdoll)
+                                    this.bricks.push(new Brick(750, 1900, 1500))
+                                    this.bricks.push(new Brick(750, 750, 1500))
+                                    this.walls.push(new Wall(150, 1500, 200, 1200))
+                                    this.walls.push(new Wall(1350, 1500, 200, 1200))
+                                    // this.bricks.push(new Brick(1900, 2450, 10000))
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6415,6 +6430,7 @@
                             // for (let t = 0; t < 3; t++) {
                             //     this.bricks.push(new Brick(500+(t * 1300) + 200, 1760, 400))
                             // }
+                            this.brickswap = 0
                         }
                         draw() {
                             if (campaignToggle == 1) {
@@ -6454,10 +6470,47 @@
                                     this.walls = this.trueWalls
                                 }
                             } else {
+
+                                for (let t = 0; t < this.lines.length; t++) {
+                                    this.lines[t].draw()
+                                }
                                 if(minigameSelected == 0){
                                     for (let t = 0; t < this.obstacles.length; t++) {
                                     this.obstacles[t].draw()
                                 }
+                                }else  if(minigameSelected == 1){
+
+
+
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000) % 60
+                                    if(seconds > 15){
+
+                                    if(boys[0].name != "Dummy"){
+                                    const tmp = boys[0]
+                                    boys[0] = boys[1]
+                                    boys[1] = tmp
+                                    }
+                                        boys[0].jumping = 0
+                                        boys[0].grounded = 0
+                                        boys[0].body.friction = .999
+                                        canvas_context.font = "40px Arial"
+                                        canvas_context.fillStyle = "#FFFF00"
+                                        canvas_context.fillText(`Distance Launched: ${Math.abs(boys[0].body.x-boys[1].body.x)}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 270)))
+
+
+                                if(this.brickswap == 0){
+                                for (let t = 0; t < this.walls.length; t++) {
+                                        this.walls[t].shape.shiftRight(-1000000)
+                                }
+                            }
+
+                                if(this.brickswap == 0){
+                                        this.bricks = []
+                                        this.bricks.push(new Brick(750, 1900, 1500))
+                                        this.brickswap = 1
+                                    }
+                                    }
                                 }
 
                                 for (let t = 0; t < this.bricks.length; t++) {
@@ -7965,6 +8018,8 @@
                             canvas_context.fillStyle = "#FFFF00"
                             if(this.index == 0){
                             canvas_context.fillText("GeGeGeGee Drop!", this.box.x + 15, this.box.y + 95)
+                            }else if(this.index == 1){
+                            canvas_context.fillText("Smashout!", this.box.x + 15, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -7979,7 +8034,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 1; t++) {
+                    for (let t = 0; t < 2; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -46526,6 +46581,11 @@
                         } else if (chooser == 12) {
                             coreboy = new Kessler(t)
                         }
+
+                        if ( minigameSelected == 1) {
+                            coreboy.body.x = 500
+                            coreboy.body.y = 1200
+                                }
                         coreboy.body.color = getRandomColor()
                         return coreboy
                     }
@@ -46662,7 +46722,7 @@
 
                                 }
                                 counter = 0
-                                if (campaignToggle == 1 || minigameSelected == 0) {
+                                if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1) {
                                     if (boys.length > 0) {
                                         minigameSelected=-1
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
@@ -46694,7 +46754,7 @@
 
                         if (counter == 1) {
                             if (boys.length >= 1) {
-                                if (campaignToggle == 1 || minigameSelected == 0) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
                                     camerax = boys[0].body.x
                                     cameray = boys[0].body.y
                                 }
@@ -46885,7 +46945,9 @@
                                 if (!boys[t]) {
                                     continue
                                 }
-                            if(minigameSelected == 0){
+                            if(minigameSelected == 1){
+
+                            }else if(minigameSelected == 0){
                                 let leftwall = new Line(-10, -10000, -10, 10000000, "#FF0000", 10)
                                 let rightwall = new Line((2560 * (invscale * .5))+10, -10000, (2560 * (invscale * .5))+10, 10000000, "#FF0000", 10)
                                 leftwall.draw()
@@ -47104,7 +47166,7 @@
                                     } else {
                                         canvas_context.font = "60px arial"
                                         canvas_context.fillStyle = boys[t].body.color
-                                        if(minigameSelected != 0){
+                                        if(minigameSelected != 0 && minigameSelected !== 1){
                                         if (AItoggle == 0) {
                                             if (boys[t].playername != "") {
                                                 canvas_context.fillText(`${boys[t].name + " (" + boys[t].playername + ")"} ${boys[t].knocks}/${boys[t].drops} Ping: ${boys[t].ping}`, 20, ((t - dropouts) * 61) + 70)
@@ -47414,7 +47476,7 @@
                             // gametheme.pause()
 
                             if (boys.length >= 1) {
-                                if (campaignToggle == 1 || minigameSelected == 0) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
                                     if (cameraLocked == 0) {
                                         // ////////console.log("whea")
                                         cameraxsum += boys[0].body.x - camerax
@@ -47742,6 +47804,10 @@
                                                 pick = k
                                                 coreboy.body.color = selectors[t].body.color
                                             }
+                                            if(minigameSelected == 1){
+                                                coreboy.body.x = 500
+                                                coreboy.body.y = 1000
+                                            }
 
                                             if (AItoggle == 1) {
                                                 boys.push(coreboy)
@@ -47771,6 +47837,20 @@
                                     counter = 1
                                 }
                                 counter = 1
+
+                                if(minigameSelected == 1){
+                                                boys[0].body.x = 500
+                                                boys[0].body.y = 1500
+
+                                if (boys.length == 1 && minigameSelected == 1) {
+                                    let coreboy = genRandomFighter(boys.length)
+                                    boys.push(coreboy)
+                                    coreboy.id = ID
+                                    boom.push(new Circle(0, 0, 1, "transparent"))
+                                    scores.push(0)
+                                    drops.push(0)
+                                }
+                                }
 
                                 let localplayer = 0
                                 for (let t = 0; t < boys.length; t++) {
@@ -47844,6 +47924,7 @@
                                                 } else {
 
                                                 }
+                                                
                                                 boys.push(coreboy)
                                                 coreboy.id = ID
                                                 boom.push(new Circle(0, 0, 1, "transparent"))
@@ -47854,6 +47935,7 @@
                                     }
 
                                 }
+                                
 
                                 if (boys.length == 0) {
                                     let coreboy = genRandomFighter(boys.length)
@@ -47864,9 +47946,18 @@
                                     drops.push(0)
                                 }
 
+                                if (boys.length == 1 && minigameSelected == 1) {
+                                    let coreboy = genRandomFighter(boys.length)
+                                    boys.push(coreboy)
+                                    coreboy.id = ID
+                                    boom.push(new Circle(0, 0, 1, "transparent"))
+                                    scores.push(0)
+                                    drops.push(0)
+                                }
+
                                 if (boys.length == 1) {
                                     if (campaignToggle == 0 && AItoggle == 1) {
-                                        if(minigameSelected != 0){
+                                        if(minigameSelected == -1){
                                             let coreboy = new Dummy()
                                             boys.push(coreboy)
                                             coreboy.id = ID
@@ -47877,7 +47968,7 @@
                                     }
                                 }
 
-                                if (campaignToggle == 1 || minigameSelected == 0) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
 
@@ -47898,6 +47989,7 @@
                                     // drops.push(0)
                                 }
                             }
+
                         }
                     }
                     // canvas_context.fillText(`${worldcounter}`, 50, 500)
