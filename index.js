@@ -54,7 +54,7 @@ class Game {
 
 }
 
-for (let t = 0; t < 10000; t++) {
+for (let t = 0; t < 1000000; t++) {
     games.push(new Game())
 }
 

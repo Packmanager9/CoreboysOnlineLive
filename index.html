@@ -84,6 +84,7 @@
                     let cameraysum = 0
                     // let meshtoggle = 0
                     let boys = []
+                    let mapIcons = []
                     let strarr = []
                     let selectors = []
                     let characterbuttons = []
@@ -108,6 +109,8 @@
                     let meshRun = 0
                     let meshLearn = 0
                     let fightlogged = 0
+                    let mapSelectToggle = 0
+                    let MapSelect = -1
 
                     let stock = 0
                     let ws
@@ -5323,7 +5326,7 @@ for(let k = 0;k<stage.bricks.length;k++){
 
                             localIDs = []
                                 }
-                                stage = new Stage()
+                                stage = new Stage(MapSelect)
 
                             if(AItoggle == 0){
                                 ws.close()
@@ -5335,6 +5338,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                             }
                             if(counter == 0){
 
+
                                 if(optionsToggle == 1){
                                 if(campaignButton.isPointInside(TIP_engine)){
                                     if(campaignToggle == 0){
@@ -5342,7 +5346,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     AIFightButton.color = "#00FF00"
                                     campaignButton.color = "#00FF00"
                                     onlineButton.color = "#FF0000"
-                                    stage = new Stage()
+                                    stage = new Stage(MapSelect)
                                     AItoggle = 1
                                     boys = []
                             socres = []
@@ -5352,7 +5356,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     campaignToggle = 0
                                     // AIFightButton.color = "#FF0000"
                                     campaignButton.color = "#FF0000"
-                                    stage = new Stage()
+                                    stage = new Stage(MapSelect)
                                     // AItoggle = 0
                                     boys = []
                             socres = []
@@ -5363,7 +5367,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     if(AItoggle == 0){
                                     AIFightButton.color = "#00FF00"
                                     onlineButton.color = "#FF0000"
-                                    stage = new Stage()
+                                    stage = new Stage(MapSelect)
                                     AItoggle = 1
                                     humanPlayers = 0
                                     boys = []
@@ -5372,7 +5376,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     ws.close()
                                 }else{
                                     // AIFightButton.color = "#FF0000"
-                                    // stage = new Stage()
+                                    // stage = new Stage(MapSelect)
                                     // AItoggle = 0
                                     // humanPlayers = 1004
                                     // campaignToggle = 0
@@ -5393,7 +5397,7 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     campaignButton.color = "#FF0000"
                                     AIFightButton.color = "#FF0000"
                                     humanPlayers = 1004
-                                    stage = new Stage()
+                                    stage = new Stage(MapSelect)
                                     boys = []
                                     socres = []
                                     drops = []
@@ -5401,6 +5405,13 @@ for(let k = 0;k<stage.bricks.length;k++){
                                     }
                                 }
 
+                                if(mapSelectButton.isPointInside(TIP_engine)){
+                                    if(mapSelectToggle == 0){
+                                        mapSelectToggle = 1
+                                    }else{
+                                        mapSelectToggle = 0
+                                    }
+                                }
                                 
                             }
                             if(AItoggle == 0 && campaignToggle == 0){
@@ -5414,6 +5425,15 @@ for(let k = 0;k<stage.bricks.length;k++){
                             }else{
                                 roomSelectionBox.focus = 0
                             }
+                            if(mapSelectToggle == 1){
+                            for(let t =0;t<mapIcons.length;t++){
+                                if(mapIcons[t].box.isPointInside(TIP_engine)){
+                                    stage = new Stage(t)
+                                    MapSelect = t
+                                    roomSelectionBox.addchar('')
+                                }
+                            }
+                        }
                             }
                         });
                         window.addEventListener('pointermove', continued_stimuli);
@@ -5914,7 +5934,7 @@ function padZero(str, len) {
 
                     class Stage {
 
-                        constructor() {
+                        constructor(MapToggle = -1) {
                             if(campaignToggle == 1){
                                 this.playerrunner = 0
                                 this.walljumper = 6*1400
@@ -6136,8 +6156,199 @@ function padZero(str, len) {
                                 // this.walls = [new Wall(400, 1200, 200, 3000), new Wall(3000, 1200, 200, 3000)]
                                 // this.bricks = [new Brick(1900, 2100, 4160), new Brick(1900, 200, 4160)]
 
-                                this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
-                                this.walls = [new Wall(1900, 1200, 200, 500)]
+                                this.walls = []
+                                this.bricks = []
+                                if(MapToggle == -1){
+                                    this.bricks = [new Brick(850, 1600, 700), new Brick(2950, 1600, 700),new Brick(1900, 2100, 2160)]
+                                    this.walls = [new Wall(1900, 1200, 200, 500)]
+                                }else if(MapToggle == 0){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                    }else if(MapToggle == 1){
+                                        this.bricks.push(new Brick(1100, 1600, 1200))
+                                        this.bricks.push(new Brick(2700, 1600, 1200))
+                                        this.bricks.push(new Brick(1900, 2100, 1900))
+                                        this.walls.push(new Wall(1100-500, 1800, 200, 200))
+                                        this.walls.push(new Wall(2700+500, 1800, 200, 200))
+                                    }else if(MapToggle == 2){
+                                        this.bricks.push(new Brick(1100, 1600, 300))
+                                        this.bricks.push(new Brick(1800, 1600, 300))
+                                        this.bricks.push(new Brick(2500, 1600, 300))
+                                        this.bricks.push(new Brick(1000, 2100, 1000))
+                                        this.bricks.push(new Brick(2600, 2100, 1000))
+                                    }else if(MapToggle == 3){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                        this.walls.push(new Wall(1900, 1200, 200, 500))
+                                    }else if(MapToggle == 4){
+                                        this.bricks.push(new Brick(850, 1600, 350))
+                                        this.bricks.push(new Brick(2950, 1600, 350))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                    }else if(MapToggle == 5){
+                                        this.bricks.push(new Brick(1900, 2100, 2760))
+                                    }else if(MapToggle == 6){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                        this.walls.push(new Wall(1900, 1200, 200, 700))
+                                        this.walls.push(new Wall(1100, 1200, 200, 700))
+                                        this.walls.push(new Wall(2700, 1200, 200, 700))
+                                    }else if(MapToggle == 7){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                        this.bricks.push(new Brick(1900, 1450, 700))
+                                        this.walls.push(new Wall(1900, 1200, 200, 450))
+                                    }else if(MapToggle == 8){
+                                        for(let n = 0;n<7;n++){
+                                        this.bricks.push(new Brick((n*350) + 750, 1600+((n%2)*(400)), 400))
+                                        }
+                                    }else if(MapToggle == 9){
+                                        for(let n = 0;n<7;n++){
+                                            this.bricks.push(new Brick((n*400) + 650, 2200+((Math.abs(-3+n))*(-300)), 450))
+                                        }
+                                    }else if(MapToggle == 10){
+                                        this.bricks.push(new Brick(850, 1700, 700))
+                                        this.bricks.push(new Brick(2950, 1700, 700))
+                                        this.bricks.push(new Brick(1900, 1700, 200))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                    }else if(MapToggle == 11){
+                                        for(let n = 0;n<6;n++){
+                                            this.walls.push(new Wall((n*560) + 500, 2100, 200, 450))
+                                        }
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                    }else if(MapToggle == 12){
+                                        for(let n = 0;n<2;n++){
+                                            this.walls.push(new Wall((n*3000) + 500, 2100, 200, 450))
+                                        }
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                    }else if(MapToggle == 13){
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                        this.walls.push(new Wall(1900, 1200, 200, 450))
+                                    }else if(MapToggle == 14){
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                        this.walls.push(new Wall(3400, 1900, 200, 850))
+                                    }else if(MapToggle == 15){
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                        this.walls.push(new Wall(400, 1900, 200, 850))
+                                    }else if(MapToggle == 16){
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                        this.walls.push(new Wall(400, 1900, 200, 850))
+                                        this.walls.push(new Wall(3400, 1900, 200, 850))
+                                    }else if(MapToggle == 17){
+                                        this.bricks.push(new Brick(1900, 2100, 3000))
+                                        this.bricks.push(new Brick(1900, 1600, 2000))
+                                        this.walls.push(new Wall(400, 1900, 200, 850))
+                                        this.walls.push(new Wall(3400, 1900, 200, 850))
+                                    }else if(MapToggle == 18){
+                                        this.bricks.push(new Brick(1900, 1000, 3000))
+                                        this.bricks.push(new Brick(1900, 1600, 2000))
+                                        this.walls.push(new Wall(400, 1900, 200, 850))
+                                        this.walls.push(new Wall(3400, 1900, 200, 850))
+                                    }else if(MapToggle == 19){
+                                        this.bricks.push(new Brick(1900, 1000, 200))
+                                        this.bricks.push(new Brick(1900, 1600, 200))
+                                        this.bricks.push(new Brick(1000, 1600, 200))
+                                        this.bricks.push(new Brick(1900, 1600, 800))
+                                        this.bricks.push(new Brick(2800, 1600, 200))
+                                        this.walls.push(new Wall(400, 1900, 200, 850))
+                                        this.walls.push(new Wall(3400, 1900, 200, 850))
+                                    }else if(MapToggle == 20){
+                                        this.bricks.push(new Brick(1900, 1000, 200))
+                                        this.bricks.push(new Brick(1900, 1600, 200))
+                                        this.bricks.push(new Brick(1000, 1600, 200))
+                                        this.bricks.push(new Brick(1900, 1600, 800))
+                                        this.bricks.push(new Brick(2800, 1600, 200))
+                                    }else if(MapToggle == 21){
+                                        this.bricks.push(new Brick(1900, 2200, 2000))
+                                        this.bricks.push(new Brick(1900, 1600, 200))
+                                        this.bricks.push(new Brick(1000, 1600, 200))
+                                        this.bricks.push(new Brick(1900, 1600, 800))
+                                        this.bricks.push(new Brick(2800, 1600, 200))
+                                    }else if(MapToggle == 22){
+                                        this.bricks.push(new Brick(1900, 2230, 2000))
+                                        this.bricks.push(new Brick(1900, 1790, 1600))
+                                        this.bricks.push(new Brick(1900, 1370, 1200))
+                                        this.bricks.push(new Brick(1900, 950, 800))
+                                        this.bricks.push(new Brick(1900, 530, 400))
+
+
+                                        this.walls.push(new Wall(1900, 1400, 200, 1700))
+                                    }else if(MapToggle == 23){
+                                        this.bricks.push(new Brick(1900, 2200, 2500))
+                                        this.bricks.push(new Brick(1000, 1760, 500))
+                                        this.bricks.push(new Brick(2800, 1340, 500))
+                                        this.bricks.push(new Brick(1000, 920, 500))
+                                        this.bricks.push(new Brick(2800, 500, 500))
+                                    }else if(MapToggle == 24){
+                                        this.bricks.push(new Brick(1900, 2200, 2500))
+                                        this.bricks.push(new Brick(1000, 1760, 500))
+                                        this.bricks.push(new Brick(2800, 1440, 500))
+                                        this.bricks.push(new Brick(1900, 1230, 500))
+                                        this.bricks.push(new Brick(1000, 920, 500))
+                                        this.bricks.push(new Brick(2800, 500, 500))
+                                    }else if(MapToggle == 25){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                        this.walls.push(new Wall(1900, 700, 200, 1500))
+                                    }else if(MapToggle == 26){
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2200, 2500))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.walls.push(new Wall(1900, 2100, 400, 700))
+                                        this.walls.push(new Wall(1900, 700, 200, 1000))
+                                    }else if(MapToggle == 27){
+                                        this.bricks.push(new Brick(850, 1600, 900))
+                                        this.bricks.push(new Brick(1900, 2200, 2500))
+                                        this.bricks.push(new Brick(2950, 1600, 300))
+                                    }else if(MapToggle == 28){
+                                        this.bricks.push(new Brick(850, 1600, 300))
+                                        this.bricks.push(new Brick(1900, 2200, 2500))
+                                        this.bricks.push(new Brick(2950, 1600, 900))
+                                    }else if(MapToggle == 29){
+                                        this.bricks.push(new Brick(2000, 2200, 1800))
+                                        this.bricks.push(new Brick(1000, 1760, 500))
+                                        this.bricks.push(new Brick(2800, 1440, 500))
+                                        this.bricks.push(new Brick(1900, 1230, 500))
+                                        this.bricks.push(new Brick(1000, 920, 500))
+                                        this.bricks.push(new Brick(2800, 500, 500))
+                                        for(let n = 0;n<2;n++){
+                                            this.walls.push(new Wall((n*3000) + 500, 2100, 200, 650))
+                                        }
+                                    }else if(MapToggle == 30){
+                                        this.bricks.push(new Brick(1875, 2200, 1800))
+                                        this.bricks.push(new Brick(1000, 1760, 500))
+                                        this.bricks.push(new Brick(2800, 1440, 500))
+                                        this.bricks.push(new Brick(1900, 1230, 500))
+                                        this.bricks.push(new Brick(1000, 920, 500))
+                                        this.bricks.push(new Brick(2800, 500, 500))
+                                        for(let n = 0;n<2;n++){
+                                            this.walls.push(new Wall((n*3000) + 350, 2100, 200, 2050))
+                                        }
+                                    }else if(MapToggle == 31){
+                                        this.bricks.push(new Brick(1875, 2200, 1800))
+                                        this.bricks.push(new Brick(1875, 1700, 1400))
+                                        this.bricks.push(new Brick(1875, 1200, 1000))
+                                    }else if(MapToggle == 32){
+                                        this.bricks.push(new Brick(1075, 2200, 1800))
+                                        this.bricks.push(new Brick(1875, 1700, 1400))
+                                        this.bricks.push(new Brick(2675, 1200, 1200))
+                                    }else if(MapToggle == 33){
+                                        this.bricks.push(new Brick(2675, 2200, 1800))
+                                        this.bricks.push(new Brick(1875, 1700, 1400))
+                                        this.bricks.push(new Brick(1075, 1200, 1200))
+                                    }else if(MapToggle == 34){
+                                        this.bricks.push(new Brick(2675, 2200, 1000))
+                                        this.bricks.push(new Brick(1075, 2200, 1000))
+                                    }else{
+                                        this.bricks.push(new Brick(850, 1600, 700))
+                                        this.bricks.push(new Brick(2950, 1600, 700))
+                                        this.bricks.push(new Brick(1900, 2100, 2160))
+                                        this.walls.push(new Wall(1900, 1200, 200, 500))
+                                    }
                                 // this.walls = []
                                 // this.bricks = []
                                 // for(let t =0;t<100;t++){
@@ -6215,7 +6426,7 @@ function padZero(str, len) {
 
                     class Wall {
                         constructor(x, y, width = 200, height = 600) {
-                            width = 200
+                            // width = 200
                             // height = 1600
                             this.center = new Point(x, y)
                             this.width = width
@@ -6402,15 +6613,15 @@ function padZero(str, len) {
                     }
 
                     class Brick {
-                        constructor(x, y, width = 200, height = 45) {
+                        constructor(x, y, width = 200, height = 75) {
                             this.center = new Point(x, y)
                             this.width = width
                             this.height = height
                             this.edgeleft = new Circle(x - (width * .5), y, 4, "cyan")
                             this.edgeright = new Circle(x + (width * .5), y, 4, "blue")
                             this.link = new Line(this.edgeleft.x - 5, this.edgeleft.y, this.edgeright.x + 5, this.edgeright.y, "#FFFFFF", height * 2)
-                            this.shape = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
-                            this.shape2 = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.41, height)
+                            this.shape = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.81, height)
+                            this.shape2 = castBetween(this.edgeleft, this.edgeright, (this.width / this.height) * 1.81, height)
                             this.edgeleft = new Circle(x - (width * .5), y - (height * 1), 26, "cyan")
                             this.edgeright = new Circle(x + (width * .5), y - (height * 1), 26, "blue") ///16
                         }
@@ -7653,7 +7864,47 @@ function padZero(str, len) {
                         // }
                     }
 
-                    let stage = new Stage()
+                    class MapIcon {
+                        constructor(bricks, walls){
+                            this.links = []
+                            this.active = 0
+                            this.index = mapIcons.length
+                            this.yindex = Math.floor(mapIcons.length/7)
+                            this.xindex = mapIcons.length%7
+                            this.box = new Rectangle(this.xindex*400, this.yindex*300, 400, 300, "#FF000030")
+                            this.xindex += .15
+                            this.scale = 15
+                            for(let t = 0;t<bricks.length;t++){
+                                let link = new Line((bricks[t].edgeleft.x/this.scale) + this.xindex*400, (bricks[t].edgeleft.y/this.scale) + this.yindex*300, (bricks[t].edgeright.x/this.scale) + this.xindex*400, (bricks[t].edgeright.y/this.scale) + this.yindex*300, "#FFFFFF", 4)
+                                this.links.push(link)
+                            }
+                            for(let t = 0;t<walls.length;t++){
+                                let link = new Line((walls[t].topcap.x/this.scale) + this.xindex*400, (walls[t].topcap.y/this.scale) + this.yindex*300, (walls[t].basecap.x/this.scale) + this.xindex*400, (walls[t].basecap.y/this.scale) + this.yindex*300, "#FFFFFF", 4)
+                                this.links.push(link)
+                            }
+                            mapIcons.push(this)
+                        }
+                        draw(){
+                            if(MapSelect == this.index){
+                                this.box.draw()
+                            }
+                            for(let t = 0;t<this.links.length;t++){
+                                this.links[t].draw()
+                            }
+                            canvas_context.font = "40px arial"
+                            canvas_context.fillStyle = "#FFFF00"
+                            canvas_context.fillText(this.index, this.box.x +5, this.box.y + 40)
+                        }
+                    }
+
+
+
+                    let stage = new Stage(MapSelect)
+
+                    for(let t = 0;t<35;t++){
+                        let iconStage = new Stage(t)
+                        let icon = new MapIcon(iconStage.bricks, iconStage.walls)
+                    }
 
                     class Explosion {
                         constructor(x, color) {
@@ -10781,7 +11032,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
 
 
-                            let room = parseInt(this.string, 10)
+                            let room = parseInt(this.string+`${MapSelect}`, 10)
                             let Rson = {
                                 "room":`${room}`
                             }
@@ -46089,6 +46340,7 @@ for(let t = 0;t<this.nodes.length;t++){
 
 
                     let optionsButton = new ShotO(3260, 600, 300, "#AAAABB")
+                    let mapSelectButton = new Rectangle(2900, 1300, 320, 100, "#FFFFFF")
 
                     
                     let campaignButton = new Rectangle(2900, 1000, 320, 100, "#FFFFFF")
@@ -46294,8 +46546,12 @@ for(let t = 0;t<this.nodes.length;t++){
                                     }
                                 }
                         if (keysPressed['Escape']) {
-                            serverID = parseFloat(Math.random().toFixed(7))
-                            stage = new Stage()
+                            if(mapSelectToggle == 1){
+                                mapSelectToggle = 0
+                            }else{
+
+                                serverID = parseFloat(Math.random().toFixed(7))
+                            stage = new Stage(MapSelect)
                                                        // ws.send('cleanout')
                             selectors = []
                                 for (let t = 0; t < 15; t++) {
@@ -46322,6 +46578,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 HOST = location.origin.replace(/^http/, 'ws')
                                 ws = new WebSocket(HOST);
                                 socketize(ws)
+                            }
                             }
                         }
 
@@ -47035,8 +47292,52 @@ for(let t = 0;t<this.nodes.length;t++){
                             }
                         } 
                         } else {
+
                             // gametheme.play()
                             canvas_context.clearRect(-canvas.width*100, -canvas.width*100, canvas.width*200, canvas.width*200)
+                            if(mapSelectToggle == 1){
+                                for(let t = 0;t<mapIcons.length;t++){
+                                    mapIcons[t].draw()
+                                }
+
+                                mapSelectButton.draw()
+                                canvas_context.font = "30px arial"
+                                canvas_context.fillStyle = "#000000"
+                                canvas_context.fillText(`Exit Map Select`, mapSelectButton.x + (mapSelectButton.width * .14), mapSelectButton.y + (mapSelectButton.width * .20))
+
+                            if(optionsToggle == 0){
+                            optionsButton.radius = 300
+                            optionsButton.draw()
+                            canvas_context.font = "40px arial"
+                            canvas_context.fillStyle = "black"
+                            canvas_context.fillText(`Click For Options`, optionsButton.x - (optionsButton.radius * .5), optionsButton.y + (optionsButton.radius * 0))
+
+                            }else{
+
+                            roomSelectionBox.draw()
+                            optionsButton.radius = 100
+                            optionsButton.draw()
+                            canvas_context.font = "90px arial"
+                            canvas_context.fillStyle = "#FF0000"
+                            canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
+
+                            canvas_context.font = "30px arial"
+                            campaignButton.draw()
+                            canvas_context.fillStyle = "#000000"
+                            canvas_context.fillText(`Campaign`, campaignButton.x + (campaignButton.width * .3), campaignButton.y + (campaignButton.width * .20))
+                            AIFightButton.draw()
+                            canvas_context.fillStyle = "#000000"
+                            canvas_context.fillText(`AI Match`, AIFightButton.x + (AIFightButton.width * .3), AIFightButton.y + (AIFightButton.width * .20))
+                            onlineButton.draw()
+                            canvas_context.fillStyle = "#000000"
+                            if(onlineButton.color == "#00FF00"){
+                            canvas_context.fillText(`Online`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .20))
+                            }else{
+                            canvas_context.fillStyle = "#FFFFFF"
+                            canvas_context.fillText(`Offline`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .15))
+                            }
+                            }
+                            }else{
 
 
                             if(optionsToggle == 0){
@@ -47070,6 +47371,9 @@ for(let t = 0;t<this.nodes.length;t++){
                             canvas_context.fillStyle = "#FFFFFF"
                             canvas_context.fillText(`Offline`, onlineButton.x + (onlineButton.width * .225), onlineButton.y + (onlineButton.width * .15))
                             }
+                            mapSelectButton.draw()
+                            canvas_context.fillStyle = "#000000"
+                            canvas_context.fillText(`Map Select`, mapSelectButton.x + (mapSelectButton.width * .3), mapSelectButton.y + (mapSelectButton.width * .20))
                             }
                             descriptor.draw()
                             massSelector.draw()
@@ -47168,6 +47472,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             if(start == 0){
                             canvas_context.fillText(`Connecting`, 700, 60)
                             }
+                        }
                             if (keysPressed[' ']) {
                                 roomSelectionBox.focus = 0
                                 let wet = boys.length
@@ -47395,9 +47700,9 @@ for(let t = 0;t<this.nodes.length;t++){
                                 }
                             }
                         }
-
-                        // canvas_context.fillText(`${worldcounter}`, 50, 500)
                     }
+                        // canvas_context.fillText(`${worldcounter}`, 50, 500)
+                    
 
                     function JumpIn(fighter) {
                         //start with the dummy
