@@ -5935,7 +5935,7 @@ function padZero(str, len) {
                     class Stage {
 
                         constructor(MapToggle = 0) {
-                            MapToggle-=1
+                            // MapToggle-=1
                             if(campaignToggle == 1){
                                 this.playerrunner = 0
                                 this.walljumper = 6*1400
@@ -11032,21 +11032,37 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.string+=char
                                 this.lock = char
                             }
-
                             if(this.string.length == 0 || this.string == "0"){
                                 this.string = "1"
                             }
-                            
-
                             let room = parseInt(this.string, 10)*(this.primes[MapSelect])
-                            // console.log(`${room+`${MapSelect}`}`, MapSelect, room)
+                            if(`${room+`${MapSelect}`}` == '5117'){
+                                if(MapSelect == 17){
+                                    room = 51
+                                }else{
+                                    room = 163
+                                }
+                            }
+                            if(`${room+`${MapSelect}`}` == '2613'){
+                                if(MapSelect == 13){
+                                    room = 263
+                                }else{
+                                    room = 26
+                                }
+                            }
+                            if(`${room+`${MapSelect}`}` == '113113'){
+                                if(MapSelect == 13){
+                                    room = 167
+                                }else{
+                                    room = 173
+                                }
+                            }
                             let Rson = {
                                 "room":`${room+`${MapSelect}`}`
                             }
                             ws.send(JSON.stringify(Rson))
                             }
                         }
-
                     }
 
                     let roomSelectionBox = new Textinput(3300, 700+450, 320, 100)
