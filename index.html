@@ -110,7 +110,7 @@
                     let meshLearn = 0
                     let fightlogged = 0
                     let mapSelectToggle = 0
-                    let MapSelect = -1
+                    let MapSelect = 0
 
                     let stock = 0
                     let ws
@@ -5934,7 +5934,8 @@ function padZero(str, len) {
 
                     class Stage {
 
-                        constructor(MapToggle = -1) {
+                        constructor(MapToggle = 0) {
+                            MapToggle-=1
                             if(campaignToggle == 1){
                                 this.playerrunner = 0
                                 this.walljumper = 6*1400
@@ -10988,6 +10989,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             this.flash = -1
                             this.flashspin = 45
                             this.flashnum = -1
+                            this.primes = [2,3,5,7,11,13,17,19,23,31,37,41,43,53,59,61,67,71,73,79,83,89,97, 101, 103, 107, 109, 113, 127, 131,137,139,149, 151, 157]
                         }
 
                         measure(){
@@ -11031,8 +11033,13 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.lock = char
                             }
 
+                            if(this.string.length == 0){
+                                this.string = "1"
+                            }
+                            
 
-                            let room = parseInt(this.string+`${MapSelect}`, 10)
+                            let room = parseInt(this.string, 10)*(this.primes[MapSelect])
+                            // console.log(room, MapSelect)
                             let Rson = {
                                 "room":`${room}`
                             }
