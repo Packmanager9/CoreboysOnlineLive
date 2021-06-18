@@ -11027,7 +11027,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             this.string = this.string.join('')
                         }
                         addchar(char){
-                            if(this.string.length < 3){
+                            if(this.string.length < 2){
                             if(this.lock != char){
                                 this.string+=char
                                 this.lock = char
@@ -11039,7 +11039,7 @@ for(let t = 0;t<this.nodes.length;t++){
                             
 
                             let room = parseInt(this.string, 10)*(this.primes[MapSelect])
-                            // //console.log(`${room+`${MapSelect}`}`, MapSelect, room)
+                            // console.log(`${room+`${MapSelect}`}`, MapSelect, room)
                             let Rson = {
                                 "room":`${room+`${MapSelect}`}`
                             }
