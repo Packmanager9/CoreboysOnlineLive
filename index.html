@@ -40700,7 +40700,11 @@ if (this.controller >= 8) {
                                 this.lefthand = this.nodes[4]
                                 this.radball = this.nodes[5]
                                 // this.radball = new ShotJR(args['radball'].x, args['radball'].y, args['radball'].radius, args['radball'].color)
-                                if(this.radball.color.length != 7){
+                                if(typeof this.radball.color != "undefined"){
+                                    if(this.radball.color.length != 7){
+                                        this.radball.color = "#00FF00"
+                                    }
+                                }else{
                                     this.radball.color = "#00FF00"
                                 }
                                 ////////console.log(this.radball)
@@ -43185,9 +43189,14 @@ for(let t = 0;t<this.nodes.length;t++){
                             this.rightarm = new LineOP(this.rightshoulder, this.righthand, invertColor(this.body.color), 8)
                             this.collideStage()
                             this.radball.color = invertColory(this.body.color)
+
+                            if(typeof this.radball.color != "undefined"){
                             if(this.radball.color.length != 7){
                                     this.radball.color = "#00FF00"
                                 }
+                            }else{
+                                this.radball.color = "#00FF00"
+                            }
                             this.radball.draw()
                             for (let t = 0; t < this.links.length; t++) {
                                 this.links[t].color = invertColor(this.body.color)
