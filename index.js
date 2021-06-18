@@ -48,13 +48,12 @@ class Game {
     swapRoom(player, room){
         this.players.splice(this.players.indexOf(player), 1)
         player.assigned = room
-        // console.log(room)
         games[room].addPlayer(player)
     }
 
 }
 
-for (let t = 0; t < 1569844; t++) {
+for (let t = 0; t < 15684335; t++) {
     games.push(new Game())
 }
 
