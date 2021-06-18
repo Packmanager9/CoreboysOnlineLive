@@ -34813,7 +34813,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 this.id = controller //boys.length
                                 this.shielddraw = 0
                                 this.gamepad = new Gamepad(controller)
-                                this.jumpreduction = 80
+                                this.jumpreduction = 85
                                 this.shild = new Circle(0, 0, 0, "transparent")
                                 this.shot = {}
                                 this.striker = 10000
@@ -35214,7 +35214,7 @@ if (this.controller >= 8) {
                             }
                             if (this.wmove == 1) {
                                 this.jumping = 1
-                                this.body.ymom = -this.speed * 2
+                                this.body.ymom = -this.speed * 2 
                                 this.lefthand.ymom = -this.speed * 2
                                 this.righthand.ymom = -this.speed * 2
                                 this.jumpcount = 100
@@ -36653,7 +36653,7 @@ for(let t = 0;t<this.nodes.length;t++){
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
-                                        object.ymom -= speed * 2
+                                        object.ymom -= speed * 4 // was 2for some reason
                                     } else {
                                         if (this.lefthand.anchored == 1) {
                                             this.degripl()
@@ -36751,9 +36751,9 @@ for(let t = 0;t<this.nodes.length;t++){
                                         }
                                     }
 
-                                    if (Math.abs(this.body.x - boys[t].body.x) < 45 && this.body.y < boys[t].body.y) {
+                                    if (Math.abs(this.body.x - boys[t].body.x) < 60 && this.body.y < boys[t].body.y) {
                                         this.downspike = 1
-                                    } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
+                                    } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y > boys[t].body.y && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
                                         this.hortsmash = 1
                                     }
                                     if (Math.abs(this.body.x - boys[t].body.x) < boys[t].body.radius && this.body.y > boys[t].body.y) {
