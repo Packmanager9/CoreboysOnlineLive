@@ -5420,6 +5420,7 @@
                                         if (minigameSelectToggle == 0) {
                                             minigameSelectToggle = 1
                                             mapSelectToggle = 0
+                                            AItoggle = 1
                                             campaignToggle = 0
                                         } else {
                                             minigameSelectToggle = 0
@@ -47864,12 +47865,14 @@
 
                                 if (boys.length == 1) {
                                     if (campaignToggle == 0 && AItoggle == 1) {
-                                        let coreboy = new Dummy()
-                                        boys.push(coreboy)
-                                        coreboy.id = ID
-                                        boom.push(new Circle(0, 0, 1, "transparent"))
-                                        scores.push(0)
-                                        drops.push(0)
+                                        if(minigameSelected != 0){
+                                            let coreboy = new Dummy()
+                                            boys.push(coreboy)
+                                            coreboy.id = ID
+                                            boom.push(new Circle(0, 0, 1, "transparent"))
+                                            scores.push(0)
+                                            drops.push(0)
+                                        }
                                     }
                                 }
 
