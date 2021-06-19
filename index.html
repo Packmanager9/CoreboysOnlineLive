@@ -5356,6 +5356,7 @@
                                             scores = []
                                             drops = []
                                             ws.close()
+                                            minigameSelected = -1
                                         } else {
                                             campaignToggle = 0
                                             // AIFightButton.color = "#FF0000"
@@ -5378,6 +5379,7 @@
                                             scores = []
                                             drops = []
                                             ws.close()
+                                            minigameSelected = -1
                                         } else {
                                             // AIFightButton.color = "#FF0000"
                                             // stage = new Stage(MapSelect)
@@ -5406,6 +5408,7 @@
                                             scores = []
                                             drops = []
                                             localIDs = []
+                                            minigameSelected = -1
                                         }
                                     }
 
@@ -5424,7 +5427,9 @@
                                             mapSelectToggle = 0
                                             AItoggle = 1
                                             campaignToggle = 0
+                                            campaignButton.color = "#FF0000"
                                             onlineButton.color = "#FF0000"
+                                            stage = new Stage(0)
                                         } else {
                                             minigameSelectToggle = 0
                                         }
@@ -5454,14 +5459,22 @@
                                 if (minigameSelectToggle == 1) {
                                     for (let t = 0; t < minigameIcons.length; t++) {
                                         if (minigameIcons[t].box.isPointInside(TIP_engine)) {
-                                            stage = new Stage(t+1000)
                                             minigameSelected = t
+                                            stage = new Stage(t+1000)
                                             if(t == 0){
                                                 boys = [new Princess(0)]
                                                 scores = [0]
+                                                drops = [0]
                                             }
                                             if(t == 2){
                                                 boys = [new Jox(0)]
+                                                scores = [0]
+                                                drops = [0]
+                                            }
+                                            if(t == 3){
+                                                boys.push(new Joule(0))
+                                                scores = [0]
+                                                drops = [0]
                                             }
                                         }
                                     }
@@ -5968,6 +5981,8 @@
 
                         constructor(MapToggle = 0) {
                                 this.spawnrunner = 900
+                                this.mostrecentpopcolor = "#FFFFFF"
+                                this.joulepopscore = 0
                                 this.obstacles = []
                                 this.lines = []
                                 this.joxwalltick = 70
@@ -6416,6 +6431,31 @@
                                         let circ = new CircleCB(0, 300+t*200, 100, "#FF0000")
                                         this.obstacles.push(circ)
                                     }
+                                }else if (MapToggle == 1003) {
+                                    let floor1 = new Brick(2700, 2000, 1800)
+                                    let floor2 = new Brick(1100, 2000, 1800)
+                                    floor1.edgeleft.y += 10000
+                                    floor2.edgeright.y += 10000
+                                    floor2.edgeleft.y += 10000
+                                    floor1.edgeright.y += 10000
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(new Brick(1100, 250, 1800))
+                                    this.bricks.push(floor2)
+                                    this.bricks.push(new Brick(2700, 250, 1800))
+
+                                    this.walls.push(new Wall(70, 1100, 300, 1700))
+                                    this.walls.push(new Wall(3700, 1100, 300, 1700))
+
+                                    for(let t = 0;t<19;t++){
+                                    let ragdoll = new Dummy(0)
+                                    ragdoll.body.x = 1200+(t*70)
+                                    ragdoll.body.y = 1000+((t%2)*200)
+                                    ragdoll.body.radius*= 2
+                                    ragdoll.body.color = getRandomColor()
+                                    ragdoll.body.gravity = 1.5
+                                    boys.push(ragdoll)
+                                    }
+
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6504,12 +6544,12 @@
                                     this.joxwallcounter++
                                     if(this.joxwallcounter%this.joxwalltick == 1){
                                         if(Math.random()<.5){
-                                        let wall = new Wall(3600, (Math.random() * 1800)+700, 200, 800)
+                                        let wall = new Wall(3900, (Math.random() * 1250)+600, 200, 900)
                                         this.walls.push(wall)
                                         }else{
-                                        let wall = new Wall(3600, (Math.random() * 500)+ 900, 200, 500)
+                                        let wall = new Wall(3900, (Math.random() * 500)+ 600, 200, 500)
                                         this.walls.push(wall)
-                                         wall = new Wall(3600, (Math.random() * 500) + 1400, 200, 500)
+                                         wall = new Wall(3900, (Math.random() * 500) + 1000, 200, 500)
                                         this.walls.push(wall)
                                         }
                                     }
@@ -6518,8 +6558,8 @@
                                             this.walls.splice(t,1)
                                             this.joxwallscore++
                                             if(this.joxwallscore%2 == 0){
-                                                if( this.joxwalltick < 10){
-                                                    this.joxwalltick = 10
+                                                if( this.joxwalltick < 23){
+                                                    this.joxwalltick = 23
                                                 }
                                                 this.joxwalltick-=1
                                                 this.joxwallcounter = 1
@@ -6570,6 +6610,11 @@
                                         this.brickswap = 1
                                     }
                                     }
+                                }else if(minigameSelected == 3){
+
+                                    canvas_context.font = "70px Arial"
+                                    canvas_context.fillStyle = this.mostrecentpopcolor
+                                    canvas_context.fillText(`Popped: ${this.joulepopscore}`, 1000, 100)
                                 }
                                 for (let t = 0; t < this.bricks.length; t++) {
                                     this.bricks[t].draw()
@@ -6584,7 +6629,7 @@
                     class Wall {
                         constructor(x, y, width = 200, height = 600) {
                             if(minigameSelected == 2){
-                                width = 100
+                                width = 150
                             }
                             // width = 200
                             // height = 1600
@@ -6595,7 +6640,7 @@
                             this.basecap = new Circle(this.center.x, this.center.y + (this.height * .5), this.width * .5, "#FFFFFF")
 
                             if(minigameSelected == 2){
-                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width * .5)) * 3.81, width * .5)
+                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width * .5)) * 4.81, width * .5)
                             }else{
                             this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width * .5)) * 1.81, width * .5)
                             }
@@ -8097,6 +8142,8 @@
                             canvas_context.fillText("Smashout!", this.box.x + 15, this.box.y + 95)
                             }else if(this.index == 2){
                             canvas_context.fillText("Running of the Jox!", this.box.x + 15, this.box.y + 95)
+                            }else if(this.index == 3){
+                            canvas_context.fillText("Joule Pop!", this.box.x + 15, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8111,7 +8158,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 3; t++) {
+                    for (let t = 0; t < 4; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -19442,7 +19489,11 @@
                                 if (controller == 1) {
                                     this.color = "#ff0000"
                                 }
+                                if(minigameSelected == 3){
+                                this.body = new Shot(400 + (Math.random() * 2560), 500, 75, this.color)
+                                }else{
                                 this.body = new Shotb(400 + (Math.random() * 2560), 500, 75, this.color)
+                                }
                                 this.controller = controller
                                 if (this.controller == 0) {
                                     this.body.color = "#FF0000"
@@ -19610,6 +19661,9 @@
                         }
 
                         playerMove(object) {
+                            if(minigameSelected == 3){
+                                return
+                            }
                             if (this.serverID == serverID || AItoggle == 1) {
 
                                 if (this.shield == 0) {
@@ -19736,6 +19790,8 @@
                             ////////////////////////////////console.log("caseF")
 
                             let copy = new Dummy(this.controller)
+
+
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
@@ -19749,6 +19805,15 @@
                                 for (let t = 0; t < copy.nodes.length; t++) {
                                     copy.nodes[t].x = stage.spawnrunner
                                 }
+                            }
+
+                            if(minigameSelected == 3){
+                                copy.body.radius*= 2
+                                copy.body.gravity = 1.5
+                                copy.body.color = getRandomColor()
+                                copy.body.radius += (Math.random()-.5)*50
+                                stage.joulepopscore++
+                                stage.mostrecentpopcolor = getRandomLightColor()
                             }
 
                             return copy
@@ -19872,6 +19937,15 @@
 
 
                                             if (boys[t].hasOwnProperty('radball')) {
+
+                                                if(minigameSelected == 3){
+                                                    if (boys[t].radball.doesPerimeterTouch(this.body)) {
+                                                            this.body.radius-= 73.5 / boys[t].radball.radius
+                                                            if(this.body.radius < 30){
+                                                                boys[boys.indexOf(this)] = this.copy()
+                                                            }
+                                                        }
+                                                    }
                                                 if (boys[t].radball.isPointInside(this.body)) {
                                                     if (AItoggle == 0) {
                                                         this.striker = boys[t].serverID
@@ -20521,11 +20595,16 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
+                            if(minigameSelected == 3){
+
+                            }else{
                             canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
                             }
+
+                        }
                             // if (this != boys[0]) {
                             //     canvas_context.fillText(`${Math.round(this.dmomu)},${Math.round(this.amomu)}`, this.body.x - 20, this.body.y - 150)
                             //     canvas_context.fillText(`Under:${Math.round(this.under)},Safe:${Math.round(this.safe)}`, this.body.x - 20, this.body.y - 200)
@@ -23092,12 +23171,14 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
+                            if(minigameSelected == 3){
                             canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
 
                             canvas_context.fillStyle = "FFFFFF"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
                             }
+                        }
                             // canvas_context.fillText(`Height:${Math.round(this.brick.edgeright.y)}`, this.body.x - 20, this.body.y - 250)
                             // canvas_context.fillText(`Safe:${Math.round(this.safe)}`, this.body.x - 20, this.body.y - 200)
                             // // if (this != boys[0]) {
@@ -41771,6 +41852,11 @@
                             this.lefthand.fired--
                             this.breaktimer--
                             this.radball.fired--
+                            if(minigameSelected == 3){
+                                if(this.radball.fired < 0){
+                                    this.radball.fired-=3
+                                }
+                            }
                             if (this.serverID == serverID || AItoggle == 1) {
                                 this.shielddraw = 0
                             }
@@ -47266,7 +47352,11 @@
                                             }
                                         } else {
                                             if (campaignToggle == 0) {
+
+                                            if(minigameSelected == 3){
+                                            }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
+                                            }
                                             } else {
                                                 // canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x-(canvas.width*invscale*.5)+20),(boys[0].body.y-(canvas.height*invscale*.5)+ (((t - dropouts) * 61)+170)))
                                             }
@@ -47584,8 +47674,11 @@
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((t - dropouts) * 61) + 770)))
 
                                             }else{
-                                            canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((t - dropouts) * 61) + 70)))
 
+                                            if(minigameSelected == 3){
+                                            }else{
+                                            canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((t - dropouts) * 61) + 70)))
+                                            }
                                             }
                                         }
 
@@ -47832,6 +47925,7 @@
                                     mapSelectToggle = 0
                                 }
                             if (keysPressed[' ']) {
+                                minigameSelectToggle = 0
                                 roomSelectionBox.focus = 0
                                 let wet = boys.length
                                 for (let t = 0; t < selectors.length; t++) {
