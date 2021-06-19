@@ -6531,7 +6531,14 @@
                                 }else  if(minigameSelected == 1){
 
 
+                                    if(boys[0].name == "Dummy"){
+                                    const tmp = boys[0]
+                                    boys[0] = boys[1]
+                                    boys[1] = tmp
+                                    }
 
+                                    const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
                                     let seconds = campaigntime
                                     seconds = Math.floor(seconds / 1000) % 60
                                     if(seconds > 15){
