@@ -6434,10 +6434,14 @@
                                 }else if (MapToggle == 1003) {
                                     let floor1 = new Brick(2700, 2000, 1800)
                                     let floor2 = new Brick(1100, 2000, 1800)
-                                    floor1.edgeleft.y += 10000
-                                    floor2.edgeright.y += 10000
-                                    floor2.edgeleft.y += 10000
-                                    floor1.edgeright.y += 10000
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
                                     this.bricks.push(floor1)
                                     this.bricks.push(new Brick(1100, 250, 1800))
                                     this.bricks.push(floor2)
