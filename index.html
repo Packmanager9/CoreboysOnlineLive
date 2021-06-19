@@ -2692,6 +2692,10 @@
                             }
                             return false
                         }
+                        xmove(){
+                            this.x+=this.xmom
+                            this.y+=this.ymom
+                        }
                         draw() {
                             if (typeof this.radius !== 'number') {
                                 return
@@ -5981,6 +5985,8 @@
 
                         constructor(MapToggle = 0) {
                                 this.spawnrunner = 900
+                                this.pops = []
+                                this.popslength = 0
                                 this.mostrecentpopcolor = "#FFFFFF"
                                 this.joulepopscore = 0
                                 this.obstacles = []
@@ -6615,7 +6621,18 @@
                                     }
                                     }
                                 }else if(minigameSelected == 3){
+                                    for(let t = 0;t<this.pops.length;t++){
+                                        this.pops[t].xmove()
+                                        this.pops[t].draw()
+                                        this.pops[t].life--
+                                    }
+                                    for(let t = 0;t<this.pops.length;t++){
+                                        if(this.pops[t].life<=0){
+                                            this.pops.splice(t,8)
+                                        }
+                                    }
 
+                                    this.popslength = this.pops.length
                                     canvas_context.font = "70px Arial"
                                     canvas_context.fillStyle = this.mostrecentpopcolor
                                     canvas_context.fillText(`Popped: ${this.joulepopscore}`, 1000, 100)
@@ -19812,6 +19829,15 @@
                             }
 
                             if(minigameSelected == 3){
+                                let angle = 0
+                                for(let t = 0;t<8;t++){
+                                    let circ = new Shot(this.body.x, this.body.y, 25, this.body.color, Math.cos(angle)*22, Math.sin(angle)*22)
+                                    circ.life = 22
+                                    if(stage.popslength+8 > (stage.pops.length)){
+                                        stage.pops.push(circ)
+                                    }
+                                    angle += (Math.PI/4)
+                                }
                                 copy.body.radius*= 2
                                 copy.body.gravity = 1.5
                                 copy.body.color = getRandomColor()
@@ -19908,6 +19934,19 @@
                             if (this.inactive == 1) {
                                 return
                             }
+
+
+                            if(minigameSelected == 3){
+                                for(let t =0;t<stage.pops.length;t++){
+                                    if(this.body.doesPerimeterTouch(stage.pops[t])){
+                                        this.body.radius -= 190.5 / stage.pops[t].radius
+                                        if(this.body.radius < 30){
+                                                                boys[boys.indexOf(this)] = this.copy()
+                                                                break
+                                                            }
+                                    }
+                                }
+                            }
                             for (let f = 0; f < boys.length; f++) {
                                 if (boys[f] && this != boys[f]) {
                                     for (let t = 0; t < boys.length; t++) {
@@ -19944,9 +19983,10 @@
 
                                                 if(minigameSelected == 3){
                                                     if (boys[t].radball.doesPerimeterTouch(this.body)) {
-                                                            this.body.radius-= 73.5 / boys[t].radball.radius
+                                                            this.body.radius-= 190.5 / boys[t].radball.radius
                                                             if(this.body.radius < 30){
                                                                 boys[boys.indexOf(this)] = this.copy()
+                                                                break
                                                             }
                                                         }
                                                     }
@@ -40860,7 +40900,14 @@
                                 this.hitboxes = []
                                 this.links = []
                                 this.speed = 10
+                                if(minigameSelected == 3){
+                                    this.speed = 20
+                                }
                                 this.punchspeed = 6.66 //6.5
+
+                                if(minigameSelected == 3){
+                                    this.punchspeed = 9.99 //6.5
+                                }
                                 this.grounded = 0
                                 this.frame = 0
                                 this.jumping = 1
@@ -41976,11 +42023,17 @@
                                     if (this.gamepad.gamepad.buttonsStatus.includes('X') || (keysPressed['j'] || keysPressed['ArrowLeft'])) {
                                         this.radball.radius = 250
                                         this.speed = 5
+                                        if(minigameSelected == 3){
+                                            this.speed = 10
+                                        }
                                         this.radball.xmom = 0
                                         this.radball.ymom = 0
                                         this.radball.fired = 1
                                     } else {
                                         this.speed = 10
+                                        if(minigameSelected == 3){
+                                            this.speed = 20
+                                        }
                                         this.radball.radius = 74
                                     }
                                 }
