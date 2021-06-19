@@ -4886,7 +4886,7 @@
                             // ////////console.log(num)
                             for (let t = 0; t < this.shapes.length; t++) {
                                 this.shapes[t].x += num
-                                this.shapes[t].color = getRandomColor()
+                                // this.shapes[t].color = getRandomColor()
                             }
                         }
                         draw() {
@@ -5418,6 +5418,7 @@
                                     }
                                     if (minigameSelectButton.isPointInside(TIP_engine)) {
                                         if (minigameSelectToggle == 0) {
+                                            boys = []
                                             minigameSelectToggle = 1
                                             mapSelectToggle = 0
                                             AItoggle = 1
@@ -5456,6 +5457,9 @@
                                             minigameSelected = t
                                             if(t == 0){
                                                 boys = [new Princess(0)]
+                                            }
+                                            if(t == 2){
+                                                boys = [new Jox(0)]
                                             }
                                         }
                                     }
@@ -5964,6 +5968,9 @@
                                 this.spawnrunner = 900
                                 this.obstacles = []
                                 this.lines = []
+                                this.joxwalltick = 70
+                                this.joxwallcounter = 0
+                                this.joxwallscore = 0
                             // MapToggle-=1
                             if (campaignToggle == 1) {
                                 this.playerrunner = 0
@@ -6399,6 +6406,14 @@
                                     this.walls.push(new Wall(150, 1500, 200, 1200))
                                     this.walls.push(new Wall(1350, 1500, 200, 1200))
                                     // this.bricks.push(new Brick(1900, 2450, 10000))
+                                } else if (MapToggle == 1002) {
+                                    this.bricks.push(new Brick(1900, 250, 3800))
+                                    this.bricks.push(new Brick(1900, 2000, 3800))
+                                    this.obstacles = []
+                                    for(let t = 0;t<9;t++){
+                                        let circ = new CircleCB(0, 300+t*200, 100, "#FF0000")
+                                        this.obstacles.push(circ)
+                                    }
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6474,9 +6489,44 @@
                                 for (let t = 0; t < this.lines.length; t++) {
                                     this.lines[t].draw()
                                 }
-                                if(minigameSelected == 0){
+                                if(minigameSelected == 0 || minigameSelected == 2){
                                     for (let t = 0; t < this.obstacles.length; t++) {
                                     this.obstacles[t].draw()
+                                }
+                                if(minigameSelected == 2){
+
+                                    canvas_context.font = "40px Arial"
+                                    canvas_context.fillStyle = "#00FFFF"
+                                    canvas_context.fillText(`Avoided: ${this.joxwallscore}`, 1000, 100)
+
+                                    this.joxwallcounter++
+                                    if(this.joxwallcounter%this.joxwalltick == 1){
+                                        if(Math.random()<.5){
+                                        let wall = new Wall(3600, (Math.random() * 1800)+700, 200, 800)
+                                        this.walls.push(wall)
+                                        }else{
+                                        let wall = new Wall(3600, (Math.random() * 500)+ 900, 200, 500)
+                                        this.walls.push(wall)
+                                         wall = new Wall(3600, (Math.random() * 500) + 1400, 200, 500)
+                                        this.walls.push(wall)
+                                        }
+                                    }
+                                    for(let t = 0;t<this.walls.length;t++){
+                                        if(this.walls[t].topcap.x < 0){
+                                            this.walls.splice(t,1)
+                                            this.joxwallscore++
+                                            if(this.joxwallscore%2 == 0){
+                                                if( this.joxwalltick < 10){
+                                                    this.joxwalltick = 10
+                                                }
+                                                this.joxwalltick-=1
+                                                this.joxwallcounter = 1
+                                            }
+                                        }
+                                    }
+                                    for(let t = 0;t<this.walls.length;t++){
+                                        this.walls[t].shape.shiftRight(-12)
+                                    }
                                 }
                                 }else  if(minigameSelected == 1){
 
@@ -6512,7 +6562,6 @@
                                     }
                                     }
                                 }
-
                                 for (let t = 0; t < this.bricks.length; t++) {
                                     this.bricks[t].draw()
                                 }
@@ -6525,19 +6574,30 @@
 
                     class Wall {
                         constructor(x, y, width = 200, height = 600) {
+                            if(minigameSelected == 2){
+                                width = 100
+                            }
                             // width = 200
                             // height = 1600
-                            this.center = new Point(x, y)
+                            this.center = new Circle(x, y,0,"")
                             this.width = width
                             this.height = height
                             this.topcap = new Circle(this.center.x, this.center.y - (this.height * .5), this.width * .5, "#FFFFFF")
                             this.basecap = new Circle(this.center.x, this.center.y + (this.height * .5), this.width * .5, "#FFFFFF")
+
+                            if(minigameSelected == 2){
+                            this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width * .5)) * 3.81, width * .5)
+                            }else{
                             this.shape = castBetween(this.topcap, this.basecap, (this.height / (this.width * .5)) * 1.81, width * .5)
+                            }
+                            // if(minigameSelected == 2){
                             // this.shape2 = castBetween(this.topcap, this.basecap, (this.height / (this.width*.5)) * 1.41, width*.5)
-                            this.shape.shapes.push(this.topcap)
-                            this.shape.shapes.push(this.basecap)
                             // this.shape2.shapes.push(this.topcap)
                             // this.shape2.shapes.push(this.basecap)
+                            // }
+                            this.shape.shapes.push(this.topcap)
+                            this.shape.shapes.push(this.basecap)
+                            this.shape.shapes.push(this.center)
                             this.link = new LineOP(this.topcap, this.basecap, "#FFFFFF", this.width)
 
                         }
@@ -6682,8 +6742,14 @@
                             if (stagepoint != false) {
                                 let dis = (stagepoint.radius + circle.radius) - (new LineOP(circle, stagepoint).hypotenuse())
                                 let angle = new LineOP(circle, stagepoint).angle()
+
+                            if(minigameSelected == 2){
+                                circle.x += dis * (Math.cos(angle)) * 1.05
+                                circle.y += dis * (Math.sin(angle)) * 1.05
+                            }else{
                                 circle.x += dis * (Math.cos(angle)) * .99
                                 circle.y += dis * (Math.sin(angle)) * .99
+                            }
                             }
 
 
@@ -8020,6 +8086,8 @@
                             canvas_context.fillText("GeGeGeGee Drop!", this.box.x + 15, this.box.y + 95)
                             }else if(this.index == 1){
                             canvas_context.fillText("Smashout!", this.box.x + 15, this.box.y + 95)
+                            }else if(this.index == 2){
+                            canvas_context.fillText("Running of the Jox!", this.box.x + 15, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8034,7 +8102,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 2; t++) {
+                    for (let t = 0; t < 3; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -17095,6 +17163,9 @@
                             ////////////////////////////////console.log("caseF")
 
                             let copy = new Jox(this.controller)
+                            if(minigameSelected == 2){
+                                stage.joxwallscore = 0
+                            }
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
