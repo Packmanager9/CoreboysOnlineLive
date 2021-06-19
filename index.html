@@ -6438,8 +6438,8 @@
                                         this.obstacles.push(circ)
                                     }
                                 }else if (MapToggle == 1003) {
-                                    let floor1 = new Brick(2700, 2000, 1800)
-                                    let floor2 = new Brick(1100, 2000, 1800)
+                                    let floor1 = new Brick(2750, 2000, 1900)
+                                    let floor2 = new Brick(1050, 2000, 1900)
                                     floor1.edgeleft.x -= 100000
                                     floor2.edgeright.x += 100000
                                     floor2.edgeleft.x -= 10000
@@ -6449,12 +6449,12 @@
                                     floor2.edgeleft.radius = .1
                                     floor1.edgeright.radius = .1
                                     this.bricks.push(floor1)
-                                    this.bricks.push(new Brick(1100, 250, 1800))
+                                    this.bricks.push(new Brick(1050, 100, 1900))
                                     this.bricks.push(floor2)
-                                    this.bricks.push(new Brick(2700, 250, 1800))
+                                    this.bricks.push(new Brick(2750, 100, 1900))
 
-                                    this.walls.push(new Wall(70, 1100, 300, 1700))
-                                    this.walls.push(new Wall(3700, 1100, 300, 1700))
+                                    // this.walls.push(new Wall(70, 1100, 200, 1700))
+                                    // this.walls.push(new Wall(3700, 1100, 200, 1700))
 
                                     for(let t = 0;t<19;t++){
                                     let ragdoll = new Dummy(0)
