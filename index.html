@@ -6592,7 +6592,7 @@
                                     const now = new Date()
                                     campaigntime = now.getTime() - campaigntimestart
                                     let seconds = campaigntime
-                                    seconds = Math.floor(seconds / 1000) % 60
+                                    seconds = Math.floor(seconds / 1000) 
                                     if(seconds > 15){
 
                                     if(boys[0].name != "Dummy"){
@@ -19842,7 +19842,15 @@
                                 copy.body.gravity = 1.5
                                 copy.body.color = getRandomColor()
                                 copy.body.radius += (Math.random()-.5)*50
-                                stage.joulepopscore++
+
+
+                                const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000)  
+                                    if(seconds < 60){
+                                        stage.joulepopscore++
+                                    }
                                 stage.mostrecentpopcolor = getRandomLightColor()
                             }
 
@@ -47778,6 +47786,33 @@
 
 
                                     }
+                                }else{
+                                    if(minigameSelected == 3){
+
+                                        const now = new Date()
+                                        campaigntime = now.getTime() - campaigntimestart
+
+                                        let ms = (campaigntime % 1000)
+                                        let seconds = campaigntime
+                                        let minutes = campaigntime
+                                        minutes = Math.floor(minutes / 60000)
+                                        seconds = Math.floor(seconds / 1000) 
+                                        if (seconds < 10) {
+                                            seconds = "0" + seconds
+                                        }
+
+                                        let roundedms = (ms / 1000).toFixed(2)
+                                        let rounder = roundedms.split('')
+                                        rounder.splice(0, 1)
+                                        roundedms = rounder.join('')
+
+
+
+                                        canvas_context.fillStyle = "white"
+
+                                        canvas_context.fillText(`${Math.max(60-seconds,0)}`, 200, 400)
+                            
+                                    }
                                 }
                             }
                         } else {
@@ -48225,6 +48260,10 @@
                                             drops.push(0)
                                         }
                                     }
+                                }
+                                if( minigameSelected == 3){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
                                 }
 
                                 if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
