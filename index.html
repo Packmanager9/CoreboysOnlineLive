@@ -27088,7 +27088,9 @@
                             }
                             for (let t = 0; t < this.shots.length; t++) {
                                 if (this.shots[t].y > (1440 * (invscale * .5)) || this.shots[t].x < 0 || this.shots[t].x > (2560 * (invscale * .5)) || this.shots[t].y < 0) {
-                                    if (campaignToggle == 0) {
+                                    if (minigameSelected == 0) {
+                                        
+                                    }else if (campaignToggle == 0) {
                                         this.shots[t].marked = 1
                                     } else if (this.shots[t].y > (1840 * (invscale * .5))) {
                                         this.shots[t].marked = 1
