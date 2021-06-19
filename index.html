@@ -5322,6 +5322,7 @@
                                     counter = 0
                                     if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
+                                        
                                     }
                                     boys = []
                                     scores = []
@@ -5457,6 +5458,7 @@
                                             minigameSelected = t
                                             if(t == 0){
                                                 boys = [new Princess(0)]
+                                                scores = [0]
                                             }
                                             if(t == 2){
                                                 boys = [new Jox(0)]
@@ -26791,6 +26793,12 @@
                             ////////////////////////////////console.log("caseF")
 
                             let copy = new Princess(this.controller)
+
+
+                            if(minigameSelected == 0){
+                                const now = new Date()
+                                campaigntimestart = now.getTime() 
+                            }
                             copy.id = this.id
                             copy.frame = this.frame
                             if (this.inactive == 1) {
@@ -46802,8 +46810,12 @@
                                 counter = 0
                                 if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1) {
                                     if (boys.length > 0) {
+                                        if(minigameSelected == 0){
+                                            canvas_context.translate(0,700)
+                                        }
                                         minigameSelected=-1
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
+                                  
                                     }
                                 }
                                 boys = []
@@ -47568,7 +47580,13 @@
 
                                             canvas_context.font = "60px arial"
                                             canvas_context.fillStyle = boys[t].body.color
+                                            if(minigameSelected == 0){
+                                                canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((t - dropouts) * 61) + 770)))
+
+                                            }else{
                                             canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((t - dropouts) * 61) + 70)))
+
+                                            }
                                         }
 
 
@@ -47594,7 +47612,11 @@
 
                                         canvas_context.fillStyle = "white"
 
+                                        if(minigameSelected == 0){
+                                        canvas_context.fillText(`${minutes}:${seconds}${roundedms}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 870)))
+                                        }else{
                                         canvas_context.fillText(`${minutes}:${seconds}${roundedms}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 170)))
+                                        }
 
 
                                     }
@@ -48055,7 +48077,9 @@
                                     }
                                     if (boys.length > 0) {
                                         canvas_context.translate((canvas.width * (invscale * .5)) - boys[0].body.x, (canvas.height * (invscale * .5)) - boys[0].body.y)
-
+                                        if(minigameSelected == 0){
+                                            canvas_context.translate(0, -700)
+                                        }
                                     }
                                 }
                                 if (boys.length == 1) {
