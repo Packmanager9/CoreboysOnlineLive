@@ -5331,6 +5331,8 @@
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
                                         
                                     }
+
+                                    minigameSelected = -1
                                     boys = []
                                     scores = []
                                     drops = []
@@ -5400,6 +5402,7 @@
                                     if (onlineButton.isPointInside(TIP_engine)) {
                                         if (AItoggle == 1 || localPlayToggle == 1 || localPlayToggle == 1) {
                                             ws.close()
+                                            minigameSelectToggle = 0
                                             campaignToggle = 0
                                             AItoggle = 0
                                             start = 0
@@ -5420,6 +5423,7 @@
                                             minigameSelected = -1
                                             minigameSelectToggle = 0
                                         }else{
+                                            minigameSelectToggle = 0
                                             localPlayToggle = 0
                                             localButton.color = "#FF0000"
                                         }
@@ -5437,7 +5441,13 @@
                                     if (minigameSelectButton.isPointInside(TIP_engine)) {
                                         if (minigameSelectToggle == 0) {
                                             boys = []
+                                            minigameSelected = 0
+
                                             minigameSelectToggle = 1
+                                            boys = [new Princess(0)]
+                                                scores = [0]
+                                                drops = [0]
+                                            stage = new Stage(1000)
                                             mapSelectToggle = 0
                                             localPlayToggle = 1  //AITggle
                                             localButton.color = "#00FF00"
@@ -5446,13 +5456,15 @@
                                             campaignToggle = 0
                                             campaignButton.color = "#FF0000"
                                             onlineButton.color = "#FF0000"
-                                            stage = new Stage(0)
                                         } else {
                                             minigameSelectToggle = 0
                                         }
                                     }
                                     if(localButton.isPointInside(TIP_engine)){
                                         if(localPlayToggle == 0){
+
+                                            ws.close()
+                                            minigameSelectToggle = 0
                                             localPlayToggle = 1
                                             humanPlayers = 1004
                                             AItoggle = 0
@@ -5466,11 +5478,27 @@
                                             boys = []
 
                                         }else{
+                                            ws.close()
+                                            minigameSelectToggle = 0
+                                            campaignToggle = 0
+                                            AItoggle = 0
+                                            start = 0
+                                            HOST = location.origin.replace(/^http/, 'ws')
+                                            ws = new WebSocket(HOST);
+                                            socketize(ws)
+                                            onlineButton.color = "#00FF00"
+                                            campaignButton.color = "#FF0000"
+                                            AIFightButton.color = "#FF0000"
+                                            localButton.color = "#FF0000"
                                             localPlayToggle = 0
                                             humanPlayers = 1004
-                                            AItoggle = 0
-                                            localButton.color = "#FF0000"
                                             stage = new Stage(MapSelect)
+                                            boys = []
+                                            scores = []
+                                            drops = []
+                                            localIDs = []
+                                            minigameSelected = -1
+                                            minigameSelectToggle = 0
                                         }
                                     }
 
@@ -5518,6 +5546,11 @@
                                             }
                                             if(t == 4){
                                                 boys.push(new Mass(0))
+                                                scores = [0]
+                                                drops = [0]
+                                            }
+                                            if(t == 5){
+                                                boys.push(new Rhopho(0))
                                                 scores = [0]
                                                 drops = [0]
                                             }
@@ -5970,7 +6003,7 @@
                                     delete this.controller;
                                 },
                                 update: function () {
-                                    if(localPlayToggle == 0){
+                                    if(localPlayToggle == 0 || minigameSelected == 1 || minigameSelected == 3){
                                         this.controller = navigator.getGamepads()[0]
                                     }else{
                                         this.controller = navigator.getGamepads()[this.locator]
@@ -6092,6 +6125,7 @@
                                 this.mostrecentpopcolor = "#FFFFFF"
                                 this.joulepopscore = 0
                                 this.masstargetscore = 0
+                                this.rhophosortscore = 0
                                 this.obstacles = []
                                 this.lines = []
                                 this.joxwalltick = 70
@@ -6586,6 +6620,45 @@
                                         let target= new Target()
                                         this.obstacles.push(target)
                                     }
+                                }else if(MapToggle == 1005){
+
+
+                                    for(let t = 0;t<9;t++){
+                                    let ragdoll = new Dummy(0)
+                                    ragdoll.body.x = 1900
+                                    ragdoll.body.y = 300+t+100
+                                    // ragdoll.body.radius*= .5    
+                                    ragdoll.life = 600
+                                     if(Math.random()<.5){
+                                                    ragdoll.body.color = "#FF0000"
+                                                }else{
+                                                    ragdoll.body.color =   "#0000FF"
+                                                }
+                                    ragdoll.body.gravity = 1.5
+                                    boys.push(ragdoll)
+                                    }
+
+
+                                    this.redbox = new Rectangle(500, 1175, 1400, 1200, "#FF000065")
+                                    this.bluebox = new Rectangle(1900, 1175, 1400, 1200, "#0000FF65")
+                                    this.walls.push(new Wall(1900, 1900, 400, 900))
+                                    this.walls.push(new Wall(500, 1400, 400, 1600))
+                                    this.walls.push(new Wall(3300, 1400, 400, 1600))
+
+                                    let floor1 = new Brick(2750, 2100, 1900)
+                                    let floor2 = new Brick(1050, 2100, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+                                    this.bricks.push(new Brick(1900, 1250, 800))
+                                    this.bricks.push(new Brick(1900, 1700, 1000))
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6620,6 +6693,63 @@
                             this.brickswap = 0
                         }
                         draw() {
+                            if(minigameSelected == 5){
+                                this.redbox.draw()
+                                this.bluebox.draw()
+                                for(let t = 0;t<boys.length;t++){
+                                    if(boys[t].name != "Rhopho"){
+                                        boys[t].damage = 0
+                                        if(Math.random()<.1){
+                                            if(boys[t].body.color == "#FF0000"){
+                                            if(this.redbox.isPointInside(boys[t].body)){
+                                                boys[t].body.y = 300
+                                                boys[t].body.x = 1900
+                                                boys[t].body.ymom = 0
+                                                boys[t].body.xmom = 0
+                                                boys[t].life = 600
+                                                this.rhophosortscore++
+                                                if(Math.random()<.5){
+                                                    boys[t].body.color = "#FF0000"
+                                                }else{
+                                                    boys[t].body.color ="#0000FF"
+                                                }
+
+                                            }
+                                            }else{
+                                            if(this.bluebox.isPointInside(boys[t].body)){
+                                                boys[t].body.y = 300
+                                                boys[t].body.x = 1900
+                                                boys[t].body.ymom = 0
+                                                boys[t].body.xmom = 0
+                                                boys[t].life = 600
+                                                this.rhophosortscore++
+                                                if(Math.random()<.5){
+                                                    boys[t].body.color = "#FF0000"
+                                                }else{
+                                                    boys[t].body.color ="#0000FF"
+                                                }
+
+                                            }
+
+                                            }
+                                        }else{
+                                            boys[t].life--
+                                            if(boys[t].life <= 0){
+                                                boys[t].life = 600
+                                                boys[t].body.y = 300
+                                                boys[t].body.x = 1900
+                                                boys[t].body.ymom = 0
+                                                boys[t].body.xmom = 0
+                                                if(Math.random()<.5){
+                                                    boys[t].body.color = "#FF0000"
+                                                }else{
+                                                    boys[t].body.color ="#0000FF"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             if (campaignToggle == 1) {
 
                                 for (let t = 0; t < this.bricks.length; t++) {
@@ -6773,6 +6903,11 @@
                                     canvas_context.font = "70px Arial"
                                     canvas_context.fillStyle = "#00FFFF"
                                     canvas_context.fillText(`Shot: ${this.masstargetscore}`, 200, 300)
+                                }
+                            if(minigameSelected == 5){
+                                    canvas_context.font = "70px Arial"
+                                    canvas_context.fillStyle = "#FF00FF"
+                                    canvas_context.fillText(`Sorted: ${this.rhophosortscore}`, 200, 300)
                                 }
                         }
                     }
@@ -8297,6 +8432,8 @@
                             canvas_context.fillText("Joule Pop!", this.box.x + 75, this.box.y + 95)
                             }else if(this.index == 4){
                             canvas_context.fillText("Mass Blast!", this.box.x + 75, this.box.y + 95)
+                            }else if(this.index == 5){
+                            canvas_context.fillText("Rhopho Sort!", this.box.x + 75, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8311,7 +8448,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 5; t++) {
+                    for (let t = 0; t < 6; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -19981,6 +20118,9 @@
                                 }
                             }
 
+                            if(minigameSelected == 5){
+                                copy.life = this.life
+                            }
                             if(minigameSelected == 3){
                                 let angle = 0
                                 for(let t = 0;t<8;t++){
@@ -20800,7 +20940,13 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            if(minigameSelected == 3){
+                            if(minigameSelected == 3 || minigameSelected == 5){
+
+
+                                if(minigameSelected == 5){
+                                    canvas_context.fillStyle = "white"
+                                    canvas_context.fillText(`${Math.round(this.life*.1)}`, this.body.x - 20, this.body.y - 100)
+                                }
 
                             }else{
                             canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
@@ -47150,6 +47296,8 @@
                                   
                                     }
                                 }
+
+                                minigameSelected = -1
                                 boys = []
                                 scores = []
                                 drops = []
@@ -47603,7 +47751,7 @@
                                         } else {
                                             if (campaignToggle == 0) {
 
-                                            if(minigameSelected == 3 || minigameSelected == 4){
+                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5){
                                             }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
                                             }
