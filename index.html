@@ -27761,7 +27761,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -speed * 2 // was this.speed?
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
