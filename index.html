@@ -5407,6 +5407,8 @@
                                             onlineButton.color = "#00FF00"
                                             campaignButton.color = "#FF0000"
                                             AIFightButton.color = "#FF0000"
+                                            localButton.color = "#FF0000"
+                                            localPlayToggle = 0
                                             humanPlayers = 1004
                                             stage = new Stage(MapSelect)
                                             boys = []
@@ -5447,6 +5449,7 @@
                                             campaignToggle = 0
                                             localButton.color = "#00FF00"
                                             onlineButton.color = "#FF0000"
+                                            campaignButton.color = "#FF0000"
                                             minigameSelected = -1
                                             boys = []
 
@@ -46860,8 +46863,8 @@
 
 
                     let campaignButton = new Rectangle(2900, 1000, 320, 100, "#FFFFFF")
-                    let AIFightButton = new Rectangle(3300, 1000, 320, 100, "#FFFFFF")
-                    let onlineButton = new Rectangle(2900, 1150, 320, 100, "#FFFFFF")
+                    let AIFightButton = new Rectangle(3300, 1000, 320, 100, "#FF0000")
+                    let onlineButton = new Rectangle(2900, 1150, 320, 100, "#00FF00")
 
 
                     let escapeButton = new Rectangle((canvas.width * invscale) - 50, 0, 50, 50, "#FFAAAA")
