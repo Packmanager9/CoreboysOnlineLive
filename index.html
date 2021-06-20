@@ -5993,6 +5993,9 @@
                             targetcount++
                             this.angle = Math.random()
                             this.turn = (Math.random()-.5)*.05
+                            if(Math.abs(this.turn) < .001){
+                                this.turn = .002
+                            }
 
                         }
                         draw(){
