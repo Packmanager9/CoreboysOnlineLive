@@ -5398,7 +5398,7 @@
                                         }
                                     }
                                     if (onlineButton.isPointInside(TIP_engine)) {
-                                        if (AItoggle == 1) {
+                                        if (AItoggle == 1 || localPlayToggle == 1) {
                                             ws.close()
                                             campaignToggle = 0
                                             AItoggle = 0
@@ -5418,6 +5418,7 @@
                                             drops = []
                                             localIDs = []
                                             minigameSelected = -1
+                                            minigameSelectToggle = 0
                                         }else{
                                             localPlayToggle = 0
                                             localButton.color = "#FF0000"
@@ -5437,7 +5438,10 @@
                                             boys = []
                                             minigameSelectToggle = 1
                                             mapSelectToggle = 0
-                                            AItoggle = 1
+                                            localPlayToggle = 1  //AITggle
+                                            localButton.color = "#00FF00"
+                                            AIFightButton.color = "#FF0000"
+                                            AItoggle = 0
                                             campaignToggle = 0
                                             campaignButton.color = "#FF0000"
                                             onlineButton.color = "#FF0000"
@@ -8666,7 +8670,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -8720,7 +8724,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -9378,7 +9382,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -11711,7 +11715,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -11736,7 +11740,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -11790,7 +11794,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -14554,7 +14558,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -14608,7 +14612,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -15310,7 +15314,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -17269,7 +17273,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -17323,7 +17327,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -18020,7 +18024,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -19842,7 +19846,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -19896,7 +19900,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -20605,7 +20609,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -21185,7 +21189,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -21239,7 +21243,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -21943,7 +21947,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -23875,7 +23879,7 @@
                         //             if (keysPressed['w']) {
                         //                 if (this.grounded == 1) {
                         //                     this.jumping = 1
-                        //                     object.ymom -= this.speed * 2
+                        //                     object.ymom = -this.speed * 1 * 2
                         //                 } else {
                         //                     if (this.lefthand.anchored == 1) {
                         //                         this.degripl()
@@ -23929,7 +23933,7 @@
                         //                         if (this.grounded == 1) {
                         //                             object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                         //                             if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                        //                                 object.ymom -= this.speed * 2
+                        //                                 object.ymom = -this.speed * 1 * 2
                         //                                 this.jumping = 1
                         //                             }
                         //                         } else {
@@ -23994,7 +23998,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2.5
+                                            object.ymom = -this.speed * 1 * 2.5
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -24048,7 +24052,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2.5
+                                                        object.ymom = -this.speed * 1 * 2.5
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -24783,7 +24787,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2.5
+                                                    object.ymom = -this.speed * 1 * 2.5
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -26965,7 +26969,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -27019,7 +27023,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -27761,7 +27765,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom = -speed * 2 // was this.speed?
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -29709,7 +29713,7 @@
                                         if (this.grounded == 1) {
                                             this.jumping = 1
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
@@ -29764,7 +29768,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -30458,7 +30462,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -32581,7 +32585,7 @@
                                         if (this.grounded == 1) {
                                             this.jumping = 1
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
-                                            object.ymom -= this.speed * 2
+                                            object.ymom = -this.speed * 1 * 2
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
@@ -32636,7 +32640,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -33347,7 +33351,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -35542,7 +35546,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 4
+                                            object.ymom = -this.speed * 1 * 4
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -35596,7 +35600,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2
+                                                        object.ymom = -this.speed * 1 * 2
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -36244,7 +36248,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -38325,7 +38329,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 2.5
+                                            object.ymom = -this.speed * 1 * 2.5
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -38379,7 +38383,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 2.5
+                                                        object.ymom = -this.speed * 1 * 2.5
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -38442,13 +38446,13 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 1.4
+                                            object.ymom = -this.speed * 1 * 1.4
                                         } else {
                                             if (this.lefthand.anchored == 1) {
-                                                object.ymom -= this.speed * .7
+                                                object.ymom = -this.speed * 1 * .7
                                             }
                                             if (this.righthand.anchored == 1) {
-                                                object.ymom -= this.speed * .7
+                                                object.ymom = -this.speed * 1 * .7
                                             }
                                         }
                                     }
@@ -38474,14 +38478,14 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed * .7)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 1.4
+                                                        object.ymom = -this.speed * 1 * 1.4
                                                     }
                                                 } else {
 
 
                                                     if (this.gamepad.gamepad.axesStatus[0] < -.5) {
                                                         if (this.lefthand.anchored == 1) {
-                                                            object.ymom -= this.speed * .7
+                                                            object.ymom = -this.speed * 1 * .7
                                                         } else {
                                                             object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed * .7)
                                                         }
@@ -38489,7 +38493,7 @@
                                                     if (this.gamepad.gamepad.axesStatus[0] > .5) {
                                                         this.face = 1
                                                         if (this.righthand.anchored == 1) {
-                                                            object.ymom -= this.speed * .7
+                                                            object.ymom = -this.speed * 1 * .7
                                                         } else {
                                                             object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed * .7)
                                                         }
@@ -38498,7 +38502,7 @@
 
                                                     if (this.gamepad.gamepad.axesStatus[1] < -.5) {
                                                         if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
-                                                            object.ymom -= this.speed * .7
+                                                            object.ymom = -this.speed * 1 * .7
                                                         }
 
                                                     }
@@ -38529,13 +38533,13 @@
                                     if (this.wmove == 1) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 1.4
+                                            object.ymom = -this.speed * 1 * 1.4
                                         } else {
                                             if (this.lefthand.anchored == 1) {
-                                                object.ymom -= this.speed * .7
+                                                object.ymom = -this.speed * 1 * .7
                                             }
                                             if (this.righthand.anchored == 1) {
-                                                object.ymom -= this.speed * .7
+                                                object.ymom = -this.speed * 1 * .7
                                             }
                                         }
                                     }
@@ -39217,7 +39221,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 2
+                                                    object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -41286,7 +41290,7 @@
                                     if (keysPressed['w']) {
                                         if (this.grounded == 1) {
                                             this.jumping = 1
-                                            object.ymom -= this.speed * 3
+                                            object.ymom = -this.speed * 1 * 3
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
@@ -41340,7 +41344,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 3
+                                                        object.ymom = -this.speed * 1 * 3
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -41996,7 +42000,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 3
+                                                    object.ymom = -this.speed * 1 * 3
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -44318,18 +44322,18 @@
                                         if (this.grounded == 1) {
                                             this.jumping = 1
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
-                                            object.ymom -= this.speed * 4
+                                            object.ymom = -this.speed * 1 * 4
                                             ////////////////////////////////////console.log(object.ymom,this.body.ymom)
                                         } else {
                                             if (this.lefthand.anchored == 1) {
                                                 this.degripl()
                                                 this.jumping = 1
-                                                object.ymom -= this.speed * 2 // not as high as the axes? //not2
+                                                object.ymom = -this.speed * 1 * 2 // not as high as the axes? //not2
                                             }
                                             if (this.righthand.anchored == 1) {
                                                 this.degripr()
                                                 this.jumping = 1
-                                                object.ymom -= this.speed * 2  //not2
+                                                object.ymom = -this.speed * 1 * 2  //not2
                                             }
                                         }
                                     }
@@ -44373,7 +44377,7 @@
                                                 if (this.grounded == 1) {
                                                     object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                     if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                        object.ymom -= this.speed * 4
+                                                        object.ymom = -this.speed * 1 * 4
                                                         this.jumping = 1
                                                     }
                                                 } else {
@@ -44383,7 +44387,7 @@
                                                         if (this.lefthand.anchored == 1) {
                                                             this.degripl()
                                                             this.jumping = 1
-                                                            object.ymom -= this.speed * 2
+                                                            object.ymom = -this.speed * 1 * 2
                                                         } else {
                                                             object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                         }
@@ -44393,7 +44397,7 @@
                                                         if (this.righthand.anchored == 1) {
                                                             this.degripr()
                                                             this.jumping = 1
-                                                            object.ymom -= this.speed * 2
+                                                            object.ymom = -this.speed * 1 * 2
                                                         } else {
                                                             object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                         }
@@ -44406,7 +44410,7 @@
                                                             this.degripr()
                                                             this.degripl()
                                                             this.jumping = 1
-                                                            object.ymom -= this.speed * 2
+                                                            object.ymom = -this.speed * 1 * 2
                                                         }
 
                                                     }
@@ -45074,7 +45078,7 @@
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom -= this.speed * 4
+                                                    object.ymom = -this.speed * 1 * 4
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
                                                 }
@@ -47330,7 +47334,7 @@
                                 for (let t = 0; t < boys.length; t++) {
                                     if (boys[t]) {
 
-                                        if (AItoggle == 0) {
+                                        if (AItoggle == 0 && localPlayToggle == 0) {
                                             boys[t].body.color = colors[t]
                                         }
                                         boys[t].draw()
