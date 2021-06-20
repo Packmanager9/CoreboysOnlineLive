@@ -84,6 +84,7 @@
                     let cameraysum = 0
                     // let meshtoggle = 0
                     let boys = []
+                    let localPlayToggle = 0
                     let mapIcons = []
                     let minigameIcons = []
                     let strarr = []
@@ -5438,6 +5439,24 @@
                                             minigameSelectToggle = 0
                                         }
                                     }
+                                    if(localButton.isPointInside(TIP_engine)){
+                                        if(localPlayToggle == 0){
+                                            localPlayToggle = 1
+                                            humanPlayers = 16
+                                            AItoggle = 1
+                                            campaignToggle = 0
+                                            localButton.color = "#00FF00"
+                                            onlineButton.color = "#FF0000"
+                                            minigameSelected = -1
+                                            boys = []
+
+                                        }else{
+                                            localPlayToggle = 0
+                                            humanPlayers = 1004
+                                            AItoggle = 0
+                                            localButton.color = "#FF0000"
+                                        }
+                                    }
 
                                 }
                                 if (AItoggle == 0 && campaignToggle == 0) {
@@ -5898,7 +5917,9 @@
 
                     class Gamepad {
                         constructor(num) {
+                            this.locator = 0
                             this.gamepad = {
+                                locator: 0,
                                 controller: {},
                                 turbo: true,
                                 connect: function (evt) {
@@ -5929,7 +5950,11 @@
                                     delete this.controller;
                                 },
                                 update: function () {
-                                    this.controller = navigator.getGamepads()[0]
+                                    if(localPlayToggle == 0){
+                                        this.controller = navigator.getGamepads()[0]
+                                    }else{
+                                        this.controller = navigator.getGamepads()[this.locator]
+                                    }
                                     this.buttonsCache = [];// clear the buttons cache
                                     for (var k = 0; k < this.buttonsStatus.length; k++) {// move the buttons status from the previous frame to the cache
                                         this.buttonsCache[k] = this.buttonsStatus[k];
@@ -46831,6 +46856,7 @@
                     let mapSelectButton = new Rectangle(2900, 1300, 320, 100, "#FFFFFF")
 
                     let minigameSelectButton = new Rectangle(3300, 1300, 320, 100, "#FFFFFF")
+                    let localButton = new Rectangle(2900, 1450, 320, 100, "#FFFFFF")
 
 
                     let campaignButton = new Rectangle(2900, 1000, 320, 100, "#FFFFFF")
@@ -47208,6 +47234,10 @@
 
                             for (let t = boys.length - 1; t >= 0; t--) {
                                 if (boys[t]) {
+                                    if(localPlayToggle == 1){
+                                        boys[t].gamepad.locator = t
+                                        boys[t].gamepad.gamepad.locator = t
+                                    }
                                     boys[t].gamepad.gamepad.update()
                                 }
                             }
@@ -47983,6 +48013,11 @@
                                     canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
 
                                     canvas_context.font = "30px arial"
+                                    localButton.draw()
+                                    canvas_context.fillStyle = "#000000"
+                                    canvas_context.fillText(`Local Match`, localButton.x + (localButton.width * .25), localButton.y + (localButton.width * .20))
+                                    
+                                    canvas_context.font = "30px arial"
                                     campaignButton.draw()
                                     canvas_context.fillStyle = "#000000"
                                     canvas_context.fillText(`Campaign`, campaignButton.x + (campaignButton.width * .3), campaignButton.y + (campaignButton.width * .20))
@@ -48021,6 +48056,12 @@
                                     canvas_context.font = "90px arial"
                                     canvas_context.fillStyle = "#FF0000"
                                     canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
+
+                                    canvas_context.font = "30px arial"
+                                    localButton.draw()
+                                    canvas_context.fillStyle = "#000000"
+                                    canvas_context.fillText(`Local Match`, localButton.x + (localButton.width * .25), localButton.y + (localButton.width * .20))
+                                    
 
                                     canvas_context.font = "30px arial"
                                     campaignButton.draw()
