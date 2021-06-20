@@ -439,8 +439,11 @@
                                 // ////////////////////////////////////////////console.log(boys)
                             })
                             if (AItoggle == 0) {
+
+                                if(localPlayToggle != 1){
                                 ws.send(serverID)
                                 swapRoom()
+                                }
                             }
                         })
                     }
@@ -5314,7 +5317,6 @@
                             }
                             if (escapeButton.isPointInside(TIP_engine)) {
                                 serverID = parseFloat(Math.random().toFixed(7))
-                                // ws.send('cleanout')
                                 selectors = []
                                 for (let t = 0; t < 16; t++) {
 
@@ -5416,6 +5418,9 @@
                                             drops = []
                                             localIDs = []
                                             minigameSelected = -1
+                                        }else{
+                                            localPlayToggle = 0
+                                            localButton.color = "#FF0000"
                                         }
                                     }
 
@@ -5444,13 +5449,15 @@
                                     if(localButton.isPointInside(TIP_engine)){
                                         if(localPlayToggle == 0){
                                             localPlayToggle = 1
-                                            humanPlayers = 16
-                                            AItoggle = 1
+                                            humanPlayers = 1004
+                                            AItoggle = 0
+                                            AIFightButton.color = "#FF0000"
                                             campaignToggle = 0
                                             localButton.color = "#00FF00"
                                             onlineButton.color = "#FF0000"
                                             campaignButton.color = "#FF0000"
                                             minigameSelected = -1
+                                            stage = new Stage(MapSelect)
                                             boys = []
 
                                         }else{
@@ -5458,11 +5465,12 @@
                                             humanPlayers = 1004
                                             AItoggle = 0
                                             localButton.color = "#FF0000"
+                                            stage = new Stage(MapSelect)
                                         }
                                     }
 
                                 }
-                                if (AItoggle == 0 && campaignToggle == 0) {
+                                if (AItoggle == 0 && campaignToggle == 0 && localPlayToggle == 0){
                                     onlineButton.color = "#00FF00"
                                 }
                             }
@@ -5913,7 +5921,10 @@
                         let Rson = {
                             "room": `${room}`
                         }
+
+                        if(localPlayToggle != 1){
                         ws.send(JSON.stringify(Rson))
+                        }
                     }
 
 
@@ -8762,7 +8773,9 @@
                             obj.kill = 1
                             obj.striker = 10000//this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -11425,7 +11438,10 @@
                                 "room": `${(0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect}`
                             }
                             this.rooms = (0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect
+
+                            if(localPlayToggle != 1){
                             ws.send(JSON.stringify(Rson))
+                            }
                         }
                         addchar(char) {
                             if (this.string.length < 3) {
@@ -11441,7 +11457,10 @@
                                     "room": `${(0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect}`
                                 }
                                 this.rooms = (0.5 * (room + MapSelect) * (room + MapSelect + 1)) + MapSelect
+
+                                if(localPlayToggle != 1){
                                 ws.send(JSON.stringify(Rson))
+                                }
                             }
                         }
                     }
@@ -11824,7 +11843,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -14640,7 +14661,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -17353,7 +17376,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -19924,7 +19949,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -21265,7 +21292,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -24073,7 +24102,9 @@
                             obj.striker = this.striker
 
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             if (this.inactive == 1) {
                                 return
@@ -24699,7 +24730,9 @@
                                         this.body.xmom = storage.xmom
                                         this.damage = storage.damage
                                         if (AItoggle == 0) {
-                                            ws.send(JSON.stringify(obj))
+                                             if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                                         }
                                     }
 
@@ -27039,7 +27072,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -29783,7 +29818,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -32653,7 +32690,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -35610,7 +35649,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -38523,7 +38564,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -41350,7 +41393,9 @@
                             obj.kill = 1
                             obj.striker = 10000//this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -44382,7 +44427,9 @@
                             obj.kill = 1
                             obj.striker = this.striker
                             if (AItoggle == 0) {
-                                ws.send(JSON.stringify(obj))
+                                 if(localPlayToggle != 1){
+                                    ws.send(JSON.stringify(obj))
+                                }
                             }
                             ////////////////////////////////console.log("caseF")
 
@@ -47077,7 +47124,6 @@
 
                                 serverID = parseFloat(Math.random().toFixed(7))
                                 stage = new Stage(MapSelect)
-                                // ws.send('cleanout')
                                 selectors = []
                                 for (let t = 0; t < 15; t++) {
                                     let selector = new Selector()
@@ -47827,8 +47873,11 @@
                                             Xson.ping = now.getTime()
                                             Xson.pinging = 1
                                             Xson.serverID = serverID
+
+                                if(localPlayToggle != 1){
                                             ws.send(JSON.stringify(Json))
                                             ws.send(JSON.stringify(Xson))
+                                }
                                         }
 
                                         for (let f = 0; f < boys[t].nodes.length; f++) {
@@ -48167,7 +48216,7 @@
                                 canvas_context.fillText(`Kessler`, kesslerSelector.x - (kesslerSelector.radius * .40), kesslerSelector.y - (kesslerSelector.radius * .65))
 
                                 for (let t = 0; t < selectors.length; t++) {
-                                    if (t == connectionnumber || AItoggle == 1) {
+                                    if (t == connectionnumber || AItoggle == 1 || localPlayToggle == 1) {
                                         selectors[t].draw()
                                     }
                                 }
