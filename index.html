@@ -6707,7 +6707,13 @@
                                                 boys[t].body.ymom = 0
                                                 boys[t].body.xmom = 0
                                                 boys[t].life = 600
+                                    const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000)  
+                                    if(seconds < 60){
                                                 this.rhophosortscore++
+                                    }
                                                 if(Math.random()<.5){
                                                     boys[t].body.color = "#FF0000"
                                                 }else{
@@ -6722,7 +6728,14 @@
                                                 boys[t].body.ymom = 0
                                                 boys[t].body.xmom = 0
                                                 boys[t].life = 600
+
+                                    const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000)  
+                                    if(seconds < 60){
                                                 this.rhophosortscore++
+                                    }
                                                 if(Math.random()<.5){
                                                     boys[t].body.color = "#FF0000"
                                                 }else{
@@ -6907,7 +6920,7 @@
                             if(minigameSelected == 5){
                                     canvas_context.font = "70px Arial"
                                     canvas_context.fillStyle = "#FF00FF"
-                                    canvas_context.fillText(`Sorted: ${this.rhophosortscore}`, 200, 300)
+                                    canvas_context.fillText(`Sorted: ${this.rhophosortscore}`, 200, 200)
                                 }
                         }
                     }
@@ -48141,6 +48154,32 @@
                                         canvas_context.fillText(`${Math.max(60-seconds,0)}`, 200, 400)
                             
                                     }
+                                    if(minigameSelected == 5){
+
+                                        const now = new Date()
+                                        campaigntime = now.getTime() - campaigntimestart
+
+                                        let ms = (campaigntime % 1000)
+                                        let seconds = campaigntime
+                                        let minutes = campaigntime
+                                        minutes = Math.floor(minutes / 60000)
+                                        seconds = Math.floor(seconds / 1000) 
+                                        if (seconds < 10) {
+                                            seconds = "0" + seconds
+                                        }
+
+                                        let roundedms = (ms / 1000).toFixed(2)
+                                        let rounder = roundedms.split('')
+                                        rounder.splice(0, 1)
+                                        roundedms = rounder.join('')
+
+
+
+                                        canvas_context.fillStyle = "#FFFFFF"
+
+                                        canvas_context.fillText(`${Math.max(60-seconds,0)}`, 200, 100)
+                            
+                                    }
                                     if(minigameSelected == 4){
 
                                         const now = new Date()
@@ -48631,6 +48670,10 @@
                                     campaigntimestart = now.getTime()
                                 }
                                 if( minigameSelected == 4){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                }
+                                if( minigameSelected == 5){
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
                                 }
