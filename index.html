@@ -5366,6 +5366,8 @@
                                             drops = []
                                             ws.close()
                                             minigameSelected = -1
+                                            minigameSelectToggle = 0
+
                                         } else {
                                             campaignToggle = 0
                                             // AIFightButton.color = "#FF0000"
@@ -5378,9 +5380,10 @@
                                         }
                                     }
                                     if (AIFightButton.isPointInside(TIP_engine)) {
-                                        if (AItoggle == 0  && localPlayToggle == 0) {
+                                        if (AItoggle == 0 ) {
                                             AIFightButton.color = "#00FF00"
                                             onlineButton.color = "#FF0000"
+                                            localButton.color = "#FF0000"
                                             stage = new Stage(MapSelect)
                                             AItoggle = 1
                                             humanPlayers = 0
@@ -5390,9 +5393,9 @@
                                             ws.close()
                                             minigameSelected = -1
                                         } else {
-                                            // AIFightButton.color = "#FF0000"
-                                            // stage = new Stage(MapSelect)
-                                            // AItoggle = 0
+                                            AIFightButton.color = "#FF0000"
+                                            stage = new Stage(MapSelect)
+                                            AItoggle = 0
                                             // humanPlayers = 1004
                                             // campaignToggle = 0
                                             // campaignButton.color = "#FF0000"
@@ -5400,7 +5403,7 @@
                                         }
                                     }
                                     if (onlineButton.isPointInside(TIP_engine)) {
-                                        if (AItoggle == 1 || localPlayToggle == 1 || localPlayToggle == 1) {
+                                        if (AItoggle == 1 || localPlayToggle == 1 ) {
                                             ws.close()
                                             minigameSelectToggle = 0
                                             campaignToggle = 0
@@ -5441,8 +5444,9 @@
                                     if (minigameSelectButton.isPointInside(TIP_engine)) {
                                         if (minigameSelectToggle == 0) {
                                             boys = []
+                                            ws.close()
                                             minigameSelected = 0
-
+                                            humanplayers = 1004
                                             minigameSelectToggle = 1
                                             boys = [new Princess(0)]
                                                 scores = [0]
@@ -5503,8 +5507,10 @@
                                     }
 
                                 }
-                                if (AItoggle == 0  && localPlayToggle == 0 && campaignToggle == 0 && localPlayToggle == 0){
+                                if ( ws.readyState == 1){ //AItoggle == 0  && localPlayToggle == 0 && campaignToggle == 0 &&
                                     onlineButton.color = "#00FF00"
+                                }else{
+                                    onlineButton.color = "#FF0000"
                                 }
                             }
 
@@ -5528,6 +5534,7 @@
                                         if (minigameIcons[t].box.isPointInside(TIP_engine)) {
                                             boys = []
                                             minigameSelected = t
+                                            humanplayers = 1004
                                             stage = new Stage(t+1000)
                                             if(t == 0){
                                                 boys = [new Princess(0)]
@@ -5551,12 +5558,18 @@
                                             }
                                             if(t == 5){
                                                 boys.push(new Rhopho(0))
+                                                humanplayers = 1004
                                                 scores = [0]
                                                 drops = [0]
                                             }
                                         }
                                     }
                                 }
+                            }
+                            if(AItoggle == 0){
+                                AIFightButton.color = "#FF0000"
+                            }else{
+                                AIFightButton.color = "#00FF00"
                             }
                         });
                         window.addEventListener('pointermove', continued_stimuli);
@@ -6635,7 +6648,7 @@
                                                     ragdoll.body.color =   "#0000FF"
                                                 }
                                     ragdoll.body.gravity = 1.5
-                                    boys.push(ragdoll)
+                                    boys.unshift(ragdoll)
                                     }
 
 
@@ -19983,9 +19996,9 @@
                         }
 
                         playerMove(object) {
-                            if(minigameSelected == 3){
+                            // if(minigameSelected == 3){
                                 return
-                            }
+                            // }
                             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
                                 if (this.shield == 0) {
@@ -47298,17 +47311,22 @@
                                     selectors.push(selector)
 
                                 }
-                                counter = 0
                                 if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1) {
                                     if (boys.length > 0) {
+                                        if(counter == 1){
                                         if(minigameSelected == 0){
                                             canvas_context.translate(0,700)
                                         }
+                                        }
                                         minigameSelected=-1
+                                        if(counter == 1){
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
+                                            
+                                        }
                                   
                                     }
                                 }
+                                counter = 0
 
                                 minigameSelected = -1
                                 boys = []
@@ -48210,6 +48228,12 @@
                             }
                         } else {
 
+
+                            if ( ws.readyState == 1){ //
+                                    onlineButton.color = "#00FF00"
+                                }else{
+                                    onlineButton.color = "#FF0000"
+                                }
                             // gametheme.play()
                             canvas_context.clearRect(-canvas.width * 100, -canvas.width * 100, canvas.width * 200, canvas.width * 200)
                             if (mapSelectToggle == 1 || minigameSelectToggle == 1) {
@@ -48654,7 +48678,7 @@
                                 }
 
                                 if (boys.length == 1) {
-                                    if (campaignToggle == 0 && AItoggle == 1 || localPlayToggle == 1) {
+                                    if (campaignToggle == 0 && (AItoggle == 1 || localPlayToggle == 1)) {
                                         if(minigameSelected == -1){
                                             let coreboy = new Dummy()
                                             boys.push(coreboy)
