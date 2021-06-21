@@ -5327,7 +5327,7 @@
                                 }
                                 if (counter == 1) {
                                     counter = 0
-                                    if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
+                                    if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6) {
                                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
                                         
                                     }
@@ -5558,6 +5558,12 @@
                                             }
                                             if(t == 5){
                                                 boys.push(new Rhopho(0))
+                                                humanplayers = 1004
+                                                scores = [0]
+                                                drops = [0]
+                                            }
+                                            if(t == 6){
+                                                boys.push(new Bunkstanks(0))
                                                 humanplayers = 1004
                                                 scores = [0]
                                                 drops = [0]
@@ -6076,6 +6082,67 @@
                             }
                         }
                     }
+
+                    let trapstartZ = 1
+
+                    let trapstartY = 1000
+                    class Trapeeze{
+                        constructor(){
+                            let x = 1500
+                            if(Math.random()<.5){
+                                x+=1500*(Math.random()-.5)
+                            }
+                            this.body = new CircleCB(x, trapstartY, 10, "#FF0000")
+                            this.body.xlock = this.body.x
+                            this.body.ylock = this.body.y
+                            this.anchor = new CircleCB(x, trapstartY, 20+(Math.random()*5), "#00FF00")
+                            this.spring = new SpringOP(this.body, this.anchor, 400+((Math.random()-.7)*100), 10)
+                            this.angle = Math.random()*2*Math.PI
+                            trapstartY -= (750+trapstartZ)
+                            trapstartZ++
+                        }
+                        draw(){
+                            this.angle +=.05
+                            this.anchor.x+=(Math.sin(this.angle))*50
+                            this.spring.balance()
+                            this.body.x = this.body.xlock
+                            this.body.y = this.body.ylock
+                            this.anchor.ymom+=5
+                            this.anchor.move()
+                            this.body.draw()
+                            this.body.xmom = 0
+                            this.body.ymom = 0
+                            this.spring.beam.draw()
+                            this.anchor.draw()
+                            for(let t =0;t<boys.length;t++){
+                                if(boys[t].lefthand.anchored != 1 && boys[t].righthand.anchored != 1){
+                                    boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].lefthand.radius)
+                                if(boys[t].lefthand.doesPerimeterTouch(this.anchor) || boys[t].lefthands.doesPerimeterTouch(this.anchor)){
+                                    boys[t].lefthand.anchored = 1
+                                    boys[t].lefthand.anchor = this.anchor
+                                    break
+                                }
+                                boys[t].righthands = castBetween(boys[t].rightshoulder, boys[t].righthand, armgranularity, boys[t].righthand.radius)
+                                if(boys[t].righthand.doesPerimeterTouch(this.anchor) || boys[t].righthands.doesPerimeterTouch(this.anchor)){
+                                    boys[t].righthand.anchored = 1
+                                    boys[t].righthand.anchor = this.anchor
+                                    break
+                                }
+                                if(boys[t].body.doesPerimeterTouch(this.anchor)){
+                                    if(Math.random()<.5){
+                                        boys[t].righthand.anchored = 1
+                                    boys[t].righthand.anchor = this.anchor
+                                    break
+                                    }else{
+                                        boys[t].lefthand.anchored = 1
+                                    boys[t].lefthand.anchor = this.anchor
+                                    break
+                                    }
+                                }
+                                }
+                            }
+                        }
+                    }
                     let targetcount = 0
                     class Target {
                         constructor(){
@@ -6144,6 +6211,7 @@
                                 this.joxwalltick = 70
                                 this.joxwallcounter = 0
                                 this.joxwallscore = 0
+                                this.funkyclimbscore = 0
                             // MapToggle-=1
                             if (campaignToggle == 1) {
                                 this.playerrunner = 0
@@ -6672,6 +6740,24 @@
                                     this.bricks.push(floor2)
                                     this.bricks.push(new Brick(1900, 1250, 800))
                                     this.bricks.push(new Brick(1900, 1700, 1000))
+                                }else if(MapToggle == 1006){
+                                    let floor1 = new Brick(2750, 2100, 1900)
+                                    let floor2 = new Brick(1050, 2100, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+                                    this.obstacles = []
+                                    for(let t = 0;t<50;t++){
+                                        let trap = new Trapeeze()
+                                        this.obstacles.push(trap)
+                                    }
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6817,7 +6903,7 @@
                                 for (let t = 0; t < this.lines.length; t++) {
                                     this.lines[t].draw()
                                 }
-                                if(minigameSelected == 0 || minigameSelected == 2 ||minigameSelected == 4){
+                                if(minigameSelected == 0 || minigameSelected == 2 ||minigameSelected == 4 ||minigameSelected == 6){
                                     for (let t = 0; t < this.obstacles.length; t++) {
                                     this.obstacles[t].draw()
                                 }
@@ -6934,6 +7020,14 @@
                                     canvas_context.font = "70px Arial"
                                     canvas_context.fillStyle = "#FF00FF"
                                     canvas_context.fillText(`Sorted: ${this.rhophosortscore}`, 200, 200)
+                                }
+                            if(minigameSelected == 6){
+                                    canvas_context.font = "70px Arial"
+                                    canvas_context.fillStyle = "#00FF00"
+                                    if((boys[0].body.y-2200)*-1 > this.funkyclimbscore){
+                                        this.funkyclimbscore = (boys[0].body.y-2200)*-1
+                                    }
+                                    canvas_context.fillText(`Height Reached: ${Math.round(this.funkyclimbscore)}`, boys[0].body.x-1920, boys[0].body.y-950)
                                 }
                         }
                     }
@@ -8460,6 +8554,8 @@
                             canvas_context.fillText("Mass Blast!", this.box.x + 75, this.box.y + 95)
                             }else if(this.index == 5){
                             canvas_context.fillText("Rhopho Sort!", this.box.x + 75, this.box.y + 95)
+                            }else if(this.index == 6){
+                            canvas_context.fillText("Funky Swinging!", this.box.x + 75, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8474,7 +8570,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 6; t++) {
+                    for (let t = 0; t < 7; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -36415,18 +36511,36 @@
 
                             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                                 if (keysPressed['w']) {
+                                    if(minigameSelected == 6){
+                                    if(-speed * 2 < object.ymom){
                                     this.jumping = 1
                                     object.ymom = -speed * 2
                                     this.jumpcount = 100 - this.jumpreduction
+                                    }
+                                    }else{
+                                    this.jumping = 1
+                                    object.ymom = -speed * 2
+                                    this.jumpcount = 100 - this.jumpreduction
+                                    }
                                 } else {
                                     if (typeof object != 'undefined') {
                                         if (typeof (this.gamepad.gamepad.axesStatus[1]) != 'undefined') {
                                             if (typeof (this.gamepad.gamepad.axesStatus[0]) != 'undefined') {
                                                 object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
                                                 if ((this.gamepad.gamepad.axesStatus[1] * this.speed) < this.speed * -.5) {
-                                                    object.ymom = -this.speed * 1 * 2
+
+                                    if(minigameSelected == 6){
+                                        if(-this.speed * 1 * 2 < object.ymom){
+                                        object.ymom = -this.speed * 1 * 2
                                                     this.jumping = 1
                                                     this.jumpcount = 100 - this.jumpreduction
+                                        }
+                                    }else{
+
+                                        object.ymom = -this.speed * 1 * 2
+                                                    this.jumping = 1
+                                                    this.jumpcount = 100 - this.jumpreduction
+                                    }
                                                 }
                                             }
                                         }
@@ -37846,6 +37960,14 @@
                             if (this.inactive == 1) {
                                 return
                             }
+
+                            if (this.lefthand.anchored == 1) {
+                            if(minigameSelected == 6){
+                                this.body.ymom = -this.speed*4
+                                this.lefthand.anchored = -5
+                                return
+                            }
+                            }
                             this.body.sxmom = 0
                             this.body.symom = 0
 
@@ -37870,6 +37992,14 @@
                         degripr() {
                             if (this.inactive == 1) {
                                 return
+                            }
+
+                            if (this.righthand.anchored == 1) {
+                            if(minigameSelected == 6){
+                                this.body.ymom = -this.speed*4
+                                this.righthand.anchored = -5
+                                return
+                            }
                             }
                             this.body.sxmom = 0
                             this.body.symom = 0
@@ -38103,7 +38233,10 @@
                                 return
                             }
 
-                            if (this.righthand.anchored == 1) {
+                            if(minigameSelected == 6){
+
+                            }else{
+                                if (this.righthand.anchored == 1) {
                                 if (this.body.x > this.righthand.x) {
                                     this.righthand.anchored = -10
                                 }
@@ -38112,6 +38245,7 @@
                                 if (this.body.x < this.lefthand.x) {
                                     this.lefthand.anchored = -10
                                 }
+                            }
                             }
 
                             if (this.lefthand.anchored != 1 && this.righthand.anchored != 1) {
@@ -47311,7 +47445,7 @@
                                     selectors.push(selector)
 
                                 }
-                                if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1) {
+                                if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1 || minigameSelected == 6) {
                                     if (boys.length > 0) {
                                         if(counter == 1){
                                         if(minigameSelected == 0){
@@ -47355,9 +47489,10 @@
 
                         if (counter == 1) {
                             if (boys.length >= 1) {
-                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6) {
                                     camerax = boys[0].body.x
                                     cameray = boys[0].body.y
+                                    //translate relevant
                                 }
                             }
                             // JumpIn(boys[0])
@@ -47550,7 +47685,7 @@
                                 if (!boys[t]) {
                                     continue
                                 }
-                            if(minigameSelected == 1){
+                            if(minigameSelected == 1 || minigameSelected == 6){
 
                             }else if(minigameSelected == 0){
                                 let leftwall = new Line(-10, -10000, -10, 10000000, "#FF0000", 10)
@@ -47771,7 +47906,7 @@
                                     } else {
                                         canvas_context.font = "60px arial"
                                         canvas_context.fillStyle = boys[t].body.color
-                                        if(minigameSelected != 0 && minigameSelected !== 1){
+                                        if(minigameSelected != 0 && minigameSelected !== 1 && minigameSelected !== 6){
                                         if (AItoggle == 0  && localPlayToggle == 0) {
                                             if (boys[t].playername != "") {
                                                 canvas_context.fillText(`${boys[t].name + " (" + boys[t].playername + ")"} ${boys[t].knocks}/${boys[t].drops} Ping: ${boys[t].ping}`, 20, ((t - dropouts) * 61) + 70)
@@ -47782,7 +47917,7 @@
                                         } else {
                                             if (campaignToggle == 0) {
 
-                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5){
+                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6){
                                             }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
                                             }
@@ -48088,7 +48223,7 @@
                             // gametheme.pause()
 
                             if (boys.length >= 1) {
-                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6) {
                                     if (cameraLocked == 0) {
                                         // ////////console.log("whea")
                                         cameraxsum += boys[0].body.x - camerax
@@ -48702,7 +48837,7 @@
                                     campaigntimestart = now.getTime()
                                 }
 
-                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1) {
+                                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6) {
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
 
