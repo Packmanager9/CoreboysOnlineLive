@@ -6102,8 +6102,64 @@
                             this.angle = Math.random()*2*Math.PI
                             trapstartY -= (750+trapstartZ)
                             trapstartZ++
+                            this.shotspawn = 0
+                            if(Math.random()<.1 +(trapstartZ/111)){
+                            this.shotspawn = 1
+                            this.shotspawner = new ShotC(this.body.x, this.body.y+(Math.random()*200), 100, "#00FF00")
+                            this.shots = []
+                            this.shotclock = 0
+                            this.shottimer = 110-trapstartZ
+                            if(this.shottimer < 10){
+                                this.shottimer = 10
+                            }
+                            if(Math.random()<.5){
+                                this.shotspawner.x+=1500
+                            }else{
+                                this.shotspawner.x-=1500
+                            }
+                            }
                         }
                         draw(){
+                            if(this.shotspawn == 1){
+                                let link = new LineOP(boys[0].body, this.shotspawner)
+                                if(link.sqrDis() < (4000*4000)){
+                                    this.shotspawner.draw()
+                                    for(let t = 0;t<this.shots.length;t++){
+                                        this.shots[t].life--
+                                        this.shots[t].move()
+                                        this.shots[t].draw()
+                                        if(this.shots[t].doesPerimeterTouch(boys[0].body)){
+                                            boys[0].body.xmom = this.shots[t].xmom*3
+                                            boys[0].lefthand.anchored = -50
+                                            boys[0].righthand.anchored = -50
+                                        }
+                                        if(this.shots[t].life <= 0){
+                                            this.shots.splice(t,1)
+                                            t--
+                                        }
+                                    }
+                                    this.shotclock++
+                                    if(this.shotclock == this.shottimer){
+                                    if(this.shotspawner.x > boys[0].body.x){
+                                        let shot = new Shot(this.shotspawner.x, this.shotspawner.y, 80, "#FFFFFF", -50)
+                                        shot.life = 100
+                                        this.shots.push(shot)
+                                    }
+                                    if(this.shotspawner.x < boys[0].body.x){
+                                        let shot = new Shot(this.shotspawner.x, this.shotspawner.y, 80, "#FFFFFF", 50)
+                                        shot.life = 100
+                                        this.shots.push(shot)
+                                    }
+                                    this.shotclock = 0
+                                    }
+                                }else{
+
+                                    for(let t = 0;t<this.shots.length;t++){
+                                        this.shots[t].move()
+                                    }
+                                }
+
+                            }
                             this.angle +=.05
                             this.anchor.x+=(Math.sin(this.angle))*50
                             this.spring.balance()
@@ -6756,7 +6812,7 @@
                                     this.bricks.push(floor1)
                                     this.bricks.push(floor2)
                                     this.obstacles = []
-                                    for(let t = 0;t<50;t++){
+                                    for(let t = 0;t<80;t++){
                                         let trap = new Trapeeze()
                                         this.obstacles.push(trap)
                                     }
@@ -35601,6 +35657,9 @@
                                 this.shielddraw = 0
                                 this.gamepad = new Gamepad(controller)
                                 this.jumpreduction = 85
+                                if(minigameSelected == 6){
+                                    this.jumpreduction = 65
+                                }
                                 this.shild = new Circle(0, 0, 0, "transparent")
                                 this.shot = {}
                                 this.striker = 10000
@@ -38220,10 +38279,14 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                            if(minigameSelected == 6){
+
+                            }else{
+                                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+                            }
                             }
 
 
@@ -38236,6 +38299,12 @@
                             }
 
                             if(minigameSelected == 6){
+                                if(this.body.x < 100){
+                                    this.body.x = 100
+                                }
+                                if(this.body.x > 3000){
+                                    this.body.x = 3000
+                                }
 
                             }else{
                                 if (this.righthand.anchored == 1) {
