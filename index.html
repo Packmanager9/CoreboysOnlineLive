@@ -5318,6 +5318,8 @@
                                 }
                             }
                             if (escapeButton.isPointInside(TIP_engine)) {
+
+                                descriptor.index = -1
                                 serverID = parseFloat(Math.random().toFixed(7))
                                 selectors = []
                                 for (let t = 0; t < 16; t++) {
@@ -5369,6 +5371,7 @@
                                             ws.close()
                                             minigameSelected = -1
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
 
                                         } else {
                                             campaignToggle = 0
@@ -5408,6 +5411,7 @@
                                         if (AItoggle == 1 || localPlayToggle == 1 ) {
                                             ws.close()
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                             campaignToggle = 0
                                             AItoggle = 0
                                             start = 0
@@ -5427,8 +5431,10 @@
                                             localIDs = []
                                             minigameSelected = -1
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                         }else{
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                             localPlayToggle = 0
                                             localButton.color = "#FF0000"
                                         }
@@ -5438,6 +5444,7 @@
                                         if (mapSelectToggle == 0) {
                                             mapSelectToggle = 1
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                             minigameSelected = -1
                                         } else {
                                             mapSelectToggle = 0
@@ -5464,6 +5471,8 @@
                                             onlineButton.color = "#FF0000"
                                         } else {
                                             minigameSelectToggle = 0
+                                            minigameSelected = -1
+                                            descriptor.index = -1
                                         }
                                     }
                                     if(localButton.isPointInside(TIP_engine)){
@@ -5471,6 +5480,7 @@
 
                                             ws.close()
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                             localPlayToggle = 1
                                             humanPlayers = 1004
                                             AItoggle = 0
@@ -5486,6 +5496,7 @@
                                         }else{
                                             ws.close()
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                             campaignToggle = 0
                                             AItoggle = 0
                                             start = 0
@@ -5505,6 +5516,7 @@
                                             localIDs = []
                                             minigameSelected = -1
                                             minigameSelectToggle = 0
+                                descriptor.index = -1
                                         }
                                     }
 
@@ -5565,7 +5577,7 @@
                                                 drops = [0]
                                             }
                                             if(t == 6){
-                                                boys.push(new Bunkstanks(0))
+                                                boys = [new Bunkstanks(0)]
                                                 humanplayers = 1004
                                                 scores = [0]
                                                 drops = [0]
@@ -11617,6 +11629,9 @@
                             this.ypointer = 1600
                         }
                         draw() {
+                            if(this.index == -1){
+                                this.string = ''
+                            }
                             if (this.index == 0) {
                                 this.string = "Mass: A young sky bound fellow, ready to plumb the depths of the cosmos. Bright-faced and ready to fight, Mass fancies himself a hotshot."
                             }
@@ -11659,6 +11674,36 @@
                             if (this.index == 13) {
                                 this.string = "Kessler: Cleaner of the cosmos, crash lander, and combat contestant."
                             }
+
+                            if(minigameSelected != -1){
+                                this.index = 1000+minigameSelected
+
+                            if (this.index == 1000) {
+                                this.string = "Character: Princess GeGeGeGee. Guide Princess GeGeGeGee down the shaft as fast as you can! Ground-pound to speed up, jump to stop, and shoot shoulder rockets to brake."
+                            }
+                            if (this.index == 1001) {
+                                this.string = "Chatacter: Any. Hit the dummy until shortly before the walls come down at 16 seconds. Then launch it as far as you can!"
+                            }
+                            if (this.index == 1002) {
+                                this.string = "Character: Jox. Steer Jox around the walls with his dash and rocket jump."
+                            }
+                            if (this.index == 1003) {
+                                this.string = "Character: Joule. Use the sievert storm to shrink down and pop as many dummies as you can in a minute. The irradiated particles can cause a chain meltdown!"
+                            }
+                            if (this.index == 1004) {
+                                this.string = "Character: Mass. Jump and shoot the targets, get as many as you can in a minute."
+                            }
+                            if (this.index == 1005) {
+                                this.string = "Character: Rhopho. Sort the red and blue dummies into their color-baskets. Sort as many as you can in a minute. Don't worry about the ones in the wrong baskets."
+                            }
+                            if (this.index == 1006) {
+                                this.string = "Character: Funky Bunkstanks. Climb the trapeeze as fast as you can, avoid the auto shooter shots."
+                            }
+                            }
+
+
+
+
                             // if(counter == 0){
                             this.measure()
 
@@ -11669,7 +11714,7 @@
                         measure() {
                             this.ypointer = 1600
                             this.xpointer = 50
-                            canvas_context.font = "40px Arial";
+                            canvas_context.font = "50px Arial";
                             canvas_context.fillStyle = "#FFFFFF"
                             let stoarr = this.string.split(' ')
                             let stostring = ''
@@ -11699,7 +11744,7 @@
                         draw() {
                             this.body.track()
                             this.body.draw()
-                            canvas_context.font = "40px arial"
+                            canvas_context.font = "50px arial"
                             canvas_context.fillStyle = `Black`
                             canvas_context.fillText(this.num, this.body.x - (canvas_context.measureText(`${this.num}`).width * .5), this.body.y + (this.body.radius * .3))
                         }
@@ -47505,8 +47550,9 @@
                             if (mapSelectToggle == 1 || minigameSelectToggle == 1) {
                                 mapSelectToggle = 0
                                 minigameSelectToggle = 0
+                                descriptor.index = -1
                             } else {
-
+                                descriptor.index = -1
                                 serverID = parseFloat(Math.random().toFixed(7))
                                 stage = new Stage(MapSelect)
                                 selectors = []
@@ -48458,6 +48504,7 @@
                             // gametheme.play()
                             canvas_context.clearRect(-canvas.width * 100, -canvas.width * 100, canvas.width * 200, canvas.width * 200)
                             if (mapSelectToggle == 1 || minigameSelectToggle == 1) {
+                                descriptor.draw()
                                 if (optionsToggle == 0) {
                                     optionsButton.radius = 300
                                     optionsButton.draw()
@@ -48671,6 +48718,7 @@
 
                             if(optionsToggle == 0){
                                     minigameSelectToggle = 0
+                                descriptor.index = -1
                                     mapSelectToggle = 0
                                 }
                             if (keysPressed[' ']) {
