@@ -1,7 +1,9 @@
 
 'use strict';
 
+const mongoURLx = require("./mongo")
 const express = require('express');
+const mongoose = require('mongoose');
 const { Server, defaultMaxListeners } = require('ws');
 var Extensions = require('websocket-extensions'),
     deflate = require('permessage-deflate'),
@@ -11,6 +13,16 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
+let mongoURL = process.env.mongoURL || mongoURLx.mongoURL
+mongoose.connect(mongoURL)
+
+
+const playerdataSchema = new mongoose.Schema({CampaignComplete: Boolean, GeGeGeGeeDropScore: Number})
+
+
+mongoose.model('PlayerRecords', playerdataSchema)
+
+
 
 var exts = new Extensions();
 exts.add(deflate);
@@ -24,8 +36,6 @@ const server = express()
 
 const wss = new Server({ server });
 let boys = []
-// const wss = new WebSocket.Server({port: 8082})
-
 let games = []
 class Game {
     constructor() {
@@ -132,7 +142,10 @@ wss.on("connection", ws => {
         games[ws.assigned].removePlayer(ws)
     })
     ws.on("message", data => {
-        if (JSON.parse(data).room > -1) {
+          if (JSON.parse(data).dataScores === 1) {
+            let model = new mongoose.model("PlayerRecords")(JSON.parse(data).model)  // JSON.parse(data).model
+            model.save()
+          }else  if (JSON.parse(data).room > -1) {
             // console.log(data)
 
             if(true===true){
