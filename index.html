@@ -32497,12 +32497,14 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
+                            if(minigameSelected != 5){
+                                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
                             }
 
+                            }
 
                         }
                         operate() {
