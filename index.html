@@ -14495,10 +14495,12 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                            if(minigameSelected != 4){
+                                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+                            }
                             }
 
                             let link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -19791,10 +19793,12 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                            if(minigameSelected != 2){
+                                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+                            }
                             }
                             // if (this != boys[0]) {
                             //     canvas_context.fillText(`${Math.round(this.dmomu)},${Math.round(this.amomu)}`, this.body.x - 20, this.body.y - 150)
@@ -29665,10 +29669,12 @@
                             canvas_context.strokeStyle = "#FFFFFF"
                             canvas_context.linewidth = 0
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
+                            if(minigameSelected != 0){
                             canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+                            }
                             }
 
 
@@ -44226,10 +44232,12 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                            if(minigameSelected != 3){
+                                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+                            }
                             }
 
 
