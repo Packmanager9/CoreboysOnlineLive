@@ -5582,6 +5582,12 @@
                                                 scores = [0]
                                                 drops = [0]
                                             }
+                                            if(t == 7){
+                                                boys.push(new Boy(0))
+                                                humanplayers = 1004
+                                                scores = [0]
+                                                drops = [0]
+                                            }
                                         }
                                     }
                                 }
@@ -6036,7 +6042,7 @@
                                     delete this.controller;
                                 },
                                 update: function () {
-                                    if(localPlayToggle == 0 || minigameSelected == 1 || minigameSelected == 3 || minigameSelected == 5){
+                                    if(localPlayToggle == 0 || minigameSelected == 1 || minigameSelected == 3 || minigameSelected == 5|| minigameSelected == 7){
                                         this.controller = navigator.getGamepads()[0]
                                     }else{
                                         this.controller = navigator.getGamepads()[this.locator]
@@ -6276,6 +6282,7 @@
                                 this.joulepopscore = 0
                                 this.masstargetscore = 0
                                 this.rhophosortscore = 0
+                                this.coreboywhackscore = 0
                                 this.obstacles = []
                                 this.lines = []
                                 this.joxwalltick = 70
@@ -6828,6 +6835,43 @@
                                         let trap = new Trapeeze()
                                         this.obstacles.push(trap)
                                     }
+                                }else if(MapToggle == 1007){
+                                    let floor1 = new Brick(2750, 2100, 1900)
+                                    let floor2 = new Brick(1050, 2100, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+                                     floor1 = new Brick(2750, 1600, 1900)
+                                     floor2 = new Brick(1050, 1600, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+                                    this.obstacles = []
+
+
+                                    for(let t = 0;t<3;t++){
+                                    let ragdoll = new Dummy(0)
+                                    ragdoll.body.x = 1900
+                                    ragdoll.body.y = 2700
+                                    ragdoll.life = 350
+                                    ragdoll.body.gravity = 1.5
+                                    boys.unshift(ragdoll)
+                                    }
+
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6931,6 +6975,20 @@
                                         }
                                     }
                                 }
+                            }
+                            if(minigameSelected == 7){
+
+                                for(let t = 0;t<boys.length;t++){
+                                              boys[t].life--
+                                            if(boys[t].life <= 0){
+                                                boys[t].life = 350
+                                                boys[t].body.y = 2700
+                                                boys[t].body.x = (Math.random()*3000) + 500
+                                                boys[t].body.ymom = 0
+                                                boys[t].body.xmom = 0
+                                            }
+                                }
+
                             }
                             if (campaignToggle == 1) {
 
@@ -7090,6 +7148,18 @@
                                     canvas_context.font = "70px Arial"
                                     canvas_context.fillStyle = "#FF00FF"
                                     canvas_context.fillText(`Sorted: ${this.rhophosortscore}`, 200, 200)
+                                }
+                            if(minigameSelected == 7){
+                                    canvas_context.font = "70px Arial"
+                                    canvas_context.fillStyle = "#FF00FF"
+                                    canvas_context.fillText(`Whacked: ${this.coreboywhackscore}`, 200, 200)
+
+
+                                    const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000) 
+
                                 }
                             if(minigameSelected == 6){
                                     canvas_context.font = "70px Arial"
@@ -8626,6 +8696,8 @@
                             canvas_context.fillText("Rhopho Sort!", this.box.x + 75, this.box.y + 95)
                             }else if(this.index == 6){
                             canvas_context.fillText("Funky Swinging!", this.box.x + 35, this.box.y + 95)
+                            }else if(this.index == 7){
+                            canvas_context.fillText("Whack a Boy!", this.box.x + 35, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8640,7 +8712,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 7; t++) {
+                    for (let t = 0; t < 8; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -8817,6 +8889,9 @@
                                 this.hitboxes = []
                                 this.links = []
                                 this.speed = 11.5 //11.5
+                                if(minigameSelected == 7){
+                                    this.speed = 18
+                                }
                                 this.punchspeed = 6.5
                                 this.grounded = 0
                                 this.frame = 0
@@ -11698,6 +11773,9 @@
                             }
                             if (this.index == 1006) {
                                 this.string = "Character: Funky Bunkstanks. Climb the trapeeze as fast as you can, avoid the auto shooter shots."
+                            }
+                            if (this.index == 1007) {
+                                this.string = "Character: Coreboy. Shoot down onto the emerging dummies, see how many you can get in a minute!!"
                             }
                             }
 
@@ -20347,9 +20425,21 @@
                                 }
                             }
 
-                            if(minigameSelected == 5){
-                                copy.life = this.life
-                            }
+                        if(minigameSelected == 5 || minigameSelected == 7){
+                            copy.life = this.life
+                        }
+
+                                if(minigameSelected == 7){
+                                    copy.body.y = 2000
+                                    copy.body.radius = 150
+                                    if(Math.random() < 0.15){
+                                        copy.body.radius = 40
+                                        copy.body.color = "#FFAA00"
+                                    }else{
+                                        copy.body.color = "#FF0000"
+                                    }
+                            copy.life = 350
+                                }
                             if(minigameSelected == 3){
                                 let angle = 0
                                 for(let t = 0;t<8;t++){
@@ -20495,6 +20585,23 @@
                                                             //shieldaud1.play()
                                                             this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
                                                         } else {
+
+                                                            if(minigameSelected == 7){
+
+                                                                const now = new Date()
+                                                                campaigntime = now.getTime() - campaigntimestart
+                                                                let seconds = campaigntime
+                                                                seconds = Math.floor(seconds / 1000)    
+                                                                if(seconds<60){
+                                                                    stage.coreboywhackscore++
+                                                                boys[boys.indexOf(this)] = this.copy()
+                                                                if(this.body.color == "#FFAA00"){
+                                                                    stage.coreboywhackscore+= 5
+                                                                }
+                                                                }
+
+                                                                break
+                                                            }
                                                             //punchaud1.playbackrate = 2
                                                             //punchaud1.play()
                                                             this.body.xmom = ((boys[t].shots[k].xmom * (this.damage / 200)) + (boys[t].shots[k].xmom * baselaunch)) * 2
@@ -21169,10 +21276,10 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            if(minigameSelected == 3 || minigameSelected == 5){
+                            if(minigameSelected == 3 || minigameSelected == 5|| minigameSelected == 7){
 
 
-                                if(minigameSelected == 5){
+                                if(minigameSelected == 5 || minigameSelected == 7 ){
                                     canvas_context.fillStyle = "white"
                                     canvas_context.fillText(`${Math.round(this.life*.1)}`, this.body.x - 20, this.body.y - 100)
                                 }
@@ -48044,7 +48151,7 @@
                                         } else {
                                             if (campaignToggle == 0) {
 
-                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6){
+                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6 || minigameSelected == 7){
                                             }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
                                             }
@@ -48423,7 +48530,7 @@
 
                                     }
                                 }else{
-                                    if(minigameSelected == 3){
+                                    if(minigameSelected == 3 || minigameSelected == 7){
 
                                         const now = new Date()
                                         campaigntime = now.getTime() - campaigntimestart
@@ -48969,6 +49076,10 @@
                                     }
                                 }
                                 if( minigameSelected == 3){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                }
+                                if( minigameSelected == 7){
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
                                 }
