@@ -5588,6 +5588,24 @@
                                                 scores = [0]
                                                 drops = [0]
                                             }
+                                            if(t == 8){
+                                                boys.push(new AsigMan(0), new AsigMan(0), new Dummy(0))
+                                                for(let t = 0;t<boys[0].nodes.length;t++){
+                                                    boys[0].nodes[t].x = 400
+                                                    boys[0].nodes[t].y = 500
+                                                    boys[0].nodes[t].color = "#FF000088"
+                                                }
+                                                for(let t = 0;t<boys[1].nodes.length;t++){
+                                                    boys[1].nodes[t].x = 3300
+                                                    boys[1].nodes[t].y = 500
+                                                    boys[1].nodes[t].color = "#0000FF88"
+                                                }
+                                                    boys[2].body.x = 1900
+                                                    boys[2].body.y = 500
+                                                humanplayers = 0
+                                                scores = [0,0]
+                                                drops = [0,0]
+                                            }
                                         }
                                     }
                                 }
@@ -5876,10 +5894,10 @@
                             hex = hex.slice(1);
                         }
                         // convert 3-digit hex to 6-digits.
-                        if (hex.length === 3) {
+                        if (hex.length === 3 || hex.length === 4) {
                             hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
                         }
-                        if (hex.length !== 6) {
+                        if (hex.length !== 6 && hex.length != 8) {
                             return getRandomColor()
                             throw new Error('Invalid HEX color.');
                         }
@@ -6872,6 +6890,30 @@
                                     boys.unshift(ragdoll)
                                     }
 
+                                }else if(MapToggle == 1008){
+
+                                   let  floor1 = new Brick(2750, 1900, 1900)
+                                    let floor2 = new Brick(1050, 1900, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+                                    this.walls.push(new Wall(1900, 1200, 120, 1700))
+                                    this.walls.push(new Wall(50, 1200, 120, 1700))
+                                    this.walls.push(new Wall(3650, 1200, 120, 1700))
+
+
+
+                                    this.redbox = new Rectangle(0, 0, 600, 3000, "#FF000065")
+                                    this.bluebox = new Rectangle(3100, 0, 600, 3000, "#0000FF65")
+
+
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6906,6 +6948,31 @@
                             this.brickswap = 0
                         }
                         draw() {
+
+
+                            if(minigameSelected == 8){
+                                this.redbox.draw()
+                                this.bluebox.draw()
+
+                                if(this.bluebox.isPointInside(boys[2].body)){
+                                    drops[0]++
+                                    scores[1]++
+                                    boys[2] = boys[2].copy()
+                                }
+                                if(this.redbox.isPointInside(boys[2].body)){
+
+                                    drops[1]++
+                                    scores[0]++
+                                    boys[2] = boys[2].copy()
+
+                                }
+                                if(boys[0].body.x > 1900){
+                                    boys[0] = boys[0].copy()
+                                }
+                                if(boys[1].body.x < 1900){
+                                    boys[1] = boys[1].copy()
+                                }
+                            }
                             if(minigameSelected == 5){
                                 this.redbox.draw()
                                 this.bluebox.draw()
@@ -7199,6 +7266,9 @@
                             this.shape.shapes.push(this.basecap)
                             this.shape.shapes.push(this.center)
                             this.link = new LineOP(this.topcap, this.basecap, "#FFFFFF", this.width)
+                            if(minigameSelected == 8){
+                                this.link.color = "#FFFFFF88"
+                            }
 
                         }
                         stick(point) {
@@ -7213,6 +7283,11 @@
                             }
                         }
                         doesPerimeterTouch(circle, player) {
+                            if(minigameSelected == 8){
+                                if(player.name == "Dummy"){
+                                    return
+                                }
+                            }
                             if (circle == player.body) {
                                 for (let t = 0; t < player.shots.length; t++) {
                                     if (this.shape.doesPerimeterTouch(player.shots[t])) {
@@ -8695,9 +8770,11 @@
                             }else if(this.index == 5){
                             canvas_context.fillText("Rhopho Sort!", this.box.x + 75, this.box.y + 95)
                             }else if(this.index == 6){
-                            canvas_context.fillText("Funky Swinging!", this.box.x + 35, this.box.y + 95)
+                            canvas_context.fillText("Funky Swinging!", this.box.x + 45, this.box.y + 95)
                             }else if(this.index == 7){
-                            canvas_context.fillText("Whack a Boy!", this.box.x + 35, this.box.y + 95)
+                            canvas_context.fillText("Whack a Boy!", this.box.x + 55, this.box.y + 95)
+                            }else if(this.index == 8){
+                            canvas_context.fillText("Adobrasig Ball!", this.box.x + 65, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8712,7 +8789,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 8; t++) {
+                    for (let t = 0; t < 9; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -11776,6 +11853,9 @@
                             }
                             if (this.index == 1007) {
                                 this.string = "Character: Coreboy. Shoot down onto the emerging dummies, see how many you can get in a minute!!"
+                            }
+                            if (this.index == 1008) {
+                                this.string = "Character: Adobrasig Man, two players. Smack the dummies, see how many you can get into the opponent's goal! Select AI Match before selecting this Minigame to play agianst the computer."
                             }
                             }
 
@@ -20107,6 +20187,8 @@
                                 }
                                 if(minigameSelected == 3){
                                 this.body = new Shot(400 + (Math.random() * 2560), 500, 75, this.color)
+                                }else if(minigameSelected == 8){
+                                this.body = new Shot(400 + (Math.random() * 2560), 500, 105, this.color)
                                 }else{
                                 this.body = new Shotb(400 + (Math.random() * 2560), 500, 75, this.color)
                                 }
@@ -21049,7 +21131,12 @@
                                         boys[f].body.y -= (this.body.y - boys[f].body.y) / (this.body.radius + boys[f].body.radius)
                                         this.fixupshoulder()
                                         boys[f].fixupshoulder()
-                                        this.body.ymom *= .99
+                                        
+                                        if(minigameSelected !== 8){
+                                            this.body.ymom *= .99
+                                        }else{
+                                            this.body.xmom *= .89
+}
                                     }
                                 }
                             }
@@ -21211,6 +21298,10 @@
                             if (this.inactive == 1) {
                                 return
                             }
+                            if(minigameSelected == 8){
+                                this.gravity = 3 + Math.min(3, (this.damage*.02))
+                                this.body.radius = 105 + Math.min(115, (this.damage*.2))
+                            }
 
                             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                                 this.playername = formname.value
@@ -21276,7 +21367,7 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-                            if(minigameSelected == 3 || minigameSelected == 5|| minigameSelected == 7){
+                            if(minigameSelected == 3 || minigameSelected == 5|| minigameSelected == 7 || minigameSelected == 8){
 
 
                                 if(minigameSelected == 5 || minigameSelected == 7 ){
@@ -24618,6 +24709,20 @@
                                 }
                             }
 
+                            if(minigameSelected == 8){
+                                if(boys.indexOf(this) == 0){
+                                    for(let t = 0 ;t<copy.nodes.length;t++){
+                                        copy.nodes[t].x = 500
+                                        copy.nodes[t].y = 500
+                                    }
+                                }
+                                if(boys.indexOf(this) == 1){
+                                    for(let t = 0 ;t<copy.nodes.length;t++){
+                                        copy.nodes[t].x = 3100
+                                        copy.nodes[t].y = 500
+                                    }
+                                }
+                            }
                             return copy
                         }
                         control() {
@@ -25244,7 +25349,12 @@
                                         boys[t].body.y -= (this.body.y - boys[t].body.y) / (this.body.radius + boys[t].body.radius)
                                         this.fixupshoulder()
                                         boys[t].fixupshoulder()
-                                        this.body.ymom *= .99
+                                        
+                                        if(minigameSelected !== 8){
+                                            this.body.ymom *= .99
+                                        }else{
+                                            this.body.xmom *= .89
+}
                                     }
                                 }
                             }
@@ -26244,6 +26354,37 @@
                                         }
                                     }
                                 }
+
+
+
+                            if(minigameSelected == 8){
+                                this.amove = 1
+                                this.dmove = 0
+                                this.wmove = 0
+                                this.exgrip = 1
+                                if(boys[2].body.x < this.body.x+boys[2].body.radius && boys[2].body.xmom > 0){
+                                    this.dmove = 1
+                                    this.amove = 0
+                                }
+                                if(boys[2].body.x > this.body.x-boys[2].body.radius ){
+                                    this.dmove = 1
+                                    this.amove = 0
+                                    this.wmove = 1
+                                }
+                                if(boys[2].body.x > 1900 && boys[2].body.x < this.body.x ){
+                                    this.amove = 1
+                                    this.dmove = 0
+                                    this.wmove = 0
+                                }
+                                if(boys[2].body.x < 1900 && this.body.x < 2500 ){
+                                    this.dmove = 1
+                                }
+                                if(this.body.x-(boys[2].body.radius*1.1) < boys[2].body.x){
+                                    this.wmove = 1
+                                }
+                            }
+
+
                                 if (this.wmove == 1) {
                                     if (this.grounded == 1) {
                                         this.jumping = 1
@@ -26616,6 +26757,9 @@
                                 }
                             }
 
+                            if(minigameSelected == 8){
+                                this.storeshield = 0
+                            }
                             if (this.shieldpower < 10) {
                                 if (Math.random() < .95) {
                                     this.storeshield = 0
@@ -26669,6 +26813,25 @@
                                 this.leftshot = 0
                                 this.rightshot = 0
                             }
+
+
+                            if(minigameSelected == 8){
+                                this.hortsmash = 0
+                                this.downspike = 0
+                                this.screwshot = 0
+                                this.leftshot = 1
+                                if(Math.random() < .1){
+                                    this.screwshot = 1
+                                }
+                                if(this.face == 1){
+                                    this.leftshot = 0
+                                    this.rightshot = 0
+                                    this.screwshot = 0
+                                }
+                            }
+
+
+
 
                             if (this.breaktimer <= 0 && this.shield == 0) {
 
@@ -26991,12 +27154,17 @@
                             canvas_context.linewidth = 0
                             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
+                            if(minigameSelected == 8){
+
+                            }else{
+                                
                             canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
                             canvas_context.fillStyle = "white"
                             if (stock > 0) {
                                 canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
                             }
 
+                        }
                             //  canvas_context.fillText(`Height:${Math.round(this.brick.edgeright.y)}`, this.body.x - 20, this.body.y - 250)
                             //         canvas_context.fillText(`M D${Math.round(this.dmove)},A${Math.round(this.amove)}`, this.body.x - 20, this.body.y - 110)
                             //         canvas_context.fillText(`U D${Math.round(this.dmomu)},A${Math.round(this.amomu)}`, this.body.x - 20, this.body.y - 150)
@@ -28210,7 +28378,12 @@
                                         boys[f].body.y -= (this.body.y - boys[f].body.y) / (this.body.radius + boys[f].body.radius)
                                         this.fixupshoulder()
                                         boys[f].fixupshoulder()
-                                        this.body.ymom *= .99
+                                        
+                                        if(minigameSelected !== 8){
+                                            this.body.ymom *= .99
+                                        }else{
+                                            this.body.xmom *= .89
+}
                                     }
                                 }
                             }
@@ -48151,7 +48324,8 @@
                                         } else {
                                             if (campaignToggle == 0) {
 
-                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6 || minigameSelected == 7){
+                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6 || minigameSelected == 7 || minigameSelected == 8){
+                                           
                                             }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
                                             }
@@ -48162,6 +48336,19 @@
                                     }
                                     }
                                 }
+                            }
+                            if(minigameSelected == 8){         
+
+                                canvas_context.font = "60px arial"
+
+                                canvas_context.fillStyle = "#FF0000"
+                                canvas_context.fillText(`${scores[0]}`, 750, 100)
+
+                                canvas_context.fillStyle = "#FFFFFF"
+                                canvas_context.fillText(`/`, 850, 100)           
+
+                                canvas_context.fillStyle = "#0000FF"
+                                canvas_context.fillText(`${scores[1]}`, 900, 100)           
                             }
                             if (stock > 0) {
                                 let wet = boys.length - 1
