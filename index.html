@@ -6892,8 +6892,21 @@
 
                                 }else if(MapToggle == 1008){
 
-                                   let  floor1 = new Brick(2750, 1900, 1900)
+                                    let  floor1 = new Brick(2750, 1900, 1900)
                                     let floor2 = new Brick(1050, 1900, 1900)
+                                    floor1.edgeleft.x -= 100000
+                                    floor2.edgeright.x += 100000
+                                    floor2.edgeleft.x -= 10000
+                                    floor1.edgeright.x += 100000
+                                    floor1.edgeleft.radius = .1
+                                    floor2.edgeright.radius = .1
+                                    floor2.edgeleft.radius = .1
+                                    floor1.edgeright.radius = .1
+                                    this.bricks.push(floor1)
+                                    this.bricks.push(floor2)
+
+                                    floor1 = new Brick(2750, 400, 1900)
+                                    floor2 = new Brick(1050, 400, 1900)
                                     floor1.edgeleft.x -= 100000
                                     floor2.edgeright.x += 100000
                                     floor2.edgeleft.x -= 10000
@@ -21299,8 +21312,9 @@
                                 return
                             }
                             if(minigameSelected == 8){
-                                this.gravity = 3 + Math.min(3, (this.damage*.02))
+                                this.gravity = .75 - Math.min(0.45, (this.damage*.0025))
                                 this.body.radius = 105 + Math.min(115, (this.damage*.2))
+                                this.body.friction = .95
                             }
 
                             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
@@ -48341,7 +48355,7 @@
 
                                 canvas_context.font = "60px arial"
 
-                                canvas_context.fillStyle = "#0000FF"
+                                canvas_context.fillStyle = "#AAAAFF"
                                 canvas_context.fillText(`${scores[0]}`, 750, 100)
 
                                 canvas_context.fillStyle = "#FFFFFF"
