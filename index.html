@@ -4899,6 +4899,13 @@
                                 // this.shapes[t].color = getRandomColor()
                             }
                         }
+                        shiftDown(num) {
+                            // ////////console.log(num)
+                            for (let t = 0; t < this.shapes.length; t++) {
+                                this.shapes[t].y += num
+                                // this.shapes[t].color = getRandomColor()
+                            }
+                        }
                         draw() {
                             for (let t = 0; t < this.shapes.length; t++) {
                                 this.shapes[t].draw()
@@ -5452,6 +5459,12 @@
                                     }
                                     if (minigameSelectButton.isPointInside(TIP_engine)) {
                                         if (minigameSelectToggle == 0) {
+                                            selectors = []
+                                            for (let t = 0; t < 15; t++) {
+                                                let selector = new Selector()
+                                                selector.body.color = colors[t]
+                                                selectors.push(selector)
+                                            }
                                             boys = []
                                             ws.close()
                                             minigameSelected = 0
@@ -5605,6 +5618,13 @@
                                                 humanplayers = 0
                                                 scores = [0,0]
                                                 drops = [0,0]
+                                            }
+                                            if(t == 9){
+                                                boys.push(new Blastgirl(0))
+
+                                                humanplayers = 1004
+                                                scores = [0]
+                                                drops = [0]
                                             }
                                         }
                                     }
@@ -6293,6 +6313,7 @@
                     class Stage {
 
                         constructor(MapToggle = 0) {
+                                this.blastgirlclimbscore = 0
                                 this.spawnrunner = 900
                                 this.pops = []
                                 this.popslength = 0
@@ -6892,41 +6913,46 @@
 
                                 }else if(MapToggle == 1008){
 
-                                    let  floor1 = new Brick(2750, 1900, 1900)
-                                    let floor2 = new Brick(1050, 1900, 1900)
-                                    floor1.edgeleft.x -= 100000
-                                    floor2.edgeright.x += 100000
-                                    floor2.edgeleft.x -= 10000
-                                    floor1.edgeright.x += 100000
-                                    floor1.edgeleft.radius = .1
-                                    floor2.edgeright.radius = .1
-                                    floor2.edgeleft.radius = .1
-                                    floor1.edgeright.radius = .1
-                                    this.bricks.push(floor1)
-                                    this.bricks.push(floor2)
+                                let  floor1 = new Brick(2750, 1900, 1900)
+                                let floor2 = new Brick(1050, 1900, 1900)
+                                floor1.edgeleft.x -= 100000
+                                floor2.edgeright.x += 100000
+                                floor2.edgeleft.x -= 10000
+                                floor1.edgeright.x += 100000
+                                floor1.edgeleft.radius = .1
+                                floor2.edgeright.radius = .1
+                                floor2.edgeleft.radius = .1
+                                floor1.edgeright.radius = .1
+                                this.bricks.push(floor1)
+                                this.bricks.push(floor2)
 
-                                    floor1 = new Brick(2750, 400, 1900)
-                                    floor2 = new Brick(1050, 400, 1900)
-                                    floor1.edgeleft.x -= 100000
-                                    floor2.edgeright.x += 100000
-                                    floor2.edgeleft.x -= 10000
-                                    floor1.edgeright.x += 100000
-                                    floor1.edgeleft.radius = .1
-                                    floor2.edgeright.radius = .1
-                                    floor2.edgeleft.radius = .1
-                                    floor1.edgeright.radius = .1
-                                    this.bricks.push(floor1)
-                                    this.bricks.push(floor2)
-                                    this.walls.push(new Wall(1900, 1200, 120, 1700))
-                                    this.walls.push(new Wall(50, 1200, 120, 1700))
-                                    this.walls.push(new Wall(3650, 1200, 120, 1700))
-
-
-
-                                    this.redbox = new Rectangle(0, 0, 600, 3000, "#FF000065")
-                                    this.bluebox = new Rectangle(3100, 0, 600, 3000, "#0000FF65")
+                                floor1 = new Brick(2750, 400, 1900)
+                                floor2 = new Brick(1050, 400, 1900)
+                                floor1.edgeleft.x -= 100000
+                                floor2.edgeright.x += 100000
+                                floor2.edgeleft.x -= 10000
+                                floor1.edgeright.x += 100000
+                                floor1.edgeleft.radius = .1
+                                floor2.edgeright.radius = .1
+                                floor2.edgeleft.radius = .1
+                                floor1.edgeright.radius = .1
+                                this.bricks.push(floor1)
+                                this.bricks.push(floor2)
+                                this.walls.push(new Wall(1900, 1200, 120, 1700))
+                                this.walls.push(new Wall(50, 1200, 120, 1700))
+                                this.walls.push(new Wall(3650, 1200, 120, 1700))
 
 
+
+                                this.redbox = new Rectangle(0, 0, 600, 3000, "#FF000065")
+                                this.bluebox = new Rectangle(3100, 0, 600, 3000, "#0000FF65")
+
+
+                                }else if(MapToggle == 1009){
+                                    for(let t = 0;t<9;t++){
+                                        let brick = new Brick((Math.random()*4500)+299, t*370, 800, 50)
+                                        this.bricks.push(brick)
+                                    }
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -6962,6 +6988,35 @@
                         }
                         draw() {
 
+
+                            if(minigameSelected == 9){
+
+
+                                const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000)  
+                                    canvas_context.font = "60px Arial"
+                                    canvas_context.fillStyle = "#FFFFFF"
+                                    canvas_context.fillText(`Climbed: ${this.blastgirlclimbscore}`, 50, 170)
+                                    canvas_context.fillText(`Survived ${seconds} Seconds`, 50, 270)
+
+                                for(let t = 0;t<this.bricks.length;t++){
+                                    this.bricks[t].shape.shiftDown(8)
+                                    this.bricks[t].edgeleft.y +=8
+                                    this.bricks[t].center.y +=8
+                                    this.bricks[t].edgeright.y +=8
+                                    this.bricks[t].link.y1 +=8
+                                    this.bricks[t].link.y2 +=8
+                                    if(this.bricks[t].edgeleft.y > 3600){
+                                        this.blastgirlclimbscore++
+
+                                        this.bricks.splice(t,1)
+                                        t--
+                                        this.bricks.push(new Brick(500 + (Math.random()*4500), 0, 800, 50))
+                                    }
+                                }
+                            }
 
                             if(minigameSelected == 8){
                                 this.redbox.draw()
@@ -8796,6 +8851,8 @@
                             canvas_context.fillText("Whack a Boy!", this.box.x + 55, this.box.y + 95)
                             }else if(this.index == 8){
                             canvas_context.fillText("Adobrasig Ball!", this.box.x + 65, this.box.y + 95)
+                            }else if(this.index == 9){
+                            canvas_context.fillText("Blast Climb!", this.box.x + 75, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -8810,7 +8867,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 9; t++) {
+                    for (let t = 0; t < 10; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -15217,6 +15274,12 @@
                             ////////////////////////////////console.log("caseF")
 
                             let copy = new Blastgirl(this.controller)
+
+                            if( minigameSelected == 9){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                    stage.blastgirlclimbscore = 0
+                                }
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
@@ -17093,6 +17156,9 @@
                                 this.charge = 0
                             }
                             this.body.fired -= .25
+                            if(minigameSelected == 9){
+                            this.body.fired -= .15
+                            }
                             this.lefthand.fired--
 
 
@@ -47868,6 +47934,15 @@
                                 minigameSelectToggle = 0
                                 descriptor.index = -1
                             } else {
+
+                                if(minigameSelected == 9){
+                                                canvas_context.scale(invscale, invscale)
+                                                 scale = .333
+                                                 invscale = 1 / scale
+                                                canvas_context.scale(scale, scale)
+                                }
+
+
                                 descriptor.index = -1
                                 serverID = parseFloat(Math.random().toFixed(7))
                                 stage = new Stage(MapSelect)
@@ -49052,6 +49127,12 @@
                                     mapSelectToggle = 0
                                 }
                             if (keysPressed[' ']) {
+                                if(minigameSelected == 9){
+                                    canvas_context.scale(invscale, invscale)
+                                                 scale = .2
+                                                 invscale = 1 / scale
+                                                canvas_context.scale(scale, scale)
+                                }
                                 minigameSelectToggle = 0
                                 roomSelectionBox.focus = 0
                                 let wet = boys.length
@@ -49289,6 +49370,10 @@
                                     }
                                 }
                                 if( minigameSelected == 3){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                }
+                                if( minigameSelected == 9){
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
                                 }
