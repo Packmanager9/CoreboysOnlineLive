@@ -6983,12 +6983,16 @@
 
                                     boys[2].body.x = 1900 - 800
                                 }
-                                if(boys[0].body.x > 1900){
-                                    boys[0] = boys[0].copy()
+                                for(let t = 0;t<boys[0].nodes.length;t++){
+                                    if(boys[0].nodes[t].x > 1900){
+                                    boys[0].nodes[t].x = 1900
                                 }
-                                if(boys[1].body.x < 1900){
-                                    boys[1] = boys[1].copy()
                                 }
+                                for(let t = 0;t<boys[1].nodes.length;t++){
+                                if(boys[1].nodes[t].x < 1900){
+                                    boys[1].nodes[t].x = 1900
+                                }
+                            }
                             }
                             if(minigameSelected == 5){
                                 this.redbox.draw()
@@ -21316,9 +21320,10 @@
                                 return
                             }
                             if(minigameSelected == 8){
-                                this.gravity = .75 - Math.min(0.45, (this.damage*.0025))
-                                this.body.radius = 105 + Math.min(115, (this.damage*.2))
+                                this.gravity = .75 //- Math.min(0.45, (this.damage*.0025))
+                                this.body.radius = 200// + Math.min(115, (this.damage*.2))
                                 this.body.friction = .95
+                                this.damage = 200
                             }
 
                             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
