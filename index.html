@@ -5627,6 +5627,18 @@
                                                 scores = [0]
                                                 drops = [0]
                                             }
+                                            if(t == 10){
+                                                boys.push(new Banandroid(0))
+                                                boys[0].body.x = 1900
+                                                boys[0].lefthand.x = 1900
+                                                boys[0].righthand.x = 1900
+                                                boys[0].middlehand.x = 1900
+                                                boys[0].bananahand.x = 1900
+
+                                                humanplayers = 1004
+                                                scores = [0]
+                                                drops = [0]
+                                            }
                                         }
                                     }
                                 }
@@ -6258,6 +6270,104 @@
                             }
                         }
                     }
+
+
+    class SpringOPx {
+        constructor(body, anchor, length, width = 3, color = body.color) {
+            this.body = body
+            this.anchor = anchor
+            this.beam = new LineOP(body, anchor, color, width)
+            this.length = length
+        }
+        balance() {
+            if (this.beam.hypotenuse() < this.length) {
+                this.body.xmom += ((this.body.x - this.anchor.x) / this.length) 
+                this.body.ymom += ((this.body.y - this.anchor.y) / this.length) 
+                this.anchor.xmom -= ((this.body.x - this.anchor.x) / this.length) 
+                this.anchor.ymom -= ((this.body.y - this.anchor.y) / this.length) 
+            } else if (this.beam.hypotenuse() > this.length) {
+                this.body.xmom -= (this.body.x - this.anchor.x) / (this.length)
+                this.body.ymom -= (this.body.y - this.anchor.y) / (this.length)
+                this.anchor.xmom += (this.body.x - this.anchor.x) / (this.length)
+                this.anchor.ymom += (this.body.y - this.anchor.y) / (this.length)
+            }
+
+            let xmomentumaverage = (this.body.xmom + this.anchor.xmom) / 2
+            let ymomentumaverage = (this.body.ymom + this.anchor.ymom) / 2
+            this.body.xmom = (this.body.xmom + xmomentumaverage) / 2
+            this.body.ymom = (this.body.ymom + ymomentumaverage) / 2
+            this.anchor.xmom = (this.anchor.xmom + xmomentumaverage) / 2
+            this.anchor.ymom = (this.anchor.ymom + ymomentumaverage) / 2
+        }
+        draw() {
+            this.beam.draw()
+        }
+        move() {
+            //movement of SpringOP objects should be handled separate from their linkage, to allow for many connections, balance here with this object, move nodes independently
+        }
+    }
+
+                    class Jumprope{
+                        constructor(){
+                            this.start = new Circle(600, 1200, 10, "#00FFFF")
+                            this.end = new Circle(3200, 1200, 10, "#FF00FF")
+                            this.beads = castBetween(this.end, this.start, 50, 10)
+                            this.beads = [...this.beads.shapes]
+                            this.startangle = 0
+                            this.endangle = Math.PI
+                            this.springs = []
+                            this.lines = []
+
+                            let spring = new SpringOPx(this.start, this.beads[0], 1, 8) 
+                            this.springs.push(spring)
+                            for(let t =0;t<this.beads.length;t++){
+                            for(let k =0;k<this.beads.length;k++){
+                                if(t!=k){
+                                    let line = new LineOP(this.beads[t], this.beads[k], "#FFFF00", 5 )
+                                    if(line.hypotenuse() < 100){
+                                        let spring = new SpringOPx(this.beads[t], this.beads[k], 9, 8)
+                                        this.springs.push(spring)
+                                        this.lines.push(line)
+                                    }
+                                }
+                            }
+                            }
+                            spring = new SpringOPx(this.beads[this.beads.length-1], this.end, 1, 8)    
+                            this.springs.push(spring)
+                        }
+                        draw(){
+                            for(let t  =0;t<this.springs.length;t++){
+                                this.springs[t].balance()
+                            }
+
+                            for(let t  =0;t<this.beads.length;t++){
+                                this.beads[t].ymom +=.1
+                                this.beads[t].move()
+                            }
+
+                            for(let t  =0;t<this.lines.length;t++){
+                                this.lines[t].draw()
+                            }
+                            for(let t  =0;t<this.beads.length;t++){
+                                this.beads[t].draw()
+                            }
+                            this.start.xmom = 0
+                            this.start.ymom = 0
+                            this.end.xmom = 0
+                            this.end.ymom = 0
+
+                            this.start.y += (Math.cos(this.startangle))*7
+                            this.startangle += .051127621563278
+
+                            this.end.y += (Math.cos(this.endangle))*7
+                            this.endangle += .07134522735217
+
+                            this.start.draw()
+                            this.end.draw()
+                        }
+                    }
+
+
                     let targetcount = 0
                     class Target {
                         constructor(){
@@ -6954,6 +7064,13 @@
                                         let brick = new Brick((Math.random()*4500)+299, t*370, 800, 50)
                                         this.bricks.push(brick)
                                     }
+                                }else if(MapToggle == 1010){
+                                        let brick = new Brick(1900, 1400, 800, 50)
+                                        this.bricks.push(brick)
+                                        this.rope = new Jumprope()
+
+
+
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -7313,6 +7430,32 @@
                                     }
                                     canvas_context.fillText(`Height Reached: ${Math.round(this.funkyclimbscore)}`, boys[0].body.x-1920, boys[0].body.y-950)
                                 }
+
+                            if(minigameSelected == 10){
+                                this.rope.draw()
+                                for(let t = 0;t<this.rope.beads.length;t++){
+                                    if(this.rope.beads[t].doesPerimeterTouch(boys[0].body)){
+                                        boys[0] = boys[0].copy()
+                                                boys[0].body.x = 1900
+                                                boys[0].lefthand.x = 1900
+                                                boys[0].righthand.x = 1900
+                                                boys[0].middlehand.x = 1900
+                                                boys[0].bananahand.x = 1900
+                                        const now = new Date()
+                                        campaigntimestart = now.getTime()
+                                    }
+                                }
+
+
+                                const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000) 
+
+
+                                    canvas_context.fillText(`Jumped for ${seconds} Seconds`, 20, 300)
+                            }
+
                         }
                     }
 
@@ -8854,10 +8997,12 @@
                             canvas_context.fillText("Adobrasig Ball!", this.box.x + 65, this.box.y + 95)
                             }else if(this.index == 9){
                             canvas_context.fillText("Blast Climb!", this.box.x + 75, this.box.y + 95)
+                            }else if(this.index == 10){
+                            canvas_context.fillText("Banandroid Skip!", this.box.x + 45, this.box.y + 95)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
-                        }
+                        }w
                     }
 
 
@@ -8868,7 +9013,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 10; t++) {
+                    for (let t = 0; t < 11; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -11938,6 +12083,9 @@
                             }
                             if (this.index == 1009) {
                                 this.string = "Character: Blastgirl. Climb the platforms for as long as you can!"
+                            }
+                            if (this.index == 1010) {
+                                this.string = "Character: Banandroid. Jump over the rope as many times as you can!"
                             }
                             }
 
@@ -48429,7 +48577,7 @@
                                         } else {
                                             if (campaignToggle == 0) {
 
-                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6 || minigameSelected == 7 || minigameSelected == 8){
+                                            if(minigameSelected == 3 || minigameSelected == 4 || minigameSelected == 5 || minigameSelected == 6 || minigameSelected == 7 || minigameSelected == 8|| minigameSelected == 10){
                                            
                                             }else{
                                                 canvas_context.fillText(`${boys[t].name} ${scores[t]}/${drops[t]}`, 20, ((t - dropouts) * 61) + 70)
@@ -49390,6 +49538,10 @@
                                     campaigntimestart = now.getTime()
                                 }
                                 if( minigameSelected == 5){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                }
+                                if( minigameSelected == 10){
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
                                 }
