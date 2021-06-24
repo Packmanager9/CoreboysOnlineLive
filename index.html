@@ -6971,6 +6971,9 @@
                                     drops[0]++
                                     scores[1]++
                                     boys[2] = boys[2].copy()
+
+                                    boys[2].body.x = 1900 + 800
+
                                 }
                                 if(this.redbox.isPointInside(boys[2].body)){
 
@@ -6978,6 +6981,7 @@
                                     scores[0]++
                                     boys[2] = boys[2].copy()
 
+                                    boys[2].body.x = 1900 - 800
                                 }
                                 if(boys[0].body.x > 1900){
                                     boys[0] = boys[0].copy()
@@ -24258,6 +24262,9 @@
                                 this.hitboxes = []
                                 this.links = []
                                 this.speed = 10.1 //10.5  //10.8
+                                if(minigameSelected == 8){
+                                    this.speed = 11.420
+                                }
                                 this.punchspeed = 6.9 // 6.9 //7.9
                                 this.grounded = 0
                                 this.frame = 0
