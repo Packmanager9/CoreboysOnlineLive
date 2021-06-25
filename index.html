@@ -7334,14 +7334,17 @@
                                 for (let t = 0; t < this.triggers.length; t++) {
                                     if (this.triggers[t].isPointInside(boys[0].body)) {
                                         runCampaign(this.playerrunner)
-                                        this.bricks = [...this.setArenas[this.playerrunner][0]]
-                                        this.walls = [...this.setArenas[this.playerrunner][1]]
+
+                                        if(this.setArenas.length > this.playerrunner){
+                                            this.bricks = [...this.setArenas[this.playerrunner][0]]
+                                            this.walls = [...this.setArenas[this.playerrunner][1]]
+                                        }
                                         // this.walljumper += 6*1400
                                         // this.walls[this.walls.length-1] = new Wall(this.walljumper, 1600, 300, 10000)
 
                                         this.playerrunner++
                                         if(this.playerrunner > 13){
-                                            worldscores.campaigncomplete = true
+                                            worldscore.campaigncomplete = true
                                         }
                                         for (let f = 0; f < boys[1].nodes.length; f++) {
                                             boys[1].nodes[f].x = boys[0].body.x + 2000
