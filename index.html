@@ -5278,7 +5278,7 @@
                                 roomSelectionBox.lock = ''
                             }
                         });
-                        window.addEventListener('pointerdown', e => {
+                        canvas.addEventListener('pointerdown', e => {
                             FLEX_engine = canvas.getBoundingClientRect();
                             XS_engine = e.clientX - FLEX_engine.left;
                             YS_engine = e.clientY - FLEX_engine.top;
@@ -5309,7 +5309,7 @@
                             //     }
                             // }
                             // example usage: if(object.isPointInside(TIP_engine)){ take action }
-                            window.addEventListener('pointermove', continued_stimuli);
+                            canvas.addEventListener('pointermove', continued_stimuli);
                             if (optionsButton.isPointInside(TIP_engine)) {
                                 if (optionsToggle == 0) {
                                     optionsToggle = 1
@@ -48133,14 +48133,11 @@
                     ////////////////////////////////////console.log(miss, miss2)
 
                     function roughSizeOfObject(object) {
-
                         var objectList = [];
                         var stack = [object];
                         var bytes = 0;
-
                         while (stack.length) {
                             var value = stack.pop();
-
                             if (typeof value === 'boolean') {
                                 bytes += 4;
                             }
