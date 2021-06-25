@@ -13,11 +13,25 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL //|| mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL// || mongoURLx.mongoURL
 mongoose.connect(mongoURL)
 
 
-const playerdataSchema = new mongoose.Schema({CampaignComplete: Boolean, GeGeGeGeeDropScore: Number})
+const playerdataSchema = new mongoose.Schema({
+    joulepopscoremax : Number,
+    masstargetscoremax : Number,
+    rhophosortscoremax : Number,
+    coreboywhackscoremax : Number,
+    joxwallscoremax : Number,
+    blastgirlclimbscoremax : Number,
+    funkyclimbscoremax : Number,
+    banandroidtimemax : Number,
+    smashoutmax : Number,
+    gegegegeedropmin  : Number,
+    campaigncomplete  : Boolean,
+    gegegegeedropminstr : String,
+    playername : String
+})
 
 
 mongoose.model('PlayerRecords', playerdataSchema)
@@ -145,6 +159,8 @@ wss.on("connection", ws => {
           if (JSON.parse(data).dataScores === 1) {
             let model = new mongoose.model("PlayerRecords")(JSON.parse(data).model)  // JSON.parse(data).model
             model.save()
+            // console.log(model)
+            return
           }else  if (JSON.parse(data).room > -1) {
             // console.log(data)
 

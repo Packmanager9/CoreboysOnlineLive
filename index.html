@@ -165,6 +165,7 @@
 
 
                     function socketize(ws) {
+                        
                         ws.addEventListener("open", () => {
                             ws.addEventListener("message", ({ data }) => {
 
@@ -312,45 +313,34 @@
                                                 counters[tempIDs.indexOf(data.serverID)] = 0
                                                 if (data.name == "Coreboy") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Boy(data.id, data)  //data.id?
-                                                }
-                                                if (data.name == "Mass") {
+                                                }else if (data.name == "Mass") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Mass(data.id, data)
-                                                }
-                                                if (data.name == "Blastgirl") {
+                                                }else if (data.name == "Blastgirl") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Blastgirl(data.id, data)
-                                                }
-                                                if (data.name == "Jox") {
+                                                }else if (data.name == "Jox") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Jox(data.id, data)
-                                                }
-                                                if (data.name == "Adobrasig Man") {
+                                                }else  if (data.name == "Adobrasig Man") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new AsigMan(data.id, data)
-                                                }
-                                                if (data.name == "Princess GeGeGeGee") {
+                                                }else if (data.name == "Princess GeGeGeGee") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Princess(data.id, data)
-                                                }
-                                                if (data.name == "Rhopho") {
+                                                }else if (data.name == "Rhopho") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Rhopho(data.id, data)
-                                                }
-                                                if (data.name == "Banandroid") {
+                                                }else if (data.name == "Banandroid") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Banandroid(data.id, data)
-                                                }
-                                                if (data.name == "Funky Bunkstanks") {
+                                                }else if (data.name == "Funky Bunkstanks") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Bunkstanks(data.id, data)
-                                                }
-                                                if (data.name == "Dummy") {
+                                                }else if (data.name == "Dummy") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Dummy(data.id, data)
-                                                }
-                                                if (data.name == "Scorched Mass") {
+                                                }else if (data.name == "Scorched Mass") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new ScorchedMass(data.id, data)
-                                                }
-                                                if (data.name == "Doctor Soto") {
+                                                }else if (data.name == "Doctor Soto") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new DrSoto(data.id, data)
-                                                }
-                                                if (data.name == "Joule") {
+                                                }else if (data.name == "Joule") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Joule(data.id, data)
-                                                }
-                                                if (data.name == "Kessler") {
+                                                }else if (data.name == "Kessler") {
                                                     boys[tempIDs.indexOf(data.serverID)] = new Kessler(data.id, data)
+                                                }else{
+                                                    return
                                                 }
                                                 let gp = new Gamepad(0)
                                                 boys[tempIDs.indexOf(data.serverID)]['gamepad'] = gp
@@ -415,6 +405,11 @@
 
                                     for (let t = 0; t < boys.length; t++) {
                                         if (typeof boys[t] == "undefined") {
+                                            boys.splice(t, 1)
+                                        }
+                                    }
+                                    for (let t = 0; t < boys.length; t++) {
+                                        if (!boys[t].hasOwnProperty('righthand')) {
                                             boys.splice(t, 1)
                                         }
                                     }
@@ -5414,6 +5409,14 @@
                                             // boys = []
                                         }
                                     }
+                                    if(saveScoreButton.isPointInside(TIP_engine)){
+
+                                            HOST = location.origin.replace(/^http/, 'ws')
+                                            ws = new WebSocket(HOST);
+                                            socketize(ws)
+                                            setTimeout(function(){worldscore.save()}, 3000);
+                                        
+                                    }
                                     if (onlineButton.isPointInside(TIP_engine)) {
                                         if (AItoggle == 1 || localPlayToggle == 1 ) {
                                             ws.close()
@@ -6421,10 +6424,64 @@
                         }
                     }
 
+                    class Scores {
+                        constructor(){
+                                this.joulepopscoremax = 0
+                                this.masstargetscoremax = 0
+                                this.rhophosortscoremax = 0
+                                this.coreboywhackscoremax = 0
+                                this.joxwallscoremax = 0
+                                this.blastgirlclimbscoremax = 0
+                                this.funkyclimbscoremax = 0
+                                this.banandroidtimemax = 0
+                                this.smashoutmax = 0
+                                this.gegegegeedropmin = 999999999
+                                this.campaigncomplete = false
+                                this.gegegegeedropminstr = "??"
+                                
+                        }
+                        save(){
+
+                                        let dson = {}
+                                       dson.dataScores = 1
+                                       dson.model = this
+                                       dson.model.playername = formname.value
+                                    //    console.log(dson)
+                                        ws.send(JSON.stringify(dson))
+                                        // ws.close()
+                        }
+                        tally(){
+                            if(stage.joulepopscore > this.joulepopscoremax){
+                                this.joulepopscoremax = stage.joulepopscore
+                            }
+                            if(stage.masstargetscore > this.masstargetscoremax){
+                                this.masstargetscoremax = stage.masstargetscore
+                            }
+                            if(stage.rhophosortscore > this.rhophosortscoremax){
+                                this.rhophosortscoremax = stage.rhophosortscore
+                            }
+                            if(stage.coreboywhackscore > this.coreboywhackscoremax){
+                                this.coreboywhackscoremax = stage.coreboywhackscore
+                            }
+                            if(stage.joxwallscore > this.joxwallscoremax){
+                                this.joxwallscoremax = stage.joxwallscore
+                            }
+                            if(stage.blastgirlclimbscore > this.blastgirlclimbscoremax){
+                                this.blastgirlclimbscoremax = stage.blastgirlclimbscore
+                            }
+                            if(stage.funkyclimbscore > this.funkyclimbscoremax){
+                                this.funkyclimbscoremax = stage.funkyclimbscore
+                            }
+
+                            
+
+                        }
+                    }
+
+                    let worldscore = new Scores()
                     class Stage {
 
                         constructor(MapToggle = 0) {
-                                this.blastgirlclimbscore = 0
                                 this.spawnrunner = 900
                                 this.pops = []
                                 this.popslength = 0
@@ -6433,12 +6490,16 @@
                                 this.masstargetscore = 0
                                 this.rhophosortscore = 0
                                 this.coreboywhackscore = 0
+                                this.joxwallscore = 0
+                                this.blastgirlclimbscore = 0
+                                this.funkyclimbscore = 0
+
+
+
                                 this.obstacles = []
                                 this.lines = []
                                 this.joxwalltick = 70
                                 this.joxwallcounter = 0
-                                this.joxwallscore = 0
-                                this.funkyclimbscore = 0
                             // MapToggle-=1
                             if (campaignToggle == 1) {
                                 this.playerrunner = 0
@@ -7106,7 +7167,7 @@
                         }
                         draw() {
 
-
+                            
                             if(minigameSelected == 9){
 
 
@@ -7275,6 +7336,9 @@
                                         // this.walls[this.walls.length-1] = new Wall(this.walljumper, 1600, 300, 10000)
 
                                         this.playerrunner++
+                                        if(this.playerrunner > 13){
+                                            worldscores.campaigncomplete = true
+                                        }
                                         for (let f = 0; f < boys[1].nodes.length; f++) {
                                             boys[1].nodes[f].x = boys[0].body.x + 2000
                                             boys[1].nodes[f].y = boys[0].body.y
@@ -7363,6 +7427,9 @@
                                         canvas_context.fillStyle = "#FFFF00"
                                         canvas_context.fillText(`Distance Launched: ${Math.abs(boys[0].body.x-boys[1].body.x)}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 270)))
 
+                                    if(worldscore.smashoutmax < Math.abs(boys[0].body.x-boys[1].body.x)){
+                                        worldscore.smashoutmax = Math.abs(boys[0].body.x-boys[1].body.x)
+                                    }
 
                                 if(this.brickswap == 0){
                                 for (let t = 0; t < this.walls.length; t++) {
@@ -7432,6 +7499,7 @@
                                 }
 
                             if(minigameSelected == 10){
+                                
                                 this.rope.draw()
                                 for(let t = 0;t<this.rope.beads.length;t++){
                                     if(this.rope.beads[t].doesPerimeterTouch(boys[0].body)){
@@ -7453,6 +7521,9 @@
                                     seconds = Math.floor(seconds / 1000) 
 
 
+                                    if(seconds > worldscore.banandroidtimemax){
+                                        worldscore.banandroidtimemax = seconds
+                                }
                                     canvas_context.fillText(`Jumped for ${seconds} Seconds`, 20, 300)
                             }
 
@@ -8979,26 +9050,40 @@
                             canvas_context.fillStyle = "#FFFF00"
                             if(this.index == 0){
                             canvas_context.fillText("GeGeGeGee Drop!", this.box.x + 15, this.box.y + 95)
+                            if(worldscore.gegegegeedropmin == 999999999){
+                                canvas_context.fillText(`Fastest ??`, this.box.x + 15, this.box.y + 155)
+                            }else{
+                                canvas_context.fillText(`Fastest ${worldscore.gegegegeedropminstr}`, this.box.x + 15, this.box.y + 155)
+                            }
                             }else if(this.index == 1){
                             canvas_context.fillText("Smashout!", this.box.x + 75, this.box.y + 95)
+                            canvas_context.fillText(`Distance ${Math.round(worldscore.smashoutmax)}`, this.box.x + 15, this.box.y + 155)
                             }else if(this.index == 2){
                             canvas_context.fillText("Running of the Jox!", this.box.x + 15, this.box.y + 95)
+                            canvas_context.fillText(`Avoided ${worldscore.joxwallscoremax}`, this.box.x + 15, this.box.y + 155)
                             }else if(this.index == 3){
                             canvas_context.fillText("Joule Pop!", this.box.x + 75, this.box.y + 95)
+                            canvas_context.fillText(`Popped ${worldscore.joulepopscoremax}`, this.box.x + 75, this.box.y + 155)
                             }else if(this.index == 4){
                             canvas_context.fillText("Mass Blast!", this.box.x + 75, this.box.y + 95)
+                            canvas_context.fillText(`Shot ${worldscore.masstargetscoremax}`, this.box.x + 75, this.box.y + 155)
                             }else if(this.index == 5){
                             canvas_context.fillText("Rhopho Sort!", this.box.x + 75, this.box.y + 95)
+                            canvas_context.fillText(`Sorted ${worldscore.rhophosortscoremax}`, this.box.x + 75, this.box.y + 155)
                             }else if(this.index == 6){
                             canvas_context.fillText("Funky Swinging!", this.box.x + 45, this.box.y + 95)
+                            canvas_context.fillText(`Height reached ${Math.round(worldscore.funkyclimbscoremax)}`, this.box.x + 45, this.box.y + 155)
                             }else if(this.index == 7){
                             canvas_context.fillText("Whack a Boy!", this.box.x + 55, this.box.y + 95)
+                            canvas_context.fillText(`Whacked ${worldscore.coreboywhackscoremax}`, this.box.x + 55, this.box.y + 155)
                             }else if(this.index == 8){
                             canvas_context.fillText("Adobrasig Ball!", this.box.x + 65, this.box.y + 95)
                             }else if(this.index == 9){
                             canvas_context.fillText("Blast Climb!", this.box.x + 75, this.box.y + 95)
+                            canvas_context.fillText(`Climbed ${worldscore.blastgirlclimbscoremax}`, this.box.x + 75, this.box.y + 155)
                             }else if(this.index == 10){
                             canvas_context.fillText("Banandroid Skip!", this.box.x + 45, this.box.y + 95)
+                            canvas_context.fillText(`Jumped for ${worldscore.banandroidtimemax}`, this.box.x + 45, this.box.y + 155)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -47871,6 +47956,7 @@
 
                     let minigameSelectButton = new Rectangle(3300, 1300, 320, 100, "#FFFFFF")
                     let localButton = new Rectangle(2900, 1450, 320, 100, "#FFFFFF")
+                    let saveScoreButton = new Rectangle(3300, 1450, 320, 100, "#FFFFFF")
 
 
                     let campaignButton = new Rectangle(2900, 1000, 320, 100, "#FFFFFF")
@@ -48074,7 +48160,7 @@
                     }
 
                     function main() {
-
+                        worldscore.tally()
                         for (let t = 0; t < boys.length; t++) {
                             if (typeof boys[t] == "undefined") {
                                 boys.splice(t, 1)
@@ -48962,6 +49048,13 @@
                                         canvas_context.fillStyle = "white"
 
                                         if(minigameSelected == 0){
+
+                                        if( worldscore.gegegegeedropmin > campaigntime){
+                                            if(boys[0].body.y > 49500){
+                                                worldscore.gegegegeedropminstr = `${minutes}:${seconds}${roundedms}`
+                                                worldscore.gegegegeedropmin = campaigntime
+                                            }
+                                        }
                                         canvas_context.fillText(`${minutes}:${seconds}${roundedms}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 870)))
                                         }else{
                                         canvas_context.fillText(`${minutes}:${seconds}${roundedms}`, (boys[0].body.x - (canvas.width * invscale * .5) + 20), (boys[0].body.y - (canvas.height * invscale * .5) + (((boys.length) * 61) + 170)))
@@ -49112,6 +49205,11 @@
                                     localButton.draw()
                                     canvas_context.fillStyle = "#000000"
                                     canvas_context.fillText(`Local Match`, localButton.x + (localButton.width * .25), localButton.y + (localButton.width * .20))
+
+                                    canvas_context.font = "30px arial"
+                                    saveScoreButton.draw()
+                                    canvas_context.fillStyle = "#000000"
+                                    canvas_context.fillText(`Save Scores`, saveScoreButton.x + (saveScoreButton.width * .25), saveScoreButton.y + (saveScoreButton.width * .20))
                                     
                                     canvas_context.font = "30px arial"
                                     campaignButton.draw()
@@ -49157,6 +49255,12 @@
                                     localButton.draw()
                                     canvas_context.fillStyle = "#000000"
                                     canvas_context.fillText(`Local Match`, localButton.x + (localButton.width * .25), localButton.y + (localButton.width * .20))
+                                    
+
+                                    canvas_context.font = "30px arial"
+                                    saveScoreButton.draw()
+                                    canvas_context.fillStyle = "#000000"
+                                    canvas_context.fillText(`Save Scores`, saveScoreButton.x + (saveScoreButton.width * .25), saveScoreButton.y + (saveScoreButton.width * .20))
                                     
 
                                     canvas_context.font = "30px arial"
