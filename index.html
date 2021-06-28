@@ -2782,6 +2782,36 @@
                             this.x -= this.xmom
                             this.y -= this.ymom
                         }
+                        rmove() {
+                            if (this.reflect == 1) {
+                                if (this.x + this.radius > canvas.width*10) {
+                                    if (this.xmom > 0) {
+                                        this.xmom *= -1
+                                        this.messup = 1
+                                    }
+                                }
+                                if (this.y + this.radius > canvas.height*10) {
+                                    if (this.ymom > 0) {
+                                        this.ymom *= -1
+                                        this.messup = 1
+                                    }
+                                }
+                                if (this.x - this.radius < 0) {
+                                    if (this.xmom < 0) {
+                                        this.xmom *= -1
+                                        this.messup = 1
+                                    }
+                                }
+                                if (this.y - this.radius < 0) {
+                                    if (this.ymom < 0) {
+                                        this.ymom *= -1
+                                        this.messup = 1
+                                    }
+                                }
+                            }
+                            this.x += this.xmom
+                            this.y += this.ymom
+                        }
 
                         frictiveMove(player) {
                             if (this.anchored !== 1) {
@@ -5640,6 +5670,16 @@
                                                 scores = [0]
                                                 drops = [0]
                                             }
+                                            if(t == 11){
+                                                boys.push(new DrSoto(0))
+                                                boys[0].body.x = 1900
+                                                boys[0].lefthand.x = 1900
+                                                boys[0].righthand.x = 1900
+
+                                                humanplayers = 1004
+                                                scores = [0]
+                                                drops = [0]
+                                            }
                                         }
                                     }
                                 }
@@ -6016,6 +6056,22 @@
                         }
                         return (new Shape(shape_array))
                     }
+                    function castBetweenRat(from, to, granularity = 10, radius = 1) { //creates a sort of beam hitbox between two points, with a granularity (number of members over distance), with a radius defined as well
+                        let limit = granularity
+                        // //////console.log(limit)
+                        if (limit < 1) {
+                            limit = 1
+                        }
+                        let shape_array = []
+                        for (let t = 0; t < limit; t++) {
+                            let circ = new CircleCB((from.x * (t / limit)) + (to.x * ((limit - t) / limit)), (from.y * (t / limit)) + (to.y * ((limit - t) / limit)), radius, "#FF0000")
+                            circ.torat =t/limit
+                            circ.fromrat = (limit-t)/limit
+                            shape_array.push(circ)
+                            // circ.draw()
+                        }
+                        return (new Shape(shape_array))
+                    }
 
                     // function armCastBetween(from, to, granularity = 10, radius = 1) { //creates a sort of beam hitbox between two points, with a granularity (number of members over distance), with a radius defined as well
                     //     let limit = granularity
@@ -6154,6 +6210,72 @@
                             }
                         }
                     }
+
+
+                    class CrazyDetonator{
+                        constructor(){
+                            this.start = new Shot(640+(Math.random()*1280*9), 360+(Math.random()*720*9), 50, "#FF00FF", (Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
+                            this.end = new Shot(640+(Math.random()*1280*9), 360+(Math.random()*720*9), 50, "#FF00FF",(Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
+                            this.start.reflect = 1
+                            this.end.reflect = 1
+                            this.link = new LineOP(this.start, this.end, "#FF00FFAA", 50)
+                            this.link2 = new LineOP(this.start, this.end, "#FF0000", 90)
+                            this.body = castBetweenRat(this.start, this.end, 100, 50)
+
+                            if(typeof boys[0] !== "undefined"){
+                                if(this.body.doesPerimeterTouch(boys[0].body)){
+                                stage.obstacles.splice(stage.obstacles.indexOf(this), 1)
+                                stage.obstacles.push(new CrazyDetonator())
+                            }
+                            }
+                        }
+                        draw(){
+                            this.start.rmove()
+                            this.end.rmove()
+                            for(let t = 0;t<this.body.shapes.length;t++){
+                                this.body.shapes[t].x += (this.body.shapes[t].fromrat*this.end.xmom)
+                                this.body.shapes[t].x += (this.body.shapes[t].torat*this.start.xmom)
+                                this.body.shapes[t].y += (this.body.shapes[t].fromrat*this.end.ymom)
+                                this.body.shapes[t].y += (this.body.shapes[t].torat*this.start.ymom)
+                                // this.body.shapes[t].draw()
+                            }
+                            // this.body = castBetween(this.start, this.end, this.link.sqrDis()*.004, 50)
+                            if(this.body.doesPerimeterTouch(boys[0].body)){
+                                boys[0] = boys[0].copy()
+                                stage = new Stage(1011)
+
+                                const now = new Date()
+                                campaigntimestart = now.getTime()
+                            }
+                            this.start.xmom*=1.002
+                            this.start.ymom*=1.002
+                            this.end.xmom*=1.002
+                            this.end.ymom*=1.002
+                            this.start.draw()
+                            this.end.draw()
+                            this.link2.draw()
+                            this.link.draw()
+                            if(this.start.messup == 1){
+                                stage.obstacles.splice(stage.obstacles.indexOf(this), 1)
+                                stage.obstacles.push(new CrazyDetonator())
+                                if(Math.random()<.04){
+                                stage.obstacles.push(new CrazyDetonator())
+                                stage.dodgespeed += .1
+                                }
+                                return
+                            }
+                            if(this.end.messup == 1){
+                                stage.obstacles.splice(stage.obstacles.indexOf(this), 1)
+                                if(Math.random()<.04){
+                                stage.obstacles.push(new CrazyDetonator())
+                                stage.dodgespeed += .1
+                                }
+                                stage.obstacles.push(new CrazyDetonator())
+                                return
+                            }
+                        }
+                    }
+
 
                     let trapstartZ = 1
 
@@ -6432,6 +6554,7 @@
                                 this.blastgirlclimbscoremax = 0
                                 this.funkyclimbscoremax = 0
                                 this.banandroidtimemax = 0
+                                this.sototimemax = 0
                                 this.smashoutmax = 0
                                 this.gegegegeedropmin = 999999999
                                 this.campaigncomplete = false
@@ -6480,6 +6603,7 @@
                     class Stage {
 
                         constructor(MapToggle = 0) {
+                            this.dodgespeed = 6
                                 this.spawnrunner = 900
                                 this.pops = []
                                 this.popslength = 0
@@ -7131,9 +7255,13 @@
                                         let brick = new Brick(1900, 1400, 800, 50)
                                         this.bricks.push(brick)
                                         this.rope = new Jumprope()
-
-
-
+                                }else if(MapToggle == 1011){
+                                    for(let t = 0;t<256;t++){
+                                        let brick = new Brick(300+(t%16)*800, (Math.floor(t/16)*440)+620, 400, 50)
+                                        this.bricks.push(brick)
+                                    }
+                                    let crazyDetonator = new CrazyDetonator()
+                                    this.obstacles.push(crazyDetonator)
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
                                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -7168,6 +7296,27 @@
                             this.brickswap = 0
                         }
                         draw() {
+
+
+                            if(minigameSelected == 11){
+                                for(let t  = 0;t<this.obstacles.length;t++){
+                                    this.obstacles[t].draw()
+                                }
+
+                                const now = new Date()
+                                    campaigntime = now.getTime() - campaigntimestart
+                                    let seconds = campaigntime
+                                    seconds = Math.floor(seconds / 1000) 
+
+
+                                    if(seconds > worldscore.sototimemax){
+                                        worldscore.sototimemax = seconds
+                                }
+                                canvas_context.font =  "140px Arial"
+                                canvas_context.fillStyle = "#FFFFFF"
+                                    canvas_context.fillText(`Dodged for ${seconds} Seconds`, 20, 300)
+                            
+                            }
 
                             
                             if(minigameSelected == 9){
@@ -9089,6 +9238,9 @@
                             }else if(this.index == 10){
                             canvas_context.fillText("Banandroid Skip!", this.box.x + 45, this.box.y + 95)
                             canvas_context.fillText(`Jumped for ${worldscore.banandroidtimemax}`, this.box.x + 45, this.box.y + 155)
+                            }else if(this.index == 11){
+                            canvas_context.fillText("Soto Scramble!", this.box.x + 20, this.box.y + 95)
+                            canvas_context.fillText(`Dodged for ${worldscore.banandroidtimemax}`, this.box.x + 45, this.box.y + 155)
                             }else{
                             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
                             }
@@ -9103,7 +9255,7 @@
                         let iconStage = new Stage(t)
                         let icon = new MapIcon(iconStage.bricks, iconStage.walls)
                     }
-                    for (let t = 0; t < 11; t++) {
+                    for (let t = 0; t < 12; t++) {
                         let icon = new MiniGameIcon()
                     }
 
@@ -48175,7 +48327,7 @@
                                 descriptor.index = -1
                             } else {
 
-                                if(minigameSelected == 9){
+                                if(minigameSelected == 9 || minigameSelected == 11){
                                                 canvas_context.scale(invscale, invscale)
                                                  scale = .333
                                                  invscale = 1 / scale
@@ -49390,6 +49542,12 @@
                                                  invscale = 1 / scale
                                                 canvas_context.scale(scale, scale)
                                 }
+                                if(minigameSelected == 11){
+                                    canvas_context.scale(invscale, invscale)
+                                                 scale = .1
+                                                 invscale = 1 / scale
+                                                canvas_context.scale(scale, scale)
+                                }
                                 minigameSelectToggle = 0
                                 roomSelectionBox.focus = 0
                                 let wet = boys.length
@@ -49647,6 +49805,11 @@
                                     campaigntimestart = now.getTime()
                                 }
                                 if( minigameSelected == 10){
+                                    const now = new Date()
+                                    campaigntimestart = now.getTime()
+                                }
+
+                                if( minigameSelected == 11){
                                     const now = new Date()
                                     campaigntimestart = now.getTime()
                                 }
