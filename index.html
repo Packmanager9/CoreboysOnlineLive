@@ -12347,6 +12347,9 @@
                             if (this.index == 1010) {
                                 this.string = "Character: Banandroid. Jump over the rope as many times as you can!"
                             }
+                            if (this.index == 1011) {
+                                this.string = "Character: Doctor Soto. Avoid the pink lines for as long as possible!"
+                            }
                             }
 
 
@@ -39390,6 +39393,9 @@
                                 this.hitboxes = []
                                 this.links = []
                                 this.speed = 10.9
+                                if(minigameSelected == 11){
+                                    this.speed = 14
+                                }
                                 this.punchspeed = 6.4 // 5 // 5.7
                                 this.frame = 0
                                 this.grounded = 0
@@ -39793,6 +39799,11 @@
                             ////////////////////////////////console.log("caseF")
 
                             let copy = new DrSoto(this.controller)
+                            if(minigameSelected == 11){
+
+                                const now = new Date()
+                                campaigntimestart = now.getTime() 
+                            }
                             copy.id = this.id
                             copy.frame = this.frame
                             copy.body.color = this.body.color
