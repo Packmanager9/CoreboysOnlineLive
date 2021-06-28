@@ -1,6 +1,5 @@
 
 'use strict';
-
 // const mongoURLx = require("./mongo")
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,15 +7,12 @@ const { Server, defaultMaxListeners } = require('ws');
 var Extensions = require('websocket-extensions'),
     deflate = require('permessage-deflate'),
     zlib = require('zlib');
-
 deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL// || mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL //|| mongoURLx.mongoURL
 mongoose.connect(mongoURL)
-
-
 const playerdataSchema = new mongoose.Schema({
     joulepopscoremax : Number,
     masstargetscoremax : Number,
@@ -26,28 +22,21 @@ const playerdataSchema = new mongoose.Schema({
     blastgirlclimbscoremax : Number,
     funkyclimbscoremax : Number,
     banandroidtimemax : Number,
+    sototimemax : Number,
     smashoutmax : Number,
     gegegegeedropmin  : Number,
     campaigncomplete  : Boolean,
     gegegegeedropminstr : String,
     playername : String
 })
-
-
 mongoose.model('PlayerRecords', playerdataSchema)
-
-
-
 var exts = new Extensions();
 exts.add(deflate);
-
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
-
 const server = express()
     .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
 const wss = new Server({ server });
 let boys = []
 let games = []
@@ -66,24 +55,16 @@ class Game {
         player.assigned = room
         games[room].addPlayer(player)
     }
-
 }
 for (let t = 0; t < 535131; t++) {
     games.push(new Game())
 }
-
-
 wss.on("connection", ws => {
-    // ws.index = game.length
     ws.assigned = Math.round(Math.random()*0)
     ws.index = games[ws.assigned].players.length
-    // game.push(ws)
     games[ws.assigned].addPlayer(ws)
-    // let pair = [game.length, -1]
     let pair = [games[ws.assigned].players.length, -1]
-    // ws.pair = pair
     ws.pair = pair
-
     ws.on("close", () => {
         let minarr = []
         for (let t = 0; t < games[ws.assigned].players.length; t++) {
@@ -131,39 +112,29 @@ wss.on("connection", ws => {
             }
             sjon.playerIDs = ids
             games[ws.assigned].players[t].send(JSON.stringify(sjon))
-
-
-
             ids = []
             sjon = {
                 'clean': '1'
             }
-
-
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
                 if (t != games[ws.assigned].players.indexOf(ws)) {
                     ids.push(games[ws.assigned].players[t].serverID)
                 }
             }
             sjon.playerIDs = ids
-
             let data = JSON.stringify(sjon)
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
                 games[ws.assigned].players[t].send(data)
             }
         }
-
         games[ws.assigned].removePlayer(ws)
     })
     ws.on("message", data => {
           if (JSON.parse(data).dataScores === 1) {
             let model = new mongoose.model("PlayerRecords")(JSON.parse(data).model)  // JSON.parse(data).model
             model.save()
-            // console.log(model)
             return
           }else  if (JSON.parse(data).room > -1) {
-            // console.log(data)
-
             if(true===true){
             let minarr = []
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
@@ -211,8 +182,6 @@ wss.on("connection", ws => {
                 }
                 sjon.playerIDs = ids
                 games[ws.assigned].players[t].send(JSON.stringify(sjon))
-
-
                 let djon = {
                     "delete": `${ws.pair[1]}`,
                     "index": `${t}`,
@@ -220,12 +189,8 @@ wss.on("connection", ws => {
                 }
                 djon.playerIDs = [ws.serverID]
                 ws.send(JSON.stringify(djon))
-
-                
             }
         }
-
-
             let ids = []
             let sjon = {
                 'clean': '1'
@@ -236,7 +201,6 @@ wss.on("connection", ws => {
                 }
             }
             sjon.playerIDs = ids
-
             let cjon = JSON.stringify(sjon)
             cjon = JSON.parse(cjon)
             cjon.playerIDs = [ws.serverID]
@@ -245,14 +209,9 @@ wss.on("connection", ws => {
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
                 if (t != games[ws.assigned].players.indexOf(ws)) {
                 games[ws.assigned].players[t].send(datasend)
-                }else{
-                    // games[ws.assigned].players[t].send(datasendC)
                 }
             }
             games[ws.assigned].swapRoom(ws, parseInt(JSON.parse(data).room, 10))
-
-            
-
          }else if (JSON.parse(data).counter == 1) {
             let sjon = {
                 "counter": `1`,
@@ -274,7 +233,6 @@ wss.on("connection", ws => {
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
                 games[ws.assigned].players[t].send(JSON.stringify(sjon))
             }
-
         } else if (JSON.parse(data).pinging == 1) {
             let sjon = {
                 "pinging": `1`
@@ -284,7 +242,6 @@ wss.on("connection", ws => {
             for (let t = 0; t < games[ws.assigned].players.length; t++) {
                 games[ws.assigned].players[t].send(JSON.stringify(sjon))
             }
-
         } else {
             if (data >= 0) {
                 let minarr = []
@@ -346,9 +303,7 @@ wss.on("connection", ws => {
                 data = JSON.parse(data)
                 data.players = wss.clients.size 
                 //ah geex this is gonna be a bad thing to fix gggeez
-
                 data.usedslots = []
-
                 let minarr = []
                 for (let t = 0; t < games[ws.assigned].players.length; t++) {
                     minarr.push(games[ws.assigned].players[t].pair[1])
@@ -398,10 +353,7 @@ wss.on("connection", ws => {
                         games[ws.assigned].players[t].serverID = parseFloat((data).serverID)
                     }
                 }
-
             }
         }
     })
 })
-
-
