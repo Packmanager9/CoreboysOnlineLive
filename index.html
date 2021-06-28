@@ -2784,13 +2784,13 @@
                         }
                         rmove() {
                             if (this.reflect == 1) {
-                                if (this.x + this.radius > canvas.width*10) {
+                                if (this.x + this.radius > canvas.width*6.2) {
                                     if (this.xmom > 0) {
                                         this.xmom *= -1
                                         this.messup = 1
                                     }
                                 }
-                                if (this.y + this.radius > canvas.height*10) {
+                                if (this.y + this.radius > canvas.height*6.2) {
                                     if (this.ymom > 0) {
                                         this.ymom *= -1
                                         this.messup = 1
@@ -6214,8 +6214,11 @@
 
                     class CrazyDetonator{
                         constructor(){
-                            this.start = new Shot(640+(Math.random()*1280*9), 360+(Math.random()*720*9), 50, "#FF00FF", (Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
-                            this.end = new Shot(640+(Math.random()*1280*9), 360+(Math.random()*720*9), 50, "#FF00FF",(Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
+                            this.flashing = 1
+                            this.flashon = 100
+                            this.flashtick = 0
+                            this.start = new Shot(500+(Math.random()*1280*5.4), 300+(Math.random()*720*5.4), 50, "#FF00FF", (Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
+                            this.end = new Shot(500+(Math.random()*1280*5.4), 300+(Math.random()*720*5.4), 50, "#FF00FF",(Math.random()-.5)*stage.dodgespeed, (Math.random()-.5)*stage.dodgespeed, 1.01, 1 )
                             this.start.reflect = 1
                             this.end.reflect = 1
                             this.link = new LineOP(this.start, this.end, "#FF00FFAA", 50)
@@ -6230,7 +6233,9 @@
                             }
                         }
                         draw(){
-                            this.start.rmove()
+                            if(this.flashing == 0){
+
+                                this.start.rmove()
                             this.end.rmove()
                             for(let t = 0;t<this.body.shapes.length;t++){
                                 this.body.shapes[t].x += (this.body.shapes[t].fromrat*this.end.xmom)
@@ -6247,10 +6252,10 @@
                                 const now = new Date()
                                 campaigntimestart = now.getTime()
                             }
-                            this.start.xmom*=1.002
-                            this.start.ymom*=1.002
-                            this.end.xmom*=1.002
-                            this.end.ymom*=1.002
+                            this.start.xmom*=1.008
+                            this.start.ymom*=1.008
+                            this.end.xmom*=1.008
+                            this.end.ymom*=1.008
                             this.start.draw()
                             this.end.draw()
                             this.link2.draw()
@@ -6258,7 +6263,7 @@
                             if(this.start.messup == 1){
                                 stage.obstacles.splice(stage.obstacles.indexOf(this), 1)
                                 stage.obstacles.push(new CrazyDetonator())
-                                if(Math.random()<.04){
+                                if(Math.random()<.3){
                                 stage.obstacles.push(new CrazyDetonator())
                                 stage.dodgespeed += .1
                                 }
@@ -6266,12 +6271,23 @@
                             }
                             if(this.end.messup == 1){
                                 stage.obstacles.splice(stage.obstacles.indexOf(this), 1)
-                                if(Math.random()<.04){
+                                if(Math.random()<.3){
                                 stage.obstacles.push(new CrazyDetonator())
                                 stage.dodgespeed += .1
                                 }
                                 stage.obstacles.push(new CrazyDetonator())
                                 return
+                            }
+                            }else{
+                                this.flashtick++
+                                if(this.flashtick%10 >= 4){
+                                    this.link.draw()
+                                }else{
+                                    this.link2.draw()
+                                }
+                                if(this.flashtick > 150){
+                                    this.flashing = 0
+                                }
                             }
                         }
                     }
@@ -6603,7 +6619,7 @@
                     class Stage {
 
                         constructor(MapToggle = 0) {
-                            this.dodgespeed = 6
+                            this.dodgespeed = 9
                                 this.spawnrunner = 900
                                 this.pops = []
                                 this.popslength = 0
@@ -7256,11 +7272,13 @@
                                         this.bricks.push(brick)
                                         this.rope = new Jumprope()
                                 }else if(MapToggle == 1011){
-                                    for(let t = 0;t<256;t++){
-                                        let brick = new Brick(300+(t%16)*800, (Math.floor(t/16)*440)+620, 400, 50)
+                                    for(let t = 0;t<160;t++){
+                                        let brick = new Brick(300+(t%10)*800, (Math.floor(t/16)*440)+900, 400, 50)
                                         this.bricks.push(brick)
                                     }
                                     let crazyDetonator = new CrazyDetonator()
+                                    this.obstacles.push(crazyDetonator)
+                                     crazyDetonator = new CrazyDetonator()
                                     this.obstacles.push(crazyDetonator)
                                 } else {
                                     this.bricks.push(new Brick(850, 1600, 700))
@@ -49544,7 +49562,7 @@
                                 }
                                 if(minigameSelected == 11){
                                     canvas_context.scale(invscale, invscale)
-                                                 scale = .1
+                                                 scale = .16
                                                  invscale = 1 / scale
                                                 canvas_context.scale(scale, scale)
                                 }
