@@ -49473,7 +49473,7 @@ move() {
                 const rightwall = new Line((2560 * (invscale * .5))+10, -10000, (2560 * (invscale * .5))+10, 10000000, "#FF0000", 10)
                 leftwall.draw()
                 rightwall.draw()
-                const wet = 0
+                let wet = 0
                 for(let t = 0;t<stage.obstacles.length;t++){
                     if(boys[0].body.doesPerimeterTouch(stage.obstacles[t])){
                                     boys[0] = boys[0].copy()
@@ -49725,7 +49725,7 @@ move() {
                 canvas_context.fillText(`${scores[1]}`, 900, 100)           
             }
             if (stock > 0) {
-                const wet = boys.length - 1
+                let wet = boys.length - 1
                 const winner = {}
                 for (let g = 0; g < boys.length; g++) {
                     if (drops[g] >= stock) {
@@ -50437,7 +50437,7 @@ move() {
                 }
                 minigameSelectToggle = 0
                 roomSelectionBox.focus = 0
-                const wet = boys.length
+                let wet = boys.length
                 for (let t = 0; t < selectors.length; t++) {
                     for (let k = 0; k < characterbuttons.length; k++) {
                         if (characterbuttons[k].isPointInside(selectors[t].body)) {
