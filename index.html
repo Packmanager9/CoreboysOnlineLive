@@ -751,7 +751,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = []
+    let scores = [49, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -6606,7 +6606,7 @@ let camerax = 0
                             AItoggle = 1
                             humanPlayers = 0
                             boys = []
-                            scores = []
+                            // scores = []
                             drops = []
                             ws.close()
                             minigameSelected = -1
@@ -40131,6 +40131,9 @@ move() {
                             this.shots.push(this.shot)
                             this.body.ymom += 8
                             this.shotclock = 50
+                            if(this.shots.length > 5){
+                                this.shots.splice(0,1)
+                            }
                     }
                 }
                 if (this.downspike == 1) {    if (this.righthand.fired <= 0) {
@@ -40452,6 +40455,9 @@ move() {
                             this.shots.push(this.shot)
                             this.body.ymom += 8
                             this.shotclock = 50
+                            if(this.shots.length > 5){
+                                this.shots.splice(0,1)
+                            }
                }
             }
         }
@@ -53083,6 +53089,7 @@ move() {
                 }
             }
             // JumpIn(boys[0])
+            // humanPlayers = -1
 
             if (AItoggle == 0  && localPlayToggle == 0 && localPlayToggle == 0) {
 
