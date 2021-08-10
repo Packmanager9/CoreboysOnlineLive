@@ -38344,7 +38344,6 @@ move() {
                 return
             }
 
-            this.armAngle += this.armspin*this.face
 
             this.leftshoulder.x = (this.body.x + ((this.body.radius+this.leftshoulder.radius)*Math.cos(this.armAngle+(Math.PI*.5))))
             this.leftshoulder.y = (this.body.y + ((this.body.radius+this.leftshoulder.radius)*Math.sin(this.armAngle+(Math.PI*.5))))
@@ -40842,6 +40841,8 @@ move() {
             if (this.inactive == 1) {
                 return
             }
+
+            this.armAngle += this.armspin*this.face
             // if (this.righthand.anchored == 1) { // disabled for spin?
             //     if (this.body.x > this.righthand.x) {
             //         this.righthand.anchored = -10
