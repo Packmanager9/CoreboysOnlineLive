@@ -40857,7 +40857,6 @@ move() {
 
             for (let t = 0; t < this.shots.length; t++) {
                     if(this.shots[t].bomb == 1){
-                        console.log("hit")
                         let link = new LineOP(this.body, this.shots[t], this.body.color, 3)
                         link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
                         if(link.hypotenuse() < 400){
