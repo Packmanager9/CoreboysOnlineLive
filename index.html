@@ -40090,28 +40090,28 @@ move() {
                     if(this.middlehand.fired <= 0){
                             if(this.middlehand.anchored <= 0){
                             this.middlehand.fired = 19
-                            this.middlehand.ymom = (-1*this.punchspeed*19)
+                            this.middlehand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.bananahand.fired <= 0){
                             if(this.bananahand.anchored <= 0){
                             this.bananahand.fired = 19
-                            this.bananahand.ymom = (-1*this.punchspeed*19)
+                            this.bananahand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.righthand.fired <= 0){
                             if(this.righthand.anchored <= 0){
                             this.righthand.fired = 19
-                            this.righthand.ymom = (-1*this.punchspeed*19)
+                            this.righthand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.lefthand.fired <= 0){
                             if(this.righthand.anchored <= 0){
                             this.lefthand.fired = 19
-                            this.lefthand.ymom = (-1*this.punchspeed*19)
+                            this.lefthand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
@@ -40127,6 +40127,7 @@ move() {
                 if (this.screwshot == 1) {
                     if(this.shotclock <= 0){
                             this.shot = new ShotFMP(this.body.x, this.body.y, 35, this.body.color, (Math.random()-.5)*this.punchspeed*4, (Math.random()-.5)*this.punchspeed*4)
+                            this.shot.bomb = 1
                             this.shots.push(this.shot)
                             this.body.ymom += 8
                             this.shotclock = 50
@@ -40355,28 +40356,28 @@ move() {
                         if(this.middlehand.fired <= 0){
                             if(this.middlehand.anchored <= 0){
                             this.middlehand.fired = 19
-                            this.middlehand.ymom = (-1*this.punchspeed*19)
+                            this.middlehand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.bananahand.fired <= 0){
                             if(this.bananahand.anchored <= 0){
                             this.bananahand.fired = 19
-                            this.bananahand.ymom = (-1*this.punchspeed*19)
+                            this.bananahand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.righthand.fired <= 0){
                             if(this.righthand.anchored <= 0){
                             this.righthand.fired = 19
-                            this.righthand.ymom = (-1*this.punchspeed*19)
+                            this.righthand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
                         if(this.lefthand.fired <= 0){
                             if(this.righthand.anchored <= 0){
                             this.lefthand.fired = 19
-                            this.lefthand.ymom = (-1*this.punchspeed*19)
+                            this.lefthand.ymom = (-1*this.punchspeed*15)
                                 this.idify()
                             }
                         }
@@ -40447,6 +40448,7 @@ move() {
             if (this.gamepad.gamepad.buttonsStatus.includes('X') || (keysPressed['j'] || keysPressed['ArrowLeft'])) {
                if(this.shotclock <= 0){
                 this.shot = new ShotFMP(this.body.x, this.body.y, 35, this.body.color, (Math.random()-.5)*this.punchspeed*4, (Math.random()-.5)*this.punchspeed*4)
+                            this.shot.bomb = 1
                             this.shots.push(this.shot)
                             this.body.ymom += 8
                             this.shotclock = 50
@@ -40652,6 +40654,7 @@ move() {
 
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.shots.length; t++) {
+               
                     if (typeof this.shots[t].gravity == "number") {
                         if (this.shots[t].ymom > -(vsmashlimit / 1.15)) {
                             this.shots[t].ymom += this.shots[t].gravity / 1.2
@@ -40670,7 +40673,40 @@ move() {
                             this.shots[t].marked = 1
                         }
                     }
-                    // this.shots[t].move()
+                    if(this.shots[t].life > 0){
+                        this.shots[t].move()
+                    }
+
+                    this.detonate = 0
+                    if(this.shots[t].bomb == 1) {
+                    for(let h = 0;h<boys.length;h++){
+                        if(boys[h] != this){
+                            let link = new LineOP(this.shots[t], boys[h].body, this.shots[t].color, 8)
+                            if(link.hypotenuse() < 300){
+                                this.detonate = 1
+                                link.draw()
+                            }
+
+                                for(let r = 0;r<boys[h].shots.length;r++){
+
+                                    let link = new LineOP(this.shots[t], boys[h].shots[r], this.shots[t].color, 8)
+                                        if(link.hypotenuse() < 300){
+                                            this.detonate = 1
+                                            link.draw()
+                                        }
+                                }
+                        }
+                    }
+                }
+                    if (this.detonate == 1 && this.shots[t].bomb == 1) {
+                                const angle = Math.PI / 6
+                                this.shots[t].marked = 1
+                                for (let d = 0; d < 12; d++) {
+                                    let bullet = new ShotFP(this.shots[t].x, this.shots[t].y, 13, this.body.color, Math.cos(angle * d) * 21, Math.sin(angle * d) * 21)
+                                    bullet.life = 13
+                                    this.shots.push(bullet)
+                                }
+                            }
                     if (this.shots[t].marked <= 0) {
                         this.shots[t].draw()
                     }
