@@ -6606,7 +6606,7 @@ let camerax = 0
                             AItoggle = 1
                             humanPlayers = 0
                             boys = []
-                            // scores = []
+                            scores = [] //jumpin( break)
                             drops = []
                             ws.close()
                             minigameSelected = -1
@@ -38004,14 +38004,14 @@ move() {
 
 
                 this.nodes.push(this.body)
-                this.leftshoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
-                this.rightshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
-                this.middleshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
-                this.bananashoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
-                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
-                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
-                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
-                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
+                this.leftshoulder = new ShotFP(this.body.x - (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
+                this.rightshoulder = new ShotFP(this.body.x + (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
+                this.middleshoulder = new ShotFP(this.body.x + (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
+                this.bananashoulder = new ShotFP(this.body.x - (this.body.radius + this.shoulderwidth), 350, 12, "#FF0000", 0, 0, .999)
+                this.lefthand = new ShotFP(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
+                this.righthand = new ShotFP(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
+                this.middlehand = new ShotFP(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
+                this.bananahand = new ShotFP(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 30.5, "#FF0000", 0, 0, .85)
                 this.nodes.push(this.leftshoulder)
                 this.nodes.push(this.rightshoulder)
                 this.nodes.push(this.middleshoulder)
@@ -38083,9 +38083,13 @@ move() {
 
                 for (let t = 0; t < this.shots.length; t++) {
                     const idsto = this.shots[t].id
-                    this.shots[t] = new ShotFMP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
-                    this.shots[t].id = idsto
-
+                    if(this.shots[t].bomb == 1){
+                        this.shots[t] = new ShotFMP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
+                        this.shots[t].id = idsto
+                    }else{
+                        this.shots[t] = new ShotFP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
+                        this.shots[t].id = idsto
+                    }
                 }
                 this.id = args["id"]
                 this.frame = args['frame']
@@ -53088,8 +53092,8 @@ move() {
                     //translate relevant
                 }
             }
-            // JumpIn(boys[0])
-            // humanPlayers = -1
+            //  JumpIn(boys[0])
+            //  humanPlayers = -1
 
             if (AItoggle == 0  && localPlayToggle == 0 && localPlayToggle == 0) {
 
@@ -54598,7 +54602,7 @@ move() {
                 whosUp = new Pinwheelian(boys.length)
             } else {
                 if (fightlogged == 0) {
-                    //console.log(strarr)
+                    console.log(strarr)
                     fightlogged = 1
                 }
                 whosUp = new Dummy(boys.length)
