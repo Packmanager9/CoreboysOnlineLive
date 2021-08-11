@@ -751,7 +751,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [49, 0]
+    let scores = [] //[119, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -4668,6 +4668,17 @@ let camerax = 0
             return false
         }
         draw() {
+
+
+                    if(this.bomb == 1){
+                        for(let t = 0;t<boys.length;t++){
+                            let link = new LineOP(this, boys[t].body, this.color, 3)
+                            link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
+                            if(link.hypotenuse() < 400){
+                                link.draw()
+                            }
+                        }
+                    }
             this.angle -= .04
             if (typeof this.radius !== 'number') {
                 return
@@ -38081,16 +38092,6 @@ move() {
                     this.nodes[t].id = idsto
                 }
 
-                for (let t = 0; t < this.shots.length; t++) {
-                    const idsto = this.shots[t].id
-                    if(this.shots[t].bomb == 1){
-                        this.shots[t] = new ShotFMP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
-                        this.shots[t].id = idsto
-                    }else{
-                        this.shots[t] = new ShotFP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
-                        this.shots[t].id = idsto
-                    }
-                }
                 this.id = args["id"]
                 this.frame = args['frame']
                 this.armlength = 35
@@ -38123,6 +38124,19 @@ move() {
                 }
                 if (this.controller >= 8) {
                     this.body.color = colors[this.controller]
+                }
+
+                for (let t = 0; t < this.shots.length; t++) {
+                    const idsto = this.shots[t].id
+                    if(this.shots[t].bomb == 1){
+                        this.shots[t] = new ShotFMP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.body.color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
+                        this.shots[t].angle+=this.armAngle
+                        this.shots[t].id = idsto
+                        this.shots[t].bomb = 1
+                    }else{
+                        this.shots[t] = new ShotFP(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.body.color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
+                        this.shots[t].id = idsto
+                    }
                 }
                 this.leftshoulder = this.nodes[1]
                 this.rightshoulder = this.nodes[2]
@@ -40640,6 +40654,20 @@ move() {
             if (this.inactive == 1) {
                 return
             }
+
+
+
+            // for (let t = 0; t < this.shots.length; t++) {
+            //         if(this.shots[t].bomb == 1){
+            //             let link = new LineOP(this.body, this.shots[t], this.body.color, 3)
+            //             link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
+            //             if(link.hypotenuse() < 400){
+            //                 link.draw()
+            //             }
+            //         }
+            // }
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -40664,6 +40692,8 @@ move() {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.shots.length; t++) {
                
+
+
                     if (typeof this.shots[t].gravity == "number") {
                         if (this.shots[t].ymom > -(vsmashlimit / 1.15)) {
                             this.shots[t].ymom += this.shots[t].gravity / 1.2
@@ -40733,6 +40763,9 @@ move() {
                     }
                 }
                 for (let t = 0; t < this.shots.length; t++) {
+
+
+
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
@@ -40860,7 +40893,6 @@ move() {
                         let link = new LineOP(this.body, this.shots[t], this.body.color, 3)
                         link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
                         if(link.hypotenuse() < 400){
-                            link.draw()
                             this.body.ymom-=(this.punchspeed*.07)
                         }
                     }
@@ -53105,7 +53137,7 @@ move() {
                     //translate relevant
                 }
             }
-            //  JumpIn(boys[0])
+            // JumpIn(boys[0])
             //  humanPlayers = -1
 
             if (AItoggle == 0  && localPlayToggle == 0 && localPlayToggle == 0) {
@@ -54579,7 +54611,7 @@ move() {
 
     function JumpIn(fighter) {
         //start with the dummy
-        if (scores.includes(50)) {
+        if (scores.includes(120)) {
             const str = `${boys[0].name}: ${scores[0]}, ${boys[1].name}: ${scores[1]}`
             strarr.push(str)
             scores = [0, 0]
