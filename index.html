@@ -38221,6 +38221,8 @@ move() {
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
                 }
+
+                this.pinwheel = 1
             }
             ////////////////////////////////////console.log(this)
         }
@@ -53339,6 +53341,11 @@ move() {
 
                         if (AItoggle == 0  && localPlayToggle == 0 && localPlayToggle == 0) {
                             boys[t].body.color = colors[t]
+                            if(boys[t].pinwheel == 1){
+                                for(let j = 0;j<boys[t].shots.length;j++){
+                                boys[t].shots[j].color = colors[t]
+                            }
+                            }
                         }
                         boys[t].draw()
                     } else {
@@ -53351,6 +53358,12 @@ move() {
                     if (boys[t]) {
                         if (AItoggle == 0  && localPlayToggle == 0) {
                             boys[t].body.color = colors[t]
+
+                            if(boys[t].pinwheel == 1){
+                            for(let j = 0;j<boys[t].shots.length;j++){
+                                boys[t].shots[j].color = colors[t]
+                            }
+                        }
                         }
                         if (t == 0) {
                             const x = boys[t].body.x
