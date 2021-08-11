@@ -40933,7 +40933,7 @@ move() {
                         link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
                         if(link.hypotenuse() < 400){
                             this.body.ymom-=(this.punchspeed*.07)
-                            console.log(this.body.ymom)
+                            // console.log(this.body.ymom)
                         }
                     }
             }
@@ -53892,6 +53892,7 @@ move() {
                             delete Json.shots[y].string
                         }
                         delete Json.shot
+                        delete Json.pinwheel
 
 
 
@@ -53899,7 +53900,7 @@ move() {
                             // bumper = 1
                             //console.log((Json))
                             //console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
-                            //console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
+                            // console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
                             //console.log(Object.keys(Json))
                         }
                         if (keysPressed['l']) {
