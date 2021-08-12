@@ -38264,7 +38264,7 @@ move() {
                     }
                     if (keysPressed['d']) {
                         this.face = 1
-                        object.x += this.speed
+                        object.x += this.speed*.8
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1|| this.middlehand.anchored == 1) {
                             this.degripr()
                             this.jumping = 1
@@ -38276,7 +38276,7 @@ move() {
                     // }
                     if (keysPressed['a']) {
                         this.face = -1
-                        object.x -= this.speed
+                        object.x -= this.speed*.8
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1|| this.middlehand.anchored == 1) {
                             this.degripl()
                             this.jumping = 1
@@ -38324,7 +38324,7 @@ move() {
                                             this.jumping = 1
                                             object.ymom -= this.speed
                                         } else {
-                                            object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)
+                                            object.x += (this.gamepad.gamepad.axesStatus[0] * this.speed)*.8
                                         }
                                     }
 
@@ -39717,11 +39717,11 @@ move() {
                 if (this.dmove == 1) {
                     this.face = 1
                     if (object == this.body) {
-                        object.x += speed
-                        this.righthand.x += speed
-                        this.lefthand.x += speed
-                        this.middlehand.x += speed
-                        this.bananahand.x += speed
+                        object.x += speed*.8
+                        this.righthand.x += speed*.8
+                        this.lefthand.x += speed*.8
+                        this.middlehand.x += speed*.8
+                        this.bananahand.x += speed*.8
                     }
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1|| this.middlehand.anchored == 1) {
                         this.degripr()
@@ -39735,10 +39735,11 @@ move() {
                 if (this.amove == 1) {
                     this.face = -1
                     if (object == this.body) {
-                        object.x -= speed
-                        this.righthand.x -= speed
-                        this.lefthand.x -= speed
-                        this.middlehand.x -= speed
+                        object.x -= speed*.8
+                        this.righthand.x -= speed*.8
+                        this.lefthand.x -= speed*.8
+                        this.middlehand.x -= speed*.8
+                        this.bananahand.x -= speed*.8
                     }
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1|| this.middlehand.anchored == 1) {
                         this.degripl()
