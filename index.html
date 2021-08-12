@@ -4651,6 +4651,7 @@ let camerax = 0
             this.anchor = {}
             this.sxmom = 0
             this.symom = 0
+            this.bomb = 1
             this.fired = parseFloat(fired)
             this.marked = parseFloat(marked)
             this.angle = parseFloat(angle)
@@ -40164,7 +40165,7 @@ move() {
 
                 for(let t = 0;t<boys.length;t++){
                     let link = new Line(boys[t].body, this.body)
-                    if(link.hypotenuse() > 0 && link.hypotenuse() < 400){
+                    if(link.hypotenuse() > 0 && link.hypotenuse() < 600){
                         this.screwshot = 1
                     }
                 }
@@ -40174,7 +40175,7 @@ move() {
                             this.shot = new ShotFMP(this, this.body.x, this.body.y, 35, this.body.color, (Math.random()-.5)*this.punchspeed*4, (Math.random()-.5)*this.punchspeed*4)
                             this.shot.bomb = 1
                             this.shots.push(this.shot)
-                            this.body.ymom += 8
+                            // this.body.ymom += 8
                             this.shotclock = 50
                             if(this.shots.length > 5){
                                 this.shots.splice(0,1)
@@ -40498,7 +40499,7 @@ move() {
                 this.shot = new ShotFMP(this, this.body.x, this.body.y, 35, this.body.color, (Math.random()-.5)*this.punchspeed*4, (Math.random()-.5)*this.punchspeed*4)
                             this.shot.bomb = 1
                             this.shots.push(this.shot)
-                            this.body.ymom += 8
+                            // this.body.ymom += 8
                             this.shotclock = 50
                             if(this.shots.length > 5){
                                 this.shots.splice(0,1)
@@ -40926,17 +40927,6 @@ move() {
 
 
 
-            
-            for (let t = 0; t < this.shots.length; t++) {
-                    if(this.shots[t].bomb == 1){
-                        let link = new LineOP(this.body, this.shots[t], this.body.color, 3)
-                        link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
-                        if(link.hypotenuse() < 400){
-                            this.body.ymom-=(this.punchspeed*.07)
-                            // console.log(this.body.ymom)
-                        }
-                    }
-            }
 
             if (this.lefthand.anchored != 1 && this.righthand.anchored != 1 && this.middlehand.anchored != 1 && this.bananahand.anchored != 1) {
                 this.body.sxmom = 0
@@ -41095,6 +41085,18 @@ move() {
 
             this.body.xmom *= .99
             this.body.ymom *= .99
+
+
+            for (let t = 0; t < this.shots.length; t++) {
+                    if(this.shots[t].bomb == 1){
+                        let link = new LineOP(this.body, this.shots[t], this.body.color, 3)
+                        link.width = Math.min(Math.max(1000/link.hypotenuse(), 1),15)
+                        if(link.hypotenuse() <= 400){
+                            this.body.ymom-=(this.punchspeed*.07)
+                            this.body.xmom*=.99
+                        }
+                    }
+            }
 
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
