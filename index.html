@@ -42769,11 +42769,9 @@ this.bananahand2.anchored = -10
                     if (this.face == -1) {
                         x -= this.body.radius * .89
                     }
-                    canvas_context.fillRect(x - 11.5, (link.y1 - this.body.radius * .18) - 11.5, 23.5, this.body.radius*.36)
-                    canvas_context.fillStyle = (this.body.color)
-                    canvas_context.fillRect(x - 6.5, (link.y1 - this.body.radius * .1) + 16.5, 14,  this.body.radius*.2)
-                    canvas_context.fillStyle = (this.body.color)
-                    canvas_context.fillRect(x - 6.5, (link.y1 - this.body.radius * .1) - 16.5, 14,  this.body.radius*.2)
+                    canvas_context.fillRect(x - 12, (link.y1 + this.body.radius * .0) - 11.5, 24, 24)
+                    let circ = new ShotGW(x, link.y1, this.body.radius*.25, (this.body.color))
+                    circ.draw()
                 }
             }
 
