@@ -11590,7 +11590,7 @@ move() {
         copy() {
             const obj = {}
             obj.kill = 1
-            obj.striker = 10000//this.striker
+            obj.striker = this.striker
             if (AItoggle == 0  && localPlayToggle == 0) {
                  if(localPlayToggle != 1){
                     ws.send(JSON.stringify(obj))
@@ -53263,9 +53263,10 @@ if (this.middlehand2.anchored == 1) {
         copy() {
             const obj = {}
             obj.kill = 1
-            obj.striker = 10000//this.striker
+            obj.striker = this.striker
             if (AItoggle == 0  && localPlayToggle == 0) {
                  if(localPlayToggle != 1){
+                    //  console.log(obj)
                     ws.send(JSON.stringify(obj))
                 }
             }
