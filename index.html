@@ -14295,6 +14295,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -14503,14 +14504,14 @@ if (this.middlehand2.anchored == 1) {
                 this.body.ymom = vsmashlimit
             }
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -17628,6 +17629,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -17825,14 +17827,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
 
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
@@ -20498,6 +20500,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -20677,14 +20680,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
 
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
@@ -23395,14 +23398,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -24884,6 +24887,7 @@ if(this.megadraw == 1){
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -27537,6 +27541,7 @@ if(this.megadraw == 1){
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -27740,14 +27745,14 @@ if(this.megadraw == 1){
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -30867,6 +30872,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -31072,14 +31078,14 @@ if (this.middlehand2.anchored == 1) {
                 this.body.ymom = vsmashlimit
             }
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             if (this.lefthand.anchored <= 0) {
 
                 this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
@@ -33813,6 +33819,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -33980,14 +33987,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -36777,6 +36784,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -36962,14 +36970,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             this.middlehand.ymom += (this.middlehand.y - this.body.y) / 20
@@ -39891,6 +39899,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -40117,14 +40126,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             this.middlehand.ymom += (this.middlehand.y - this.body.y) / 18
@@ -43377,6 +43386,7 @@ this.bananahand2.anchored = -10
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -43708,14 +43718,14 @@ this.bananahand2.anchored = -10
                     }
             }
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             // this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             // this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             // this.middlehand.ymom += (this.middlehand.y - this.body.y) / 18
@@ -46954,6 +46964,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -47245,14 +47256,14 @@ if (this.middlehand2.anchored == 1) {
                     }
             }
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             // this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             // this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             // this.middlehand.ymom += (this.middlehand.y - this.body.y) / 18
@@ -49975,6 +49986,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -50242,14 +50254,14 @@ if (this.middlehand2.anchored == 1) {
                 this.body.ymom = vsmashlimit
             }
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -53075,6 +53087,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -53318,14 +53331,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
             this.righthand.xmom += (this.righthand.x - this.body.x) / 80
             this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
@@ -56221,6 +56234,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -59269,6 +59283,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
+this.shots[t].move()
                         }
                     }
                 }
@@ -59453,14 +59468,14 @@ if (this.middlehand2.anchored == 1) {
             this.body.xmom *= .99
             this.body.ymom *= .99
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+           // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].frictiveMove(this)
                 }
                 for (let t = 0; t < this.nodes.length; t++) {
                     this.nodes[t].smove(this)
                 }
-            }
+   //         }
             this.lefthand.xmom += (this.lefthand.x - this.body.x) / 40
             this.righthand.xmom += (this.righthand.x - this.body.x) / 40
             this.middlehand.ymom += (this.middlehand.y - this.body.y) / 20
