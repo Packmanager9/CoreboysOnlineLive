@@ -42673,9 +42673,9 @@ this.bananahand2.anchored = -10
                                     }
                                 }else  if(typeof target.x != "undefined"){
 
-                                    if(this.shots[t].doesPerimeterTouch(target)){
-                                    this.shots[t].marked == 1
-                                }
+                                //     if(this.shots[t].doesPerimeterTouch(target)){
+                                //     this.shots[t].marked = 1
+                                // }
                                     let link = new LineOP(this.shots[t], target)
                                     this.shots[t].xmom -= (this.shots[t].x-target.x)/Math.max((link.hypotenuse()-800), 400)
                                     this.shots[t].ymom -= (this.shots[t].y-target.y)/Math.max((link.hypotenuse()-800), 400)
