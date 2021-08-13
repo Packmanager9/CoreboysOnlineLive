@@ -1115,6 +1115,56 @@ let camerax = 0
             }
         })
     }
+
+
+    class Vector{
+        constructor(object, xmom = 0, ymom = 0){
+            this.xmom = xmom
+            this.ymom = ymom
+            this.object = object
+        }
+        isToward(point){
+            let link = new LineOP(this.object, point)
+            let dis1 = link.sqrDis()
+            let dummy = new Point(this.object.x+this.xmom, this.object.y+this.ymom)
+            let link2 = new LineOP(dummy, point)
+            let dis2 = link2.sqrDis()
+            if(dis2 < dis1){
+                return true
+            }else{
+                return false
+            }
+        }
+        rotate(angleGoal){
+            let link = new Line(this.xmom, this.ymom, 0,0)
+            let length = link.hypotenuse()
+            let x = (length * Math.cos(angleGoal))
+            let y = (length * Math.sin(angleGoal))
+            this.xmom = x
+            this.ymom = y
+        }
+        magnitude(){
+            return (new Line(this.xmom, this.ymom, 0,0)).hypotenuse()
+        }
+        multiply(vect){
+            return new Vector(this.object, this.xmom*vect.xmom, this.ymom*vect.ymom)
+        }
+        add(vect){
+            return new Vector(this.object, this.xmom+vect.xmom, this.ymom+vect.ymom)
+        }
+        subtract(vect){
+            return new Vector(this.object, this.xmom-vect.xmom, this.ymom-vect.ymom)
+        }
+        divide(vect){
+            return new Vector(this.object, this.xmom/vect.xmom, this.ymom/vect.ymom)
+        }
+        draw(){
+            let dummy = new Point(this.object.x+this.xmom, this.object.y+this.ymom)
+            let link = new LineOP(this.object, dummy, "#FFFFFF", 1)
+            link.draw()
+        }
+    }
+
     class Perceptron {
         constructor(inputs, layer, outputcount = 0, override = 0) {
             if (override == 0) {
@@ -5055,6 +5105,248 @@ let camerax = 0
                     // }
 
                     // }
+
+
+                    // tempcanvas.width = this.radius * 2
+                    // tempcanvas.height = this.radius * 2
+
+
+                    // // temp_context.save();
+                    // temp_context.fillStyle = gard
+                    // temp_context.beginPath();
+                    // temp_context.arc(this.radius, this.radius, this.radius, 0, (Math.PI * 2), true)
+                    // temp_context.fill()
+                    // temp_context.globalCompositeOperation = 'destination-out'
+                    // temp_context.beginPath();
+                    // temp_context.fillStyle = '#888888'
+                    // temp_context.arc(this.radius, this.radius, this.radius * .5, 0, 2 * Math.PI)
+                    // temp_context.fill()
+                    // // temp_context.restore()
+                    // canvas_context.drawImage(tempcanvas, 0, 0, tempcanvas.width, tempcanvas.height, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2)
+                    // // canvas_context.stroke();
+                    // temp_context.globalCompositeOperation = 'source-over'
+                }
+            } else {
+                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+            }
+            // canvas_context.closePath()
+        }
+
+        move(player) {
+            if (this.anchored !== 1) {
+                let fricbreak = 0
+                for (let t = 0; t < (Math.abs(this.xmom) + Math.abs(this.ymom)); t += (Math.abs(this.xmom) + Math.abs(this.ymom)) * .08) {
+                    fricbreak++
+                    if (fricbreak > 27) {
+                        break
+                    }
+                    this.x += this.xmom * .08
+                    this.y += this.ymom * .08
+
+                    if (typeof player != 'undefined') {
+                        for (let k = 0; k < stage.bricks.length; k++) {
+                            stage.bricks[k].doesPerimeterTouch(this, player)
+                        }
+                        for (let k = 0; k < stage.walls.length; k++) {
+                            stage.walls[k].doesPerimeterTouch(this, player)
+                        }
+                    }
+                }
+            } else {
+                this.x = this.anchor.x
+                this.y = this.anchor.y
+                this.xmom = 0
+                this.ymom = 0
+            }
+        }
+        unmove() {
+            if (this.reflect == 1) {
+                if (this.x + this.radius > canvas.width) {
+                    if (this.xmom > 0) {
+                        this.xmom *= -1
+                    }
+                }
+                if (this.y + this.radius > canvas.height) {
+                    if (this.ymom > 0) {
+                        this.ymom *= -1
+                    }
+                }
+                if (this.x - this.radius < 0) {
+                    if (this.xmom < 0) {
+                        this.xmom *= -1
+                    }
+                }
+                if (this.y - this.radius < 0) {
+                    if (this.ymom < 0) {
+                        this.ymom *= -1
+                    }
+                }
+            }
+            this.x -= this.xmom
+            this.y -= this.ymom
+        }
+
+        frictiveMove(player) {
+            if (this.anchored !== 1) {
+                let fricbreak = 0
+                for (let t = 0; t < (Math.abs(this.xmom) + Math.abs(this.ymom)); t += (Math.abs(this.xmom) + Math.abs(this.ymom)) * .08) {
+                    fricbreak++
+                    if (fricbreak > 27) {
+                        break
+                    }
+                    this.x += this.xmom * .08
+                    this.y += this.ymom * .08
+
+                    if (typeof player != 'undefined') {
+                        for (let k = 0; k < stage.bricks.length; k++) {
+                            stage.bricks[k].doesPerimeterTouch(this, player)
+                        }
+                        for (let k = 0; k < stage.walls.length; k++) {
+                            stage.walls[k].doesPerimeterTouch(this, player)
+                        }
+                    }
+                }
+            } else {
+                this.x = this.anchor.x
+                this.y = this.anchor.y
+                this.xmom = 0
+                this.ymom = 0
+            }
+            this.xmom *= this.friction
+            this.ymom *= this.friction
+        }
+        frictiveunMove() {
+            if (this.reflect == 1) {
+                if (this.x + this.radius > canvas.width) {
+                    if (this.xmom > 0) {
+                        this.xmom *= -1
+                    }
+                }
+                if (this.y + this.radius > canvas.height) {
+                    if (this.ymom > 0) {
+                        this.ymom *= -1
+                    }
+                }
+                if (this.x - this.radius < 0) {
+                    if (this.xmom < 0) {
+                        this.xmom *= -1
+                    }
+                }
+                if (this.y - this.radius < 0) {
+                    if (this.ymom < 0) {
+                        this.ymom *= -1
+                    }
+                }
+            }
+            this.xmom /= this.friction
+            this.ymom /= this.friction
+            this.x -= this.xmom
+            this.y -= this.ymom
+        }
+        isPointInside(point) {
+            this.areaY = point.y - this.y
+            this.areaX = point.x - this.x
+            if (((this.areaX * this.areaX) + (this.areaY * this.areaY)) <= (this.radius * this.radius)) {
+                return true
+            }
+            return false
+        }
+        doesPerimeterTouch(point) {
+            this.areaY = point.y - this.y
+            this.areaX = point.x - this.x
+            if (((this.areaX * this.areaX) + (this.areaY * this.areaY)) <= ((this.radius + point.radius) * (this.radius + point.radius))) {
+                return true
+            }
+            return false
+        }
+    }
+   
+    class ShotDD {
+        constructor(x, y, radius, color, xmom = 0, ymom = 0, friction = 1, marked = 0, fired = 0, angle = 0, reflect = 0, strokeWidth = 0, strokeColor = "transparent") {
+            this.x = parseFloat(x)
+            this.id = parseFloat(Math.random().toFixed(5))
+            this.y = parseFloat(y)
+            this.radius = parseFloat(radius)
+            this.color = color
+            this.xmom = parseFloat(xmom)
+            this.ymom = parseFloat(ymom)
+            this.friction = parseFloat(friction)
+            this.reflect = parseInt(reflect)
+            this.strokeWidth = parseFloat(strokeWidth)
+            this.strokeColor = strokeColor
+            this.anchored = 0
+            this.anchor = {}
+            this.sxmom = 0
+            this.symom = 0
+            this.fired = parseFloat(fired)
+            this.marked = parseFloat(marked)
+            this.angle = parseFloat(angle)
+        }
+        smove(player) {
+            this.x += this.sxmom
+            this.y += this.symom
+        }
+        reversePointinside(point) {
+
+            this.areaY = point.y - this.y
+            this.areaX = point.x - this.x
+            if (((this.areaX * this.areaX) + (this.areaY * this.areaY)) <= (point.radius * point.radius)) {
+                return true
+            }
+            return false
+        }
+        draw() {
+            this.angle += .04
+            if (typeof this.radius !== 'number') {
+                return
+            }
+            if (isFinite(this.x) && isFinite(this.y) && isFinite(this.radius)) {
+                canvas_context.lineWidth = this.radius * .1
+            } else {
+                canvas_context.lineWidth = 10
+            }
+            canvas_context.strokeStyle = this.color
+            // canvas_context.beginPath();
+            if (this.radius > 0) {
+                for (let t = 0; t < Math.PI * 2; t += (Math.PI / 10)) {
+                    canvas_context.beginPath();
+                    canvas_context.arc(this.x, this.y, this.radius, t + this.angle, t + (Math.PI / 20) + this.angle, false)
+                    canvas_context.strokeStyle = this.color
+                    canvas_context.stroke()
+                }
+
+
+                if (isFinite(this.x) && isFinite(this.y) && isFinite(this.radius)) {
+                    var gard = canvas_context.createRadialGradient(Math.round(this.x), Math.round(this.y), 0, Math.round(this.x), Math.ceil(this.y + (this.radius * 0)), Math.ceil(Math.max((this.radius * 1.1) - canvas_context.lineWidth, 0)))
+                    this.string = this.color
+                    // if (this.color != "#FFAAAA") {
+                    //     for (let t = 0; t < 13; t += 6) {
+                    //         gard.addColorStop(t / 18.1, (this.string) + `ff`)
+                    //         gard.addColorStop((t + 1.5) / 18.1, "#000000" + "ff")
+                    //         gard.addColorStop((t + 3) / 18.1, (this.string) + "ff")
+                    //         gard.addColorStop((t + 4) / 18.1, "#000000" + "ff")
+                    //     }
+                    // } else {
+                    //     for (let t = 0; t < 13; t += 6) {
+                    //         gard.addColorStop(t / 18.1, (this.string) + `ff`)
+                    //         gard.addColorStop((t + 1.5) / 18.1, "#000000" + "ff")
+                    //         gard.addColorStop((t + 3) / 18.1, (this.string) + "ff")
+                    //         gard.addColorStop((t + 4) / 18.1, "#000000" + "ff")
+                    //     }
+
+                    // }
+
+
+                    gard.addColorStop(0, (this.string) + `00`)
+                    gard.addColorStop(.5, "#000000" + "00")
+                    gard.addColorStop(.75, (this.string) + "ff")
+                    // gard.addColorStop(.9, (this.string) + "ff")
+                    gard.addColorStop(1, "#000000" + "00")
+
+                    canvas_context.fillStyle = gard
+                    canvas_context.beginPath();
+                    canvas_context.arc(this.x, this.y, this.radius, 0, (Math.PI * 2), true)
+                    canvas_context.fill()
 
 
                     // tempcanvas.width = this.radius * 2
@@ -23155,6 +23447,8 @@ if (this.middlehand2.anchored == 1) {
     class Dummy {
         constructor(controller, args = 0) {
             if (args == 0) {
+                this.reflecting = 0
+                this.countering = -1
                  this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
@@ -23210,6 +23504,7 @@ if (this.middlehand2.anchored == 1) {
                 }else{
                 this.body = new Shotb(400 + (Math.random() * 2560), 500, 75, this.color)
                 }
+
                 this.controller = controller
                 if (this.controller == 0) {
                     this.body.color = "#FF0000"
@@ -23239,6 +23534,11 @@ if (this.middlehand2.anchored == 1) {
                     this.body.color = colors[this.controller]
                 }
 
+if(minigameSelected < 0){
+                this.body.stocolor = this.body.color 
+}else{
+    this.body.stocolor = "#FF0000"
+}
                 this.armlength = 1
                 this.shoulderwidth = 1
                 this.damage = 0
@@ -23246,7 +23546,7 @@ if (this.middlehand2.anchored == 1) {
                 this.springs = []
                 this.hitboxes = []
                 this.links = []
-                this.speed = 11.5
+                this.speed = 12.5
                 this.punchspeed = 5
                 this.frame = 0
                 this.grounded = 0
@@ -23377,8 +23677,12 @@ if (this.middlehand2.anchored == 1) {
         }
 
         playerMove(object) {
+
+if(minigameSelected > -1){
+    return
+}
             // if(minigameSelected == 3){
-                return
+                // return
             // }
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
@@ -23647,6 +23951,14 @@ if (this.middlehand2.anchored == 1) {
             }
         }
         enemycollide() {
+
+
+            const storage = {}
+            if (this.countering > 0) {
+                storage.ymom = this.body.ymom
+                storage.xmom = this.body.xmom
+                storage.damage = this.damage
+            }
             const armfixstorage = {}
             armfixstorage.xcomp = this.body.xmom
             armfixstorage.ycomp = this.body.ymom
@@ -23667,6 +23979,8 @@ if (this.middlehand2.anchored == 1) {
                     }
                 }
             }
+
+            
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
                     for (let t = 0; t < boys.length; t++) {
@@ -23675,18 +23989,19 @@ if (this.middlehand2.anchored == 1) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
                                         this.shotIDs.push(boys[t].shots[k].id)
-                                        if (AItoggle == 0  && localPlayToggle == 0) {
-                                            this.striker = boys[t].serverID
-                                        } else if (AItoggle == 1 || localPlayToggle == 1) {
-                                            this.striker = t
-                                        }
-                                        this.struck = 1
-                                        if (this.shield == 1) {
-                                            //shieldaud1.play()
-                                            this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
-                                        } else {
 
-                                            if(minigameSelected == 7){
+
+                                        if (this.reflecting <= 0) {
+                                     if (AItoggle == 0  && localPlayToggle == 0) {
+                                                this.striker = boys[t].serverID
+                                            } else if (AItoggle == 1 || localPlayToggle == 1) {
+                                                this.striker = t
+                                            }
+                                            this.struck = 1
+                                            if (this.shield == 1) {
+                                                this.shieldpower -= (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 3
+                                            } else {
+                                                 if(minigameSelected == 7){
 
                                                 const now = new Date()
                                                 campaigntime = now.getTime() - campaigntimestart
@@ -23708,8 +24023,16 @@ if (this.middlehand2.anchored == 1) {
                                             this.body.ymom = (((boys[t].shots[k].ymom * (this.damage / 200)) + (boys[t].shots[k].ymom * baselaunch)) * 2) - (10 * (this.damage / 200))
                                             this.damage += (Math.abs(boys[t].shots[k].xmom) + Math.abs(boys[t].shots[k].ymom)) / 2
                                             this.breaktimer = 0
+                                            }
+                                            boys[t].shots[k].marked = 1
+                                        } else {
+                                            boys[t].shots[k].ymom *= -2
+                                            boys[t].shots[k].xmom *= -2
+                                            this.shots.push(boys[t].shots[k])
+                                            boys[t].shots.splice(k, 1)
                                         }
-                                        boys[t].shots[k].marked = 1
+
+
                                     }
                                 }
                             }
@@ -24269,7 +24592,34 @@ if (this.middlehand2.anchored == 1) {
                                 }
                             }
                         }
+
+
+                    if (this.countering > 0) {
+                        const obj = {}
+                        obj.ymom = (this.body.ymom - storage.ymom)*2
+                        obj.xmom = (this.body.xmom - storage.xmom)*2
+                        obj.damage = (this.damage - storage.damage)
+                        obj.counter = 1
+                        obj.striker = boys[t].serverID
+                        boys[t].body.ymom -= (this.body.ymom - storage.ymom)*2
+                        boys[t].body.xmom -= (this.body.xmom - storage.xmom)*2
+                        boys[t].damage += (this.damage - storage.damage)
+                        boys[t].striker = boys.indexOf(this)
+                        worldcounter += (this.damage - storage.damage)
+                        this.body.ymom = storage.ymom
+                        this.body.xmom = storage.xmom
+                        this.damage = storage.damage
+                        if (AItoggle == 0  && localPlayToggle == 0) {
+                             if(localPlayToggle != 1){
+                                ws.send(JSON.stringify(obj))
+                             }
+                        }
                     }
+                    }
+
+
+
+                    
                     let j = 0
                     while (boys[f].body.doesPerimeterTouch(this.body)) {
                         j++
@@ -24377,6 +24727,42 @@ if (this.middlehand2.anchored == 1) {
             this.idify()
         }
         fightcontrol() {
+         
+if(minigameSelected > -1){
+    return
+}
+                    if (this.gamepad.gamepad.buttonsStatus.includes('A') || (keysPressed['k'] || keysPressed['ArrowDown'])) {
+                        if(this.countering < -40){
+                            this.countering = 18
+                        }
+                    }
+
+                        if (this.gamepad.gamepad.buttonsStatus.includes('B') || (keysPressed['l'] || keysPressed['ArrowRight'])) {
+                            this.megadraw = 1
+                            this.speed = 0
+                            this.mega = new Shot(this.body.x, this.body.y, this.body.radius*15, this.body.color, 0, 0)
+
+                          
+                        }else{
+                            this.speed = 12.5
+                            this.megadraw = 0
+                        }
+
+                    if (this.gamepad.gamepad.buttonsStatus.includes('Y') || (keysPressed['i'] || keysPressed['ArrowUp'])) {
+                        if(this.body.fired < -35){
+                            this.body.xmom = 0
+                            this.body.ymom = 0
+                            this.body.fired = 15
+                        }
+
+                    }
+
+                    if (this.gamepad.gamepad.buttonsStatus.includes('X') || (keysPressed['j'] || keysPressed['ArrowLeft'])) {
+                            if(this.reflecting <= -30){
+                                this.reflecting = 25
+                            }
+
+                    }
         }
         degripl() {
             if (this.inactive == 1) {
@@ -24449,6 +24835,74 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+
+if(this.megadraw == 1){
+    console.log("heie")
+    this.mega.draw()
+    for(let t =0;t<boys.length;t++){
+        if(this == boys[t]){
+            continue
+        }
+        if(boys[t].body.doesPerimeterTouch(this.mega)){
+           let vec = new Vector(boys[t].body, boys[t].body.xmom, boys[t].body.ymom)
+           if(vec.isToward(this.body)){
+
+           }else{
+               boys[t].body.xmom += .02*(this.body.x-boys[t].body.x)
+               boys[t].body.ymom +=  .02*(this.body.y-boys[t].body.y)
+           }
+        }
+    }
+}
+            this.breaktimer--
+            this.countering--
+            this.reflecting--
+
+            this.body.fired--
+
+            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+                for (let t = 0; t < this.shots.length; t++) {
+
+                        this.shots[t].life--
+                        if (this.shots[t].life <= 0) {
+                            this.shots[t].marked = 1
+                        }
+                        this.shots[t].move()
+                    if (this.shots[t].marked <= 0) {
+                        this.shots[t].draw()
+                    }
+                }
+            } else {
+                let shotdummy = {}
+                for (let t = 0; t < boys.length; t++) {
+                    if (boys[t].serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                        shotdummy = boys[t]
+                    }
+                }
+                for (let t = 0; t < this.shots.length; t++) {
+                    if (this.shots[t].marked <= 0) {
+                        if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
+                            this.shots[t].draw()
+                        }
+                    }
+                }
+            }
+
+
+            if(this.countering < 0){
+                if(this.body.color !=  "#FFFFFF"){
+                this.body.stocolor = this.body.color 
+                }
+            }
+            if(this.countering > 0){
+                // this.body.stocolor = this.body.color 
+                this.body.color = "#FFFFFF"
+            }else{
+                this.body.color = this.body.stocolor 
+            }
+
+
             if(minigameSelected == 8){
                 this.gravity = .75 //- Math.min(0.45, (this.damage*.0025))
                 this.body.radius = 200// + Math.min(115, (this.damage*.2))
@@ -24549,6 +25003,11 @@ if (this.middlehand2.anchored == 1) {
             //     }
             // }
 
+            if (this.reflecting > 0) {
+                const polygot = new Polygon(this.body.x, this.body.y,this.body.radius*1.5, this.body.color, 7, 0, 0, (Math.PI / 2))
+                canvas_context.lineWidth = 5
+                polygot.draw()
+            }
 
         }
         operate() {
@@ -24664,10 +25123,13 @@ if (this.middlehand2.anchored == 1) {
             this.body.frictiveMove(this)
             this.body.smove()
 
-            this.lefthand.xmom += (this.lefthand.x - this.body.x) / 80
-            this.righthand.xmom += (this.righthand.x - this.body.x) / 80
-            this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
-            this.rightshoulder.xmom -= (this.rightshoulder.x - this.body.x) / 40
+            this.lefthand.x = this.body.x
+            this.lefthand.y = this.body.y
+            this.righthand.x = this.body.x
+            this.righthand.y = this.body.y
+            // this.righthand.xmom += (this.righthand.x - this.body.x) / 80
+            // this.leftshoulder.xmom -= (this.leftshoulder.x - this.body.x) / 40
+            // this.rightshoulder.xmom -= (this.rightshoulder.x - this.body.x) / 40
             this.fixupshoulder()
             //for (let t = 0; t < this.hitboxes.length; t++) {
             //                            }
@@ -24684,6 +25146,14 @@ if (this.middlehand2.anchored == 1) {
                 link2.draw()
             }
 
+
+            if (boys.indexOf(this) <= humanPlayers) {
+
+                // this.AI()
+                this.fightcontrol()
+            } else {
+                this.AI()
+            }
         }
     }
 
