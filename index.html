@@ -1065,7 +1065,8 @@ let camerax = 0
                                 const gp = new Gamepad(0)
                                 newplayer['gamepad'] = gp
                                 boys.push(newplayer)
-
+                                scores.push(0)
+                                drops.push(0)
                             }
                         }
 
@@ -6775,10 +6776,18 @@ let camerax = 0
                 if (roomSelectionBox.focus == 1) {
                     roomSelectionBox.backspace()
                 }
+                if (stockSelectionBox.focus == 1) {
+                    stockSelectionBox.backspace()
+                }
             } else {
                 if (roomSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
                         roomSelectionBox.addchar(event.key)
+                    }
+                }
+                if (stockSelectionBox.focus == 1) {
+                    if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
+                        stockSelectionBox.addchar(event.key)
                     }
                 }
             }
@@ -6787,6 +6796,9 @@ let camerax = 0
             delete keysPressed[event.key];
             if (roomSelectionBox.lock == event.key) {
                 roomSelectionBox.lock = ''
+            }
+            if (stockSelectionBox.lock == event.key) {
+                stockSelectionBox.lock = ''
             }
         });
 
@@ -6879,6 +6891,7 @@ let camerax = 0
                     if (campaignButton.isPointInside(TIP_engine)) {
                         if (campaignToggle == 0) {
                             campaignToggle = 1
+                            stock = 0
                             AIFightButton.color = "#00FF00"
                             campaignButton.color = "#00FF00"
                             onlineButton.color = "#FF0000"
@@ -7065,6 +7078,11 @@ let camerax = 0
                     roomSelectionBox.focus = 1
                 } else {
                     roomSelectionBox.focus = 0
+                }
+                if (stockSelectionBox.inputbox.isPointInside(TIP_engine)) {
+                    stockSelectionBox.focus = 1
+                } else {
+                    stockSelectionBox.focus = 0
                 }
                 if (mapSelectToggle == 1) {
                     for (let t = 0; t < mapIcons.length; t++) {
@@ -8172,7 +8190,7 @@ move() {
                 this.triggers = []
 
                 this.block = new Wall(this.walljumper, 1600, 300, 10000)
-                for (let k = 0; k < 14; k++) {
+                for (let k = 0; k < 16; k++) {
 
                     if (k == 0) {
                         this.tempBricks = []
@@ -8344,11 +8362,61 @@ move() {
                     } else if (k == 13) {
                         this.tempBricks = []
                         this.tempWalls = []
+                        this.bricks.push(new Brick(2000+ (k * (6 * 1400)), 2200, 1800))
+                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
+                        this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
+                        this.bricks.push(new Brick(1900+ (k * (6 * 1400)), 1230, 500))
+                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
+                        this.tempBricks.push(new Brick(2000+ (k * (6 * 1400)), 2200, 1800))
+                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
+                        this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
+                        this.tempBricks.push(new Brick(1900+ (k * (6 * 1400)), 1230, 500))
+                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
+                        for (let n = 0; n < 2; n++) {
+                            this.walls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
+                            this.tempWalls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
+                        }
+                        this.tempWalls.push(this.block)
+                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]]) 
+                        this.tempBricks = []
+                        this.tempWalls = []
                         this.bricks.push(new Brick(1900 + (k * (6 * 1400)), 2100, 3000))
                         this.tempBricks.push(new Brick(1900 + (k * (6 * 1400)), 2100, 3000))
                         this.tempWalls.push(this.block)
                         this.setArenas.push([[...this.tempBricks], [...this.tempWalls]])
-                    } else {
+                    } else if(k == 14){
+                       
+                        this.tempBricks = []
+                        this.tempWalls = []
+                        this.bricks.push(new Brick(2000+ (k * (6 * 1400)), 2200, 1800))
+                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
+                        this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
+                        this.bricks.push(new Brick(1900+ (k * (6 * 1400)), 1230, 500))
+                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
+                        this.tempBricks.push(new Brick(2000+ (k * (6 * 1400)), 2200, 1800))
+                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
+                        this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
+                        this.tempBricks.push(new Brick(1900+ (k * (6 * 1400)), 1230, 500))
+                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
+                        for (let n = 0; n < 2; n++) {
+                            this.walls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
+                            this.tempWalls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
+                        }
+                        this.tempWalls.push(this.block)
+                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]]) 
+                    } else if(k == 15){
+                       
+                        this.tempBricks = []
+                        this.tempWalls = []
+                        this.bricks.push(new Brick(1900 + (k * (6 * 1400)), 2100, 2760))
+                        this.tempBricks.push(new Brick(1900 + (k * (6 * 1400)), 2100, 2760))
+                        this.tempWalls.push(this.block)
+                        this.setArenas.push([[...this.tempBricks], [...this.tempWalls]]) 
+                    }else {
                         this.tempBricks = []
                         this.tempWalls = []
                         this.bricks.push(new Brick(850 + (k * (6 * 1400)), 1600, 700))
@@ -9066,7 +9134,7 @@ move() {
                         // this.walls[this.walls.length-1] = new Wall(this.walljumper, 1600, 300, 10000)
 
                         this.playerrunner++
-                        if(this.playerrunner > 13){
+                        if(this.playerrunner > 15){
                             worldscore.campaigncomplete = true
                         }
                         for (let f = 0; f < boys[1].nodes.length; f++) {
@@ -11160,6 +11228,7 @@ move() {
     class Boy {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 1) {
@@ -13955,10 +14024,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
 
 
@@ -14405,10 +14474,92 @@ if (this.middlehand2.anchored == 1) {
         }
     }
 
+    class TextinputStock {
+        constructor(x, y, w, h) {
+            this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
+            this.string = ""
+            this.focus = 0
+            this.neverfocus = 1
+            this.lock = ''
+            this.focusindicator = new Rectangle(x, y + (h * .1), w * .03, h * .8, "#000000")
+            this.flash = -1
+            this.flashspin = 45
+            this.flashnum = -1
+            this.rooms = 0
+            this.primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 31, 37, 41, 43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157]
+        }
+
+        measure() {
+            canvas_context.font = "70px Arial";
+            canvas_context.fillStyle = "#000000"
+            const width = canvas_context.measureText(this.string).width
+            return width
+        }
+        draw() {
+            
+            stock = parseInt(this.string, 10)
+            this.inputbox.draw()
+            if (this.neverfocus == 1) {
+                canvas_context.font = "70px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText("Stock ∞", this.inputbox.x + 10, this.inputbox.y + 75)
+            } else {
+                canvas_context.font = "70px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+            }
+            if (this.focus == 1) {
+                this.neverfocus = 0
+                this.flashnum++
+                if (this.flashnum % (this.flashspin + (-15 * this.flash)) == 0) {
+                    this.flash *= -1
+                }
+                if (this.flash == 1) {
+                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                    this.focusindicator.draw()
+                }
+            }
+        }
+        backspace() {
+            this.string = this.string.split('')
+            this.string.splice(this.string.length - 1, 1)
+            this.string = this.string.join('')
+            stock = parseInt(this.string, 10)
+            if(campaignToggle == 1){
+                stock = 0
+            }
+            for(let t = 0;t<boys.length;t++){
+                boys[t].stock = stock
+            }
+            
+        }
+        addchar(char) {
+            if (this.string.length < 3) {
+                if (this.lock != char) {
+                    this.string += char
+                    this.lock = char
+                }
+                if (this.string.length == 0 || this.string == "0") {
+                    this.string = "0"
+                }
+            stock = parseInt(this.string, 10)
+            if(campaignToggle == 1){
+                stock = 0
+            }
+            for(let t = 0;t<boys.length;t++){
+                boys[t].stock = stock
+            }
+            }
+        }
+    }
+
     const roomSelectionBox = new Textinput(3300, 700 + 450, 320, 100)
+
+    const stockSelectionBox = new TextinputStock(3300, 850, 320, 100)
     class Mass {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 0) {
@@ -17205,10 +17356,10 @@ if (this.middlehand2.anchored == 1) {
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
             if(minigameSelected != 4){
-                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             }
 
@@ -17406,6 +17557,7 @@ if (this.middlehand2.anchored == 1) {
     class Blastgirl {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -20067,10 +20219,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             // if (this != boys[0]) {
             //     canvas_context.fillText(`${Math.round(this.dmomu)},${Math.round(this.amomu)}`, this.body.x - 20, this.body.y - 150)
@@ -20266,6 +20418,7 @@ if (this.middlehand2.anchored == 1) {
     class Jox {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -22786,10 +22939,10 @@ if (this.middlehand2.anchored == 1) {
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
             if(minigameSelected != 2){
-                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             }
             // if (this != boys[0]) {
@@ -22972,6 +23125,7 @@ if (this.middlehand2.anchored == 1) {
     class Dummy {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -24349,10 +24503,10 @@ if (this.middlehand2.anchored == 1) {
                 }
 
             }else{
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 100)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 100)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
 
         }
@@ -24507,6 +24661,7 @@ if (this.middlehand2.anchored == 1) {
     class ScorchedMass {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -26929,11 +27084,11 @@ if (this.middlehand2.anchored == 1) {
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
 
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
 
             canvas_context.fillStyle = "FFFFFF"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
         
             // canvas_context.fillText(`Height:${Math.round(this.brick.edgeright.y)}`, this.body.x - 20, this.body.y - 250)
@@ -27140,6 +27295,7 @@ if (this.middlehand2.anchored == 1) {
     class AsigMan {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -30275,10 +30431,10 @@ if (this.middlehand2.anchored == 1) {
 
             }else{
                 
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
 
         }
@@ -30511,6 +30667,7 @@ if (this.middlehand2.anchored == 1) {
     class Princess {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -33205,10 +33362,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
             if(minigameSelected != 0){
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             }
 
@@ -33366,6 +33523,7 @@ if (this.middlehand2.anchored == 1) {
     class Rhopho {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.pounding = 0
                 this.shotIDs = []
@@ -36177,10 +36335,10 @@ if (this.middlehand2.anchored == 1) {
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
             if(minigameSelected != 5){
-                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
+                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 200)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 240)
             }
 
             }
@@ -36351,6 +36509,7 @@ if (this.middlehand2.anchored == 1) {
     class Banandroid {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.nograv = 0
                 this.pounding = 0
@@ -39301,10 +39460,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 75)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 75)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             if (this.shotdraw == 1) {
                 if (this.face == 1) {
@@ -39506,6 +39665,7 @@ if (this.middlehand2.anchored == 1) {
     class Gwompei {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.shotclock = 0
                 this.armAngle =0
                 this.armspin = .05
@@ -42788,10 +42948,10 @@ this.bananahand2.anchored = -10
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 75)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 75)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             if (this.shotdraw == 1) {
                 if (this.face == 1) {
@@ -43163,6 +43323,7 @@ this.bananahand2.anchored = -10
     class Pinwheelian {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.shotclock = 0
                 this.armAngle = Math.PI*.5
                 this.armspin = .05
@@ -46364,10 +46525,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 75)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 75)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             if (this.shotdraw == 1) {
                 if (this.face == 1) {
@@ -46677,6 +46838,7 @@ if (this.middlehand2.anchored == 1) {
     class Bunkstanks {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotclock = 0
                 this.shotIDs = []
@@ -49451,10 +49613,10 @@ if (this.middlehand2.anchored == 1) {
             if(minigameSelected == 6){
 
             }else{
-                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             }
 
@@ -49631,6 +49793,7 @@ if (this.middlehand2.anchored == 1) {
     class DrSoto {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -52492,11 +52655,11 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
 
             canvas_context.fillStyle = "FFFFFF"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             // canvas_context.fillText(`Height:${Math.round(this.brick.edgeright.y)}`, this.body.x - 20, this.body.y - 250)
             // canvas_context.fillText(`Safe:${Math.round(this.safe)}`, this.body.x - 20, this.body.y - 200)
@@ -52710,6 +52873,7 @@ if (this.middlehand2.anchored == 1) {
     class Joule {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 1) {
@@ -55632,10 +55796,10 @@ if (this.middlehand2.anchored == 1) {
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
             if(minigameSelected != 3){
-                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 70)
+                canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 70)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 110)
             }
             }
 
@@ -55893,6 +56057,7 @@ if (this.middlehand2.anchored == 1) {
     class Kessler {
         constructor(controller, args = 0) {
             if (args == 0) {
+                 this.stock = stock
                 this.ping = 0
                 this.reflecting = 0
                 this.pounding = 0
@@ -58656,10 +58821,10 @@ if (this.middlehand2.anchored == 1) {
             canvas_context.linewidth = 0
             //canvas_context.strokeText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
             canvas_context.fillStyle = `rgb(${Math.max(255 - (this.damage / 10), 50)},${255 - this.damage},${255 - this.damage})`
-            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - 20, this.body.y - 200)
+            canvas_context.fillText(`${Math.round(this.damage)}%`, this.body.x - ((canvas_context.measureText(`${Math.round(this.damage)}%`)).width*.5), this.body.y - 200)
             canvas_context.fillStyle = "white"
-            if (stock > 0) {
-                canvas_context.fillText(`${Math.round(stock - (drops[boys.indexOf(this)]))}`, this.body.x - 20, this.body.y + 90)
+            if (this.stock > 0) {
+                canvas_context.fillText(`${Math.round(this.stock - (this.drops))}`, this.body.x - ((canvas_context.measureText(`${Math.round(this.stock - (this.drops))}`)).width*.5), this.body.y - 240)
             }
 
             if (this.reflecting > 0) {
@@ -59049,6 +59214,12 @@ if (this.middlehand2.anchored == 1) {
         } else if (chooser == 12) {
             coreboy = new Kessler(t)
             coreboy.body.color = "#00FF00"
+        } else if (chooser == 13) {
+            coreboy = new Pinwheelian(t)
+            coreboy.body.color = "#00FF00"
+        } else if (chooser == 14) {
+            coreboy = new Gwompei(t)
+            coreboy.body.color = "#00FF00"
         } else {
             coreboy = new Dummy(t)
         }
@@ -59311,7 +59482,7 @@ if (this.middlehand2.anchored == 1) {
             // }
 
             flopper++ //aitesting
-            canvas_context.clearRect(-canvas.width * 100, -canvas.width * 100, canvas.width * 200, canvas.width * 200)
+            canvas_context.clearRect(-canvas.width * 10000, -canvas.width * 10000, canvas.width * 20000, canvas.width * 20000)
             if (campaignToggle == 0 && minigameSelected == -1) {
                 escapeButton.draw()
             }
@@ -59481,9 +59652,9 @@ if (this.middlehand2.anchored == 1) {
                         if (drops[t] < stock) {
                             if (t != boys[t].striker) {
                                 // if(AItoggle == 0  && localPlayToggle == 0){
-                                if (boys[boys[t].striker].hasOwnProperty("mesh")) {
-                                    mutationrate *= .99
-                                }
+                                // if (boys[boys[t].striker].hasOwnProperty("mesh")) {
+                                //     mutationrate *= .99
+                                // }
                                 scores[boys[t].striker]++
                                 // }else{
                                 // scores[t]++
@@ -59669,7 +59840,7 @@ if (this.middlehand2.anchored == 1) {
             }
             if (stock > 0) {
                 let wet = boys.length - 1
-                const winner = {}
+                let winner = {}
                 for (let g = 0; g < boys.length; g++) {
                     if (drops[g] >= stock) {
                         wet--
@@ -59681,7 +59852,7 @@ if (this.middlehand2.anchored == 1) {
                     if (boys.length > 1) {
                         canvas_context.font = "100px arial"
                         canvas_context.fillStyle = winner.body.color
-                        canvas_context.fillText(`The Winner of this Match is: ${winner.name + "!"} `, 800, 100)
+                        canvas_context.fillText(`The Winner of this Match is: ${winner.name + "!"} `, 1000, 100)
                     }
                 }
             }
@@ -60151,7 +60322,7 @@ if (this.middlehand2.anchored == 1) {
                     onlineButton.color = "#FF0000"
                 }
             // gametheme.play()
-            canvas_context.clearRect(-canvas.width * 100, -canvas.width * 100, canvas.width * 200, canvas.width * 200)
+            canvas_context.clearRect(-canvas.width * 10000, -canvas.width * 10000, canvas.width * 20000, canvas.width * 20000)
             if (mapSelectToggle == 1 || minigameSelectToggle == 1) {
                 descriptor.draw()
                 if (optionsToggle == 0) {
@@ -60194,6 +60365,7 @@ if (this.middlehand2.anchored == 1) {
                     canvas_context.fillText(`Minigames`, minigameSelectButton.x + (minigameSelectButton.width * .14), minigameSelectButton.y + (minigameSelectButton.width * .20))
                 }
                     roomSelectionBox.draw()
+                    stockSelectionBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
                     canvas_context.font = "90px arial"
@@ -60244,6 +60416,7 @@ if (this.middlehand2.anchored == 1) {
                     canvas_context.fillText(`Minigames`, minigameSelectButton.x + (minigameSelectButton.width * .14), minigameSelectButton.y + (minigameSelectButton.width * .20))
 
                     roomSelectionBox.draw()
+                    stockSelectionBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
                     canvas_context.font = "90px arial"
