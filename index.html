@@ -39605,18 +39605,18 @@ if (this.middlehand2.anchored == 1) {
 
 
                 this.nodes.push(this.body)
-                this.leftshoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
-                this.rightshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
-                this.middleshoulder = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
-                this.bananashoulder = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
-                this.middleshoulder2 = new Circle(this.body.x + (this.body.radius + this.shoulderwidth), 350,5.6, "#FF0000", 0, 0, .999)
-                this.bananashoulder2 = new Circle(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
-                this.lefthand = new Circle(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
-                this.righthand = new Circle(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
-                this.middlehand = new Circle(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
-                this.bananahand = new Circle(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
-                this.middlehand2 = new Circle(this.middleshoulder2.x, (this.middleshoulder2.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
-                this.bananahand2 = new Circle(this.bananashoulder2.x, (this.bananashoulder2.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.leftshoulder = new Shot(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
+                this.rightshoulder = new Shot(this.body.x + (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
+                this.middleshoulder = new Shot(this.body.x + (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
+                this.bananashoulder = new Shot(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
+                this.middleshoulder2 = new Shot(this.body.x + (this.body.radius + this.shoulderwidth), 350,5.6, "#FF0000", 0, 0, .999)
+                this.bananashoulder2 = new Shot(this.body.x - (this.body.radius + this.shoulderwidth), 350, 5.6, "#FF0000", 0, 0, .999)
+                this.lefthand = new Shot(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.righthand = new Shot(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.middlehand = new Shot(this.middleshoulder.x, (this.middleshoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.bananahand = new Shot(this.bananashoulder.x, (this.bananashoulder.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.middlehand2 = new Shot(this.middleshoulder2.x, (this.middleshoulder2.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
+                this.bananahand2 = new Shot(this.bananashoulder2.x, (this.bananashoulder2.y + this.armlength), 19.5, "#FF0000", 0, 0, .85)
                 this.nodes.push(this.leftshoulder)
                 this.nodes.push(this.rightshoulder)
                 this.nodes.push(this.middleshoulder)
@@ -39690,7 +39690,7 @@ if (this.middlehand2.anchored == 1) {
                         this.nodes[t] = new ShotGW(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, colors[this.controller], this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                         this.nodes[t].angle += this.armAngle
                     } else {
-                        this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, colors[this.controller], this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
+                        this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, colors[this.controller], this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                         this.nodes[t].angle += this.armAngle
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
