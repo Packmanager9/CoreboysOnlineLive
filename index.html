@@ -24838,6 +24838,7 @@ if(minigameSelected > -1){
             if (this.inactive == 1) {
                 return
             }
+            console.log(this)
 
 if(this.megadraw == 1){
 
@@ -25155,7 +25156,9 @@ this.shots[t].move()
             if (boys.indexOf(this) <= humanPlayers) {
 
                 // this.AI()
+                if(this.serverID == serverID){
                 this.fightcontrol()
+                }
             } else {
                 this.AI()
             }
@@ -25319,6 +25322,7 @@ this.shots[t].move()
                 }
                 this.id = args["id"]
                 this.frame = args['frame']
+                this.megadraw = args['megadraw']
                 this.armlength = 34  // 40
                 this.shoulderwidth = 18
                 this.body = this.nodes[0]
