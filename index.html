@@ -24840,7 +24840,8 @@ if(minigameSelected > -1){
             }
 
 if(this.megadraw == 1){
-    console.log("heie")
+
+                            this.mega = new Shot(this.body.x, this.body.y, this.body.radius*15, this.body.color, 0, 0)
     this.mega.draw()
     for(let t =0;t<boys.length;t++){
         if(this == boys[t]){
