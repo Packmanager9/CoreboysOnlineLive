@@ -751,7 +751,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [] //[119, 0]
+    let scores = [] // [119, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -4939,6 +4939,7 @@ let camerax = 0
             this.marked = parseFloat(marked)
             this.angle = parseFloat(angle)
             this.linkdraw = 1
+            this.marked = 0
         }
         smove(player) {
             this.x += this.sxmom
@@ -39735,7 +39736,7 @@ if (this.middlehand2.anchored == 1) {
 
                 for (let t = 0; t < this.shots.length; t++) {
                     const idsto = this.shots[t].id
-                        this.shots[t] = new ShotGW(this, this.shots[t].x, this.shots[t].y, this.shots[t].radius,  colors[this.controller], this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
+                        this.shots[t] = new ShotGW(this.shots[t].x, this.shots[t].y, this.shots[t].radius,  colors[this.controller], this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
                         this.shots[t].angle+=this.armAngle
                         this.shots[t].id = idsto
                 }
@@ -42572,6 +42573,9 @@ this.bananahand2.anchored = -10
                 return
             }
 
+                for (let t = 0; t < this.shots.length; t++) {
+                    this.shots[t].color = this.body.color
+                }
 
 
             // for (let t = 0; t < this.shots.length; t++) {
@@ -42700,6 +42704,7 @@ this.bananahand2.anchored = -10
                     }
                 }
             } else {
+                console.log(this.shots)
                 let shotdummy = {}
                 for (let t = 0; t < boys.length; t++) {
                     if (boys[t].serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
@@ -42766,7 +42771,9 @@ this.bananahand2.anchored = -10
                     }
                     canvas_context.fillRect(x - 11.5, (link.y1 - this.body.radius * .18) - 11.5, 23.5, this.body.radius*.36)
                     canvas_context.fillStyle = (this.body.color)
-                    canvas_context.fillRect(x - 6.5, (link.y1 - this.body.radius * .1) - 6.5, 14,  this.body.radius*.2)
+                    canvas_context.fillRect(x - 6.5, (link.y1 - this.body.radius * .1) + 16.5, 14,  this.body.radius*.2)
+                    canvas_context.fillStyle = (this.body.color)
+                    canvas_context.fillRect(x - 6.5, (link.y1 - this.body.radius * .1) - 16.5, 14,  this.body.radius*.2)
                 }
             }
 
