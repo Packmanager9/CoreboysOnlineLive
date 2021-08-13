@@ -14224,6 +14224,9 @@ if (this.middlehand2.anchored == 1) {
             if (this.index == 14) {
                 this.string = "Pinwheelian: Anything is within the wheelhouse of this 2.6M woman from Pinwheel."
             }
+            if (this.index == 15) {
+                this.string = "Gwomp: A backwoods swamp lumberjack from Adufleigh. The compression system built into this fighter is able to amplify punches when it returns to a normal size."
+            }
 
             if(minigameSelected != -1){
                 this.index = 1000+minigameSelected
@@ -41870,11 +41873,7 @@ this.middlehand2.anchored = -20
                     this.screwshot = 0
                 }
 
-
-
-
-                if (this.rightshot == 1 || this.leftshot == 1) {
-                      
+                    if (this.gamepad.gamepad.buttonsStatus.includes('B') || (keysPressed['l'] || keysPressed['ArrowRight'])) {
                         if(this.middlehand.fired <= 0){
                             if(this.middlehand.anchored <= 0){
                             this.middlehand.fired = 19
@@ -41886,6 +41885,20 @@ this.middlehand2.anchored = -20
                             if(this.bananahand.anchored <= 0){
                             this.bananahand.fired = 19
                             this.bananahand.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                                if(this.middlehand2.fired <= 0){
+                            if(this.middlehand2.anchored <= 0){
+                            this.middlehand2.fired = 19
+                            this.middlehand2.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                        if(this.bananahand2.fired <= 0){
+                            if(this.bananahand2.anchored <= 0){
+                            this.bananahand2.fired = 19
+                            this.bananahand2.xmom = (this.face*this.punchspeed*19)
                                 this.idify()
                             }
                         }
@@ -41903,71 +41916,29 @@ this.middlehand2.anchored = -20
                                 this.idify()
                             }
                         }
-                }
-                if (this.body.fired > 30) {
-                    this.body.ymom -= this.body.fired * .008
-                }
-                if (this.screwtimer == 30) {
-                    this.body.fired = 30
-                    this.body.ymom = 0
-                } else if (this.screwtimer <= 30) {
-                    if (this.screwtimer > 0) {
+                    }
+
+                    if (this.body.fired > 30) {
+                        this.body.ymom -= this.body.fired * .008
+                    }
+                    if (this.screwtimer == 30) {
+                        this.body.fired = 30
                         this.body.ymom = 0
+                    } else if (this.screwtimer <= 30) {
+                        if (this.screwtimer > 0) {
+                            this.body.ymom = 0
+                        }
                     }
-                }
-                
-                
-                if (this.hortsmash == 1) { 
-                    if(this.middlehand.fired <= 0){
-                            if(this.middlehand.anchored <= 0){
-                            this.middlehand.fired = 19
-                            this.middlehand.ymom = (-1*this.punchspeed*15)
-                                this.idify()
-                            }
-                        }
-                        if(this.bananahand.fired <= 0){
-                            if(this.bananahand.anchored <= 0){
-                            this.bananahand.fired = 19
-                            this.bananahand.ymom = (-1*this.punchspeed*15)
-                                this.idify()
-                            }
-                        }
-                        if(this.righthand.fired <= 0){
-                            if(this.righthand.anchored <= 0){
-                            this.righthand.fired = 19
-                            this.righthand.ymom = (-1*this.punchspeed*15)
-                                this.idify()
-                            }
-                        }
-                        if(this.lefthand.fired <= 0){
-                            if(this.lefthand.anchored <= 0){
-                            this.lefthand.fired = 19
-                            this.lefthand.ymom = (-1*this.punchspeed*15)
-                                this.idify()
-                            }
-                        }
-                }
-
-                for(let t = 0;t<boys.length;t++){
-                    let link = new Line(boys[t].body, this.body)
-                    if(link.hypotenuse() > 0 && link.hypotenuse() < 600){
-                        this.screwshot = 1
-                    }
-                }
-
-                if (this.screwshot == 1) {
-                    if(this.shotclock <= 0){
-                            this.shot = new ShotFMP(this, this.body.x, this.body.y, 35, this.body.color, (Math.random()-.5)*this.punchspeed*4, (Math.random()-.5)*this.punchspeed*4)
-                            this.shot.bomb = 1
+                    if (this.screwshot == 1) {
+                        if(this.shotclock <= 0){
+                            this.shot = new ShotGW( this.body.x, this.body.y, 35, this.body.color, 0,  -7)
+                            this.shot.homing = 1
                             this.shots.push(this.shot)
-                            // this.body.ymom += 8
                             this.shotclock = 50
-                            if(this.shots.length > 5){
-                                this.shots.splice(0,1)
-                            }
+                        }
                     }
-                }
-                if (this.downspike == 1) {    if (this.righthand.fired <= 0) {
+                    if (this.hortsmash == 1) {
+                        if (this.righthand.fired <= 0) {
                             if (this.righthand.anchored <= 0) {
                                 this.righthand.fired = 19
                                 let armlink1 = new LineOP(this.righthand, this.body)
@@ -41977,6 +41948,32 @@ this.middlehand2.anchored = -20
                                 this.righthand.ymom += ((Math.sin(armlink1angle)*armlink1dis)/armlink1dis) * this.punchspeed * 14
                                 this.rightshoulder.xmom -= (Math.cos(armlink1angle)*armlink1dis)*.15
                                 this.rightshoulder.ymom -= (Math.sin(armlink1angle)*armlink1dis)*.15
+                                this.idify()
+                            }
+                        }
+                        if (this.bananahand2.fired <= 0) {
+                            if (this.bananahand2.anchored <= 0) {
+                                this.bananahand2.fired = 19
+                                let armlink1 = new LineOP(this.bananahand2, this.body)
+                                let armlink1dis = armlink1.hypotenuse()
+                                let armlink1angle = armlink1.angle()
+                                this.bananahand2.xmom += ((Math.cos(armlink1angle)*armlink1dis)/armlink1dis) * this.punchspeed * 14
+                                this.bananahand2.ymom += ((Math.sin(armlink1angle)*armlink1dis)/armlink1dis) * this.punchspeed * 14
+                                this.bananahand2.xmom -= (Math.cos(armlink1angle)*armlink1dis)*.15
+                                this.bananahand2.ymom -= (Math.sin(armlink1angle)*armlink1dis)*.15
+                                this.idify()
+                            }
+                        }
+                        if (this.middlehand2.fired <= 0) {
+                            if (this.righthand.anchored <= 0) {
+                                this.middlehand2.fired = 19
+                                let armlink1 = new LineOP(this.middlehand2, this.body)
+                                let armlink1dis = armlink1.hypotenuse()
+                                let armlink1angle = armlink1.angle()
+                                this.middlehand2.xmom += ((Math.cos(armlink1angle)*armlink1dis)/armlink1dis) * this.punchspeed * 14
+                                this.middlehand2.ymom += ((Math.sin(armlink1angle)*armlink1dis)/armlink1dis) * this.punchspeed * 14
+                                this.middlehand2.xmom -= (Math.cos(armlink1angle)*armlink1dis)*.15
+                                this.middlehand2.ymom -= (Math.sin(armlink1angle)*armlink1dis)*.15
                                 this.idify()
                             }
                         }
@@ -42024,39 +42021,90 @@ this.middlehand2.anchored = -20
                         }
 
 
+                    }
+
                 }
+            
+
+                    if(this.leftshot == 1 || this.rightshot == 1){
+                        if(this.middlehand.fired <= 0){
+                            if(this.middlehand.anchored <= 0){
+                            this.middlehand.fired = 19
+                            this.middlehand.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                        if(this.bananahand.fired <= 0){
+                            if(this.bananahand.anchored <= 0){
+                            this.bananahand.fired = 19
+                            this.bananahand.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                                if(this.middlehand2.fired <= 0){
+                            if(this.middlehand2.anchored <= 0){
+                            this.middlehand2.fired = 19
+                            this.middlehand2.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                        if(this.bananahand2.fired <= 0){
+                            if(this.bananahand2.anchored <= 0){
+                            this.bananahand2.fired = 19
+                            this.bananahand2.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                        if(this.righthand.fired <= 0){
+                            if(this.righthand.anchored <= 0){
+                            this.righthand.fired = 19
+                            this.righthand.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+                        if(this.lefthand.fired <= 0){
+                            if(this.lefthand.anchored <= 0){
+                            this.lefthand.fired = 19
+                            this.lefthand.xmom = (this.face*this.punchspeed*19)
+                                this.idify()
+                            }
+                        }
+
+                    }
 
 
-                // if (this.rightshot == 1) {
-                //     //check
-                //     if (this.righthand.fired <= 0) {
-                //         if (this.face == 1) {
-                //             if (this.righthand.anchored == 0) {
-                //                 this.righthand.ymom = this.punchspeed * 8
-                //                 this.righthand.xmom = this.punchspeed * 19.1
-                //                 this.righthand.fired = 19
-                //                 this.body.xmom -= 5
-                //             }
-                //         }
-                //     }
-                // }
-                // if (this.leftshot == 1) {
-                //     //check
-                //     if (this.lefthand.fired <= 0) {
-                //         if (this.face == -1) {
-                //             if (this.lefthand.anchored == 0) {
-                //                 this.lefthand.ymom = this.punchspeed * 8
-                //                 this.lefthand.xmom = this.punchspeed * -19.1
-                //                 this.lefthand.fired = 19
-                //                 this.body.xmom += 5
-                //             }
-                //         }
-                //     }
-                // }
+            if (this.safe == 0 || (this.hortsmash == 0 && this.downspike == 0 && this.leftshot == 0 && this.rightshot == 0 && this.screwshot == 0) || this.downspike == 1) {
+                for(let t = 0;t<this.springs.length;t++){
+                    this.springs[t].length = 9
+                }
+                this.speed = 21
+                this.body.radius = 25
+                this.lefthand.radius = 10
+                this.righthand.radius = 10
+                this.middlehand.radius = 10
+                this.bananahand.radius = 10
+                this.middlehand2.radius = 10
+                this.bananahand2.radius = 10
+                this.punchspeed = 2.1
+            }else{
+     for(let t = 0;t<this.springs.length;t++){
+                    this.springs[t].length = 18
+                }
+                this.speed = 15.95
+                this.body.radius = 48
+                this.punchspeed = 5.1
+
+                this.lefthand.radius = 19.5
+                this.righthand.radius = 19.5
+                this.middlehand.radius = 19.5
+                this.bananahand.radius = 19.5
+                this.middlehand2.radius = 19.5
+                this.bananahand2.radius = 19.5
+                }
 
             }
 
-        }
+    
         fightcontrol() {
 
             if (this.inactive == 1) {
@@ -58941,7 +58989,7 @@ if (this.middlehand2.anchored == 1) {
             coreboy = new Kessler(t)
         }else if (chooser == 13) {
             coreboy = new Pinwheelian(t)
-        }else if (chooser == 13) {
+        }else if (chooser == 14) {
             coreboy = new Gwompei(t)
         }
 
