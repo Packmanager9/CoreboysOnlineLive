@@ -731,7 +731,7 @@ w
     const armgranularity = 7
 
     const squaretable = {}
-for(let t = 0;t<10000000;t++){
+for(let t = 0;t<14100000;t++){
     squaretable[`${t}`] = Math.sqrt(t)
     if(t > 999){
         t+=9
@@ -1724,13 +1724,17 @@ let camerax = 0
             const xdif = this.x1 - this.x2
             const ydif = this.y1 - this.y2
             const hypotenuse = (xdif * xdif) + (ydif * ydif)
-            if(hypotenuse < 10000000-1){
+            if(hypotenuse < 14100000-1){
                 if(hypotenuse > 1000){
                     return squaretable[`${Math.round(10*Math.round((hypotenuse*.1)))}`]
                 }else{
                 return squaretable[`${Math.round(hypotenuse)}`]
                 }
             }else{
+                //console.log(hypotenuse)
+                // if(isNaN(hypotenuse) ){
+                //     console.trace()
+                // }
                 return Math.sqrt(hypotenuse)
             }
         }
@@ -1762,13 +1766,14 @@ let camerax = 0
             const xdif = this.object.x - this.target.x
             const ydif = this.object.y - this.target.y
             const hypotenuse = (xdif * xdif) + (ydif * ydif)
-            if(hypotenuse < 10000000-1){
+            if(hypotenuse < 14100000-1){
                 if(hypotenuse > 1000){
                     return squaretable[`${Math.round(10*Math.round((hypotenuse*.1)))}`]
                 }else{
                 return squaretable[`${Math.round(hypotenuse)}`]
                 }
             }else{
+                //console.log(hypotenuse)
                 return Math.sqrt(hypotenuse)
             }
         }
@@ -1803,6 +1808,8 @@ let camerax = 0
             const xdif = this.object.x - this.target.x
             const ydif = this.object.y - this.target.y
             const hypotenuse = (xdif * xdif) + (ydif * ydif)
+                //console.log(hypotenuse)
+
             return Math.sqrt(hypotenuse)
         }
         sqrDis() {
@@ -45811,7 +45818,7 @@ if (this.middlehand2.anchored == 1) {
                 }
 
                 for(let t = 0;t<boys.length;t++){
-                    let link = new Line(boys[t].body, this.body)
+                    let link = new LineOP(boys[t].body, this.body)
                     if(link.hypotenuse() > 0 && link.hypotenuse() < 600){
                         this.screwshot = 1
                     }
