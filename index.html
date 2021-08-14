@@ -25327,9 +25327,10 @@ this.shots[t].move()
                 }
                 for (let t = 0; t < this.shots.length; t++) {
                     const idsto = this.shots[t].id
+                    const bombsto = this.shots[t].bomb
                     this.shots[t] = new ShotD(this.shots[t].x, this.shots[t].y, this.shots[t].radius, this.shots[t].color, this.shots[t].xmom, this.shots[t].ymom, this.shots[t].friction, this.shots[t].marked)
                     this.shots[t].id = idsto
-
+                    this.shots[t].bomb = bombsto
                 }
                 this.id = args["id"]
                 this.frame = args['frame']
