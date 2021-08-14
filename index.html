@@ -9934,6 +9934,11 @@ move() {
             //     }
             // }
 
+    if(circle != player.body){
+        if(player.dummy == 1){
+            return
+        }
+    }
 
             if (circle == player.rightshoulder) {
                 return
@@ -23450,6 +23455,7 @@ if (this.middlehand2.anchored == 1) {
     class Dummy {
         constructor(controller, args = 0) {
             if (args == 0) {
+                this.dummy = 1
                 this.reflecting = 0
                 this.countering = -1
                  this.stock = stock
