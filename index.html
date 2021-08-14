@@ -27557,7 +27557,10 @@ this.shots[t].move()
                     if (this.shots[t].marked <= 0) {
                         if (!shotdummy.shotIDs.includes(this.shots[t].id)) {
                             this.shots[t].draw()
-this.shots[t].move()
+                            
+                            if(this.shots[t].bomb != 1){
+                                this.shots[t].move()
+                            }
                         }
                     }
                 }
