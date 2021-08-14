@@ -7086,11 +7086,16 @@ let camerax = 0
         canvas_context = canvas.getContext('2d');
         canvas.style.background = style
         canvas_context.scale(scale, scale)
-        window.setInterval(function () {
 
-            main()
 
-        }, 18)
+    requestAnimationFrame(main);
+
+    
+  //      window.setInterval(function () {
+
+   //         main()
+
+  //      }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
             if (event.key == 'Backspace') {
@@ -59808,7 +59813,25 @@ this.shots[t].move()
         return bytes;
     }
 
-    function main() {
+
+let lastTime;
+let requiredElapsed=54; // desired interval is 54fps
+
+
+
+    function main(now) {
+
+    requestAnimationFrame(main);
+
+    if(!lastTime){lastTime=now;}
+    var elapsed=lastTime-now;
+
+    if(elapsed>requiredElapsed){
+        // do stuff
+        lastTime=now;
+    }
+
+
         worldscore.tally()
         for (let t = 0; t < boys.length; t++) {
             if (typeof boys[t] == "undefined") {
