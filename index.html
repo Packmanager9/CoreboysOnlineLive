@@ -825,7 +825,7 @@ let camerax = 0
 
 
     function socketize(ws) {
-        
+            
         ws.addEventListener("open", () => {
             ws.addEventListener("message", ({ data }) => {
 
@@ -7087,15 +7087,15 @@ let camerax = 0
         canvas.style.background = style
         canvas_context.scale(scale, scale)
 
-
-    requestAnimationFrame(main);
+// 
+    // requestAnimationFrame(main);
 
     
-  //      window.setInterval(function () {
+       window.setInterval(function () {
 
-   //         main()
+           main()
 
-  //      }, 18)
+       }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
             if (event.key == 'Backspace') {
@@ -11561,6 +11561,7 @@ move() {
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 1) {
@@ -11796,6 +11797,21 @@ move() {
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -14267,6 +14283,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.hasOwnProperty('mesh')) {
                 if (keysPressed['p']) {
                     this.mesh.mutate()
@@ -14893,6 +14918,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 0) {
@@ -15148,6 +15174,21 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
+
+
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
@@ -17612,6 +17653,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -17892,6 +17942,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -18106,6 +18157,21 @@ this.shots[t].move()
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -20473,6 +20539,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -20754,6 +20829,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -20969,6 +21045,20 @@ this.shots[t].move()
         }
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -23168,6 +23258,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -23464,6 +23563,7 @@ if (this.middlehand2.anchored == 1) {
                 this.reflecting = 0
                 this.countering = -1
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -23699,6 +23799,20 @@ if(minigameSelected > -1){
                 // return
             // }
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -24850,6 +24964,14 @@ if(minigameSelected > -1){
                 return
             }
             // console.log(this)
+this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
 
 if(this.megadraw == 1){
 
@@ -25181,6 +25303,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -25401,6 +25524,20 @@ this.shots[t].move()
         }
 
         playerMove(object) {
+            
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
                 if (this.shield == 0) {
@@ -27503,6 +27640,16 @@ this.shots[t].move()
             if (this.inactive == 1) {
                 return
             }
+            
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -27821,6 +27968,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -28224,6 +28372,19 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
@@ -30854,6 +31015,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -31194,6 +31364,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -31411,6 +31582,19 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
@@ -33785,6 +33969,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -34051,6 +34244,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.pounding = 0
                 this.shotIDs = []
@@ -34301,7 +34495,19 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
-                if (this.shield == 0) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }                if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
                         this.lefthand.anchored = 0
@@ -36743,6 +36949,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -37038,6 +37253,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.nograv = 0
                 this.pounding = 0
@@ -37313,6 +37529,19 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
@@ -39857,6 +40086,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -40195,6 +40433,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.shotclock = 0
                 this.armAngle =0
                 this.armspin = .05
@@ -40513,6 +40752,19 @@ this.shots[t].move()
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
 
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
                         this.righthand.anchored = 0
@@ -43261,6 +43513,14 @@ this.bananahand2.anchored = -10
             if (this.inactive == 1) {
                 return
             }
+this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
 
                 for (let t = 0; t < this.shots.length; t++) {
                     this.shots[t].color = this.body.color
@@ -43854,6 +44114,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.shotclock = 0
                 this.armAngle = Math.PI*.5
                 this.armspin = .05
@@ -44141,6 +44402,19 @@ this.shots[t].move()
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -46860,6 +47134,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
 
 
 
@@ -47372,6 +47655,7 @@ if (this.middlehand2.anchored == 1) {
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotclock = 0
                 this.shotIDs = []
@@ -47594,6 +47878,19 @@ if (this.middlehand2.anchored == 1) {
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -49965,6 +50262,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
 
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
@@ -50328,6 +50634,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.shotIDs = []
                 this.struck = 0
@@ -50566,6 +50873,19 @@ this.shots[t].move()
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -53011,6 +53331,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
 
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 this.innerbody.x = this.body.x
@@ -53409,6 +53738,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
                     if (meshtoggle == 1) {
                         if (boys.length == 1) {
@@ -53672,6 +54002,19 @@ this.shots[t].move()
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -56218,6 +56561,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.hasOwnProperty('mesh')) {
                 if (keysPressed['p']) {
                     this.mesh.mutate()
@@ -56595,6 +56947,7 @@ this.shots[t].move()
         constructor(controller, args = 0) {
             if (args == 0) {
                  this.stock = stock
+                this.dash = -200
                 this.ping = 0
                 this.reflecting = 0
                 this.pounding = 0
@@ -56854,6 +57207,19 @@ this.shots[t].move()
 
         playerMove(object) {
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+                if (this.gamepad.gamepad.buttonsStatus.includes('LB') || keysPressed['q']) {
+                        if(this.dash > 0){
+                            this.body.x += this.face * this.body.radius*.5
+                        }else if(this.dash <= -80){
+                            //this.dash = 0
+                        }else{
+
+                        }
+                }else{
+                    if(this.dash > 0){
+                        this.body.x += this.face * this.body.radius*.5
+                    }
+                }
 
                 if (this.shield == 0) {
                     if (keysPressed['s']) {
@@ -59244,6 +59610,15 @@ if (this.middlehand2.anchored == 1) {
             if (this.inactive == 1) {
                 return
             }
+            this.dash--
+
+
+if(this.dash > -1){
+     let line = new Line(this.body.x, this.body.y, this.body.x-(this.body.radius*.5*this.face*(12-this.dash)), this.body.y, this.body.color, this.body.radius*.35)
+     line.draw()
+}
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                  if(formname.value != "Chat/PlayerName"){
                         this.playername = formname.value
@@ -59827,15 +60202,15 @@ let requiredElapsed=54; // desired interval is 54fps
 
     function main(now) {
 
-    requestAnimationFrame(main);
+    // requestAnimationFrame(main);
 
-    if(!lastTime){lastTime=now;}
-    var elapsed=lastTime-now;
+    // if(!lastTime){lastTime=now;}
+    // var elapsed=lastTime-now;
 
-    if(elapsed>requiredElapsed){
-        // do stuff
-        lastTime=now;
-    }
+    // if(elapsed>requiredElapsed){
+    //     // do stuff
+    //     lastTime=now;
+    // }
 
 
         worldscore.tally()
