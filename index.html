@@ -62118,10 +62118,14 @@ let requiredElapsed=54; // desired interval is 54fps
             }
         }
         draw(){
+
+            if(this.boy.team<1){
+            }else{
             this.x = this.boy.body.x
             this.y = this.boy.body.y - 300
             this.circ = new Circle(this.x, this.y, 16, `rgb(${255-(this.r*64)}, ${255-(this.g*64)}, ${255-(this.b*64)}`)
             this.circ.draw()
+            }
         }
     }
 
