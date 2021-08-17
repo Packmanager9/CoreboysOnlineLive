@@ -745,6 +745,7 @@ let camerax = 0
     let cameraysum = 0
     // const meshtoggle = 0
     let boys = []
+    let teams = []
     let stars = []
     let localPlayToggle = 0
     let mapIcons = []
@@ -7105,6 +7106,9 @@ let camerax = 0
                 if (stockSelectionBox.focus == 1) {
                     stockSelectionBox.backspace()
                 }
+                if (teamSelectionBox.focus == 1) {
+                    teamSelectionBox.backspace()
+                }
             } else {
                 if (roomSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
@@ -7116,6 +7120,11 @@ let camerax = 0
                         stockSelectionBox.addchar(event.key)
                     }
                 }
+                if (teamSelectionBox.focus == 1) {
+                    if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
+                        teamSelectionBox.addchar(event.key)
+                    }
+                }
             }
         });
         document.addEventListener('keyup', (event) => {
@@ -7125,6 +7134,9 @@ let camerax = 0
             }
             if (stockSelectionBox.lock == event.key) {
                 stockSelectionBox.lock = ''
+            }
+            if (teamSelectionBox.lock == event.key) {
+                teamSelectionBox.lock = ''
             }
         });
 
@@ -7409,6 +7421,11 @@ let camerax = 0
                     stockSelectionBox.focus = 1
                 } else {
                     stockSelectionBox.focus = 0
+                }
+                if (teamSelectionBox.inputbox.isPointInside(TIP_engine)) {
+                    teamSelectionBox.focus = 1
+                } else {
+                    teamSelectionBox.focus = 0
                 }
                 if (mapSelectToggle == 1) {
                     for (let t = 0; t < mapIcons.length; t++) {
@@ -11560,6 +11577,7 @@ move() {
     class Boy {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -12056,7 +12074,10 @@ move() {
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -12078,6 +12099,9 @@ move() {
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -14910,13 +14934,94 @@ this.shots[t].move()
             }
         }
     }
+    class TextinputTeam {
+        constructor(x, y, w, h) {
+            this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
+            this.string = ""
+            this.focus = 0
+            this.neverfocus = 1
+            this.lock = ''
+            this.focusindicator = new Rectangle(x, y + (h * .1), w * .03, h * .8, "#000000")
+            this.flash = -1
+            this.flashspin = 45
+            this.flashnum = -1
+            this.rooms = 0
+            this.team = Math.random()
+            this.primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 31, 37, 41, 43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157]
+        }
+
+        measure() {
+            canvas_context.font = "70px Arial";
+            canvas_context.fillStyle = "#000000"
+            const width = canvas_context.measureText(this.string).width
+            return width
+        }
+        draw() {
+            
+            this.team = parseInt(this.string, 10)
+            this.inputbox.draw()
+            if (this.neverfocus == 1) {
+                canvas_context.font = "70px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText("Team #", this.inputbox.x + 10, this.inputbox.y + 75)
+            } else {
+                canvas_context.font = "70px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+            }
+            if (this.focus == 1) {
+                this.neverfocus = 0
+                this.flashnum++
+                if (this.flashnum % (this.flashspin + (-15 * this.flash)) == 0) {
+                    this.flash *= -1
+                }
+                if (this.flash == 1) {
+                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                    this.focusindicator.draw()
+                }
+            }
+        }
+        backspace() {
+            this.string = this.string.split('')
+            this.string.splice(this.string.length - 1, 1)
+            this.string = this.string.join('')
+             this.team = parseInt(this.string, 10)
+            if(campaignToggle == 1){
+                this.team = 0
+            }
+            for(let t = 0;t<boys.length;t++){
+                boys[t].team = this.team
+            }
+            
+        }
+        addchar(char) {
+            if (this.string.length < 3) {
+                if (this.lock != char) {
+                    this.string += char
+                    this.lock = char
+                }
+                if (this.string.length == 0 || this.string == "0") {
+                    this.string = "0"
+                }
+            let team = parseInt(this.string, 10)
+            for(let t = 0;t<boys.length;t++){
+                boys[t].team = team
+            }
+            }
+        }
+    }
 
     const roomSelectionBox = new Textinput(3300, 700 + 450, 320, 100)
 
     const stockSelectionBox = new TextinputStock(3300, 850, 320, 100)
+
+    const teamSelectionBox = new TextinputTeam(2900, 850, 320, 100)
+
+
     class Mass {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -15462,7 +15567,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -15484,6 +15592,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -17941,6 +18052,7 @@ this.shots[t].move()
     class Blastgirl {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -18449,7 +18561,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -18471,6 +18586,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -20828,6 +20946,7 @@ this.shots[t].move()
     class Jox {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -21323,7 +21442,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -21345,6 +21467,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -23559,6 +23684,7 @@ if(this.dash > -1){
     class Dummy {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                 this.dummy = 1
                 this.reflecting = 0
                 this.countering = -1
@@ -24068,7 +24194,10 @@ if(minigameSelected > -1){
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -24111,6 +24240,9 @@ if(minigameSelected > -1){
             
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -25302,6 +25434,7 @@ this.shots[t].move()
     class ScorchedMass {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -25809,7 +25942,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -25831,6 +25967,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -27967,6 +28106,7 @@ if(this.dash > -1){
     class AsigMan {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -28667,7 +28807,10 @@ if(this.dash > -1){
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -31363,6 +31506,7 @@ this.shots[t].move()
     class Princess {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -31908,7 +32052,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     const rline = new LineOP(this.righthand, boys[k].body)
                     const lline = new LineOP(this.lefthand, boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
@@ -31932,6 +32079,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -34243,6 +34393,7 @@ this.shots[t].move()
     class Rhopho {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -34777,7 +34928,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     const rline = new LineOP(this.righthand, boys[k].body)
                     const lline = new LineOP(this.lefthand, boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
@@ -34801,6 +34955,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -37252,6 +37409,7 @@ this.shots[t].move()
     class Banandroid {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -37829,6 +37987,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
+
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     let line = new LineOP(this.shots[t], boys[k].body)
                     let rline = new LineOP(this.righthand, boys[k].body)
                     let lline = new LineOP(this.lefthand, boys[k].body)
@@ -37853,6 +38015,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -40432,6 +40597,7 @@ this.shots[t].move()
     class Gwompei {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.shotclock = 0
@@ -41096,7 +41262,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     const rline = new LineOP(this.righthand, boys[k].body)
                     const lline = new LineOP(this.lefthand, boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
@@ -41120,6 +41289,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -44113,6 +44285,7 @@ this.shots[t].move()
     class Pinwheelian {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.shotclock = 0
@@ -44707,7 +44880,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     const rline = new LineOP(this.righthand, boys[k].body)
                     const lline = new LineOP(this.lefthand, boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
@@ -44731,6 +44907,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -47208,6 +47387,9 @@ if(this.dash > -1){
                     this.detonate = 0
                     if(this.shots[t].bomb == 1) {
                     for(let h = 0;h<boys.length;h++){
+                        if(boys[h].team == this.team){
+                            continue
+                        }
                         if(boys[h] != this){
                             let link = new LineOP(this.shots[t], boys[h].body, this.shots[t].color, 8)
                             if(link.hypotenuse() < 400){
@@ -47654,6 +47836,7 @@ if(this.dash > -1){
     class Bunkstanks {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -48127,7 +48310,10 @@ if(this.dash > -1){
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -48149,6 +48335,9 @@ if(this.dash > -1){
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -50633,6 +50822,7 @@ this.shots[t].move()
     class DrSoto {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -51297,7 +51487,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -51319,6 +51512,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -53739,6 +53935,7 @@ this.shots[t].move()
     class Joule {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -54262,7 +54459,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
                         if (boys[k] == this) {
                             continue
@@ -54284,6 +54484,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -56948,6 +57151,7 @@ this.shots[t].move()
     class Kessler {
         constructor(controller, args = 0) {
             if (args == 0) {
+           this.team = teamSelectionBox.team
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -57493,7 +57697,10 @@ this.shots[t].move()
             }
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
-                    const line = new LineOP(this.shots[t], boys[k].body)
+                    if(boys[k].team == this.team){
+continue
+}
+const line = new LineOP(this.shots[t], boys[k].body)
                     const rline = new LineOP(this.righthand, boys[k].body)
                     const lline = new LineOP(this.lefthand, boys[k].body)
                     if (line.hypotenuse() < (this.shots[t].radius + boys[k].body.radius)) {
@@ -57517,6 +57724,9 @@ this.shots[t].move()
 
             for (let f = 0; f < boys.length; f++) {
                 if (boys[f] && this != boys[f]) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                     for (let t = 0; t < boys.length; t++) {
                         if (this != boys[t] && boys[t]) {
                             for (let k = 0; k < boys[t].shots.length; k++) {
@@ -60478,6 +60688,8 @@ let requiredElapsed=54; // desired interval is 54fps
                             }
                         }
                         boys[t].draw()
+                            let team = new TeamMarker(boys[t])
+                            team.draw()
                     } else {
                         ////////////////////////////////console.log(boys)
                     }
@@ -60499,8 +60711,12 @@ let requiredElapsed=54; // desired interval is 54fps
                             const x = boys[t].body.x
                             const y = boys[t].body.y
                             boys[t].draw()
+                            let team = new TeamMarker(boys[t])
+                            team.draw()
                         } else {
                             boys[t].draw()
+                            let team = new TeamMarker(boys[t])
+                            team.draw()
                         }
 
                     }
@@ -61299,6 +61515,7 @@ let requiredElapsed=54; // desired interval is 54fps
                 }
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
+                    teamSelectionBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
                     canvas_context.font = "90px arial"
@@ -61350,6 +61567,7 @@ let requiredElapsed=54; // desired interval is 54fps
 
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
+                    teamSelectionBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
                     canvas_context.font = "90px arial"
@@ -61878,6 +62096,32 @@ let requiredElapsed=54; // desired interval is 54fps
             boys[1] = whosUp
             fighter = fighter.copy()
             fightnum++
+        }
+    }
+
+
+
+
+    class TeamMarker {
+        constructor(boy){
+            this.boy = boy
+            if(this.boy.team<1){
+
+            this.r = (this.boy.team*100) % 4
+            this.g = ((this.boy.team*100) / 4) % 4
+            this.b = ((this.boy.team*100) / 16) % 4
+            }else{
+
+            this.r = this.boy.team % 4
+            this.g = (this.boy.team / 4) % 4
+            this.b = (this.boy.team / 16) % 4
+            }
+        }
+        draw(){
+            this.x = this.boy.body.x
+            this.y = this.boy.body.y - 300
+            this.circ = new Circle(this.x, this.y, 16, `rgb(${255-(this.r*64)}, ${255-(this.g*64)}, ${255-(this.b*64)}`)
+            this.circ.draw()
         }
     }
 
