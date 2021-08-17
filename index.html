@@ -825,7 +825,7 @@ let camerax = 0
 
 
     function socketize(ws) {
-            
+                
         ws.addEventListener("open", () => {
             ws.addEventListener("message", ({ data }) => {
 
@@ -53341,7 +53341,9 @@ if(this.dash > -1){
 
 
 
-            if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+            // if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
+
+                this.innerbody = new Circle(400 + (Math.random() * 2560), 500, 42.5, this.color)
                 this.innerbody.x = this.body.x
                 this.innerbody.y = this.body.y
                 let wait = 1
@@ -53404,7 +53406,7 @@ if(this.dash > -1){
                         this.bullets.push(bullet)
                     }
                 }
-            }
+            // }
 
             for (let t = 0; t < this.bullets.length; t++) {
                 this.bullets[t].body.color = this.body.color
