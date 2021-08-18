@@ -7330,6 +7330,30 @@ let camerax = 0
                             // boys = []
                         }
                     }
+                    if (trueAIFightButton.isPointInside(TIP_engine)) {
+                        if (AItoggle == 0 ) {
+                            
+                            trueAIFightButton.color = "#00FF00"
+                            onlineButton.color = "#FF0000"
+                            localButton.color = "#FF0000"
+                            stage = new Stage(MapSelect)
+                            AItoggle = 1
+                            humanPlayers = -1
+                            boys = []
+                            scores = [] //jumpin( break)
+                            drops = []
+                            ws.close()
+                            minigameSelected = -1
+                        } else {
+                            trueAIFightButton.color = "#FF0000"
+                            stage = new Stage(MapSelect)
+                            AItoggle = 0
+                            // humanPlayers = 1004
+                            // campaignToggle = 0
+                            // campaignButton.color = "#FF0000"
+                            // boys = []
+                        }
+                    }
                     if(saveScoreButton.isPointInside(TIP_engine)){
 
                             HOST = location.origin.replace(/^http/, 'ws')
@@ -38265,7 +38289,7 @@ this.shots[t].move()
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
 
-                     if(boys[f].team == this.team){
+                     if(boys[k].team == this.team){
                             continue
                      }
                     let line = new LineOP(this.shots[t], boys[k].body)
@@ -60497,6 +60521,7 @@ this.shots[t].move()
 
     const campaignButton = new Rectangle(2900, 1000, 320, 100, "#FFFFFF")
     const AIFightButton = new Rectangle(3300, 1000, 320, 100, "#FF0000")
+    const trueAIFightButton = new Rectangle(3680, 1000, 180, 100, "#FF0000")
     const onlineButton = new Rectangle(2900, 1150, 320, 100, "#00FF00")
 
 
@@ -60988,8 +61013,10 @@ let requiredElapsed=54; // desired interval is 54fps
                             }
                         }
                         boys[t].draw()
+                        if(boys[t].team > .99999){
                             let team = new TeamMarker(boys[t])
                             team.draw()
+                        }
                     } else {
                         //////////////////////////////////console.log(boys)
                     }
@@ -61012,11 +61039,17 @@ let requiredElapsed=54; // desired interval is 54fps
                             const y = boys[t].body.y
                             boys[t].draw()
                             let team = new TeamMarker(boys[t])
+                        if(boys[t].team > .99999){
+                            let team = new TeamMarker(boys[t])
                             team.draw()
+                        }
                         } else {
                             boys[t].draw()
                             let team = new TeamMarker(boys[t])
+                        if(boys[t].team > .99999){
+                            let team = new TeamMarker(boys[t])
                             team.draw()
+                        }
                         }
 
                     }
@@ -61864,8 +61897,11 @@ let requiredElapsed=54; // desired interval is 54fps
                     canvas_context.fillStyle = "#000000"
                     canvas_context.fillText(`Campaign`, campaignButton.x + (campaignButton.width * .3), campaignButton.y + (campaignButton.width * .20))
                     AIFightButton.draw()
+                    trueAIFightButton.draw()
                     canvas_context.fillStyle = "#000000"
                     canvas_context.fillText(`AI Match`, AIFightButton.x + (AIFightButton.width * .3), AIFightButton.y + (AIFightButton.width * .20))
+                    canvas_context.fillStyle = "#000000"
+                    canvas_context.fillText(`CPUx`, trueAIFightButton.x + (trueAIFightButton.width * .3), trueAIFightButton.y + (trueAIFightButton.width * .20))
                     onlineButton.draw()
                     canvas_context.fillStyle = "#000000"
                     if (onlineButton.color == "#00FF00") {
@@ -61925,8 +61961,11 @@ let requiredElapsed=54; // desired interval is 54fps
                     canvas_context.fillStyle = "#000000"
                     canvas_context.fillText(`Campaign`, campaignButton.x + (campaignButton.width * .3), campaignButton.y + (campaignButton.width * .20))
                     AIFightButton.draw()
+                    trueAIFightButton.draw()
                     canvas_context.fillStyle = "#000000"
                     canvas_context.fillText(`AI Match`, AIFightButton.x + (AIFightButton.width * .3), AIFightButton.y + (AIFightButton.width * .20))
+                    canvas_context.fillStyle = "#000000"
+                    canvas_context.fillText(`CPUx`, trueAIFightButton.x + (trueAIFightButton.width * .3), trueAIFightButton.y + (trueAIFightButton.width * .20))
                     onlineButton.draw()
                     canvas_context.fillStyle = "#000000"
                     if (onlineButton.color == "#00FF00") {
