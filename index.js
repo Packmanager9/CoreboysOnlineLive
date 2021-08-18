@@ -1,6 +1,6 @@
 
 'use strict';
-// const mongoURLx = require("./mongo")
+const mongoURLx = require("./mongo")
 const express = require('express');
 const mongoose = require('mongoose');
 const { Server, defaultMaxListeners } = require('ws');
@@ -11,7 +11,7 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL //|| mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL || mongoURLx.mongoURL
 mongoose.connect(mongoURL)
 const playerdataSchema = new mongoose.Schema({
     joulepopscoremax : Number,
@@ -25,6 +25,7 @@ const playerdataSchema = new mongoose.Schema({
     sototimemax : Number,
     smashoutmax : Number,
     gegegegeedropmin  : Number,
+    kesslerscoremax  : Number,
     campaigncomplete  : Boolean,
     gegegegeedropminstr : String,
     playername : String
@@ -38,25 +39,133 @@ const server = express()
     .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 const wss = new Server({ server });
+
+
 let boys = []
 let games = []
+let tournaments = []
+
+class TournamentBracket{
+    constructor(name, size, stock){
+        this.name = name
+        this.id = Math.random()
+        this.size = size
+        this.stock = stock
+        this.players = []
+        this.rooms = []
+        this.unpaired = 0
+        this.totalIn = 0
+        for(let t = 535131+(tournaments.length*64); t <  535131+(tournaments.length*64) + Math.ceil(this.size*.5); t++){
+            this.rooms.push(t)
+        }
+        this.layer = 0
+        this.layercap = Math.floor(Math.log(this.size)/Math.log(2))
+        this.map = Math.floor(Math.random()*20)
+        this.roundOuts = 0
+    }
+    pair(){
+        let g = 0 
+        let index1 = Math.floor(Math.random()*this.players.length)
+        while(this.players[index1].lockout == this.layer){
+            if(g>(this.players.length*this.players.length*this.players.length)+10){
+                break
+            }
+            if(this.totalIn >= this.size){
+                break
+            }
+            index1 = Math.floor(Math.random()*this.players.length)
+        }
+        let index2 = Math.floor(Math.random()*this.players.length)
+        let j = 0 
+        g = 0 
+        while(index2 == index1){
+            j++
+            if(j>(this.players.length*this.players.length*this.players.length)+10){
+                break
+            }
+            index2 = Math.floor(Math.random()*this.players.length)
+
+        while(this.players[index2].lockout == this.layer){
+            if(g>(this.players.length*this.players.length*this.players.length)+10){
+                break
+            }
+            if(this.totalIn >= this.size){
+                break
+            }
+            index2 = Math.floor(Math.random()*this.players.length)
+        }
+        }
+
+        if(this.players[index1].lockout == this.layer){
+            return
+        }
+        if(this.players[index2].lockout == this.layer){
+            return
+        }
+        if(index1 == index2){
+            return
+        }
+        let room = this.rooms[Math.floor(Math.random()*this.rooms.length)]
+        let r = 0
+        while(games[room].occupied == 1){
+            room = this.rooms[Math.floor(Math.random()*this.rooms.length)]
+            r++
+            if(r>10000){
+                return
+            }
+        }
+        games[this.players[index1].assigned].swapRoom(this.players[index1], room)
+        games[this.players[index2].assigned].swapRoom(this.players[index2], room)
+        games[room].occupied = 1
+
+
+        let forceSwap = {}
+        let map = this.map
+        forceSwap.tournamentRoom = room
+        forceSwap.map = map
+        forceSwap.stock = this.stock
+        forceSwap.id = this.id
+        this.players[index1].send(JSON.stringify(forceSwap))
+        this.players[index2].send(JSON.stringify(forceSwap))
+        this.players[index1].lockout = this.layer
+        this.players[index2].lockout = this.layer
+        // this.unpaired-=2
+        if(this.totalIn >= this.size){
+            this.layer++
+        }
+    }
+
+    addPlayer(player) {
+        this.players.push(player)
+        this.unpaired++
+        this.totalIn++
+    }
+}
 class Game {
     constructor() {
         this.players = []
+        this.occupied = 0
     }
     removePlayer(player) {
         this.players.splice(this.players.indexOf(player), 1)
+        if(this.players.length == 0){
+            this.occupied = 0
+        }
     }
     addPlayer(player) {
         this.players.push(player)
+        this.occupied = 1
     }
     swapRoom(player, room){
         this.players.splice(this.players.indexOf(player), 1)
         player.assigned = room
         games[room].addPlayer(player)
+        if(this.players.length == 0){
+            this.occupied = 0
+        }
     }
 }
-for (let t = 0; t < 535131; t++) {
+for (let t = 0; t < 565131; t++) { //535131 ++ is tournies
     games.push(new Game())
 }
 wss.on("connection", ws => {
@@ -130,7 +239,44 @@ wss.on("connection", ws => {
         games[ws.assigned].removePlayer(ws)
     })
     ws.on("message", data => {
-          if (JSON.parse(data).dataScores === 1) {
+        if (JSON.parse(data).makeTournament == 1) {
+            let tournament = new TournamentBracket(JSON.parse(data).name, JSON.parse(data).size, JSON.parse(data).stock)
+            tournaments.push(tournament)
+            tournament.addPlayer(ws)
+        }else if (JSON.parse(data).tournamentWinner == 1) {
+
+            for(let t = 0;t<tournaments.length;t++){
+                for(let k = 0;k<tournaments[t].players.length;k++){
+                    if(tournaments[t].players[k].serverID == JSON.parse(data).splicePlayer ){
+                        games[tournaments[t].players[k].assigned].removePlayer(tournaments[t].players[k])
+                        tournaments[t].players.splice(k,1)
+                        tournaments[t].unpaired++
+                        tournaments[t].layer++
+                        if(tournaments[t].unpaired%2 == 0){
+                            tournaments[t].pair()
+                        }
+                    }
+                }
+            }
+
+
+        }else if (JSON.parse(data).joinTournament === 1) {
+            let tournament
+            for(let t = 0;t<tournaments.length;t++){
+                if(tournaments[t].name == JSON.parse(data).name){
+                    tournament = tournaments[t]
+                    break
+                }
+            }
+            if(typeof tournament != "undefined"){
+                tournament.addPlayer(ws)
+                if(tournament.unpaired%2 == 0){
+                    tournament.pair()
+                }
+            }else{
+            }
+
+        }else if (JSON.parse(data).dataScores === 1) {
             let model = new mongoose.model("PlayerRecords")(JSON.parse(data).model)  // JSON.parse(data).model
             model.save()
             return

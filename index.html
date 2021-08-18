@@ -732,8 +732,8 @@ w
 <script>
 
 
-    // console.log(mongoURL)
-    ////////////// ////////////////////////////////////////////console.log(HOST)
+    // //console.log(mongoURL)
+    ////////////// //////////////////////////////////////////////console.log(HOST)
     let pick = -1
     let meshX = 10
     const armgranularity = 7
@@ -773,6 +773,8 @@ let camerax = 0
     let optionsToggle = 0
     let humanPlayers = 1004
     let AItoggle = 0
+    let tournamentPending = 0
+    let tournamentNameStorage = 0
     let campaignToggle = 0
     let campaigntime = 0
     let campaigntimestart = 0
@@ -859,6 +861,10 @@ let camerax = 0
                         players = parseInt(data.length)
                         CreatePlayer(data.playerIDs.length)
                     }
+                } else if (parseInt(JSON.parse(data).tournamentRoom) >= 1) {
+                    swapRoom(parseInt(JSON.parse(data).tournamentRoom), parseInt(JSON.parse(data).stock),  parseFloat(JSON.parse(data).id))
+                    stage  = new Stage(parseInt(JSON.parse(data).map))
+                    //console.log(data)
                 } else if (parseInt(JSON.parse(data).clean) == 1) {
                     data = JSON.parse(data)
                     for (let t = 0; t < (data).playerIDs.length; t++) {
@@ -870,11 +876,11 @@ let camerax = 0
                                 if (counters[y] > 250) {
                                     if (!(data).playerIDs.includes(boys[y].serverID)) {
                                         if (boys[y].serverID != serverID) {
-                                            ////////////////////////////////////console.log(localIDs,)
-                                            ////////////////////////////////console.log("caseA", boys[y])
+                                            //////////////////////////////////////console.log(localIDs,)
+                                            //////////////////////////////////console.log("caseA", boys[y])
                                             localIDs.splice(localIDs.indexOf(boys[y].serverID)) //sus
                                             boys.splice(y, 1)
-                                            ////////////////////////////////////console.log("snip")
+                                            //////////////////////////////////////console.log("snip")
                                         }
                                     }
                                 }
@@ -895,7 +901,7 @@ let camerax = 0
                         }
                     }
                 } else if (parseInt(JSON.parse(data).counter) == 1) {
-                    ////////////////////////////////////console.log(data)
+                    //////////////////////////////////////console.log(data)
                     for (let t = 0; t < boys.length; t++) {
                         if (boys[t].serverID == parseFloat(JSON.parse(data).index)) {
                             boys[t].body.xmom += parseFloat(JSON.parse(data).xmom)
@@ -925,10 +931,10 @@ let camerax = 0
                             for (let t = 0; t < boys.length; t++) {
                                 if (!(data).playerIDs.includes(boys[t].serverID)) {
                                     if (serverID != boys[t].serverID) {
-                                        ////////////////////////////////console.log("caseB", boys[t])
+                                        //////////////////////////////////console.log("caseB", boys[t])
                                         localIDs.splice(localIDs.indexOf(boys[t].serverID))//sus
                                         boys.splice(t, 1)
-                                        ////////////////////////////////////console.log("snip")
+                                        //////////////////////////////////////console.log("snip")
                                     }
                                 }
                             }
@@ -969,7 +975,7 @@ let camerax = 0
                         tempIDs.push(boys[t].serverID)
                     }
                     for (let t = 0; t < data.playerIDs.length; t++) {
-                        // //////////////////////////////console.log(serverID, data.serverID)
+                        // ////////////////////////////////console.log(serverID, data.serverID)
                         if (serverID != data.serverID) {
                             const identites = []
                             for (let g = 0; g < boys.length; g++) {
@@ -977,7 +983,7 @@ let camerax = 0
                             }
                             if (localIDs.includes(data.serverID)) {
                                 //should prevent sending yourself to yourself?
-                                // ////////////////////////////////console.log("caseG")
+                                // //////////////////////////////////console.log("caseG")
                                 counters[tempIDs.indexOf(data.serverID)] = 0
                                 if (data.name == "Coreboy") {
                                     boys[tempIDs.indexOf(data.serverID)] = new Boy(data.id, data)  //data.id?
@@ -1020,7 +1026,7 @@ let camerax = 0
                             } else if (!localIDs.includes(data.serverID)) {
                                 counters[tempIDs.indexOf(data.serverID)] = 0
                                 localIDs.push(data.serverID)
-                                ////////////////////////////////console.log("caseC", data)
+                                //////////////////////////////////console.log("caseC", data)
                                 let newplayer = {}
                                 if (data.name == "Coreboy") {
                                     newplayer = new Boy(data.slot)  //data.id?
@@ -1112,7 +1118,7 @@ let camerax = 0
                     }
                 }
 
-                // ////////////////////////////////////////////console.log(boys)
+                // //////////////////////////////////////////////console.log(boys)
             })
             if (AItoggle == 0  && localPlayToggle == 0) {
 
@@ -1353,7 +1359,7 @@ let camerax = 0
                 }
                 this.name = `#${this.r.toString(16)}${this.g.toString(16)}${this.b.toString(16)}`
             } else {
-                // //////////console.log(override)
+                // ////////////console.log(override)
                 const keys = Object.keys(override)
                 for (let t = 0; t < keys.length; t++) {
                     this[keys[t]] = override[keys[t]]
@@ -1395,7 +1401,7 @@ let camerax = 0
             clone.longInputs = [...this.longInputs]
             clone.parent = this.name
             clone.name = `#${clone.r.toString(16)}${clone.g.toString(16)}${clone.b.toString(16)}`
-            // //////////console.log(clone)
+            // ////////////console.log(clone)
             return clone
         }
         freshClone() {
@@ -1467,7 +1473,7 @@ let camerax = 0
                 bigerror += error
             }
             this.error = (bigerror)
-            // //////////console.log(bigerror)
+            // ////////////console.log(bigerror)
 
         }
         calculateError(errors) {
@@ -1475,7 +1481,7 @@ let camerax = 0
             this.errors = errors
             this.dropoffs = []
             for (let t = 0; t < errors.length; t++) {
-                // //////////console.log(this.outputMagnitudes[t])
+                // ////////////console.log(this.outputMagnitudes[t])
                 if (t < 3) {
                     this.dropoffs.push([errors[t], this.outputMagnitudes[t], Math.abs(errors[t] - this.outputMagnitudes[t]) * 2])
                     error += Math.round(Math.abs(errors[t] - this.outputMagnitudes[t])) * 2//*(errors[t]-this.outputMagnitudes[t])  //notround?
@@ -1493,7 +1499,7 @@ let camerax = 0
 
                 const clone1 = this.clone()
                 clone1.mutate()
-                //////////console.log(clone1)
+                ////////////console.log(clone1)
                 clone1.bigErrorReduce()
                 this.bigErrorReduce()
                 const failsafe = 0
@@ -1508,7 +1514,7 @@ let camerax = 0
                 }
 
                 if (((this.error) / this.longErrors.length) > ((clone1.error) / this.longErrors.length) - .00001) {
-                    //////////console.log(this.error, clone1.error)
+                    ////////////console.log(this.error, clone1.error)
                     const keys = Object.keys(clone1)
                     for (let t = 0; t < keys.length; t++) {
                         this[keys[t]] = clone1[keys[t]]
@@ -1519,9 +1525,9 @@ let camerax = 0
                             this.structure[t][k] = new Perceptron(0, 0, 0, this.structure[t][k])
                         }
                     }
-                    // //////////console.log(this.error)
+                    // ////////////console.log(this.error)
                     // canvas_context.fillText(this.error, 200,200)
-                    //////////console.log(this)
+                    ////////////console.log(this)
                 }
 
                 meshX += 5
@@ -1538,7 +1544,7 @@ let camerax = 0
                 }
 
                 // if(keysPressed['n']){
-                //////////console.log(this)
+                ////////////console.log(this)
                 // }
             }
         }
@@ -1576,7 +1582,7 @@ let camerax = 0
                                 this.structure[t][k] = new Perceptron(0, 0, 0, this.structure[t][k])
                             }
                         }
-                        // //////////console.log(this.error)
+                        // ////////////console.log(this.error)
                         // canvas_context.fillText(this.error, 200,200)
                     }
 
@@ -1594,7 +1600,7 @@ let camerax = 0
                     }
 
                     if (keysPressed['n']) {
-                        //////////console.log(boys[index])
+                        ////////////console.log(boys[index])
                     }
                 } else {
 
@@ -1628,7 +1634,7 @@ let camerax = 0
                                 this.structure[t][k] = new Perceptron(0, 0, 0, this.structure[t][k])
                             }
                         }
-                        // //////////console.log(this.error)
+                        // ////////////console.log(this.error)
                         // canvas_context.fillText(this.error, 200,200)
                     }
 
@@ -1648,9 +1654,9 @@ let camerax = 0
                 }
 
                 if (keysPressed['m']) {
-                    //////////console.log(boys[index])
+                    ////////////console.log(boys[index])
                 }
-                // //////////console.log(this.error)
+                // ////////////console.log(this.error)
             }
         }
         changeInputs(inputs) {
@@ -1874,7 +1880,7 @@ let camerax = 0
             const xdif = this.object.x - this.target.x
             const ydif = this.object.y - this.target.y
             const hypotenuse = (xdif * xdif) + (ydif * ydif)
-                //console.log(hypotenuse)
+                ////console.log(hypotenuse)
 
             if(hypotenuse < 14100000-1){
                 if(hypotenuse > 1000000){
@@ -2066,7 +2072,7 @@ let camerax = 0
                 canvas_context.fill()
                 canvas_context.stroke();
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -2261,7 +2267,7 @@ let camerax = 0
                 canvas_context.fill()
                 canvas_context.stroke();
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -2456,7 +2462,7 @@ let camerax = 0
                 canvas_context.fill()
                 canvas_context.stroke();
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -2681,7 +2687,7 @@ let camerax = 0
                     this.angle += .1
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -2886,7 +2892,7 @@ let camerax = 0
                     this.angle += (Math.PI) / 20
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -3095,7 +3101,7 @@ let camerax = 0
                     // this.angle+=(Math.PI)/20
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -3299,7 +3305,7 @@ let camerax = 0
                     this.angle += .1
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -3497,7 +3503,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -3705,7 +3711,7 @@ let camerax = 0
                 canvas_context.fillStyle = this.color
 
                 if (Math.random() < .0001) {
-                    ////////// ////////////////////////////////////////////console.log(this)
+                    ////////// //////////////////////////////////////////////console.log(this)
                 }
                 if (isFinite(this.x) && isFinite(this.y) && isFinite(this.radius)) {
                     var gard = canvas_context.createRadialGradient(Math.round(this.x), Math.round(this.y), 0, Math.round(this.x), Math.round(this.y), Math.ceil(Math.max(this.radius - canvas_context.lineWidth, 0)))
@@ -3720,7 +3726,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -3912,7 +3918,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -4113,7 +4119,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -4350,7 +4356,7 @@ let camerax = 0
                     canvas_context.closePath();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -4593,7 +4599,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -4872,7 +4878,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -5135,7 +5141,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -5377,7 +5383,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -5619,7 +5625,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -5883,7 +5889,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -6115,7 +6121,7 @@ let camerax = 0
                     // temp_context.globalCompositeOperation = 'source-over'
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -6306,7 +6312,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
             // canvas_context.closePath()
         }
@@ -6498,7 +6504,7 @@ let camerax = 0
                     canvas_context.stroke();
                 }
             } else {
-                // //////////////////////////// ////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
+                // //////////////////////////// //////////////////////////////////////////////console.log("The circle is below a radius of 0, and has not been drawn. The circle is:", this)
             }
         }
 
@@ -6719,14 +6725,14 @@ let camerax = 0
             this.compareflop = 0
         }
         shiftRight(num) {
-            // ////////console.log(num)
+            // //////////console.log(num)
             for (let t = 0; t < this.shapes.length; t++) {
                 this.shapes[t].x += num
                 // this.shapes[t].color = getRandomColor()
             }
         }
         shiftDown(num) {
-            // ////////console.log(num)
+            // //////////console.log(num)
             for (let t = 0; t < this.shapes.length; t++) {
                 this.shapes[t].y += num
                 // this.shapes[t].color = getRandomColor()
@@ -6921,7 +6927,7 @@ let camerax = 0
                 }
             } else if (this.str > (this.length + 2) * (this.length + 2)) {
 
-                // //////console.log(this.str, this.length)
+                // ////////console.log(this.str, this.length)
                 this.body.xmom -= ((this.body.x - this.anchor.x) / (this.length)) * 1.66
                 this.body.ymom -= ((this.body.y - this.anchor.y) / (this.length)) * 1.66
                 this.anchor.xmom += ((this.body.x - this.anchor.x) / (this.length)) * 1.66
@@ -7102,7 +7108,9 @@ let camerax = 0
        window.setInterval(function () {
 
            main()
-
+            if(keysPressed['k']){
+                //console.log(boys)
+            }
        }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
@@ -7112,6 +7120,10 @@ let camerax = 0
                 }
                 if (stockSelectionBox.focus == 1) {
                     stockSelectionBox.backspace()
+                }
+                
+                if (tournamentNameBox.focus == 1) {
+                    tournamentNameBox.backspace()
                 }
                 if (teamSelectionBox.focus == 1) {
                     teamSelectionBox.backspace()
@@ -7126,6 +7138,10 @@ let camerax = 0
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
                         stockSelectionBox.addchar(event.key)
                     }
+                }
+                
+                if (tournamentNameBox.focus == 1) {
+                        tournamentNameBox.addchar(event.key)
                 }
                 if (teamSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
@@ -7159,7 +7175,7 @@ let camerax = 0
             TIP_engine.y = YS_engine * invscale
             TIP_engine.body = TIP_engine
 
-            ////////////////// ////////////////////////////////////////////console.log(TIP_engine)
+            ////////////////// //////////////////////////////////////////////console.log(TIP_engine)
             for (let t = 0; t < selectors.length; t++) {
                 if (selectors[t].body.isPointInside(TIP_engine)) {
                     selectors[t].body.anchored = 2
@@ -7193,7 +7209,35 @@ let camerax = 0
                     roomSelectionBox.focus = 0
                     stockSelectionBox.focus = 0
                     teamSelectionBox.focus = 0
+                    tournamentNameBox.focus = 0
                 }
+            }
+            if(tournamentStartMenu.isPointInside(TIP_engine)){
+
+                let tson  = {}
+                tson.makeTournament = 1
+                tson.size = 16
+                tson.name = tournamentNameBox.string + "'s Tournament"
+                tson.stock = stock
+                // roomSelectionBox.rooms = 
+                // swapRoom()
+
+
+                tournamentPending = 1
+                ws.send(JSON.stringify(tson))
+
+
+            }
+            if(tournamentJoinMenu.isPointInside(TIP_engine)){
+
+                let tson  = {}
+                tson.joinTournament = 1
+                tson.size = 16
+                tson.stock = stock
+                tson.name = tournamentNameBox.string + "'s Tournament"
+
+                ws.send(JSON.stringify(tson))
+
             }
             if (escapeButton.isPointInside(TIP_engine)) {
 
@@ -7426,6 +7470,11 @@ let camerax = 0
                 } else {
                     roomSelectionBox.focus = 0
                 }
+                if (tournamentNameBox.inputbox.isPointInside(TIP_engine)) {
+                    tournamentNameBox.focus = 1
+                } else {
+                    tournamentNameBox.focus = 0
+                }
                 if (stockSelectionBox.inputbox.isPointInside(TIP_engine)) {
                     stockSelectionBox.focus = 1
                 } else {
@@ -7614,7 +7663,7 @@ let camerax = 0
 
 
     function gamepad_control_controller_proto(object, speed = 1, controller) { // basic control for objects using the controler
-        //         //////////////////////////// ////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+        //         //////////////////////////// //////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
 
         if (object.self.shield == 0) {
             if (keysPressed['s']) {
@@ -7728,7 +7777,7 @@ let camerax = 0
     }
 
     function gamepad_control_controller_proto_dj(object, speed = 1, controller) { // basic control for objects using the controler
-        //         //////////////////////////// ////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+        //         //////////////////////////// //////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
 
 
         if (keysPressed['w']) {
@@ -7763,7 +7812,7 @@ let camerax = 0
         }
     }
     function gamepad_control(object, speed = 1) { // basic control for objects using the controler
-        //         //////////////////////////// ////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
+        //         //////////////////////////// //////////////////////////////////////////////console.log(this.axesStatus[1]*this.axesStatus[0]) //debugging
         if (typeof object.body != 'undefined') {
             if (typeof (controller.gamepad.axesStatus[1]) != 'undefined') {
                 if (typeof (controller.gamepad.axesStatus[0]) != 'undefined') {
@@ -7919,7 +7968,7 @@ let camerax = 0
     }
     function castBetween(from, to, granularity = 10, radius = 1) { //creates a sort of beam hitbox between two points, with a granularity (number of members over distance), with a radius defined as well
         const limit = granularity
-        // //////console.log(limit)
+        // ////////console.log(limit)
         if (limit < 1) {
             limit = 1
         }
@@ -7933,7 +7982,7 @@ let camerax = 0
     }
     function castBetweenRat(from, to, granularity = 10, radius = 1) { //creates a sort of beam hitbox between two points, with a granularity (number of members over distance), with a radius defined as well
         const limit = granularity
-        // //////console.log(limit)
+        // ////////console.log(limit)
         if (limit < 1) {
             limit = 1
         }
@@ -7971,13 +8020,14 @@ let camerax = 0
     // tempcanvas.width 1200
     const temp_context = tempcanvas.getContext("2d")
     tempcanvas.style.background = "#000000"
-    //////////////////////////////////console.log(tempcanvas)
+    ////////////////////////////////////console.log(tempcanvas)
 
     rooms.onchange = swapRoom
 
     setUp(setup_canvas) // setting up canvas refrences, starting timer. 
 
-    function swapRoom() {
+    function swapRoom(roominput = -1, stockx = stock, namerx = '') {
+        if(roominput == -1){
         const room = roomSelectionBox.rooms
         const Rson = {
             "room": `${room}`
@@ -7986,6 +8036,131 @@ let camerax = 0
         if(localPlayToggle != 1){
         ws.send(JSON.stringify(Rson))
         }
+        }else{
+        const Rson = {
+            "room": `${roominput}`
+        }
+        if(localPlayToggle != 1){
+        ws.send(JSON.stringify(Rson))
+
+                let wet = boys.length
+                for (let t = 0; t < selectors.length; t++) {
+                    for (let k = 0; k < characterbuttons.length; k++) {
+                        if (characterbuttons[k].isPointInside(selectors[t].body)) {
+                            let coreboy
+                            //////////////////////////////////console.log("caseD")
+                            if (k == 0) {
+
+                                coreboy = new Mass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 1) {
+                                coreboy = new Boy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 2) {
+                                coreboy = new Blastgirl(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 3) {
+                                coreboy = new Jox(boys.length)
+                                pick = k
+                                coreboy.body.color = invertColor(selectors[t].body.color)
+                            } else if (k == 4) {
+                                coreboy = new ScorchedMass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 5) {
+                                coreboy = new AsigMan(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 6) {
+                                coreboy = new Princess(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 7) {
+                                coreboy = new Rhopho(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 8) {
+                                coreboy = new Banandroid(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 9) {
+                                coreboy = new Bunkstanks(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 10) {
+                                coreboy = new Dummy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 11) {
+                                coreboy = new DrSoto(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 12) {
+                                coreboy = new Joule(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 13) {
+                                coreboy = new Kessler(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 14) {
+                                coreboy = new Pinwheelian(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 15) {
+                                coreboy = new Gwompei(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else {
+
+                            }
+                            if(minigameSelected == 0){
+                                coreboy = new Princess(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            }
+                            if(minigameSelected == 1){
+                                coreboy.body.x = 500
+                                coreboy.body.y = 1000
+                            }
+
+                            if (AItoggle == 1 || localPlayToggle == 1) {
+                                boys.push(coreboy)
+                                coreboy.id = ID
+                                boom.push(new Circle(0, 0, 1, "transparent"))
+                                scores.push(0)
+                                drops.push(0)
+
+                            } else {
+                                for (let u = 0; u < boys.length; u++) {
+                                    if (boys[u].serverID == serverID) {
+                                        coreboy.id = ID
+                                        boys[u] = coreboy
+                                        boom.push(new Circle(0, 0, 1, "transparent"))
+                                        scores.push(0)
+                                        drops.push(0)
+                                        wet--
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                counter = 1
+                for(let h = 0;h<boys.length;h++){
+                    boys[h].stock = stockx
+                }
+                stock = stockx
+                tournamentPending = 0
+                tournamentNameStorage = namerx
+        }
+        }
+
     }
 
 
@@ -8057,7 +8232,7 @@ let camerax = 0
                     }
                     this.axesStatus = axes;// assign received values
                     this.buttonsStatus = pressed;
-                    // //////////////////////////// ////////////////////////////////////////////console.log(pressed); // return buttons for debugging purposes
+                    // //////////////////////////// //////////////////////////////////////////////console.log(pressed); // return buttons for debugging purposes
                     return pressed;
                 },
                 buttonPressed: function (button, hold) {
@@ -8469,7 +8644,7 @@ move() {
                         dson.model.playername = ''
                        }
 
-                    //    console.log(dson)
+                    //    //console.log(dson)
                         ws.send(JSON.stringify(dson))
                         // ws.close()
         }
@@ -10019,7 +10194,7 @@ move() {
                 if (player.bananahand2s.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10032,7 +10207,7 @@ move() {
                 if (player.bananahand2s.doesPerimeterTouch(this.edgeright) || circle.doesPerimeterTouch(this.edgeright)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10046,7 +10221,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10060,7 +10235,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10075,7 +10250,7 @@ move() {
                 if (player.righthands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10089,7 +10264,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10102,7 +10277,7 @@ move() {
                 if (player.righthands.doesPerimeterTouch(this.edgeright) || circle.doesPerimeterTouch(this.edgeright)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10116,7 +10291,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10130,7 +10305,7 @@ move() {
                 if (player.bananahands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10143,7 +10318,7 @@ move() {
                 if (player.bananahands.doesPerimeterTouch(this.edgeright) || circle.doesPerimeterTouch(this.edgeright)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10157,7 +10332,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10171,7 +10346,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -10186,7 +10361,7 @@ move() {
                 if (player.righthands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
-                        // ////////console.log("anchired r?")
+                        // //////////console.log("anchired r?")
                         circle.anchor = this.edgeleft
                     }
                     if (player.body.y > circle.y) {
@@ -10200,7 +10375,7 @@ move() {
                     if (circle.anchored >= -1) {
                         circle.anchored = 1
 
-                        // ////////console.log("anchired l?")
+                        // //////////console.log("anchired l?")
                         circle.anchor = this.edgeright
                     }
                     if (player.body.y > circle.y) {
@@ -11312,7 +11487,7 @@ move() {
         //     if (player.righthands.doesPerimeterTouch(this.edgeleft) || circle.doesPerimeterTouch(this.edgeleft)) {
         //             if (circle.anchored >= -1) {
         //                 circle.anchored = 1
-        //         // ////////console.log("anchired r?")
+        //         // //////////console.log("anchired r?")
         //                 circle.anchor = this.edgeleft
         //             }
         //             if (player.body.y > circle.y) {
@@ -11326,7 +11501,7 @@ move() {
         //             if (circle.anchored >= -1) {
         //                 circle.anchored = 1
 
-        //         // ////////console.log("anchired l?")
+        //         // //////////console.log("anchired l?")
         //                 circle.anchor = this.edgeright
         //             }
         //             if (player.body.y > circle.y) {
@@ -11596,7 +11771,7 @@ move() {
                             for (let t = 0; t < 200; t++) {
                                 this.meshinputs.push(Math.random() - .5)
                             }
-                            // //////////console.log(coreboyvcoreboymesh)
+                            // ////////////console.log(coreboyvcoreboymesh)
                             //bakedcoreboy
                             //overnight
                             this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10], 10)
@@ -11734,19 +11909,19 @@ move() {
                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                     //  }
                 }
-                // ////////////// ////////////////////////////////////////////console.log(args)
+                // ////////////// //////////////////////////////////////////////console.log(args)
                 this.armlength = 30
                 this.shoulderwidth = 8
                 this.shotdraw = args['shotdraw']
                 this.brick = new Brick(1, 1, 1, 1)
-                // //////////// ////////////////////////////////////////////console.log(this.shotdraw)
+                // //////////// //////////////////////////////////////////////console.log(this.shotdraw)
                 this.jumpcount = args['jumpcount']
 
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -11814,7 +11989,7 @@ move() {
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -11950,7 +12125,7 @@ move() {
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -11963,7 +12138,7 @@ move() {
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Boy(this.controller)
             if (this.hasOwnProperty("mesh")) {
@@ -14766,7 +14941,7 @@ this.shots[t].move()
                     }
                 }
             }
-            // //////////console.log(this)
+            // ////////////console.log(this)
         }
 
     }
@@ -14946,6 +15121,70 @@ this.shots[t].move()
             }
         }
     }
+    class TournamentName {
+        constructor(x, y, w, h) {
+            this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
+            this.string = ""
+            this.focus = 0
+            this.neverfocus = 1
+            this.lock = ''
+            this.focusindicator = new Rectangle(x, y + (h * .1), w * .03, h * .8, "#000000")
+            this.flash = -1
+            this.flashspin = 45
+            this.flashnum = -1
+            this.rooms = 0
+            this.primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 31, 37, 41, 43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157]
+        }
+
+        measure() {
+            canvas_context.font = "60px Arial";
+            canvas_context.fillStyle = "#000000"
+            const width = canvas_context.measureText(this.string).width
+            return width
+        }
+        draw() {
+            
+            // stock = parseInt(this.string, 10)
+            this.inputbox.draw()
+            if (this.neverfocus == 1) {
+                canvas_context.font = "48px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText("'s Tournament", this.inputbox.x + 10, this.inputbox.y + 75)
+            } else {
+                canvas_context.font = "60px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+            }
+            if (this.focus == 1) {
+                this.neverfocus = 0
+                this.flashnum++
+                if (this.flashnum % (this.flashspin + (-15 * this.flash)) == 0) {
+                    this.flash *= -1
+                }
+                if (this.flash == 1) {
+                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                    this.focusindicator.draw()
+                }
+            }
+        }
+        backspace() {
+            this.string = this.string.split('')
+            this.string.splice(this.string.length - 1, 1)
+            this.string = this.string.join('')
+            
+        }
+        addchar(char) {
+            if (this.string.length < 8) {
+                if (this.lock != char) {
+                    this.string += char
+                    this.lock = char
+                }
+                if (this.string.length == 0 || this.string == "") {
+                    this.string = ""
+                }
+            }
+        }
+    }
     class TextinputTeam {
         constructor(x, y, w, h) {
             this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
@@ -15028,6 +15267,8 @@ this.shots[t].move()
     const stockSelectionBox = new TextinputStock(3300, 850, 320, 100)
 
     const teamSelectionBox = new TextinputTeam(2900, 850, 320, 100)
+
+    const tournamentNameBox = new TournamentName(3520, 300, 320, 100)
 
 
     class Mass {
@@ -15179,17 +15420,17 @@ this.shots[t].move()
                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                     //  }
                 }
-                // ////////////// ////////////////////////////////////////////console.log(args)
+                // ////////////// //////////////////////////////////////////////console.log(args)
                 this.shotdraw = args['shotdraw']
                 this.brick = new Brick(1, 1, 1, 1)
-                // //////////// ////////////////////////////////////////////console.log(this.shotdraw)
+                // //////////// //////////////////////////////////////////////console.log(this.shotdraw)
                 this.jumpcount = args['jumpcount']
 
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -15259,7 +15500,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -15416,7 +15657,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -15429,7 +15670,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Mass(this.controller)
             if (this.hasOwnProperty("mesh")) {
@@ -16083,7 +16324,7 @@ if (this.middlehand2.anchored == 1) {
                                 boys[t].lefthands = castBetween(boys[t].leftshoulder, boys[t].lefthand, armgranularity, boys[t].leftshoulder.radius)
 
                                 if (boys[t].lefthands.doesPerimeterTouch(this.body) || boys[t].lefthand.doesPerimeterTouch(this.body)) {
-                                    // ////////////// //////////////////////////////////////////////console.log(this, boys[t])
+                                    // ////////////// ////////////////////////////////////////////////console.log(this, boys[t])
                                     if (AItoggle == 0  && localPlayToggle == 0) {
                                         this.striker = boys[t].serverID
                                     } else if (AItoggle == 1 || localPlayToggle == 1) {
@@ -16201,7 +16442,7 @@ if (this.middlehand2.anchored == 1) {
                 this.lefthand.ymom = -this.speed * 2
                 this.righthand.ymom = -this.speed * 2
                 this.jumpcount = 100
-                //////////////////// ////////////////////////////////////////////console.log(this)
+                //////////////////// //////////////////////////////////////////////console.log(this)
             }
         }
         doubleJump() {
@@ -16656,7 +16897,7 @@ if (this.middlehand2.anchored == 1) {
                 if (this.safe == 0) {
                     this.screwshot = 1
                     if (this.body.x > (this.brick.center.x)) {
-                        ////////////////////////// ////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                        ////////////////////////// //////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
@@ -16873,7 +17114,7 @@ if (this.middlehand2.anchored == 1) {
                             const errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
                             // this.mesh.errorReduce(errors, boys.indexOf(this))
                             if (keysPressed['r']) {
-                                //////////console.log(this.mesh)
+                                ////////////console.log(this.mesh)
                             }
                         }
 
@@ -17288,9 +17529,9 @@ if (this.middlehand2.anchored == 1) {
                         const errors = [this.wmove, this.dmove, this.amove, this.exgrip, this.screwshot, this.downspike, this.hortsmash, this.rightshot, this.leftshot, this.storeshield]
                         // this.mesh.errorReduce(errors, boys.indexOf(this))
                         if (keysPressed['r']) {
-                            //////////console.log(JSON.stringify(this.mesh))
-                            //////////console.log((this.mesh))
-                            //////////console.log((this))
+                            ////////////console.log(JSON.stringify(this.mesh))
+                            ////////////console.log((this.mesh))
+                            ////////////console.log((this))
                         }
                     }
 
@@ -17699,7 +17940,7 @@ if (this.middlehand2.anchored == 1) {
                     }
                 } else {
                     if (Math.random() < .001) {
-                        //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                        //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                     }
                 }
             }
@@ -18205,7 +18446,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -18274,7 +18515,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -18410,7 +18651,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -18423,7 +18664,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Blastgirl(this.controller)
 
@@ -21106,7 +21347,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotC(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -21173,7 +21414,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -21307,7 +21548,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -21320,7 +21561,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Jox(this.controller)
             if(minigameSelected == 2){
@@ -23858,7 +24099,7 @@ if(minigameSelected < 0){
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -23928,7 +24169,7 @@ if(minigameSelected < 0){
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -24071,7 +24312,7 @@ if(minigameSelected > -1){
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -24084,7 +24325,7 @@ if(minigameSelected > -1){
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Dummy(this.controller)
 
@@ -25119,7 +25360,7 @@ if(minigameSelected > -1){
             if (this.inactive == 1) {
                 return
             }
-            // console.log(this)
+            // //console.log(this)
 this.dash--
 
 
@@ -25601,7 +25842,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotD(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -25672,7 +25913,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -25807,7 +26048,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -25820,7 +26061,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new ScorchedMass(this.controller)
             copy.id = this.id
@@ -26461,7 +26702,7 @@ const line = new LineOP(this.shots[t], boys[k].body)
                 this.lefthand.ymom = -this.speed * 2
                 this.righthand.ymom = -this.speed * 2
                 this.jumpcount = 100
-                //////////////////// ////////////////////////////////////////////console.log(this)
+                //////////////////// //////////////////////////////////////////////console.log(this)
             }
         }
         doJump(object, speed) {
@@ -26939,7 +27180,7 @@ const line = new LineOP(this.shots[t], boys[k].body)
                 if (this.safe == 0) {
                     this.screwshot = 1
                     if (this.body.x > (this.brick.center.x)) {
-                        ////////////////////////// ////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                        ////////////////////////// //////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
@@ -28309,7 +28550,7 @@ if(this.dash > -1){
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -28409,7 +28650,7 @@ if(this.dash > -1){
                 this.springs.push(this.rightarm)
 
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -28531,7 +28772,7 @@ if(this.dash > -1){
         //         }
         //     } else {
         //         if (Math.random() < .001) {
-        //             //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+        //             //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
         //         }
         //     }
         // }
@@ -28662,7 +28903,7 @@ if(this.dash > -1){
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -28679,7 +28920,7 @@ if(this.dash > -1){
             if (this.inactive == 1) {
                 return
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new AsigMan(this.controller)
             copy.id = this.id
@@ -29865,7 +30106,7 @@ if (this.middlehand2.anchored == 1) {
                 if (this != boys[t] && boys[t]) {
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + 35)) {
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseA")
+                        //////////////// //////////////////////////////////////////////console.log("caseA")
                     }
 
                     if (this.fleeing == 0) {
@@ -29886,7 +30127,7 @@ if (this.middlehand2.anchored == 1) {
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1) {
                         if (Math.random() < .2) {
                             this.wmove = 1
-                            //////////////// ////////////////////////////////////////////console.log("caseB")
+                            //////////////// //////////////////////////////////////////////console.log("caseB")
                         }
                         if (Math.random() < .1) {
                             this.dmove = 1
@@ -30008,7 +30249,7 @@ if (this.middlehand2.anchored == 1) {
                     this.dmove = 1
                     this.downspike = 1
                     this.wmove = 1
-                    //////////////// ////////////////////////////////////////////console.log("caseC")
+                    //////////////// //////////////////////////////////////////////console.log("caseC")
                 }
                 if (this.under == 2) {
                     this.amove = 1
@@ -30017,7 +30258,7 @@ if (this.middlehand2.anchored == 1) {
                     this.dmove = 0
                     this.wmove = 1
                     this.downspike = 1
-                    //////////////// ////////////////////////////////////////////console.log("caseD")
+                    //////////////// //////////////////////////////////////////////console.log("caseD")
                 }
             }
             this.exgrip = 0
@@ -30050,7 +30291,7 @@ if (this.middlehand2.anchored == 1) {
                 this.dmove = 1
                 if (Math.random() < .5) {
                     this.wmove = 1
-                    //////////////// ////////////////////////////////////////////console.log("caseE")
+                    //////////////// //////////////////////////////////////////////console.log("caseE")
                 }
                 this.amove = 0
                 this.amom = 0
@@ -30068,7 +30309,7 @@ if (this.middlehand2.anchored == 1) {
                 this.dmom = 0
                 this.amove = 1
                 this.wmove = 1
-                //////////////// ////////////////////////////////////////////console.log("caseF")
+                //////////////// //////////////////////////////////////////////console.log("caseF")
                 this.dmove = 0
             } else {
                 if (this.amomu > 0) {
@@ -30087,14 +30328,14 @@ if (this.middlehand2.anchored == 1) {
                     this.amove = 1
                     this.dmove = 0
                     this.wmove = 1
-                    //////////////// ////////////////////////////////////////////console.log("caseG")
+                    //////////////// //////////////////////////////////////////////console.log("caseG")
                     this.amomu = 0
                     this.dmomu = 0
                 } else {
                     this.amove = 0
                     this.dmove = 1
                     this.wmove = 1
-                    //////////////// ////////////////////////////////////////////console.log("caseH")
+                    //////////////// //////////////////////////////////////////////console.log("caseH")
                     this.amomu = 0
                     this.dmomu = 0
                 }
@@ -30137,7 +30378,7 @@ if (this.middlehand2.anchored == 1) {
                                                 this.downspike = 1
                                                 this.wmove = 1
                                             }
-                                            //////////////// ////////////////////////////////////////////console.log("caseI", cancel)
+                                            //////////////// //////////////////////////////////////////////console.log("caseI", cancel)
                                         } else {
                                             this.brick = this.bricksto
                                         }
@@ -30153,7 +30394,7 @@ if (this.middlehand2.anchored == 1) {
                                                 this.downspike = 1
                                                 this.wmove = 1
                                             }
-                                            //////////////// ////////////////////////////////////////////console.log("caseJ", cancel)
+                                            //////////////// //////////////////////////////////////////////console.log("caseJ", cancel)
                                         } else {
                                             this.brick = this.bricksto
                                         }
@@ -30193,7 +30434,7 @@ if (this.middlehand2.anchored == 1) {
                                 this.downspike = 1
                                 this.wmove = 1
                             }
-                            //////////////// ////////////////////////////////////////////console.log("caseK", cancel)
+                            //////////////// //////////////////////////////////////////////console.log("caseK", cancel)
                         }
                     } else {
                         const xdisL = Math.abs(this.brick.edgeleft.x - (this.body.x + (this.body.radius * 1.1)))
@@ -30208,7 +30449,7 @@ if (this.middlehand2.anchored == 1) {
                                 this.wmove = 1
                             }
                             //problem2
-                            //////////////// ////////////////////////////////////////////console.log("caseL", cancel)
+                            //////////////// //////////////////////////////////////////////console.log("caseL", cancel)
                         }
                     }
 
@@ -30226,14 +30467,14 @@ if (this.middlehand2.anchored == 1) {
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseM")
+                        //////////////// //////////////////////////////////////////////console.log("caseM")
                         this.amomu = 0
                         this.dmomu = 0
                     } else {
                         this.amove = 0
                         this.dmove = 1
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseN")
+                        //////////////// //////////////////////////////////////////////console.log("caseN")
                         this.amomu = 0
                         this.dmomu = 0
                     }
@@ -30266,7 +30507,7 @@ if (this.middlehand2.anchored == 1) {
                                         this.storeshield = 1
                                     } else {
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////////console.log("caseO")
+                                        //////////////// //////////////////////////////////////////////console.log("caseO")
                                     }
                                 } else {
                                     if (this.body.x < boys[t].shots[g].x) {
@@ -30324,7 +30565,7 @@ if (this.middlehand2.anchored == 1) {
                                         }
                                         if (this.under == 0) {
                                             this.wmove = 1
-                                            //////////////// ////////////////////////////////////////////console.log("caseP")
+                                            //////////////// //////////////////////////////////////////////console.log("caseP")
                                             this.downspike = 1
                                         }
                                     }
@@ -30339,14 +30580,14 @@ if (this.middlehand2.anchored == 1) {
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseQ")
+                        //////////////// //////////////////////////////////////////////console.log("caseQ")
                         this.amomu = 0
                         this.dmomu = 0
                     } else {
                         this.amove = 0
                         this.dmove = 1
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseR")
+                        //////////////// //////////////////////////////////////////////console.log("caseR")
                         this.amomu = 0
                         this.dmomu = 0
                     }
@@ -30367,7 +30608,7 @@ if (this.middlehand2.anchored == 1) {
                                         this.storeshield = 1
                                     } else {
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////////console.log("caseS")
+                                        //////////////// //////////////////////////////////////////////console.log("caseS")
                                     }
                                 } else {
                                     if (this.body.x < boys[t].shots[g].x) {
@@ -30426,7 +30667,7 @@ if (this.middlehand2.anchored == 1) {
                                         }
                                         if (this.under == 0) {
                                             this.wmove = 1
-                                            //////////////// ////////////////////////////////////////////console.log("caseT")
+                                            //////////////// //////////////////////////////////////////////console.log("caseT")
                                             this.downspike = 1
                                         }
                                     }
@@ -30441,14 +30682,14 @@ if (this.middlehand2.anchored == 1) {
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseU")
+                        //////////////// //////////////////////////////////////////////console.log("caseU")
                         this.amomu = 0
                         this.dmomu = 0
                     } else {
                         this.amove = 0
                         this.dmove = 1
                         this.wmove = 1
-                        //////////////// ////////////////////////////////////////////console.log("caseV")
+                        //////////////// //////////////////////////////////////////////console.log("caseV")
                         this.amomu = 0
                         this.dmomu = 0
                     }
@@ -30627,7 +30868,7 @@ if (this.middlehand2.anchored == 1) {
                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x > boys[t].body.x) {
                             if (this.face == -1) {
                                 if (Math.abs(this.body.x - boys[t].body.x) < 212) {
-                                    // ////////////// ////////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
+                                    // ////////////// //////////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
                                     if (this.fleeing != 1) {
                                         this.leftshot = 1
                                     }
@@ -30641,7 +30882,7 @@ if (this.middlehand2.anchored == 1) {
                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x < boys[t].body.x) {
                             if (this.face == 1) {
                                 if (Math.abs(this.body.x - boys[t].body.x) < 212) {
-                                    // ////////////// ////////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
+                                    // ////////////// //////////////////////////////////////////////console.log(Math.abs(this.body.x - boys[t].body.x))
                                     if (this.fleeing != 1) {
                                         this.rightshot = 1
                                     }
@@ -30875,7 +31116,7 @@ if (this.middlehand2.anchored == 1) {
                                     }
                                     if (this.under == 0) {
                                         this.wmove = 1
-                                        //////////////// ////////////////////////////////////////////console.log("caseX")
+                                        //////////////// //////////////////////////////////////////////console.log("caseX")
                                         this.downspike = 1
                                     }
                                 }
@@ -31675,7 +31916,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotP(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -31745,7 +31986,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -31879,7 +32120,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -31892,7 +32133,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Princess(this.controller)
 
@@ -34578,7 +34819,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotR(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -34667,13 +34908,13 @@ this.shots[t].move()
                 this.springs.push(this.rightarm)
                 this.springs.push(this.middlearm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
                 }
             }
-            ////////////////////////////////////console.log(this)
+            //////////////////////////////////////console.log(this)
         }
 
         playerMove(object) {
@@ -34703,9 +34944,9 @@ this.shots[t].move()
                     if (keysPressed['w']) {
                         if (this.grounded == 1) {
                             this.jumping = 1
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                             object.ymom = -this.speed * 1 * 2
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                         } else {
                             if (this.lefthand.anchored == 1) {
                                 this.degripl()
@@ -34804,7 +35045,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -34817,7 +35058,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Rhopho(this.controller)
             copy.id = this.id
@@ -37614,7 +37855,7 @@ this.shots[t].move()
 
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
                     this.nodes[t].id = idsto
@@ -37711,13 +37952,13 @@ this.shots[t].move()
                 this.springs.push(this.middlearm)
                 this.springs.push(this.bananarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
                 }
             }
-            ////////////////////////////////////console.log(this)
+            //////////////////////////////////////console.log(this)
         }
 
         playerMove(object) {
@@ -37748,9 +37989,9 @@ this.shots[t].move()
                     if (keysPressed['w']) {
                         if (this.grounded == 1) {
                             this.jumping = 1
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                             object.ymom = -this.speed * 1 * 2
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                         } else {
                             if (this.lefthand.anchored == 1) {
                                 this.degripl()
@@ -37849,7 +38090,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -37862,7 +38103,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             let copy = new Banandroid(this.controller)
             copy.id = this.id
@@ -37875,7 +38116,7 @@ this.shots[t].move()
             copy.striker = this.striker
             copy.drops = this.drops + 1
             copy.knocks = this.knocks
-            //////////////////////////////////console.log(copy)
+            ////////////////////////////////////console.log(copy)
             if (campaignToggle == 1) {
                 for (let t = 0; t < copy.nodes.length; t++) {
                     copy.nodes[t].x = stage.spawnrunner
@@ -40571,7 +40812,7 @@ this.shots[t].move()
                 this.middlehand.ymom += this.gravity
                 this.bananahand.ymom += this.gravity
             } else {
-                //////////////////////////////////console.log("hum")
+                ////////////////////////////////////console.log("hum")
                 if (this.body.ymom > 0) {
                     this.body.ymom = 0
                 }
@@ -40827,7 +41068,7 @@ this.shots[t].move()
                         this.nodes[t].angle += this.armAngle
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
                     this.nodes[t].id = idsto
@@ -40943,7 +41184,7 @@ this.shots[t].move()
                 this.springs.push(this.middlearm2)
                 this.springs.push(this.bananarm2)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -40951,7 +41192,7 @@ this.shots[t].move()
 
                 this.gwomp = 1
             }
-            ////////////////////////////////////console.log(this)
+            //////////////////////////////////////console.log(this)
         }
 
         playerMove(object) {
@@ -40986,9 +41227,9 @@ this.shots[t].move()
                     if (keysPressed['w']) {
                         if (this.grounded == 1) {
                             this.jumping = 1
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                             object.ymom = -this.speed * 1 * 2
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                         } else {
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1 || this.bananahand2.anchored == 1|| this.middlehand.anchored == 1 || this.middlehand2.anchored == 1) {
                                 this.degripl()
@@ -41086,7 +41327,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -41099,7 +41340,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Gwompei(this.controller)
             copy.id = this.id
@@ -41112,7 +41353,7 @@ this.shots[t].move()
             copy.striker = this.striker
             copy.drops = this.drops + 1
             copy.knocks = this.knocks
-            //////////////////////////////////console.log(copy)
+            ////////////////////////////////////console.log(copy)
             if (campaignToggle == 1) {
                 for (let t = 0; t < copy.nodes.length; t++) {
                     copy.nodes[t].x = stage.spawnrunner
@@ -44183,7 +44424,7 @@ this.shots[t].move()
                 // this.middlehand.ymom += this.gravity
                 // this.bananahand.ymom += this.gravity
             } else {
-                //////////////////////////////////console.log("hum")
+                ////////////////////////////////////console.log("hum")
                 if (this.body.ymom > 0) {
                     this.body.ymom = 0
                 }
@@ -44500,7 +44741,7 @@ this.shots[t].move()
 
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
                     this.nodes[t].id = idsto
@@ -44604,7 +44845,7 @@ this.shots[t].move()
                 this.springs.push(this.middlearm)
                 this.springs.push(this.bananarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -44612,7 +44853,7 @@ this.shots[t].move()
 
                 this.pinwheel = 1
             }
-            ////////////////////////////////////console.log(this)
+            //////////////////////////////////////console.log(this)
         }
 
         playerMove(object) {
@@ -44647,9 +44888,9 @@ this.shots[t].move()
                     if (keysPressed['w']) {
                         if (this.grounded == 1) {
                             this.jumping = 1
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                             object.ymom = -this.speed * 1 * 2
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                         } else {
                     if (this.righthand.anchored == 1 || this.lefthand.anchored == 1|| this.bananahand.anchored == 1|| this.middlehand.anchored == 1) {
                                 this.degripl()
@@ -44747,7 +44988,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -44760,7 +45001,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Pinwheelian(this.controller)
             copy.id = this.id
@@ -44773,7 +45014,7 @@ this.shots[t].move()
             copy.striker = this.striker
             copy.drops = this.drops + 1
             copy.knocks = this.knocks
-            //////////////////////////////////console.log(copy)
+            ////////////////////////////////////console.log(copy)
             if (campaignToggle == 1) {
                 for (let t = 0; t < copy.nodes.length; t++) {
                     copy.nodes[t].x = stage.spawnrunner
@@ -47759,7 +48000,7 @@ if(this.dash > -1){
                 // this.middlehand.ymom += this.gravity
                 // this.bananahand.ymom += this.gravity
             } else {
-                //////////////////////////////////console.log("hum")
+                ////////////////////////////////////console.log("hum")
                 if (this.body.ymom > 0) {
                     this.body.ymom = 0
                 }
@@ -48012,12 +48253,12 @@ if(this.dash > -1){
                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                     //  }
                 }
-                // ////////////// ////////////////////////////////////////////console.log(args)
+                // ////////////// //////////////////////////////////////////////console.log(args)
                 this.armlength = 45
                 this.shoulderwidth = 18
                 this.shotdraw = args['shotdraw']
                 this.brick = new Brick(1, 1, 1, 1)
-                // //////////// ////////////////////////////////////////////console.log(this.shotdraw)
+                // //////////// //////////////////////////////////////////////console.log(this.shotdraw)
                 this.jumpcount = args['jumpcount']
 
                 for (let t = 0; t < this.nodes.length; t++) {
@@ -48028,7 +48269,7 @@ if(this.dash > -1){
                         this.nodes[t] = new ShotE(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -48096,7 +48337,7 @@ if(this.dash > -1){
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -48230,7 +48471,7 @@ if(this.dash > -1){
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -48243,7 +48484,7 @@ if(this.dash > -1){
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Bunkstanks(this.controller)
             copy.id = this.id
@@ -50617,7 +50858,7 @@ this.shots[t].move()
             const leftshape2 = (castBetween(leftnodebottom, leftnodebottoms, 4, 4))
             leftshape1.shapes.unshift(this.leftshoulder)
             leftshape2.shapes.push(this.lefthand)
-            // //////////////////////////console.log(leftshape1, leftshape2)
+            // ////////////////////////////console.log(leftshape1, leftshape2)
             this.invcolor = invertColor(this.body.color)
             canvas_context.lineWidth = 8
             canvas_context.strokeStyle = this.invcolor
@@ -50642,7 +50883,7 @@ this.shots[t].move()
             const rightshape2 = (castBetween(rightnodebottom, rightnodebottoms, 4, 4))
             rightshape1.shapes.unshift(this.rightshoulder)
             rightshape2.shapes.push(this.righthand)
-            // //////////////////////////console.log(rightshape1, rightshape2)
+            // ////////////////////////////console.log(rightshape1, rightshape2)
             canvas_context.beginPath()
 
             for (let t = 0; t < rightshape1.shapes.length; t++) {
@@ -51010,7 +51251,7 @@ this.shots[t].move()
                 this.target.body = {}
             } else {
 
-                ////////////////////////console.log(args)
+                //////////////////////////console.log(args)
                 const keys = Object.keys(args)
                 for (let t = 0; t < keys.length; t++) {
                     this[keys[t]] = args[keys[t]]
@@ -51023,7 +51264,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotZ(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -51034,12 +51275,12 @@ this.shots[t].move()
 
                 }
                 for (let t = 0; t < this.bullets.length; t++) {
-                    ////////////////////////console.log(this.bullets[t], "pre")
+                    //////////////////////////console.log(this.bullets[t], "pre")
                     const idsto = this.bullets[t].id
                     this.bullets[t] = new Bullet(this.bullets[t].body.x, this.bullets[t].body.y, this.bullets[t].body.radius, this.bullets[t].body.color)
                     this.bullets[t].body = new CircleS(this.bullets[t].body.x, this.bullets[t].body.y, this.bullets[t].body.radius, this.bullets[t].body.color, this.bullets[t].body.xmom, this.bullets[t].body.ymom, this.bullets[t].body.friction)
                     this.bullets[t].body.id = idsto
-                    ////////////////////////console.log(this.bullets[t], "post")
+                    //////////////////////////console.log(this.bullets[t], "post")
 
                 }
                 this.id = args["id"]
@@ -51101,7 +51342,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -51235,7 +51476,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -51322,7 +51563,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -51367,7 +51608,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -51380,7 +51621,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new DrSoto(this.controller)
             if(minigameSelected == 11){
@@ -52162,7 +52403,7 @@ if (this.middlehand2.anchored == 1) {
                 this.lefthand.ymom = -this.speed * 2
                 this.righthand.ymom = -this.speed * 2
                 this.jumpcount = 100
-                //////////////////// ////////////////////////////////////////////console.log(this)
+                //////////////////// //////////////////////////////////////////////console.log(this)
             }
         }
         doJump(object, speed) {
@@ -52640,7 +52881,7 @@ if (this.middlehand2.anchored == 1) {
                 if (this.safe == 0) {
                     // this.screwshot = 1
                     if (this.body.x > (this.brick.center.x)) {
-                        ////////////////////////// ////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
+                        ////////////////////////// //////////////////////////////////////////////console.log(this.brick.center.x, this.body.x)
                         this.amove = 1
                         this.dmove = 0
                         this.wmove = 1
@@ -53615,7 +53856,7 @@ if(this.dash > -1){
 
 
                         }
-                        // ////////////////////////console.log(this.bullets[t])
+                        // //////////////////////////console.log(this.bullets[t])
                         for (let k = 0; k < this.bullets.length; k++) {
                             if (k != t) {
 
@@ -53996,7 +54237,7 @@ this.shots[t].move()
                             for (let t = 0; t < 200; t++) {
                                 this.meshinputs.push(Math.random() - .5)
                             }
-                            // //////////console.log(coreboyvcoreboymesh)
+                            // ////////////console.log(coreboyvcoreboymesh)
                             //bakedcoreboy
                             //overnight
                             this.mesh = new GenNN(this.meshinputs, 4, [66, 66, 24, 10], 10)
@@ -54142,12 +54383,12 @@ this.shots[t].move()
                     //     this[keys[t]][keys2[j]] = args[keys[t]][keys2[j]]
                     //  }
                 }
-                // ////////////// ////////////////////////////////////////////console.log(args)
+                // ////////////// //////////////////////////////////////////////console.log(args)
                 this.armlength = 36
                 this.shoulderwidth = 12
                 this.shotdraw = args['shotdraw']
                 this.brick = new Brick(1, 1, 1, 1)
-                // //////////// ////////////////////////////////////////////console.log(this.shotdraw)
+                // //////////// //////////////////////////////////////////////console.log(this.shotdraw)
                 this.jumpcount = args['jumpcount']
 
                 for (let t = 0; t < this.nodes.length; t++) {
@@ -54164,7 +54405,7 @@ this.shots[t].move()
                         }
                     }
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -54219,7 +54460,7 @@ this.shots[t].move()
                 } else {
                     this.radball.color = "#00FF00"
                 }
-                //////////console.log(this.radball)
+                ////////////console.log(this.radball)
 
                 this.leftcollar = new LineOP(this.leftshoulder, this.body, this.nodes[0].color, 8)
                 this.rightcollar = new LineOP(this.rightshoulder, this.body, this.nodes[0].color, 8)
@@ -54242,7 +54483,7 @@ this.shots[t].move()
                 this.springs.push(this.leftarm)
                 this.springs.push(this.rightarm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
@@ -54376,7 +54617,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -54386,11 +54627,11 @@ this.shots[t].move()
             obj.striker = this.striker
             if (AItoggle == 0  && localPlayToggle == 0) {
                  if(localPlayToggle != 1){
-                    //  console.log(obj)
+                    //  //console.log(obj)
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Joule(this.controller)
             if (this.hasOwnProperty("mesh")) {
@@ -57367,7 +57608,7 @@ this.shots[t].move()
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotG(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired, this.nodes[t].angle)
                     if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
-                        ////////////////////////////////console.log("vanish break", this.nodes[t])
+                        //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
                 }
@@ -57456,13 +57697,13 @@ this.shots[t].move()
                 this.springs.push(this.rightarm)
                 this.springs.push(this.middlearm)
                 // if(this.righthand.fired > 0){
-                //     // //////////// ////////////////////////////////////////////console.log(this.righthand.fired)
+                //     // //////////// //////////////////////////////////////////////console.log(this.righthand.fired)
                 // }
                 for (let t = 0; t < this.nodes.length; t++) {
                     // this.nodes[t].self = this
                 }
             }
-            ////////////////////////////////////console.log(this)
+            //////////////////////////////////////console.log(this)
         }
 
         playerMove(object) {
@@ -57493,9 +57734,9 @@ this.shots[t].move()
                     if (keysPressed['w']) {
                         if (this.grounded == 1) {
                             this.jumping = 1
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                             object.ymom = -this.speed * 1 * 4
-                            ////////////////////////////////////console.log(object.ymom,this.body.ymom)
+                            //////////////////////////////////////console.log(object.ymom,this.body.ymom)
                         } else {
                             if (this.lefthand.anchored == 1) {
                                 this.degripl()
@@ -57594,7 +57835,7 @@ this.shots[t].move()
                 }
             } else {
                 if (Math.random() < .001) {
-                    //////////////// ////////////////////////////////////////////console.log(this.body.color, color)
+                    //////////////// //////////////////////////////////////////////console.log(this.body.color, color)
                 }
             }
         }
@@ -57607,7 +57848,7 @@ this.shots[t].move()
                     ws.send(JSON.stringify(obj))
                 }
             }
-            ////////////////////////////////console.log("caseF")
+            //////////////////////////////////console.log("caseF")
 
             const copy = new Kessler(this.controller)
             copy.id = this.id
@@ -60245,6 +60486,8 @@ this.shots[t].move()
 
 
     const optionsButton = new ShotO(3260, 600, 300, "#AAAABB")
+    const tournamentStartMenu = new ShotD(3500, 720, 40, "#FFAA00")
+    const tournamentJoinMenu = new ShotD(3500, 610, 40, "#00FFFF")
     const mapSelectButton = new Rectangle(2900, 1300, 320, 100, "#FFFFFF")
 
     const minigameSelectButton = new Rectangle(3300, 1300, 320, 100, "#FFFFFF")
@@ -60268,7 +60511,7 @@ this.shots[t].move()
         let coreboy
         const chooser = Math.floor(Math.random() * 15)
 
-        ////////////////////////////////console.log("caseE")
+        //////////////////////////////////console.log("caseE")
         if (chooser == 0) {
             coreboy = new Mass(t)
         } else if (chooser == 1) {
@@ -60311,7 +60554,7 @@ this.shots[t].move()
         const chooser = Math.floor(Math.random() * 15)
 
         t = Math.floor(Math.random() * 16)
-        ////////////////////////////////console.log("caseE")
+        //////////////////////////////////console.log("caseE")
         if (chooser == 0) {
             coreboy = new Mass(t)
         } else if (chooser == 1) {
@@ -60357,7 +60600,7 @@ this.shots[t].move()
         let coreboy
         const chooser = t
 
-        ////////////////////////////////console.log("caseE")
+        //////////////////////////////////console.log("caseE")
         if (chooser == 0) {
             coreboy = new Mass(t)
         } else if (chooser == 1) {
@@ -60431,7 +60674,7 @@ this.shots[t].move()
     //             miss2.push(kets1[t])
     //         }
     // }
-    ////////////////////////////////////console.log(miss, miss2)
+    //////////////////////////////////////console.log(miss, miss2)
 
     function roughSizeOfObject(object) {
         var objectList = [];
@@ -60748,7 +60991,7 @@ let requiredElapsed=54; // desired interval is 54fps
                             let team = new TeamMarker(boys[t])
                             team.draw()
                     } else {
-                        ////////////////////////////////console.log(boys)
+                        //////////////////////////////////console.log(boys)
                     }
                 }
             } else {
@@ -60901,6 +61144,7 @@ let requiredElapsed=54; // desired interval is 54fps
                                     boys[t] = boys[t].copy()
                                 } else {
                                     boys[t].body.y = (canvas.height * invscale * 10)
+                                    boys[t].drops = stock+1
                                 }
                             } else {
                                 boys[t] = boys[t].copy()
@@ -61045,20 +61289,32 @@ let requiredElapsed=54; // desired interval is 54fps
                 canvas_context.fillText(`${scores[1]}`, 900, 100)           
             }
             if (stock > 0) {
+                // //console.log("pow")
                 let wet = boys.length - 1
                 let winner = {}
+                    let tson2 = {}
                 for (let g = 0; g < boys.length; g++) {
-                    if (drops[g] >= stock) {
+                //console.log(boys[g].drops, boys[g].stock)
+                    if (boys[g].drops >= boys[g].stock) {
+                        tson2.splicePlayer = boys[g].serverID
                         wet--
                     } else {
                         winner = boys[g]
                     }
                 }
-                if (wet == 0) {
+                //console.log(wet, "wet")
+                if (wet <= 0) {
                     if (boys.length > 1) {
+                        //console.log(tournamentNameStorage)
                         canvas_context.font = "100px arial"
                         canvas_context.fillStyle = winner.body.color
                         canvas_context.fillText(`The Winner of this Match is: ${winner.name + "!"} `, 1000, 100)
+                        if(tournamentNameStorage > 0){
+                            tson2.tournamentWinner = 1
+                            
+                            ws.send(JSON.stringify(tson2))
+
+                        }
                     }
                 }
             }
@@ -61100,7 +61356,7 @@ let requiredElapsed=54; // desired interval is 54fps
                             }
                         }
 
-                        // ////////////// ////////////////////////////////////////////console.log(keys)
+                        // ////////////// //////////////////////////////////////////////console.log(keys)
                         delete Json.springs
                         delete Json.links
                         delete Json.rightarm
@@ -61206,7 +61462,7 @@ let requiredElapsed=54; // desired interval is 54fps
                                 delete Json.shots[f].boss
                             }
                         }
-                        ////////// ////////////////////////////////////////////console.log("sending")
+                        ////////// //////////////////////////////////////////////console.log("sending")
 
 
                         // delete Json.color
@@ -61315,13 +61571,13 @@ let requiredElapsed=54; // desired interval is 54fps
 
                         if (bumper == 0) {
                             // bumper = 1
-                            //console.log((Json))
-                            //console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
-                            // console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
-                            //console.log(Object.keys(Json))
+                            ////console.log((Json))
+                            ////console.log(roughSizeOfObject(Json), `Bytes, ${boys[t].name} pruned for network traffic`)
+                            // //console.log(roughSizeOfObject(boys[t]),  `Bytes, ${boys[t].name} local`)
+                            ////console.log(Object.keys(Json))
                         }
                         if (keysPressed['l']) {
-                            //////////////////////////console.log((Json))
+                            ////////////////////////////console.log((Json))
                         }
 
                         if (AItoggle == 0  && localPlayToggle == 0) {
@@ -61348,7 +61604,7 @@ let requiredElapsed=54; // desired interval is 54fps
                             
                         //     ws.send(JSON.stringify(dson))
                         //     bumper = 1
-                        //     console.log(dson)
+                        //     //console.log(dson)
                         // }
                 }
                         }
@@ -61359,9 +61615,9 @@ let requiredElapsed=54; // desired interval is 54fps
                         // for(let f = 0;f<boys[t].nodes.length;f++){
                         //     boys[t].nodes[f].self =boys[t]
                         // }
-                        //////////// ////////////////////////////////////////////console.log(boys[IDaddress].id, ID)
+                        //////////// //////////////////////////////////////////////console.log(boys[IDaddress].id, ID)
                     } else {
-                        //////////// ////////////////////////////////////////////console.log(boys[IDaddress].id, ID)
+                        //////////// //////////////////////////////////////////////console.log(boys[IDaddress].id, ID)
                     }
 
                     // for (let t = boys.length - 1; t >= 0; t--) {
@@ -61376,7 +61632,7 @@ let requiredElapsed=54; // desired interval is 54fps
             if (boys.length >= 1) {
                 if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12) {
                     if (cameraLocked == 0) {
-                        // ////////console.log("whea")
+                        // //////////console.log("whea")
                         cameraxsum += boys[0].body.x - camerax
                         cameraysum += boys[0].body.y - cameray
                         canvas_context.translate(camerax - boys[0].body.x, cameray - boys[0].body.y)
@@ -61418,7 +61674,7 @@ let requiredElapsed=54; // desired interval is 54fps
                         rounder.splice(0, 1)
                         roundedms = rounder.join('')
 
-                        // ////////console.log(campaigntime)
+                        // //////////console.log(campaigntime)
 
 
                         canvas_context.fillStyle = "white"
@@ -61534,9 +61790,16 @@ let requiredElapsed=54; // desired interval is 54fps
                 if (optionsToggle == 0) {
                     optionsButton.radius = 240
                     optionsButton.draw()
+                    tournamentStartMenu.draw()
+                    tournamentJoinMenu.draw()
                     canvas_context.font = "40px arial"
                     canvas_context.fillStyle = "black"
                     canvas_context.fillText(`Click For Options`, optionsButton.x - (optionsButton.radius * .6), optionsButton.y + (optionsButton.radius * 0))
+
+
+                    canvas_context.fillStyle = "#FFFFFF"
+                    canvas_context.fillText(`Start Tournament`, tournamentStartMenu.x + (tournamentStartMenu.radius * .6), tournamentStartMenu.y + (tournamentStartMenu.radius * 0))
+                    canvas_context.fillText(`Join Tournament`, tournamentJoinMenu.x + (tournamentJoinMenu.radius * .6), tournamentJoinMenu.y + (tournamentJoinMenu.radius * 0))
 
                 } else {
                     if (mapSelectToggle == 1) {
@@ -61573,8 +61836,15 @@ let requiredElapsed=54; // desired interval is 54fps
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
                     teamSelectionBox.draw()
+                    tournamentNameBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
+
+                    tournamentStartMenu.draw()
+                    tournamentJoinMenu.draw()
+                    canvas_context.fillStyle = "#FFFFFF"
+                    canvas_context.fillText(`Start Tournament`, tournamentStartMenu.x + (tournamentStartMenu.radius * .6), tournamentStartMenu.y + (tournamentStartMenu.radius * 0))
+                    canvas_context.fillText(`Join Tournament`, tournamentJoinMenu.x + (tournamentJoinMenu.radius * .6), tournamentJoinMenu.y + (tournamentJoinMenu.radius * 0))
                     canvas_context.font = "90px arial"
                     canvas_context.fillStyle = "#FF0000"
                     canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
@@ -61625,8 +61895,15 @@ let requiredElapsed=54; // desired interval is 54fps
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
                     teamSelectionBox.draw()
+                    tournamentNameBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
+                    tournamentStartMenu.draw()
+                    tournamentJoinMenu.draw()
+                                    canvas_context.font = "40px arial"
+                    canvas_context.fillStyle = "#FFFFFF"
+                    canvas_context.fillText(`Start Tournament`, tournamentStartMenu.x + (tournamentStartMenu.radius * 1.6), tournamentStartMenu.y + (tournamentStartMenu.radius * 0))
+                    canvas_context.fillText(`Join Tournament`, tournamentJoinMenu.x + (tournamentJoinMenu.radius * 1.6), tournamentJoinMenu.y + (tournamentJoinMenu.radius * 0))
                     canvas_context.font = "90px arial"
                     canvas_context.fillStyle = "#FF0000"
                     canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
@@ -61771,6 +62048,10 @@ let requiredElapsed=54; // desired interval is 54fps
                     minigameSelectToggle = 0
                     mapSelectToggle = 0
                 }
+
+               if( tournamentPending == 1){
+                    canvas_context.fillText(`Tournament Pending`, 2800, 60)
+               }
             if (keysPressed[' ']) {
                 if(minigameSelected == 9){
                     canvas_context.scale(invscale, invscale)
@@ -61799,7 +62080,7 @@ let requiredElapsed=54; // desired interval is 54fps
                     for (let k = 0; k < characterbuttons.length; k++) {
                         if (characterbuttons[k].isPointInside(selectors[t].body)) {
                             let coreboy
-                            ////////////////////////////////console.log("caseD")
+                            //////////////////////////////////console.log("caseD")
                             if (k == 0) {
 
                                 coreboy = new Mass(boys.length)
