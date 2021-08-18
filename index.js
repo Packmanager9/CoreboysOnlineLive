@@ -1,6 +1,6 @@
 
 'use strict';
-const mongoURLx = require("./mongo")
+// const mongoURLx = require("./mongo")
 const express = require('express');
 const mongoose = require('mongoose');
 const { Server, defaultMaxListeners } = require('ws');
@@ -11,7 +11,7 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL || mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL //|| mongoURLx.mongoURL
 mongoose.connect(mongoURL)
 const playerdataSchema = new mongoose.Schema({
     joulepopscoremax : Number,
