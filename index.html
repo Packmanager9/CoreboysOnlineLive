@@ -61899,8 +61899,10 @@ let requiredElapsed=54; // desired interval is 54fps
                     tournamentStartMenu.draw()
                     tournamentJoinMenu.draw()
                     canvas_context.fillStyle = "#FFFFFF"
-                    canvas_context.fillText(`Start Tournament`, tournamentStartMenu.x + (tournamentStartMenu.radius * .6), tournamentStartMenu.y + (tournamentStartMenu.radius * 0))
-                    canvas_context.fillText(`Join Tournament`, tournamentJoinMenu.x + (tournamentJoinMenu.radius * .6), tournamentJoinMenu.y + (tournamentJoinMenu.radius * 0))
+
+                                    canvas_context.font = "40px arial"
+                    canvas_context.fillText(`Start Tournament`, tournamentStartMenu.x + (tournamentStartMenu.radius * 1.6), tournamentStartMenu.y + (tournamentStartMenu.radius * 0))
+                    canvas_context.fillText(`Join Tournament`, tournamentJoinMenu.x + (tournamentJoinMenu.radius * 1.6), tournamentJoinMenu.y + (tournamentJoinMenu.radius * 0))
                     canvas_context.font = "90px arial"
                     canvas_context.fillStyle = "#FF0000"
                     canvas_context.fillText(`X`, optionsButton.x - (optionsButton.radius * .3), optionsButton.y + (optionsButton.radius * .20))
