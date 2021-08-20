@@ -132,6 +132,7 @@ class TournamentBracket{
         // this.unpaired-=2
         if(this.totalIn >= this.size){
             this.layer++
+            this.size = Math.floor(this.size*.5)
         }
     }
 
@@ -251,7 +252,7 @@ wss.on("connection", ws => {
                         games[tournaments[t].players[k].assigned].removePlayer(tournaments[t].players[k])
                         tournaments[t].players.splice(k,1)
                         tournaments[t].unpaired++
-                        tournaments[t].layer++
+                        // tournaments[t].layer++
                         if(tournaments[t].unpaired%2 == 0){
                             tournaments[t].pair()
                         }
