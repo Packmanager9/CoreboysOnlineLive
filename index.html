@@ -7128,6 +7128,9 @@ let camerax = 0
                 if (teamSelectionBox.focus == 1) {
                     teamSelectionBox.backspace()
                 }
+                if (tournamentSizeBox.focus == 1) {
+                    tournamentSizeBox.backspace()
+                }
             } else {
                 if (roomSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
@@ -7148,6 +7151,11 @@ let camerax = 0
                         teamSelectionBox.addchar(event.key)
                     }
                 }
+                if (tournamentSizeBox.focus == 1) {
+                    if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
+                        tournamentSizeBox.addchar(event.key)
+                    }
+                }
             }
         });
         document.addEventListener('keyup', (event) => {
@@ -7160,6 +7168,9 @@ let camerax = 0
             }
             if (teamSelectionBox.lock == event.key) {
                 teamSelectionBox.lock = ''
+            }
+            if(tournamentSizeBox.lock == event.key){
+                tournamentSizeBox.lock = ''
             }
         });
 
@@ -7209,14 +7220,15 @@ let camerax = 0
                     roomSelectionBox.focus = 0
                     stockSelectionBox.focus = 0
                     teamSelectionBox.focus = 0
+                    tournamentSizeBox.focus = 0
                     tournamentNameBox.focus = 0
                 }
             }
             if(tournamentStartMenu.isPointInside(TIP_engine)){
 
-                let tson  = {}
+                let tson = {}
                 tson.makeTournament = 1
-                tson.size = 16
+                tson.size = tournamentSizeBox.value 
                 tson.name = tournamentNameBox.string + "'s Tournament"
                 tson.stock = stock
                 // roomSelectionBox.rooms = 
@@ -7230,9 +7242,9 @@ let camerax = 0
             }
             if(tournamentJoinMenu.isPointInside(TIP_engine)){
 
-                let tson  = {}
+                let tson = {}
                 tson.joinTournament = 1
-                tson.size = 16
+                tson.size = tournamentSizeBox.value 
                 tson.stock = stock
                 tson.name = tournamentNameBox.string + "'s Tournament"
 
@@ -7508,6 +7520,11 @@ let camerax = 0
                     teamSelectionBox.focus = 1
                 } else {
                     teamSelectionBox.focus = 0
+                }
+                if (tournamentSizeBox.inputbox.isPointInside(TIP_engine)) {
+                    tournamentSizeBox.focus = 1
+                } else {
+                    tournamentSizeBox.focus = 0
                 }
                 if (mapSelectToggle == 1) {
                     for (let t = 0; t < mapIcons.length; t++) {
@@ -11785,7 +11802,11 @@ move() {
     class Boy {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -15166,6 +15187,72 @@ this.shots[t].move()
             }
         }
     }
+    class TournamentSize {
+        constructor(x, y, w, h) {
+            this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
+            this.string = ""
+            this.focus = 0
+            this.neverfocus = 1
+            this.lock = ''
+            this.focusindicator = new Rectangle(x, y + (h * .1), w * .03, h * .8, "#000000")
+            this.flash = -1
+            this.flashspin = 45
+            this.flashnum = -1
+            this.rooms = 0
+            this.value = 16
+            this.primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 31, 37, 41, 43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157]
+        }
+
+        measure() {
+            canvas_context.font = "70px Arial";
+            canvas_context.fillStyle = "#000000"
+            const width = canvas_context.measureText(this.string).width
+            return width
+        }
+        draw() {
+            
+            // this.value = parseInt(this.string, 10)
+            this.inputbox.draw()
+            if (this.neverfocus == 1) {
+                canvas_context.font = "54px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText("Bracket Size", this.inputbox.x + 10, this.inputbox.y + 75)
+            } else {
+                canvas_context.font = "70px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+            }
+            if (this.focus == 1) {
+                this.neverfocus = 0
+                this.flashnum++
+                if (this.flashnum % (this.flashspin + (-15 * this.flash)) == 0) {
+                    this.flash *= -1
+                }
+                if (this.flash == 1) {
+                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                    this.focusindicator.draw()
+                }
+            }
+        }
+        backspace() {
+            this.string = this.string.split('')
+            this.string.splice(this.string.length - 1, 1)
+            this.string = this.string.join('')
+            this.value = parseInt(this.string, 10)
+        }
+        addchar(char) {
+            if (this.string.length < 3) {
+                if (this.lock != char) {
+                    this.string += char
+                    this.lock = char
+                }
+                if (this.string.length == 0 || this.string == "0") {
+                    this.string = "0"
+                }
+            this.value = parseInt(this.string, 10)
+            }
+        }
+    }
     class TournamentName {
         constructor(x, y, w, h) {
             this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
@@ -15315,11 +15402,17 @@ this.shots[t].move()
 
     const tournamentNameBox = new TournamentName(3520, 300, 320, 100)
 
+    const tournamentSizeBox = new TournamentSize(3520, 150, 320, 100)
+
 
     class Mass {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -18353,7 +18446,11 @@ this.shots[t].move()
     class Blastgirl {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -21250,7 +21347,11 @@ this.shots[t].move()
     class Jox {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -23991,7 +24092,11 @@ if(this.dash > -1){
     class Dummy {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                 this.dummy = 1
                 this.reflecting = 0
                 this.countering = -1
@@ -25744,7 +25849,11 @@ this.shots[t].move()
     class ScorchedMass {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -28419,7 +28528,11 @@ if(this.dash > -1){
     class AsigMan {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -31822,7 +31935,11 @@ this.shots[t].move()
     class Princess {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -34712,7 +34829,11 @@ this.shots[t].move()
     class Rhopho {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -37731,7 +37852,11 @@ this.shots[t].move()
     class Banandroid {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -40922,7 +41047,11 @@ this.shots[t].move()
     class Gwompei {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.shotclock = 0
@@ -43308,6 +43437,12 @@ this.middlehand2.anchored = -20
                     this.body.ymom = 0
                 }
             }
+
+
+
+            //screwshot homing attack on toggle
+            this.screwshot = 1
+
             if (this.breaktimer <= 0 && this.shield == 0) {
 
                 if (this.body.y < 900) {
@@ -44613,7 +44748,11 @@ this.shots[t].move()
     class Pinwheelian {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.shotclock = 0
@@ -48169,7 +48308,11 @@ if(this.dash > -1){
     class Bunkstanks {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -51158,7 +51301,11 @@ this.shots[t].move()
     class DrSoto {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -54274,7 +54421,11 @@ this.shots[t].move()
     class Joule {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 if (AItoggle == 1 || localPlayToggle == 1) {
@@ -57493,7 +57644,11 @@ this.shots[t].move()
     class Kessler {
         constructor(controller, args = 0) {
             if (args == 0) {
-           this.team = teamSelectionBox.team
+           if(minigameSelected < 0){
+this.team = teamSelectionBox.team
+}else{
+this.team = Math.random()
+}
                  this.stock = stock
                 this.dash = -200
                 this.ping = 0
@@ -61892,6 +62047,7 @@ let requiredElapsed=54; // desired interval is 54fps
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
                     teamSelectionBox.draw()
+                    tournamentSizeBox.draw()
                     tournamentNameBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
@@ -61956,6 +62112,7 @@ let requiredElapsed=54; // desired interval is 54fps
                     roomSelectionBox.draw()
                     stockSelectionBox.draw()
                     teamSelectionBox.draw()
+                    tournamentSizeBox.draw()
                     tournamentNameBox.draw()
                     optionsButton.radius = 100
                     optionsButton.draw()
@@ -62138,6 +62295,7 @@ let requiredElapsed=54; // desired interval is 54fps
                 minigameSelectToggle = 0
                 roomSelectionBox.focus = 0
                 teamSelectionBox.focus = 0
+                tournamentSizeBox.focus = 0
                 stockSelectionBox.focus = 0
                 let wet = boys.length
                 for (let t = 0; t < selectors.length; t++) {
