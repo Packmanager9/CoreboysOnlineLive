@@ -760,7 +760,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [] // [119, 0]
+    let scores = [] //[49, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -7194,20 +7194,20 @@ let camerax = 0
                     break
                 }
             }
-            // if (counter == 1) {
-            //     for(let t = 0;t<boys.length;t++){
-            //         boys[t].righthand.anchored = 0
-            //         boys[t].lefthand.anchored = 0
-            //         boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
-            //         boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
-            //         boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
-            //         boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
-            //         boys[t].body.x = TIP_engine.x * 1
-            //         boys[t].body.y = TIP_engine.y * 1
-            //         boys[t].body.xmom = 0
-            //         boys[t].body.ymom = 0
-            //     }
-            // }
+            if (counter == 1) {
+                for(let t = 1;t<boys.length;t++){
+                    boys[t].righthand.anchored = 0
+                    boys[t].lefthand.anchored = 0
+                    boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
+                    boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
+                    boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
+                    boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
+                    boys[t].body.x = TIP_engine.x * 1
+                    boys[t].body.y = TIP_engine.y * 1
+                    boys[t].body.xmom = 0
+                    boys[t].body.ymom = 0
+                }
+            }
             // example usage: if(object.isPointInside(TIP_engine)){ take action }
             canvas.addEventListener('pointermove', continued_stimuli);
             if (optionsButton.isPointInside(TIP_engine)) {
@@ -7352,7 +7352,7 @@ let camerax = 0
                             AItoggle = 1
                             humanPlayers = -1
                             boys = []
-                            scores = [] //jumpin( break)
+                            // scores = [] //jumpin( break)
                             drops = []
                             ws.close()
                             minigameSelected = -1
@@ -11934,6 +11934,7 @@ this.team = Math.random()
                 this.gravity = 1
                 this.righthand.fired = 0
                 this.lefthand.fired = 0
+                this.shotkeeper = 0 
                 this.shield = 0
                 this.shieldpower = 100
                 this.breaktimer = -1
@@ -13097,8 +13098,9 @@ if (this.middlehand2.anchored == 1) {
 
 
                     if (this.gamepad.gamepad.buttonsStatus.includes('X') || (keysPressed['j'] || keysPressed['ArrowLeft'])) {
-                        if (this.lefthand.fired <= 0) {
-                            if (this.righthand.fired <= 0) {
+                        // if (this.lefthand.fired <= 0) {
+                        //     if (this.righthand.fired <= 0) {
+                            if(this.shotkeeper <= 0){
                                 this.shot = new Shot(this.body.x, this.body.y, 20, "#bbbbbb", 0, (this.speed * 2.5))
                                 this.shots.push(this.shot)
                                 if (this.body.ymom > -jumplimit) {
@@ -13108,9 +13110,11 @@ if (this.middlehand2.anchored == 1) {
                                     }
                                 } else {
                                 }
-                                this.lefthand.fired = 12
-                                this.righthand.fired = 12
-                            }
+                                // this.lefthand.fired = 12
+                                // this.righthand.fired = 12
+
+                            this.shotkeeper = 12
+                            // }
                         }
                     }
                 }
@@ -14035,7 +14039,7 @@ if (this.middlehand2.anchored == 1) {
                         }
                     }
 
-                    if (Math.abs(this.body.x - boys[t].body.x) < 45 && this.body.y < boys[t].body.y) {
+                    if (Math.abs(this.body.x - boys[t].body.x) < (boys[t].body.radius + 22) && this.body.y < boys[t].body.y) {  //22 is shot size or such
                         this.downspike = 1
                     } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
                         this.hortsmash = 1
@@ -14141,9 +14145,14 @@ if (this.middlehand2.anchored == 1) {
             }
 
             if (this.safe == 0) {
-                if (this.recovering == 1) {
+                        // let circ = new Circle(this.body.x, this.body.y, this.body.radius*5.5, "#00FFFF44")
+                        // circ.draw()
                     this.downspike = 1
-                }
+                    this.hortsmash = 0
+                    this.screwshot = 0
+                // if (this.recovering == 1) { //literally doesn't do anything
+                //     this.downspike = 1
+                // }
             }
 
             this.breaks()
@@ -14248,21 +14257,23 @@ if (this.middlehand2.anchored == 1) {
                 }
             }
 
-
+                        // let circ = new Circle(this.body.x, this.body.y, this.body.radius*6.5, "#00FFFF44")
+                        // circ.draw()
 //thing to punch the ledge not to die?
             if(this.safe == 0){
-                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*3.5){
-                    if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*3.5 && this.brick.edgeleft.y > this.body.y){
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*7.5){
+                    if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*2.5){ //} && this.brick.edgeleft.y > this.body.y){
                         this.leftshot = 1
                         this.rightshot = 1
                         this.wmove = 0
                     }
                 }
-                if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*3.5){
-                    if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*3.5  && this.brick.edgeright.y > this.body.y){
+                if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*7.5){
+                    if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*2.5){ //} && this.brick.edgeright.y > this.body.y){
                         this.leftshot = 1
                         this.rightshot = 1
                         this.wmove = 0
+
                     }
                 }
             }
@@ -14334,8 +14345,9 @@ if (this.middlehand2.anchored == 1) {
                 }
 
                 if (this.downspike == 1) {
-                    if (this.lefthand.fired <= 0) {
-                        if (this.righthand.fired <= 0) {
+                    if (this.shotkeeper<= 0) {
+                        // if (this.righthand.fired <= 0) {
+                        // if (this.lefthand.fired <= 0) {
                             this.shot = new Shot(this.body.x, this.body.y, 20, "#bbbbbb", 0, (this.speed * 2.5))
                             this.shots.push(this.shot)
                             if (this.body.ymom > -jumplimit) {
@@ -14345,9 +14357,10 @@ if (this.middlehand2.anchored == 1) {
                                 }
                             } else {
                             }
-                            this.lefthand.fired = 12
-                            this.righthand.fired = 12
-                        }
+                            this.shotkeeper = 12
+                            // this.lefthand.fired = 12
+                            // this.righthand.fired = 12
+                        // }
                     }
                 }
 
@@ -14583,6 +14596,7 @@ if(this.dash > -1){
             }
             this.grounded = 0
             this.frame++
+            this.shotkeeper--
 
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 for (let t = 0; t < this.shots.length; t++) {
@@ -62612,7 +62626,7 @@ let requiredElapsed=54; // desired interval is 54fps
 
     function JumpIn(fighter) {
         //start with the dummy
-        if (scores.includes(120)) {
+        if (scores.includes(50)) {
             const str = `${boys[0].name}: ${scores[0]}, ${boys[1].name}: ${scores[1]}`
             strarr.push(str)
             scores = [0, 0]
