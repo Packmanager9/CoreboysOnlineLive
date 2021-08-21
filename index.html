@@ -760,7 +760,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [] //[49, 0]
+    let scores = [] //[199, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -7108,9 +7108,6 @@ let camerax = 0
        window.setInterval(function () {
 
            main()
-            if(keysPressed['k']){
-                //console.log(boys)
-            }
        }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
@@ -7352,7 +7349,7 @@ let camerax = 0
                             AItoggle = 1
                             humanPlayers = -1
                             boys = []
-                            // scores = [] //jumpin( break)
+                            scores = [] //jumpin( break)
                             drops = []
                             ws.close()
                             minigameSelected = -1
@@ -14265,15 +14262,19 @@ if (this.middlehand2.anchored == 1) {
                     if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*2.5){ //} && this.brick.edgeleft.y > this.body.y){
                         this.leftshot = 1
                         this.rightshot = 1
-                        this.wmove = 0
+
+                        //  if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){ //this is the wrong place to interface with the jump functionality, should be in AI move, but honestly its a not a good operation to emulate at all, so for not its out
+                        //     this.wmove = 0
+                         }
                     }
                 }
                 if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*7.5){
                     if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*2.5){ //} && this.brick.edgeright.y > this.body.y){
                         this.leftshot = 1
-                        this.rightshot = 1
-                        this.wmove = 0
-
+                        // this.rightshot = 1
+                        //  if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*5.5){
+                        //     this.wmove = 0
+                        // }
                     }
                 }
             }
@@ -55783,7 +55784,7 @@ if (this.middlehand2.anchored == 1) {
 
                     if (this.gamepad.gamepad.buttonsStatus.includes('X') || (keysPressed['j'] || keysPressed['ArrowLeft'])) {
                         this.radball.radius = 250
-                        this.speed = 5
+                        // this.speed = 5
                         if(minigameSelected == 3){
                             this.speed = 10
                         }
@@ -62626,7 +62627,7 @@ let requiredElapsed=54; // desired interval is 54fps
 
     function JumpIn(fighter) {
         //start with the dummy
-        if (scores.includes(50)) {
+        if (scores.includes(200)) {
             const str = `${boys[0].name}: ${scores[0]}, ${boys[1].name}: ${scores[1]}`
             strarr.push(str)
             scores = [0, 0]
