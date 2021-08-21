@@ -48417,8 +48417,8 @@ this.team = Math.random()
                 this.nodes.push(this.body)
                 this.leftshoulder = new ShotE(this.body.x - (this.body.radius + this.shoulderwidth), 350, 10, "magenta", 0, 0, .999)
                 this.rightshoulder = new ShotE(this.body.x + (this.body.radius + this.shoulderwidth), 350, 10, "#FF0000", 0, 0, .999)
-                this.lefthand = new ShotE(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 27, "magenta", 0, 0, .85) //26
-                this.righthand = new ShotE(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 27, "#FF0000", 0, 0, .85) //26
+                this.lefthand = new ShotE(this.leftshoulder.x, (this.leftshoulder.y + this.armlength), 29.5, "magenta", 0, 0, .85) //26
+                this.righthand = new ShotE(this.rightshoulder.x, (this.rightshoulder.y + this.armlength), 29.5, "#FF0000", 0, 0, .85) //26
                 this.nodes.push(this.leftshoulder)
                 this.nodes.push(this.rightshoulder)
                 this.nodes.push(this.righthand)
@@ -49549,8 +49549,8 @@ if (this.middlehand2.anchored == 1) {
                         if (this.face == 1) {
                             if (this.righthand.fired <= 0) {
                                 if (this.righthand.anchored == 0) {
-                                    this.righthand.ymom = -this.punchspeed * 7
-                                    this.righthand.xmom = this.punchspeed * 14
+                                    this.righthand.ymom = -this.punchspeed * 3
+                                    this.righthand.xmom = this.punchspeed * 17
                                     this.righthand.fired = 19
                                     if (this.lefthand.fired <= 0) {
                                         this.lefthand.ymom = -((Math.random() * 10) + 8) * this.punchspeed
@@ -49567,8 +49567,8 @@ if (this.middlehand2.anchored == 1) {
                         if (this.face == -1) {
                             if (this.lefthand.fired <= 0) {
                                 if (this.lefthand.anchored == 0) {
-                                    this.lefthand.ymom = -this.punchspeed * 7
-                                    this.lefthand.xmom = -this.punchspeed * 14
+                                    this.lefthand.ymom = -this.punchspeed * 3
+                                    this.lefthand.xmom = -this.punchspeed * 17
                                     this.lefthand.fired = 19
                                     if (this.righthand.fired <= 0) {
                                         this.righthand.ymom = -((Math.random() * 10) + 8) * this.punchspeed
@@ -49778,6 +49778,10 @@ if (this.middlehand2.anchored == 1) {
                         if (Math.abs(this.body.x - boys[t].body.x) > (this.body.radius * 4) && this.body.x > (boys[t].body.x + 5)) {
                             this.amove = 1
                         } else if (Math.abs(this.body.x - boys[t].body.x) > (this.body.radius * 4) && this.body.x < (boys[t].body.x + 5)) {
+                            this.dmove = 1
+                        } else if (Math.abs(this.body.x - boys[t].body.x) > (this.body.radius * 2) && this.body.x > (boys[t].body.x + 5)) {
+                            this.amove = 1
+                        } else if (Math.abs(this.body.x - boys[t].body.x) > (this.body.radius * 2) && this.body.x < (boys[t].body.x + 5)) {
                             this.dmove = 1
                         }
                     } else {
@@ -50105,7 +50109,19 @@ if (this.middlehand2.anchored == 1) {
                 } else {
                     if (this.target.safe == 0) {
                         if (this.target.righthand.anchored != 1 && this.target.lefthand.anchored != 1) {
-                            this.fleeing = 1
+                            if(Math.abs(this.target.body.x-this.body.x) < 700){
+                                if(this.safe == 1){
+                                    this.fleeing = 1
+                                }
+                            }
+                        }else{
+                            if(this.body.x > this.target.body.x){  // this is new
+                                this.amove = 1
+                                this.dmove = 0
+                            }else{
+                                this.amove = 0
+                                this.dmove = 1
+                            }
                         }
                     }
                 }
@@ -50457,10 +50473,19 @@ if (this.middlehand2.anchored == 1) {
                         }
                     }
 
-                    if (Math.abs(this.body.x - boys[t].body.x) < 60 && this.body.y < boys[t].body.y) {
-                        this.downspike = 1
-                    } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y > boys[t].body.y && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
+                    if(Math.abs(this.body.x - boys[t].body.x) < 120 && this.body.y > boys[t].body.y){
+                        if(Math.abs(this.body.y - boys[t].body.y) < 280){
                         this.hortsmash = 1
+                        }else{
+                        this.hortsmash = 0
+                        this.screwshot = 1
+                        }
+                    } else if (Math.abs(this.body.x - boys[t].body.x) < 90 && this.body.y < boys[t].body.y) {
+                        this.downspike = 1 // much better logic
+                    // } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y > boys[t].body.y && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
+                    }else if (Math.abs(this.body.x - boys[t].body.x) < 170  && (boys[t].body.doesPerimeterTouch(this.lefthand) || boys[t].body.doesPerimeterTouch(this.righthand))) {
+                        this.downspike = 1
+                    // } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y > boys[t].body.y && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
                     }
                     if (Math.abs(this.body.x - boys[t].body.x) < boys[t].body.radius && this.body.y > boys[t].body.y) {
                         this.screwshot = 1
@@ -50472,19 +50497,19 @@ if (this.middlehand2.anchored == 1) {
 
 
 
-
-                    if (Math.abs(this.body.x - boys[t].body.x) < 240) {
-                        if (this.body.x > boys[t].body.x) {
-                            if (this.face == 1) {
-                                this.hortsmash = 1
-                            }
-                        }
-                        if (this.body.x < boys[t].body.x) {
-                            if (this.face == -1) {
-                                this.hortsmash = 1
-                            }
-                        }
-                    }
+                //what?
+                    // if (Math.abs(this.body.x - boys[t].body.x) < 240) {
+                    //     if (this.body.x > boys[t].body.x) {
+                    //         if (this.face == 1) {
+                    //             // this.hortsmash = 1
+                    //         }
+                    //     }
+                    //     if (this.body.x < boys[t].body.x) {
+                    //         if (this.face == -1) {
+                    //             // this.hortsmash = 1
+                    //         }
+                    //     }
+                    // }
 
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
@@ -50703,8 +50728,8 @@ if (this.middlehand2.anchored == 1) {
                         if (this.face == 1) {
                             if (this.righthand.fired <= 0) {
                                 if (this.righthand.anchored == 0) {
-                                    this.righthand.ymom = -this.punchspeed * 7
-                                    this.righthand.xmom = this.punchspeed * 14
+                                    this.righthand.ymom = -this.punchspeed * 3 // 7
+                                    this.righthand.xmom = this.punchspeed * 17 // 14
                                     this.righthand.fired = 19
                                     if (this.lefthand.fired <= 0) {
                                         this.lefthand.ymom = -((Math.random() * 10) + 8) * this.punchspeed
@@ -50721,8 +50746,8 @@ if (this.middlehand2.anchored == 1) {
                         if (this.face == -1) {
                             if (this.lefthand.fired <= 0) {
                                 if (this.lefthand.anchored == 0) {
-                                    this.lefthand.ymom = -this.punchspeed * 7
-                                    this.lefthand.xmom = -this.punchspeed * 14
+                                    this.lefthand.ymom = -this.punchspeed * 3 // 7
+                                    this.lefthand.xmom = -this.punchspeed * 17 // 14
                                     this.lefthand.fired = 19
                                     if (this.righthand.fired <= 0) {
                                         this.righthand.ymom = -((Math.random() * 10) + 8) * this.punchspeed
