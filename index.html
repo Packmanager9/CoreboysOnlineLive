@@ -7191,20 +7191,20 @@ let camerax = 0
                     break
                 }
             }
-            if (counter == 1) {
-                for(let t = 1;t<boys.length;t++){
-                    boys[t].righthand.anchored = 0
-                    boys[t].lefthand.anchored = 0
-                    boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
-                    boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
-                    boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
-                    boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
-                    boys[t].body.x = TIP_engine.x * 1
-                    boys[t].body.y = TIP_engine.y * 1
-                    boys[t].body.xmom = 0
-                    boys[t].body.ymom = 0
-                }
-            }
+            // if (counter == 1) {
+            //     for(let t = 1;t<boys.length;t++){
+            //         boys[t].righthand.anchored = 0
+            //         boys[t].lefthand.anchored = 0
+            //         boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
+            //         boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
+            //         boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
+            //         boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
+            //         boys[t].body.x = TIP_engine.x * 1
+            //         boys[t].body.y = TIP_engine.y * 1
+            //         boys[t].body.xmom = 0
+            //         boys[t].body.ymom = 0
+            //     }
+            // }
             // example usage: if(object.isPointInside(TIP_engine)){ take action }
             canvas.addEventListener('pointermove', continued_stimuli);
             if (optionsButton.isPointInside(TIP_engine)) {
