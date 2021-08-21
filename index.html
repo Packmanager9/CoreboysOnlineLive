@@ -760,7 +760,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [] //[199, 0]
+    let scores = [] //[49, 0]
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -7107,7 +7107,9 @@ let camerax = 0
     
        window.setInterval(function () {
 
+// for(let t = 0;t<10;t++){
            main()
+// }
        }, 18)
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
@@ -7191,20 +7193,20 @@ let camerax = 0
                     break
                 }
             }
-            // if (counter == 1) {
-            //     for(let t = 1;t<boys.length;t++){
-            //         boys[t].righthand.anchored = 0
-            //         boys[t].lefthand.anchored = 0
-            //         boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
-            //         boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
-            //         boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
-            //         boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
-            //         boys[t].body.x = TIP_engine.x * 1
-            //         boys[t].body.y = TIP_engine.y * 1
-            //         boys[t].body.xmom = 0
-            //         boys[t].body.ymom = 0
-            //     }
-            // }
+            if (counter == 1) {
+                for(let t = 1;t<boys.length;t++){
+                    boys[t].righthand.anchored = 0
+                    boys[t].lefthand.anchored = 0
+                    boys[t].righthand.x += (TIP_engine.x * 1) - boys[t].righthand.x
+                    boys[t].righthand.y += (TIP_engine.y * 1) - boys[t].righthand.y
+                    boys[t].lefthand.x += (TIP_engine.x * 1) - boys[t].lefthand.x
+                    boys[t].lefthand.y += (TIP_engine.y * 1) - boys[t].lefthand.y
+                    boys[t].body.x = TIP_engine.x * 1
+                    boys[t].body.y = TIP_engine.y * 1
+                    boys[t].body.xmom = 0
+                    boys[t].body.ymom = 0
+                }
+            }
             // example usage: if(object.isPointInside(TIP_engine)){ take action }
             canvas.addEventListener('pointermove', continued_stimuli);
             if (optionsButton.isPointInside(TIP_engine)) {
@@ -14271,7 +14273,7 @@ if (this.middlehand2.anchored == 1) {
                 if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*7.5){
                     if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*2.5){ //} && this.brick.edgeright.y > this.body.y){
                         this.leftshot = 1
-                        // this.rightshot = 1
+                        this.rightshot = 1
                         //  if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*5.5){
                         //     this.wmove = 0
                         // }
@@ -49608,12 +49610,12 @@ if (this.middlehand2.anchored == 1) {
                         if (this.grounded != 1) {
                             if (this.lefthand.fired <= 0) {
                                 if (this.lefthand.anchored == 0) {
-                                    this.body.ymom -= this.speed / 4
+                                    this.body.ymom -= this.speed / 3
                                 }
                             }
                             if (this.righthand.fired <= 0) {
                                 if (this.righthand.anchored == 0) {
-                                    this.body.ymom -= this.speed / 4
+                                    this.body.ymom -= this.speed / 3
                                 }
                             }
 
@@ -50450,10 +50452,10 @@ if (this.middlehand2.anchored == 1) {
             if (Math.random() < .5) {
                 this.screwshot = 0
             }
-            if (Math.random() < .01 || this.charge == 0) {
+            if (Math.random() < .05 || this.charge == 0) { //was.01?
                 this.rightshot = 0
             }
-            if (Math.random() < .01 || this.charge == 0) {
+            if (Math.random() < .05 || this.charge == 0) {//was.01?
                 this.leftshot = 0
             }
             if (Math.random() < .1) {
@@ -50521,8 +50523,11 @@ if (this.middlehand2.anchored == 1) {
                     if (this.screwshot + this.hortsmash + this.downspike + this.storeshield == 0) {
                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x > boys[t].body.x) {
                             if (this.face == -1) {
-                                if (Math.abs(this.body.x - boys[t].body.x) < 570) {
+                                if (Math.abs(this.body.x - boys[t].body.x) < this.body.radius*5.4) {
+                                    if(boys[t].lefthand.anchored == 1 || boys[t].righthand.anchored == 1){
+                                    }else{
                                     this.leftshot = 1
+                                    }
                                     if (Math.random() < .009) {
                                         this.hortsmash = 1
                                         this.leftshot = 0
@@ -50532,8 +50537,11 @@ if (this.middlehand2.anchored == 1) {
                         }
                         if (Math.abs(this.body.y - boys[t].body.y) < boys[t].body.radius && this.body.x < boys[t].body.x) {
                             if (this.face == 1) {
-                                if (Math.abs(this.body.x - boys[t].body.x) < 570) {
+                                if (Math.abs(this.body.x - boys[t].body.x)  < this.body.radius*5.4) {
+                                    if(boys[t].lefthand.anchored == 1 || boys[t].righthand.anchored == 1){
+                                    }else{
                                     this.rightshot = 1
+                                    }
                                     if (Math.random() < .009) {
                                         this.hortsmash = 1
                                         this.rightshot = 0
@@ -50696,6 +50704,42 @@ if (this.middlehand2.anchored == 1) {
                 }
             }
 
+
+//thing to punch the ledge not to die?
+            if(this.safe == 0){
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*7.5 && this.body.x < this.brick.edgeleft.x){
+
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
+                        this.downspike  = 0 
+                }
+                    if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeleft.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+
+                        //  if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){ //this is the wrong place to interface with the jump functionality, should be in AI move, but honestly its a not a good operation to emulate at all, so for not its out
+                        //     this.wmove = 0
+                         }
+                    }
+                
+                if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*7.5 && this.body.x > this.brick.edgeright.x){
+                    
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
+                        this.downspike  = 0 
+                }
+
+                    if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeright.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+                        //  if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*5.5){
+                        //     this.wmove = 0
+                        // }
+                    }
+                }
+            }
+ // end not die punch block
+
             if (this.shieldpower < 10) {
                 if (Math.random() < .95) {
                     this.storeshield = 0
@@ -50788,12 +50832,12 @@ if (this.middlehand2.anchored == 1) {
 
                             if (this.lefthand.fired <= 0) {
                                 if (this.lefthand.anchored == 0) {
-                                    this.body.ymom -= this.speed / 4
+                                    this.body.ymom -= this.speed / 3
                                 }
                             }
                             if (this.righthand.fired <= 0) {
                                 if (this.righthand.anchored == 0) {
-                                    this.body.ymom -= this.speed / 4
+                                    this.body.ymom -= this.speed / 3
                                 }
                             }
 
@@ -62652,7 +62696,7 @@ let requiredElapsed=54; // desired interval is 54fps
 
     function JumpIn(fighter) {
         //start with the dummy
-        if (scores.includes(200)) {
+        if (scores.includes(50)) {
             const str = `${boys[0].name}: ${scores[0]}, ${boys[1].name}: ${scores[1]}`
             strarr.push(str)
             scores = [0, 0]
