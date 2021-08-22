@@ -34063,6 +34063,39 @@ if (this.middlehand2.anchored == 1) {
                     }
 //end
 
+ if(this.safe == 0){
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*7.5 && this.body.x < this.brick.edgeleft.x){
+
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
+                        this.downspike  = 0 
+                }
+                    if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeleft.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+
+                        //  if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){ //this is the wrong place to interface with the jump functionality, should be in AI move, but honestly its a not a good operation to emulate at all, so for not its out
+                        //     this.wmove = 0
+                         }
+                    }
+                
+                if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*7.5 && this.body.x > this.brick.edgeright.x){
+                    
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
+                        this.downspike  = 0 
+                }
+
+                    if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeright.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+                        //  if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*5.5){
+                        //     this.wmove = 0
+                        // }
+                    }
+                }
+            }
+
                     // if (Math.abs(this.body.x - boys[t].body.x) < 240) {
                     //     if (this.body.x > boys[t].body.x) {
                     //         if (this.face == 1) {
