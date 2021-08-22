@@ -8933,13 +8933,13 @@ move() {
                         this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
                         this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
                         this.bricks.push(new Brick(1900+ (k * (6 * 1400)), 1440, 500))
-                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
                         // this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
                         this.tempBricks.push(new Brick(2000+ (k * (6 * 1400)), 2100, 1800))
                         this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
                         this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
                         this.tempBricks.push(new Brick(1900+ (k * (6 * 1400)), 1440, 500))
-                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
                         // this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
                         // for (let n = 0; n < 2; n++) {
                         //     this.walls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
@@ -8961,13 +8961,13 @@ move() {
                         this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
                         this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
                         this.bricks.push(new Brick(1900+ (k * (6 * 1400)), 1440, 500))
-                        this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.bricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
                         // this.bricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
                         this.tempBricks.push(new Brick(2000+ (k * (6 * 1400)), 2100, 1800))
                         this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 1760, 500))
                         this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 1440, 500))
                         this.tempBricks.push(new Brick(1900+ (k * (6 * 1400)), 1440, 500))
-                        this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
+                        // this.tempBricks.push(new Brick(1000+ (k * (6 * 1400)), 920, 500))
                         // this.tempBricks.push(new Brick(2800+ (k * (6 * 1400)), 500, 500))
                         // for (let n = 0; n < 2; n++) {
                         //     this.walls.push(new Wall((n * 2950) + 500+ (k * (6 * 1400)), 2100, 200, 650))
@@ -39856,10 +39856,10 @@ if (this.middlehand2.anchored == 1) {
             if (Math.random() < .5) {
                 this.screwshot = 0
             }
-            if (Math.random() < .01 || this.charge == 0) {
+            if (Math.random() < .09 || this.charge == 0) { //was .01
                 this.rightshot = 0
             }
-            if (Math.random() < .01 || this.charge == 0) {
+            if (Math.random() < .09 || this.charge == 0) { //was .01
                 this.leftshot = 0
             }
             if (Math.random() < .1) {
@@ -39940,18 +39940,36 @@ if (this.middlehand2.anchored == 1) {
 
 
 
-                    if (Math.abs(this.body.x - boys[t].body.x) < 240) {
-                        if (this.body.x > boys[t].body.x) {
-                            if (this.face == 1) {
-                                this.hortsmash = 1
-                            }
-                        }
-                        if (this.body.x < boys[t].body.x) {
-                            if (this.face == -1) {
-                                this.hortsmash = 1
-                            }
-                        }
+                    if(this.body.y > boys[t].body.y + 50 && this.body.y < boys[t].body.y + 250 ){
+                    if(Math.abs(this.body.x - boys[t].body.x) < 120){
+                         this.hortsmash = 1
                     }
+                    }
+
+
+                    if(this.bananahand.doesPerimeterTouch(boys[t].body)){
+                        this.downspike = 1
+                    }else  if(this.middlehand.doesPerimeterTouch(boys[t].body)){
+                        this.downspike = 1
+                    }else  if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                        this.downspike = 1
+                    }else  if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                        this.downspike = 1
+                    }
+
+
+                    // if (Math.abs(this.body.x - boys[t].body.x) < 240) {
+                    //     if (this.body.x > boys[t].body.x) {
+                    //         if (this.face == 1) {
+                    //             this.hortsmash = 1
+                    //         }
+                    //     }
+                    //     if (this.body.x < boys[t].body.x) {
+                    //         if (this.face == -1) {
+                    //             this.hortsmash = 1
+                    //         }
+                    //     }
+                    // }
 
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
@@ -39982,6 +40000,28 @@ if (this.middlehand2.anchored == 1) {
                                     }
                                 }
                             }
+                        }
+                    }
+
+
+                    if (this.screwshot + this.hortsmash + this.downspike + this.storeshield == 0) {
+                        if(this.safe == 1){
+                        if(this.charge < 95){
+                            if(this.charge2 < 95){
+                                this.leftshot = 1
+                                this.rightshot = 1
+                            }else{
+                            if(Math.random() < .5){
+                                this.leftshot = 0
+                                this.rightshot = 0
+                            }
+                        }
+                        }else{
+                            if(Math.random() < .5){
+                                this.leftshot = 0
+                                this.rightshot = 0
+                            }
+                        }
                         }
                     }
 
@@ -40238,7 +40278,7 @@ if (this.middlehand2.anchored == 1) {
                     }
                 }
 
-                if (this.hortsmash == 1) {
+                if (this.hortsmash == 1) {  //upsmash
                     if (this.righthand.fired <= 0) {
                         if (this.righthand.anchored == 0) {
                             this.rightshoulder.xmom = 0
