@@ -760,7 +760,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = []//[49, 0] //jumpin()
+    let scores =[]// [49, 0] //jumpin()
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -34024,11 +34024,9 @@ if (this.middlehand2.anchored == 1) {
 
                     if(this.grounded != 1){
                         if(this.body.ymom < 0){
-                            let xint = 0
                             let projection = {}
                             projection.y = this.body.y
                             projection.ymom = this.body.ymom
-                            projection.x = this.body.x
                             for(let t = 0;projection.y > 0 && t<10;t++){
                                 projection.y += (projection.ymom)
                                 projection.ymom += this.gravity 
@@ -34068,11 +34066,13 @@ if (this.middlehand2.anchored == 1) {
 
                 if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
                         this.downspike  = 0 
+                        this.screwshot  = 0 
                 }
                     if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeleft.y > this.body.y){
                         this.leftshot = 1
                         this.rightshot = 1
                         this.downspike  = 0 
+                        this.screwshot  = 0 
 
                         //  if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){ //this is the wrong place to interface with the jump functionality, should be in AI move, but honestly its a not a good operation to emulate at all, so for not its out
                         //     this.wmove = 0
@@ -34083,12 +34083,14 @@ if (this.middlehand2.anchored == 1) {
                     
                 if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){
                         this.downspike  = 0 
+                        this.screwshot  = 0 
                 }
 
                     if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*4.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeright.y > this.body.y){
                         this.leftshot = 1
                         this.rightshot = 1
                         this.downspike  = 0 
+                        this.screwshot  = 0 
                         //  if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*5.5){
                         //     this.wmove = 0
                         // }
