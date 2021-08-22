@@ -760,7 +760,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores = [] //[49, 0]
+    let scores = []//[49, 0] //jumpin()
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -14041,7 +14041,9 @@ if (this.middlehand2.anchored == 1) {
                     if (Math.abs(this.body.x - boys[t].body.x) < (boys[t].body.radius + 22) && this.body.y < boys[t].body.y) {  //22 is shot size or such
                         this.downspike = 1
                     } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
+                                if (Math.abs(this.body.y - boys[t].body.y) < 50) {
                         this.hortsmash = 1
+                                }
                     }
                     if (Math.abs(this.body.x - boys[t].body.x) < 70 && this.body.y > boys[t].body.y) {
                         this.screwshot = 1
@@ -14057,15 +14059,27 @@ if (this.middlehand2.anchored == 1) {
                     if (Math.abs(this.body.x - boys[t].body.x) < 240) {
                         if (this.body.x > boys[t].body.x) {
                             if (this.face == 1) {
+                                if (Math.abs(this.body.y - boys[t].body.y) < 50) {
                                 this.hortsmash = 1
+                                }
                             }
                         }
                         if (this.body.x < boys[t].body.x) {
                             if (this.face == -1) {
+                                if (Math.abs(this.body.y - boys[t].body.y) < 50) {
                                 this.hortsmash = 1
+                                }
                             }
                         }
                     }
+
+            if(this.downspike == 0){
+                if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                    this.hortsmash = 1
+                }else if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                    this.hortsmash = 1
+                }
+            }
 
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
@@ -33994,11 +34008,13 @@ if (this.middlehand2.anchored == 1) {
                         if (this.brick == boys[t].brick) {
                             this.downspike = 1
                         }
-                    } else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
-                        if (this.brick == boys[t].brick) {
-                            this.downspike = 1
-                        }
-                    }
+                    } 
+                    //gibberish
+                    // else if (Math.abs(this.body.x - boys[t].body.x) < 150 && this.body.y <= boys[t].body.y && (boys[t].righthand.anchored == 1 || boys[t].lefthand.anchored == 1)) {
+                    //     if (this.brick == boys[t].brick) {
+                    //         this.downspike = 1
+                    //     }
+                    // }
                     if (Math.abs(this.body.x - boys[t].body.x) < 70 && this.body.y > boys[t].body.y) {
                         if (this.dmomu <= 0 && this.amomu <= 0) {
                             this.screwshot = 1
@@ -34006,30 +34022,69 @@ if (this.middlehand2.anchored == 1) {
                     }
 
 
-
-
-                    if (Math.abs(this.body.x - boys[t].body.x) < 240) {
-                        if (this.body.x > boys[t].body.x) {
-                            if (this.face == 1) {
-                                this.hortsmash = 1
+                    if(this.grounded != 1){
+                        if(this.body.ymom < 0){
+                            let xint = 0
+                            let projection = {}
+                            projection.y = this.body.y
+                            projection.ymom = this.body.ymom
+                            projection.x = this.body.x
+                            for(let t = 0;projection.y > 0 && t<10;t++){
+                                projection.y += (projection.ymom)
+                                projection.ymom += this.gravity 
                             }
-                        }
-                        if (this.body.x < boys[t].body.x) {
-                            if (this.face == -1) {
-                                this.hortsmash = 1
-                            }
-                        }
-                    }
-
-                    if (boys[t].righthand.fired > 14) {
-                        if (this.body.x > boys[t].body.x) {
-                            if (Math.random() < .09) {
-                                this.storeshield = 1
+                            if(projection.y < 0){
+                                if(this.safe == 1){
+                                    this.downspike = 1
+                                }
                             }
                         }
                     }
+
+
+    /// novel
+                    if(this.grounded != 1){
+                        if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                              this.hortsmash = 1
+                        }
+                        if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                              this.hortsmash = 1
+                        }
+                    }else{
+                        if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                              this.leftshot = 1
+                              this.rightshot = 1
+                        }
+                        if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                              this.leftshot = 1
+                              this.rightshot = 1
+                        }
+
+                    }
+//end
+
+                    // if (Math.abs(this.body.x - boys[t].body.x) < 240) {
+                    //     if (this.body.x > boys[t].body.x) {
+                    //         if (this.face == 1) {
+                    //             this.hortsmash = 1
+                    //         }
+                    //     }
+                    //     if (this.body.x < boys[t].body.x) {
+                    //         if (this.face == -1) {
+                    //             this.hortsmash = 1
+                    //         }
+                    //     }
+                    // }
+
+                    // if (boys[t].righthand.fired > 14) {
+                    //     if (this.body.x > boys[t].body.x) {
+                    //         if (Math.random() < .09) {
+                    //             this.storeshield = 1
+                    //         }
+                    //     }
+                    // }
                     if (this.screwshot + this.hortsmash + this.downspike + this.storeshield == 0) {
-                        if (Math.abs(this.body.y - boys[t].body.y) < 35 && this.body.x > boys[t].body.x) {
+                        if (Math.abs(this.body.y - boys[t].body.y) < 35 && this.body.x > boys[t].body.x && Math.abs(this.body.x-boys[t].body.x) < this.body.radius *4.21) {
                             if (this.face == -1) {
                                 this.leftshot = 1
                                 if (Math.abs(this.body.x - boys[t].body.x) < 170) {
@@ -34040,7 +34095,7 @@ if (this.middlehand2.anchored == 1) {
                                 }
                             }
                         }
-                        if (Math.abs(this.body.y - boys[t].body.y) < 35 && this.body.x < boys[t].body.x) {
+                        if (Math.abs(this.body.y - boys[t].body.y) < 35 && this.body.x < boys[t].body.x && Math.abs(this.body.x-boys[t].body.x) < this.body.radius *4.21) {
                             if (this.face == 1) {
                                 this.rightshot = 1
                                 if (Math.abs(this.body.x - boys[t].body.x) < 170) {
@@ -34056,11 +34111,11 @@ if (this.middlehand2.anchored == 1) {
 
                     if (Math.abs(this.body.y - boys[t].body.y) < 50 && Math.abs(this.body.x - boys[t].body.x) < 200) {
                         if (boys[t].lefthand.fired > 14 || boys[t].righthand.fired > 14) {
-                            if (this.body.x < boys[t].body.x) {
+                            // if (this.body.x < boys[t].body.x) {  //newly dropped
                                 if (Math.random() < .4) {
                                     this.storeshield = 1
                                 }
-                            }
+                            // }
                         }
                     }
                 }
