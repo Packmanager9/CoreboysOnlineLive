@@ -748,6 +748,9 @@ w
 
 let tournamentDisplayMode = -1
 let brackets = {}
+brackets.names = []
+brackets.sizes = []
+brackets.members = []
 
 let logobject = {}
 logobject.a = 0
@@ -7266,7 +7269,7 @@ let camerax = 0
                 }
                 }
 
-                
+
             if (optionsButton.isPointInside(TIP_engine)) {
                 if (optionsToggle == 0) {
                     optionsToggle = 1
