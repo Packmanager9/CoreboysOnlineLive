@@ -746,6 +746,9 @@ w
 //     }
 // }
 
+let tournamentDisplayMode = -1
+let brackets = {}
+
 let logobject = {}
 logobject.a = 0
 logobject.b = 0
@@ -850,10 +853,6 @@ let camerax = 0
                     return
                 }
 
-
-
-
-
                 if (start == 0 && (parseInt(JSON.parse(data).pinging)) !== 1) {
                     data = JSON.parse(data)
                     for (let t = 0; t < data.playerIDs.length; t++) { //error?
@@ -868,6 +867,10 @@ let camerax = 0
                         players = parseInt(data.length)
                         CreatePlayer(data.playerIDs.length)
                     }
+                } else if (parseInt(JSON.parse(data).queryTournamentResponse) >= 1) {
+                    tournamentDisplayMode = 1
+                    brackets = JSON.parse(data)
+                    
                 } else if (parseInt(JSON.parse(data).tournamentRoom) >= 1) {
                     swapRoom(parseInt(JSON.parse(data).tournamentRoom), parseInt(JSON.parse(data).stock),  parseFloat(JSON.parse(data).id))
                     stage  = new Stage(parseInt(JSON.parse(data).map))
@@ -7230,6 +7233,7 @@ let camerax = 0
                     tournamentNameBox.focus = 0
                 }
             }
+
             if(tournamentStartMenu.isPointInside(TIP_engine)){
 
                 let tson = {}
@@ -7248,15 +7252,25 @@ let camerax = 0
             }
             if(tournamentJoinMenu.isPointInside(TIP_engine)){
 
+                tournamentDisplayMode = 1
                 let tson = {}
-                tson.joinTournament = 1
-                tson.size = tournamentSizeBox.value 
-                tson.stock = stock
-                tson.name = tournamentNameBox.string + "'s Tournament"
+                tson.queryTournament = 1
 
                 ws.send(JSON.stringify(tson))
 
             }
+                for(let t = 0;t<tlob.buttons.length;t++){
+                    if(tlob.buttons[t].isPointInside(TIP_engine)){
+                        let tson = {}
+                        tournamentDisplayMode = 0
+                        tson.size = tlob.bracket.sizes[t] 
+                        tson.joinTournament = 1
+                        tson.name =  tlob.bracket.names[t] 
+                        ws.send(JSON.stringify(tson))
+                    }
+                }
+
+
             if (escapeButton.isPointInside(TIP_engine)) {
 
                 stars = []
@@ -62310,7 +62324,21 @@ let requiredElapsed=54; // desired interval is 54fps
             }
         } else {
 
+            if(tournamentDisplayMode == 1){
 
+            canvas_context.clearRect(-canvas.width * 10000, -canvas.width * 10000, canvas.width * 20000, canvas.width * 20000)
+
+
+                    let qson = {}
+                    qson.queryTournament = 1
+                    ws.send(JSON.stringify(qson))
+                 tlob = new TournamentDisplay(brackets)
+                tlob.draw()
+
+                    if(keysPressed['Escape']){
+                        tournamentDisplayMode = 0
+                    }
+            }else{
             if ( ws.readyState == 1){ //
                     onlineButton.color = "#00FF00"
                 }else{
@@ -62318,6 +62346,7 @@ let requiredElapsed=54; // desired interval is 54fps
                 }
             // gametheme.play()
             canvas_context.clearRect(-canvas.width * 10000, -canvas.width * 10000, canvas.width * 20000, canvas.width * 20000)
+
             if (mapSelectToggle == 1 || minigameSelectToggle == 1) {
                 descriptor.draw()
                 if (optionsToggle == 0) {
@@ -62981,10 +63010,32 @@ let requiredElapsed=54; // desired interval is 54fps
             boys[1] = whosUp
             fighter = fighter.copy()
             fightnum++
+            }
+
         }
     }
 
 
+    class TournamentDisplay{
+        constructor(bracketObject){
+            this.bracket = bracketObject
+            this.buttons = []
+        }
+        draw(){
+            console.log(this.bracket)
+            canvas_context.font = "56px arial"
+            canvas_context.fillStyle = "#FFFFFF"
+            this.buttons = []
+            for(let t = 0;t<this.bracket.names.length;t++){
+                canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t], (t*0)+120, (t*60)+100)
+                let button = new Circle(60,( t*60)+80, 30, "#FFFFFF")
+                button.draw()
+                this.buttons.push(button)
+            }
+        }
+    }
+
+                let tlob = new TournamentDisplay(brackets)
 
 
     class TeamMarker {

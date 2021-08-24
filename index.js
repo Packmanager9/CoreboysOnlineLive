@@ -261,8 +261,22 @@ wss.on("connection", ws => {
             }
 
 
+        }else if (JSON.parse(data).queryTournament === 1) {
+
+            let tson ={}
+            tson.queryTournamentResponse = 1
+            tson.names = []
+            tson.sizes = []
+            tson.members = []
+            for(let t = 0;t<tournaments.length;t++){
+                tson.names.push(tournaments[t].name)
+                tson.sizes.push(tournaments[t].size)
+                tson.members.push(tournaments[t].players.length)
+            }
+
+            ws.send(JSON.stringify(tson))
         }else if (JSON.parse(data).joinTournament === 1) {
-            let tournament
+                let tournament
             for(let t = 0;t<tournaments.length;t++){
                 if(tournaments[t].name == JSON.parse(data).name){
                     tournament = tournaments[t]
