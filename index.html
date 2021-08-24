@@ -868,7 +868,9 @@ let camerax = 0
                         CreatePlayer(data.playerIDs.length)
                     }
                 } else if (parseInt(JSON.parse(data).queryTournamentResponse) >= 1) {
+                    if(tournamentDisplayMode > -1){
                     tournamentDisplayMode = 1
+                    }
                     brackets = JSON.parse(data)
                     
                 } else if (parseInt(JSON.parse(data).tournamentRoom) >= 1) {
@@ -7255,7 +7257,9 @@ let camerax = 0
             }
             if(tournamentJoinMenu.isPointInside(TIP_engine)){
 
+                    if(tournamentDisplayMode > -1){
                 tournamentDisplayMode = 1
+                    }
                 let tson = {}
                 tson.queryTournament = 1
 
@@ -61255,7 +61259,13 @@ let requiredElapsed=54; // desired interval is 54fps
 
 
     function main(now) {
+        if(tournamentDisplayMode < 0){
+            tournamentDisplayMode++
+        }
 
+                    if(keysPressed['Escape']){
+                        tournamentDisplayMode = -10
+                    }
     // requestAnimationFrame(main);
 
     // if(!lastTime){lastTime=now;}
@@ -62339,7 +62349,7 @@ let requiredElapsed=54; // desired interval is 54fps
                 tlob.draw()
 
                     if(keysPressed['Escape']){
-                        tournamentDisplayMode = 0
+                        tournamentDisplayMode = -10
                     }
             }else{
             if ( ws.readyState == 1){ //
@@ -63034,6 +63044,10 @@ let requiredElapsed=54; // desired interval is 54fps
                 let button = new Circle(60,( t*60)+80, 30, "#FFFFFF")
                 button.draw()
                 this.buttons.push(button)
+            }
+            if(this.bracket.names.length == 0){
+
+                canvas_context.fillText("No tournaments found (Press Escape)", 500, 500)
             }
         }
     }
