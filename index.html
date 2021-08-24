@@ -7239,6 +7239,9 @@ let camerax = 0
                 let tson = {}
                 tson.makeTournament = 1
                 tson.size = tournamentSizeBox.value 
+                if(tson.size == 1){
+                    tson.size = 16
+                }
                 tson.name = tournamentNameBox.string + "'s Tournament"
                 tson.stock = stock
                 // roomSelectionBox.rooms = 
