@@ -7221,21 +7221,9 @@ let camerax = 0
             // }
             // example usage: if(object.isPointInside(TIP_engine)){ take action }
             canvas.addEventListener('pointermove', continued_stimuli);
-            if (optionsButton.isPointInside(TIP_engine)) {
-                if (optionsToggle == 0) {
-                    optionsToggle = 1
-                    roomSelectionBox.focus = 1
-                } else {
-                    optionsToggle = 0
-                    descriptor.index = -1
-                    roomSelectionBox.focus = 0
-                    stockSelectionBox.focus = 0
-                    teamSelectionBox.focus = 0
-                    tournamentSizeBox.focus = 0
-                    tournamentNameBox.focus = 0
-                }
-            }
 
+
+                if (optionsToggle == 1) {
             if(tournamentStartMenu.isPointInside(TIP_engine)){
 
                 let tson = {}
@@ -7276,6 +7264,23 @@ let camerax = 0
                         ws.send(JSON.stringify(tson))
                     }
                 }
+                }
+
+                
+            if (optionsButton.isPointInside(TIP_engine)) {
+                if (optionsToggle == 0) {
+                    optionsToggle = 1
+                    roomSelectionBox.focus = 1
+                } else {
+                    optionsToggle = 0
+                    descriptor.index = -1
+                    roomSelectionBox.focus = 0
+                    stockSelectionBox.focus = 0
+                    teamSelectionBox.focus = 0
+                    tournamentSizeBox.focus = 0
+                    tournamentNameBox.focus = 0
+                }
+            }
 
 
             if (escapeButton.isPointInside(TIP_engine)) {
