@@ -746,6 +746,13 @@ w
 //     }
 // }
 
+let logobject = {}
+logobject.a = 0
+logobject.b = 0
+logobject.c = 0
+logobject.d = 0
+logobject.e = 0
+
 let camerax = 0
     let cameray = 0
     let cameraxsum = 0
@@ -760,7 +767,7 @@ let camerax = 0
     let strarr = []
     let selectors = []
     let characterbuttons = []
-    let scores =[]// [49, 0] //jumpin()
+    let scores =  [] //[49, 0] //jumpin()
     let fightnum = 0
     let drops = []
     const baselaunch = .60
@@ -7110,7 +7117,7 @@ let camerax = 0
 // for(let t = 0;t<10;t++){
            main()
 // }
-       }, 18)
+       }, 18) //jumpin()
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
             if (event.key == 'Backspace') {
@@ -34057,7 +34064,6 @@ if (this.middlehand2.anchored == 1) {
                               this.leftshot = 1
                               this.rightshot = 1
                         }
-
                     }
 //end
 
@@ -36843,7 +36849,8 @@ if (this.middlehand2.anchored == 1) {
                 this.lefthand.anchored = 0
             }
         }
-        AI() {
+        AI() { 
+            //rhophoai
             this.idify()
 
             if (this.inactive == 1) {
@@ -37118,6 +37125,107 @@ if (this.middlehand2.anchored == 1) {
                     this.storeshield = 0
                 }
             }
+
+
+
+//rhopho update block start
+
+                    if(this.grounded != 1){
+                        if(this.body.ymom < 0){
+                            let projection = {}
+                            projection.y = this.body.y
+                            projection.ymom = this.body.ymom
+                            for(let t = 0;projection.y > 0 && t<10;t++){
+                                projection.y += (projection.ymom)
+                                projection.ymom += this.gravity 
+                            }
+                            if(projection.y < 0){
+                                if(this.safe == 1){
+                                    this.downspike = 1
+                                    logobject.a++
+                                }
+                            }
+                        }
+                    }
+
+                    for(let t = 0;t<boys.length;t++){
+                        if(this != boys[t]){
+
+                            if(this.grounded != 1){
+                                if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                                    this.hortsmash = 1
+                                    logobject.b++
+                                }
+                                if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                                    this.hortsmash = 1
+                                    logobject.b++
+                                }
+                                if(this.middlehand.doesPerimeterTouch(boys[t].body)){
+                                    this.screwshot = 1
+                                    logobject.c++
+                                }
+                            }else{
+                                if(this.lefthand.doesPerimeterTouch(boys[t].body)){
+                                    this.leftshot = 1
+                                    this.rightshot = 1
+                                    logobject.b++
+                                }
+                                if(this.righthand.doesPerimeterTouch(boys[t].body)){
+                                    this.leftshot = 1
+                                    this.rightshot = 1
+                                    logobject.b++
+                                }
+                                if(this.middlehand.doesPerimeterTouch(boys[t].body)){
+                                    this.downspike = 1
+                                    logobject.d++
+                                }
+                            }
+                        }
+                    }
+                //rhopho edge punch
+
+             if(this.safe == 0){
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*3.5 && this.body.x < this.brick.edgeleft.x){
+
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*2.5){
+                        this.downspike  = 0 
+                        this.screwshot  = 0 
+                }
+                    if(Math.abs(this.brick.edgeleft.y-this.body.y) < this.body.radius*2.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeleft.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+                        this.screwshot  = 0 
+                        logobject.e++
+
+                        //  if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*5.5){ //this is the wrong place to interface with the jump functionality, should be in AI move, but honestly its a not a good operation to emulate at all, so for not its out
+                        //     this.wmove = 0
+                         }
+                    }
+                
+                if(Math.abs(this.brick.edgeright.x-this.body.x) < this.body.radius*3.5 && this.body.x > this.brick.edgeright.x){
+                    
+                if(Math.abs(this.brick.edgeleft.x-this.body.x) < this.body.radius*2.5){
+                        this.downspike  = 0 
+                        this.screwshot  = 0 
+                }
+
+                    if(Math.abs(this.brick.edgeright.y-this.body.y) < this.body.radius*2.5 && this.body.y > this.brick.edgeleft.y-this.body.radius){ //} && this.brick.edgeright.y > this.body.y){
+                        this.leftshot = 1
+                        this.rightshot = 1
+                        this.downspike  = 0 
+                        this.screwshot  = 0 
+                        logobject.e++
+                    }
+                }
+            }
+
+
+//rhopho update block end
+
+
+
+
             if (this.serverID == serverID || AItoggle == 1 || localPlayToggle == 1) {
                 this.shielddraw = 0
             }
@@ -62865,6 +62973,7 @@ let requiredElapsed=54; // desired interval is 54fps
             } else {
                 if (fightlogged == 0) {
                     console.log(strarr)
+                    console.log(logobject)
                     fightlogged = 1
                 }
                 whosUp = new Dummy(boys.length)
