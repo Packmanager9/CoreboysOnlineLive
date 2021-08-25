@@ -63166,7 +63166,7 @@ let requiredElapsed=54; // desired interval is 54fps
             this.buttons = []
             let offset = 0
             for(let t = tournamentDisplayOffset;t<Math.min(this.bracket.names.length, tournamentDisplayOffset+25);t++){
-                if(this.bracket.names[t].includes(this.filter.string)){
+                if(this.bracket.names[t].toLocaleLowerCase('en-US').includes(this.filter.string.toLocaleLowerCase('en-US'))){
             canvas_context.font = "56px arial"
                 canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t] + " - " + `${this.bracket.stocks[t]} Stock`,356,  156+(60*(t-tournamentDisplayOffset-offset)))
                 let button = new Rectangle(120, 104+((t-tournamentDisplayOffset-offset)*60), 200, 56, "#FF000088")
