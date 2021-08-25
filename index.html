@@ -24639,7 +24639,9 @@ if(minigameSelected < 0){
         playerMove(object) {
 
 if(minigameSelected > -1){
+    if(minigameSelected != 13){
     return
+    }
 }
             // if(minigameSelected == 3){
                 // return
@@ -25712,7 +25714,10 @@ if (this.middlehand2.anchored == 1) {
         fightcontrol() {
          
 if(minigameSelected > -1){
+
+    if(minigameSelected != 13){
     return
+    }
 }
                     if (this.gamepad.gamepad.buttonsStatus.includes('A') || (keysPressed['k'] || keysPressed['ArrowDown'])) {
                         if(this.countering < -40){
