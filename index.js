@@ -11,7 +11,7 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL // || mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL  //|| mongoURLx.mongoURL
 mongoose.connect(mongoURL)
 const playerdataSchema = new mongoose.Schema({
     joulepopscoremax : Number,
@@ -26,6 +26,7 @@ const playerdataSchema = new mongoose.Schema({
     smashoutmax : Number,
     gegegegeedropmin  : Number,
     kesslerscoremax  : Number,
+    survivalscore  : Number,
     campaigncomplete  : Boolean,
     gegegegeedropminstr : String,
     playername : String

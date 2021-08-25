@@ -775,6 +775,7 @@ let camerax = 0
     let minigameIcons = []
     let strarr = []
     let selectors = []
+    let selectors13 = []
     let characterbuttons = []
     let scores =  [] //[49, 0] //jumpin()
     let fightnum = 0
@@ -7480,7 +7481,9 @@ let camerax = 0
                     }
                     if (minigameSelectButton.isPointInside(TIP_engine)) {
                         if (minigameSelectToggle == 0) {
+                            selectors13 = [...selectors]
                             selectors = []
+
                             for (let t = 0; t < 15; t++) {
                                 const selector = new Selector()
                                 selector.body.color = colors[t]
@@ -7706,6 +7709,133 @@ let camerax = 0
                                 humanPlayers = 1004
                                 scores = [0]
                                 drops = [0]
+                            }
+                            if(t == 13){
+                                boys = []
+                                humanPlayers = 0
+                                scores = [0,0]
+                                drops = [0,0]
+
+                            stage = new Stage(Math.floor(Math.random()*35))
+                let wet = boys.length
+                let dry = 0
+                for (let t = 0; t < selectors13.length; t++) {
+                    for (let k = 0; k < characterbuttons.length; k++) {
+                        if (characterbuttons[k].isPointInside(selectors13[t].body)) {
+                            let coreboy
+                            dry = 1
+                            //////////////////////////////////console.log("caseD")
+                            if (k == 0) {
+
+                                coreboy = new Mass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 1) {
+                                coreboy = new Boy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 2) {
+                                coreboy = new Blastgirl(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 3) {
+                                coreboy = new Jox(boys.length)
+                                pick = k
+                                coreboy.body.color = invertColor(selectors13[t].body.color)
+                            } else if (k == 4) {
+                                coreboy = new ScorchedMass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 5) {
+                                coreboy = new AsigMan(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 6) {
+                                coreboy = new Princess(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 7) {
+                                coreboy = new Rhopho(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 8) {
+                                coreboy = new Banandroid(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 9) {
+                                coreboy = new Bunkstanks(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 10) {
+                                coreboy = new Dummy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 11) {
+                                coreboy = new DrSoto(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 12) {
+                                coreboy = new Joule(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 13) {
+                                coreboy = new Kessler(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 14) {
+                                coreboy = new Pinwheelian(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 15) {
+                                coreboy = new Gwompei(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else {
+
+                                coreboy = new Boy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            }
+
+                            if (AItoggle == 1 || localPlayToggle == 1) {
+                                boys.push(coreboy)
+                                coreboy.id = ID
+                                boom.push(new Circle(0, 0, 1, "transparent"))
+                                scores.push(0)
+                                drops.push(0)
+
+                            } else {
+                                for (let u = 0; u < boys.length; u++) {
+                                    if (boys[u].serverID == serverID) {
+                                        coreboy.id = ID
+                                        boys[u] = coreboy
+                                        boom.push(new Circle(0, 0, 1, "transparent"))
+                                        scores.push(0)
+                                        drops.push(0)
+                                        wet--
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+                                
+                                if(dry == 0){
+
+
+                                let coreboy = new Boy(boys.length)
+                                        boys[0] = coreboy
+                                        boom.push(new Circle(0, 0, 1, "transparent"))
+                                        scores.push(0)
+                                        drops.push(0)
+                                        wet--
+                                }
+                                boys.push(genRandomFighter(boys.length))
+                                for(let t = 0;t<boys[0].nodes.length;t++){
+                                boys[0].nodes[t].x = (1280*invscale)*.5
+                                }
+
                             }
                         }
                     }
@@ -8734,6 +8864,7 @@ move() {
                 this.gegegegeedropmin = 999999999
                 this.campaigncomplete = false
                 this.gegegegeedropminstr = "??"
+                this.survivalscore = 0
                 
         }
         save(){
@@ -11734,6 +11865,9 @@ move() {
             }else if(this.index == 12){
             canvas_context.fillText("Kessler's Careen!", this.box.x + 40, this.box.y + 95)
             canvas_context.fillText(`Careened for ${worldscore.kesslerscoremax}`, this.box.x + 45, this.box.y + 155)
+            }else if(this.index == 13){
+            canvas_context.fillText("Survival", this.box.x + 40, this.box.y + 95)
+            canvas_context.fillText(`Survived for ${worldscore.survivalscore}`, this.box.x + 45, this.box.y + 155)
             }else{
             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
             }
@@ -11748,7 +11882,7 @@ move() {
         const iconStage = new Stage(t)
         const icon = new MapIcon(iconStage.bricks, iconStage.walls)
     }
-    for (let t = 0; t < 12; t++) {
+    for (let t = 0; t < 14; t++) {
         const icon = new MiniGameIcon()
     }
 
@@ -15068,6 +15202,9 @@ this.shots[t].move()
             }
             if (this.index == 1012) {
                 this.string = "Character: Kessler. Do it!"
+            }
+            if (this.index == 1013) {
+                this.string = "Character: Any (Coreboy by default, pick a character on the main screen to play as them in this minigame). An endless survival mode, see how many knockouts you can get on one life in a row.!"
             }
             }
 
@@ -61755,12 +61892,38 @@ let requiredElapsed=54; // desired interval is 54fps
 
                             if (stock > 0) {
                                 if (drops[t] < stock) {
+                                     if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                    }else{
                                     boys[t] = boys[t].copy()
+                                    }
                                 } else {
                                     boys[t].body.y = (canvas.height * invscale * 10)
                                 }
                             } else {
+                                 if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                }else{
                                 boys[t] = boys[t].copy()
+                                }
                             }
                         }
                         // }
@@ -61813,13 +61976,39 @@ let requiredElapsed=54; // desired interval is 54fps
 
                             if (stock > 0) {
                                 if (drops[t] < stock) {
+                                     if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                    }else{
                                     boys[t] = boys[t].copy()
+                                    }
                                 } else {
                                     boys[t].body.y = (canvas.height * invscale * 10)
                                     boys[t].drops = stock+1
                                 }
                             } else {
+                                 if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                }else{
                                 boys[t] = boys[t].copy()
+                                }
                             }
                         }
                         // }
@@ -61871,7 +62060,20 @@ let requiredElapsed=54; // desired interval is 54fps
                             if (stock > 0) {
                                 if (drops[t] < stock) {
                                     if (t == 0) {
+                                         if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                        }else{
                                         boys[t] = boys[t].copy()
+                                        }
                                     } else {
                                         boys.splice(t, 1)
                                         boys[0].damage = 0
@@ -61886,7 +62088,20 @@ let requiredElapsed=54; // desired interval is 54fps
                                 }
                             } else {
                                 if (t == 0) {
+                                     if(minigameSelected == 13){
+                                        if(t == 0){
+                                            boys[t] = boys[t].copy()
+                                            scores[0] = 0
+
+                                        }else{
+                                            if(scores[0] > worldscore.survivalscore){
+                                            worldscore.survivalscore++
+                                           }
+                                            boys[t] = genRandomFighter(boys.length)
+                                        }
+                                    }else{
                                     boys[t] = boys[t].copy()
+                                    }
                                 } else {
                                     boys.splice(t, 1)
                                     scores[1] = 0
