@@ -189,6 +189,8 @@ for (let t = 0; t < 565131; t++) { //535131 ++ is tournies
     games.push(new Game())
 }
 wss.on("connection", ws => {
+
+    ws.lockout = -1
     ws.assigned = Math.round(Math.random()*0)
     ws.index = games[ws.assigned].players.length
     games[ws.assigned].addPlayer(ws)

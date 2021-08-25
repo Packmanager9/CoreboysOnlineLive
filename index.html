@@ -748,6 +748,7 @@ w
 
 let tournmantCounter = 0
 let tournamentDisplayMode = -1
+let tournamentDisplayOffset = 0
 let brackets = {}
 brackets.names = []
 brackets.sizes = []
@@ -7147,6 +7148,9 @@ let camerax = 0
                 if (tournamentSizeBox.focus == 1) {
                     tournamentSizeBox.backspace()
                 }
+                if (tlob.filter.focus == 1) {
+                    tlob.filter.backspace()
+                }
             } else {
                 if (roomSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
@@ -7161,6 +7165,9 @@ let camerax = 0
                 
                 if (tournamentNameBox.focus == 1) {
                         tournamentNameBox.addchar(event.key)
+                }
+                if (tlob.filter.focus == 1) {
+                        tlob.filter.addchar(event.key)
                 }
                 if (teamSelectionBox.focus == 1) {
                     if (parseInt(event.key, 10) > -1 && parseInt(event.key, 10) < 10) {
@@ -7227,6 +7234,23 @@ let camerax = 0
             // example usage: if(object.isPointInside(TIP_engine)){ take action }
             canvas.addEventListener('pointermove', continued_stimuli);
 
+            if(tournamentDisplayMode == 1){
+                if(tlob.up.isPointInside(TIP_engine)){
+                    tournamentDisplayOffset--
+                    if(tournamentDisplayOffset < 0){
+                        tournamentDisplayOffset = 0
+                    }
+                }
+                if(tlob.down.isPointInside(TIP_engine)){
+                    tournamentDisplayOffset++
+                    if(tournamentDisplayOffset > tlob.bracket.names.length-30){
+                        tournamentDisplayOffset = tlob.bracket.names.length-30
+                    if(tournamentDisplayOffset < 0){
+                        tournamentDisplayOffset = 0
+                    }
+                    }
+                }
+            }
 
                 if (optionsToggle == 1) {
             if(tournamentStartMenu.isPointInside(TIP_engine)){
@@ -7252,6 +7276,7 @@ let camerax = 0
 
                     if(tournamentDisplayMode > -1){
                 tournamentDisplayMode = 1
+                tournamentDisplayOffset = 0
                     }
                 let tson = {}
                 tson.queryTournament = 1
@@ -15157,6 +15182,9 @@ this.shots[t].move()
             }
         }
         addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
             if (this.string.length < 3) {
                 if (this.lock != char) {
                     this.string += char
@@ -15238,6 +15266,9 @@ this.shots[t].move()
             
         }
         addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
             if (this.string.length < 3) {
                 if (this.lock != char) {
                     this.string += char
@@ -15310,6 +15341,9 @@ this.shots[t].move()
             this.value = parseInt(this.string, 10)
         }
         addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
             if (this.string.length < 3) {
                 if (this.lock != char) {
                     this.string += char
@@ -15375,6 +15409,71 @@ this.shots[t].move()
             
         }
         addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
+            if (this.string.length < 8) {
+                if (this.lock != char) {
+                    this.string += char
+                    this.lock = char
+                }
+                if (this.string.length == 0 || this.string == "") {
+                    this.string = ""
+                }
+            }
+        }
+    }
+   
+    class FilterTextInput {
+        constructor(x, y, w, h) {
+            this.inputbox = new Rectangle(x, y, w, h, "#FFFFFF")
+            this.string = ""
+            this.focus = 0
+            this.neverfocus = 1
+            this.lock = ''
+            this.focusindicator = new Rectangle(x, y + (h * .1), w * .03, h * .8, "#000000")
+            this.flash = -1
+            this.flashspin = 45
+            this.flashnum = -1
+            this.rooms = 0
+            this.primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 31, 37, 41, 43, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157]
+        }
+
+        measure() {
+            canvas_context.font = "60px Arial";
+            canvas_context.fillStyle = "#000000"
+            const width = canvas_context.measureText(this.string).width
+            return width
+        }
+        draw() {
+            
+            // stock = parseInt(this.string, 10)
+            this.inputbox.draw()
+                canvas_context.font = "60px Arial"
+                canvas_context.fillStyle = "#000000"
+                canvas_context.fillText(this.string, this.inputbox.x + 10, this.inputbox.y + 75)
+            if (this.focus == 1) {
+                this.neverfocus = 0
+                this.flashnum++
+                if (this.flashnum % (this.flashspin + (-15 * this.flash)) == 0) {
+                    this.flash *= -1
+                }
+                if (this.flash == 1) {
+                    this.focusindicator.x = (this.measure(this.string) + this.inputbox.x + 10)
+                    this.focusindicator.draw()
+                }
+            }
+        }
+        backspace() {
+            this.string = this.string.split('')
+            this.string.splice(this.string.length - 1, 1)
+            this.string = this.string.join('')
+            
+        }
+        addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
             if (this.string.length < 8) {
                 if (this.lock != char) {
                     this.string += char
@@ -15447,6 +15546,9 @@ this.shots[t].move()
             
         }
         addchar(char) {
+            if(char == 'Escape' || char == 'Shift'|| char == 'Meta' || char == 'Control' || char == 'Alt' || char == 'Tab'){
+                return
+            }
             if (this.string.length < 3) {
                 if (this.lock != char) {
                     this.string += char
@@ -62356,7 +62458,9 @@ let requiredElapsed=54; // desired interval is 54fps
                     let qson = {}
                     qson.queryTournament = 1
                     ws.send(JSON.stringify(qson))
+                    let str = tlob.filter.string
                  tlob = new TournamentDisplay(brackets)
+                 tlob.filter.string = str
                 }
                 tlob.draw()
 
@@ -63045,24 +63149,37 @@ let requiredElapsed=54; // desired interval is 54fps
         constructor(bracketObject){
             this.bracket = bracketObject
             this.buttons = []
-            this.body = new Rectangle(100,100, 2560, 1440, "#00AAFF44")
+            this.body = new Rectangle(100,100, 2660, 1540, "#00AAFF44")
+            this.up = new Rectangle(this.body.x+this.body.width,this.body.y,100, 100,  "#00FF00")
+            this.down = new Rectangle(this.body.x+this.body.width,this.body.y+this.body.height-100,100, 100,  "#FF0000")
+            this.filter = new FilterTextInput(3520, 400, 320, 100)
         }
         draw(){
+            this.filter.focus = 1
+            this.filter.draw()
+            this.up.draw()
+            this.down.draw()
             this.body.draw()
            // console.log(this.bracket)
             canvas_context.font = "56px arial"
             canvas_context.fillStyle = "#FFFFFF"
             this.buttons = []
-            for(let t = 0;t<this.bracket.names.length;t++){
+            let offset = 0
+            for(let t = tournamentDisplayOffset;t<Math.min(this.bracket.names.length, tournamentDisplayOffset+25);t++){
+                if(this.bracket.names[t].includes(this.filter.string)){
             canvas_context.font = "56px arial"
-                canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t] + " - " + `${this.bracket.stocks[t]} Stock`,356,  156+(60*t))
-                let button = new Rectangle(120, 104+(t*60), 200, 56, "#FF000088")
+                canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t] + " - " + `${this.bracket.stocks[t]} Stock`,356,  156+(60*(t-tournamentDisplayOffset-offset)))
+                let button = new Rectangle(120, 104+((t-tournamentDisplayOffset-offset)*60), 200, 56, "#FF000088")
                 button.draw()
 
             canvas_context.font = "46px arial"
             canvas_context.fillStyle = "#FFFFFF"
-                canvas_context.fillText("Join", button.x+54, button.y+52)
+                canvas_context.fillText("Join", button.x+54, button.y+48)
                 this.buttons.push(button)
+                }else{
+                    offset++
+                    continue
+                }
             }
             if(this.bracket.names.length == 0){
 
