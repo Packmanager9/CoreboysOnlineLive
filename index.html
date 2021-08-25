@@ -746,11 +746,13 @@ w
 //     }
 // }
 
+let tournmantCounter = 0
 let tournamentDisplayMode = -1
 let brackets = {}
 brackets.names = []
 brackets.sizes = []
 brackets.members = []
+brackets.stocks = []
 
 let logobject = {}
 logobject.a = 0
@@ -62349,11 +62351,13 @@ let requiredElapsed=54; // desired interval is 54fps
 
             canvas_context.clearRect(-canvas.width * 10000, -canvas.width * 10000, canvas.width * 20000, canvas.width * 20000)
 
-
+                tournmantCounter++
+                if(tournmantCounter%100 == 0){
                     let qson = {}
                     qson.queryTournament = 1
                     ws.send(JSON.stringify(qson))
                  tlob = new TournamentDisplay(brackets)
+                }
                 tlob.draw()
 
                     if(keysPressed['Escape']){
@@ -63041,16 +63045,23 @@ let requiredElapsed=54; // desired interval is 54fps
         constructor(bracketObject){
             this.bracket = bracketObject
             this.buttons = []
+            this.body = new Rectangle(100,100, 2560, 1440, "#00AAFF44")
         }
         draw(){
+            this.body.draw()
            // console.log(this.bracket)
             canvas_context.font = "56px arial"
             canvas_context.fillStyle = "#FFFFFF"
             this.buttons = []
             for(let t = 0;t<this.bracket.names.length;t++){
-                canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t], (t*0)+120, (t*60)+100)
-                let button = new Circle(60,( t*60)+80, 30, "#FFFFFF")
+            canvas_context.font = "56px arial"
+                canvas_context.fillText(this.bracket.names[t] +' '+ this.bracket.members[t] +'/'+ this.bracket.sizes[t] + " - " + `${this.bracket.stocks[t]} Stock`,356,  156+(60*t))
+                let button = new Rectangle(120, 104+(t*60), 200, 56, "#FF000088")
                 button.draw()
+
+            canvas_context.font = "46px arial"
+            canvas_context.fillStyle = "#FFFFFF"
+                canvas_context.fillText("Join", button.x+54, button.y+52)
                 this.buttons.push(button)
             }
             if(this.bracket.names.length == 0){

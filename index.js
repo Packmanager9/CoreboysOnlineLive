@@ -51,7 +51,7 @@ class TournamentBracket{
         this.id = Math.random()
         this.size = size
         this.stock = stock
-        if(this.stock == 0){
+        if(this.stock == 0 || typeof this.stock != "number"){
             this.stock = 1
         }
         this.players = []
@@ -71,6 +71,9 @@ class TournamentBracket{
         for(let t = 0;t<this.players.length;t++){
             if(this.players[t].readyState == 1){
                 wet = 1
+            }else{
+                this.players.splice(t,1)
+                t--
             }
         }
         if(wet == 0){
@@ -284,10 +287,12 @@ wss.on("connection", ws => {
             tson.names = []
             tson.sizes = []
             tson.members = []
+            tson.stocks = []
             for(let t = 0;t<tournaments.length;t++){
                 tson.names.push(tournaments[t].name)
                 tson.sizes.push(tournaments[t].size)
                 tson.members.push(tournaments[t].players.length)
+                tson.stocks.push(tournaments[t].stock)
             }
 
             ws.send(JSON.stringify(tson))
