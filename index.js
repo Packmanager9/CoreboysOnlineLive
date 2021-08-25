@@ -11,7 +11,7 @@ deflate = deflate.configure({
     level: zlib.constants.Z_BEST_COMPRESSION,
     maxWindowBits: 13
 });
-let mongoURL = process.env.mongoURL //|| mongoURLx.mongoURL
+let mongoURL = process.env.mongoURL // || mongoURLx.mongoURL
 mongoose.connect(mongoURL)
 const playerdataSchema = new mongoose.Schema({
     joulepopscoremax : Number,
@@ -51,6 +51,9 @@ class TournamentBracket{
         this.id = Math.random()
         this.size = size
         this.stock = stock
+        if(this.stock == 0){
+            this.stock = 1
+        }
         this.players = []
         this.rooms = []
         this.unpaired = 0
@@ -63,6 +66,17 @@ class TournamentBracket{
         this.map = Math.floor(Math.random()*20)
         this.roundOuts = 0
     }
+    sort(){
+        let wet = 0
+        for(let t = 0;t<this.players.length;t++){
+            if(this.players[t].readyState == 1){
+                wet = 1
+            }
+        }
+        if(wet == 0){
+            tournaments.splice(this)
+        }
+    }
     pair(){
         let g = 0 
         let index1 = Math.floor(Math.random()*this.players.length)
@@ -74,6 +88,7 @@ class TournamentBracket{
                 break
             }
             index1 = Math.floor(Math.random()*this.players.length)
+            g++
         }
         let index2 = Math.floor(Math.random()*this.players.length)
         let j = 0 
@@ -93,6 +108,7 @@ class TournamentBracket{
                 break
             }
             index2 = Math.floor(Math.random()*this.players.length)
+            g++
         }
         }
 
@@ -110,7 +126,7 @@ class TournamentBracket{
         while(games[room].occupied == 1){
             room = this.rooms[Math.floor(Math.random()*this.rooms.length)]
             r++
-            if(r>10000){
+            if(r>100){
                 return
             }
         }
@@ -518,3 +534,17 @@ wss.on("connection", ws => {
         }
     })
 })
+
+setInterval(function(){ 
+    for(let t = 0;t<tournaments.length;t++){
+        tournaments[t].sort()
+    }
+ }, 10000);
+
+ setInterval(function(){ 
+    for(let t = 0;t<tournaments.length;t++){
+        if(tournaments[t].unpaired%2 == 0 && tournaments[t].unpaired != 0){
+        tournaments[t].pair()
+        }
+    }
+ }, 1000);
