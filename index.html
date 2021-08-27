@@ -7329,7 +7329,7 @@ let camerax = 0
                 }
                 if (counter == 1) {
                     counter = 0
-                    if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12) {
+                    if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12  || minigameSelected == 14) {
                         canvas_context.translate(boys[0].body.x - (canvas.width * (invscale * .5)), boys[0].body.y - (canvas.height * (invscale * .5)))
                     }
 
@@ -7832,6 +7832,138 @@ let camerax = 0
                                         wet--
                                 }
                                 boys.push(genRandomFighter(boys.length))
+                                for(let t = 0;t<boys[0].nodes.length;t++){
+                                boys[0].nodes[t].x = (1280*invscale)*.5
+                                }
+
+                            }
+                            if(t == 14){
+                                boys = []
+                                humanPlayers = 0
+                                scores = [0,0]
+                                drops = [0,0]
+
+                            // stage = new Stage(Math.floor(Math.random()*35))
+                let wet = boys.length
+                let dry = 0
+                for (let t = 0; t < selectors13.length; t++) {
+                    for (let k = 0; k < characterbuttons.length; k++) {
+                        if (characterbuttons[k].isPointInside(selectors13[t].body)) {
+                            let coreboy
+                            dry = 1
+                            //////////////////////////////////console.log("caseD")
+                            if (k == 0) {
+
+                                coreboy = new Mass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 1) {
+                                coreboy = new Boy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 2) {
+                                coreboy = new Blastgirl(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 3) {
+                                coreboy = new Jox(boys.length)
+                                pick = k
+                                coreboy.body.color = invertColor(selectors13[t].body.color)
+                            } else if (k == 4) {
+                                coreboy = new ScorchedMass(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 5) {
+                                coreboy = new AsigMan(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 6) {
+                                coreboy = new Princess(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 7) {
+                                coreboy = new Rhopho(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 8) {
+                                coreboy = new Banandroid(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 9) {
+                                coreboy = new Bunkstanks(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 10) {
+                                coreboy = new Dummy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 11) {
+                                coreboy = new DrSoto(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 12) {
+                                coreboy = new Joule(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 13) {
+                                coreboy = new Kessler(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors[t].body.color
+                            } else if (k == 14) {
+                                coreboy = new Pinwheelian(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else if (k == 15) {
+                                coreboy = new Gwompei(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            } else {
+
+                                coreboy = new Boy(boys.length)
+                                pick = k
+                                coreboy.body.color = selectors13[t].body.color
+                            }
+
+                            if (AItoggle == 1 || localPlayToggle == 1) {
+                                boys.push(coreboy)
+                                coreboy.id = ID
+                                boom.push(new Circle(0, 0, 1, "transparent"))
+                                scores.push(0)
+                                drops.push(0)
+
+                            } else {
+                                for (let u = 0; u < boys.length; u++) {
+                                    if (boys[u].serverID == serverID) {
+                                        coreboy.id = ID
+                                        boys[u] = coreboy
+                                        boom.push(new Circle(0, 0, 1, "transparent"))
+                                        scores.push(0)
+                                        drops.push(0)
+                                        wet--
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+                                
+                                if(dry == 0){
+
+
+                                let coreboy = new Jox(boys.length)
+                                        boys[0] = coreboy
+                                        boom.push(new Circle(0, 0, 1, "transparent"))
+                                        scores.push(0)
+                                        drops.push(0)
+                                        wet--
+                                }
+                                boys.push(genRandomFighter(boys.length))
+                                boys.push(genRandomFighter(boys.length))
+                                boys.push(genRandomFighter(boys.length))
+                                for(let t = 1;t<boys.length;t++){
+                                    boys[t].team = 60
+                                }
                                 for(let t = 0;t<boys[0].nodes.length;t++){
                                 boys[0].nodes[t].x = (1280*invscale)*.5
                                 }
@@ -8865,6 +8997,7 @@ move() {
                 this.campaigncomplete = false
                 this.gegegegeedropminstr = "??"
                 this.survivalscore = 0
+                this.runscore = 0
                 
         }
         save(){
@@ -8907,6 +9040,9 @@ move() {
             if(stage.funkyclimbscore > this.funkyclimbscoremax){
                 this.funkyclimbscoremax = stage.funkyclimbscore
             }
+            if(stage.runscore > this.runscore){
+                this.runscore = stage.runscore
+            }
 
             
 
@@ -8919,6 +9055,7 @@ move() {
         constructor(MapToggle = 0) {
             this.dodgespeed = 9
                 this.spawnrunner = 900
+                this.runscore = 0
                 this.pops = []
                 this.popslength = 0
                 this.mostrecentpopcolor = "#FFFFFF"
@@ -9631,6 +9768,11 @@ move() {
                     this.obstacles.push(crazyDetonator2)
                 } else if(MapToggle == 1012){
 
+                } else if(MapToggle == 1014){
+                    for(let t = 0;t<10;t++){
+                        let brick = new Brick(t*800, 1200+(Math.random()*700), 400)
+                        this.bricks.push(brick)
+                    }
                 } else {
                     this.bricks.push(new Brick(850, 1600, 700))
                     this.bricks.push(new Brick(2950, 1600, 700))
@@ -9665,6 +9807,16 @@ move() {
             this.brickswap = 0
         }
         draw() {
+            if(minigameSelected == 14){
+                for(let t = 0;t<this.bricks.length;t++){
+                if(this.bricks[t].center.x - boys[0].body.x < -2000 && this.bricks[t].center.x < boys[0].body.x){
+                        let brick = new Brick(this.bricks[this.bricks.length-1].center.x+800, 1200+(Math.random()*700), 400)
+                        this.bricks.push(brick)
+                        this.bricks.splice(t,1)
+                        t-1
+                }
+                }
+            }
 
 
             if(minigameSelected == 12){ 
@@ -11868,6 +12020,9 @@ move() {
             }else if(this.index == 13){
             canvas_context.fillText("Survival", this.box.x + 40, this.box.y + 95)
             canvas_context.fillText(`Survived for ${worldscore.survivalscore}`, this.box.x + 45, this.box.y + 155)
+            }else if(this.index == 14){
+            canvas_context.fillText("Run Run Run", this.box.x + 40, this.box.y + 95)
+            canvas_context.fillText(`Run for ${worldscore.runscore}`, this.box.x + 45, this.box.y + 155)
             }else{
             canvas_context.fillText(this.index, this.box.x + 15, this.box.y + 95)
             }
@@ -11882,7 +12037,7 @@ move() {
         const iconStage = new Stage(t)
         const icon = new MapIcon(iconStage.bricks, iconStage.walls)
     }
-    for (let t = 0; t < 14; t++) {
+    for (let t = 0; t < 15; t++) {
         const icon = new MiniGameIcon()
     }
 
@@ -12391,7 +12546,8 @@ this.team = Math.random()
                 copy.mesh = this.mesh.freshClone(this.meshinputs)
                 // copy.mesh.mutate()
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -12524,12 +12680,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
-                if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
+                if (boys[f] && this != boys[f]) {
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
+                           if(boys[t].team == this.team){
+                                continue
+                            }
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -13467,7 +13629,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -13538,6 +13703,9 @@ if (this.middlehand2.anchored == 1) {
             this.under = 0
             this.trapped = 0
             for (let k = 0; k < boys.length; k++) {
+                           if(boys[k].team == this.team){
+                                continue
+                            }
 
                 for (let t = 0; t < stage.bricks.length; t++) {
                     if (stage.bricks[t].edgeleft.x < (this.body.x + (this.body.radius * 1.6)) && stage.bricks[t].edgeright.x > (this.body.x - (this.body.radius * 1.6))) {
@@ -13625,8 +13793,11 @@ if (this.middlehand2.anchored == 1) {
             }
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -13706,7 +13877,10 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -13838,7 +14012,10 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -13935,7 +14112,10 @@ if (this.middlehand2.anchored == 1) {
 
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -14225,7 +14405,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -14373,7 +14556,10 @@ if (this.middlehand2.anchored == 1) {
                 this.storeshield = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
                             if (Math.random() < .94) {
@@ -14392,7 +14578,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -15204,7 +15393,10 @@ this.shots[t].move()
                 this.string = "Character: Kessler. Do it!"
             }
             if (this.index == 1013) {
-                this.string = "Character: Any (Coreboy by default, pick a character on the main screen to play as them in this minigame). An endless survival mode, see how many knockouts you can get on one life in a row.!"
+                this.string = "Character: Any (Coreboy by default, pick a character on the main screen to play as them in this minigame). An endless survival mode, see how many knockouts you can get on one life in a row!"
+            }
+            if (this.index == 1014) {
+                this.string = "Character: Any (Jox by default, pick a character on the main screen to play as them in this minigame). An endless runner mode, see how far you can get on one life while being chased!"
             }
             }
 
@@ -16123,7 +16315,8 @@ this.team = Math.random()
                 copy.mesh = this.mesh.clone(this.meshinputs)
                 copy.mesh.mutate()
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -16290,12 +16483,15 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
-                if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
+                if (boys[f] && this != boys[f]) {
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -16999,7 +17195,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -17156,7 +17355,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.under == 0) {
                 for (let t = 0; t < boys.length; t++) {
                     if (this.amomu <= 0 && this.dmomu <= 0) {
-                        if (this != boys[t] && boys[t]) {
+                           if (this != boys[t] && boys[t]){
                             if (boys[t].brick.center.y > this.brick.center.y) {
                                 if (boys[t].body.x < this.body.x) {
                                     this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -17236,7 +17435,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0 && ((this.dmomu <= 0) && (this.amomu <= 0)) && ((this.dmom <= 0) && (this.amom <= 0))) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -17369,7 +17568,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -17733,7 +17932,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -17888,7 +18090,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -19123,7 +19328,8 @@ this.team = Math.random()
                     campaigntimestart = now.getTime()
                     stage.blastgirlclimbscore = 0
                 }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -19291,12 +19497,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -20031,7 +20243,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                     if(boys[t].team == this.team){
+                            continue
+                     }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -20236,7 +20451,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -20316,7 +20531,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -20453,7 +20668,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -20705,7 +20920,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -20871,7 +21089,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -22023,7 +22244,8 @@ this.team = Math.random()
                 stage.joxwalltick = 70
                 stage.walls = []
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -22179,12 +22401,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -22917,7 +23145,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -23073,7 +23304,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -23166,7 +23397,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -23297,7 +23528,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -23542,7 +23773,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -24790,7 +25024,8 @@ if(minigameSelected > -1){
             const copy = new Dummy(this.controller)
 
 
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -24961,12 +25196,19 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
             
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
+                               
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -26531,7 +26773,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new ScorchedMass(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -26698,12 +26941,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -27303,7 +27552,10 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -27460,7 +27712,7 @@ const line = new LineOP(this.shots[t], boys[k].body)
             if (this.under == 0) {
                 for (let t = 0; t < boys.length; t++) {
                     if (this.amomu <= 0 && this.dmomu <= 0) {
-                        if (this != boys[t] && boys[t]) {
+                           if (this != boys[t] && boys[t]){
                             if (boys[t].brick.center.y > this.brick.center.y) {
                                 if (boys[t].body.x < this.body.x) {
                                     this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -27540,7 +27792,7 @@ const line = new LineOP(this.shots[t], boys[k].body)
             if (this.trapped == 0 && ((this.dmomu <= 0) && (this.amomu <= 0)) && ((this.dmom <= 0) && (this.amom <= 0))) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -27673,7 +27925,7 @@ const line = new LineOP(this.shots[t], boys[k].body)
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -27905,6 +28157,9 @@ const line = new LineOP(this.shots[t], boys[k].body)
             let bombs = 0
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
+                           if(boys[k].team == this.team){
+                                continue
+                            }
                     if (boys[k] && this != boys[k]) {
                         if (this.shots[t].stuck == 1) {
                             bombs++
@@ -27923,7 +28178,10 @@ const line = new LineOP(this.shots[t], boys[k].body)
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -28079,7 +28337,10 @@ const line = new LineOP(this.shots[t], boys[k].body)
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -29394,7 +29655,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new AsigMan(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (typeof this.colorsto != "undefined") {
                 copy.body.color = this.colorsto
@@ -29575,7 +29837,10 @@ const line = new LineOP(this.shots[t], boys[k].body)
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                     if(boys[t].team == this.team){
+                            continue
+                     }
+                   if (this != boys[t] && boys[t]){
 
                     for (let k = 0; k < boys[t].shots.length; k++) {
                         if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
@@ -30176,7 +30441,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     let j = 0
                     while (boys[t].body.doesPerimeterTouch(this.body)) {
                         j++
@@ -30574,7 +30842,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + 35)) {
                         this.wmove = 1
                         //////////////// //////////////////////////////////////////////console.log("caseA")
@@ -30735,7 +31006,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -30819,7 +31090,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -30969,7 +31240,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -31070,7 +31341,7 @@ if (this.middlehand2.anchored == 1) {
 
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -31324,7 +31595,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -31501,7 +31775,10 @@ if (this.middlehand2.anchored == 1) {
                 this.storeshield = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
                             if (Math.random() < .94) {
@@ -31520,7 +31797,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -31638,7 +31918,10 @@ if (this.middlehand2.anchored == 1) {
 
             let min = 250000
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     const link = new LineOP(this.body, boys[t].body)
                     if (min > link.sqrDis()) {
                         min = link.sqrDis()
@@ -32617,7 +32900,8 @@ this.team = Math.random()
                 const now = new Date()
                 campaigntimestart = now.getTime() 
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -32824,12 +33108,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -33560,7 +33850,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -33765,7 +34058,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -33845,7 +34138,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -33976,7 +34269,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -34233,7 +34526,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -34478,7 +34774,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -35615,7 +35914,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new Rhopho(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -35782,12 +36082,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -36511,7 +36817,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -36716,7 +37025,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -36796,7 +37105,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -36927,7 +37236,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -37173,7 +37482,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -37343,7 +37655,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -37424,6 +37739,9 @@ if (this.middlehand2.anchored == 1) {
                     }
 
                     for(let t = 0;t<boys.length;t++){
+                           if(boys[t].team == this.team){
+                                continue
+                            }
                         if(this != boys[t]){
 
                             if(this.grounded != 1){
@@ -38766,7 +39084,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             let copy = new Banandroid(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -38951,12 +39270,18 @@ this.team = Math.random()
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -39680,7 +40005,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         let link = new LineOP(this.body, boys[t].shots[g])
@@ -39885,7 +40213,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -39965,7 +40293,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -40096,7 +40424,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             let link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -40342,7 +40670,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -40552,7 +40883,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         let link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -42047,7 +42381,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new Gwompei(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -42272,12 +42607,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -43042,7 +43383,10 @@ this.middlehand2.anchored = -20
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -43248,7 +43592,7 @@ this.middlehand2.anchored = -20
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -43328,7 +43672,7 @@ this.middlehand2.anchored = -20
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -43459,7 +43803,7 @@ this.middlehand2.anchored = -20
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -43710,7 +44054,10 @@ this.middlehand2.anchored = -20
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -43880,7 +44227,10 @@ this.middlehand2.anchored = -20
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -45718,7 +46068,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new Pinwheelian(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -45903,12 +46254,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -46785,7 +47142,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -46991,7 +47351,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -47071,7 +47431,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -47202,7 +47562,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -47451,7 +47811,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -47621,7 +47984,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -49207,7 +49573,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new Bunkstanks(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -49340,12 +49707,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -50284,7 +50657,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -50445,7 +50821,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -50525,7 +50901,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -50669,7 +51045,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -50766,7 +51142,7 @@ if (this.middlehand2.anchored == 1) {
 
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -50978,7 +51354,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -51123,7 +51502,10 @@ if (this.middlehand2.anchored == 1) {
                 this.storeshield = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
                             if (Math.random() < .94) {
@@ -51142,7 +51524,7 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -52421,7 +52803,8 @@ this.team = Math.random()
                 const now = new Date()
                 campaigntimestart = now.getTime() 
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -52591,12 +52974,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -53328,7 +53717,10 @@ if (this.middlehand2.anchored == 1) {
 
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -53485,7 +53877,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.under == 0) {
                 for (let t = 0; t < boys.length; t++) {
                     if (this.amomu <= 0 && this.dmomu <= 0) {
-                        if (this != boys[t] && boys[t]) {
+                           if (this != boys[t] && boys[t]){
                             if (boys[t].brick.center.y > this.brick.center.y) {
                                 if (boys[t].body.x < this.body.x) {
                                     this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -53565,7 +53957,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0 && ((this.dmomu <= 0) && (this.amomu <= 0)) && ((this.dmom <= 0) && (this.amom <= 0))) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -53698,7 +54090,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -53929,6 +54321,9 @@ if (this.middlehand2.anchored == 1) {
             let bombs = 0
             for (let t = 0; t < this.shots.length; t++) {
                 for (let k = 0; k < boys.length; k++) {
+                           if(boys[k].team == this.team){
+                                continue
+                            }
                     if (boys[k] && this != boys[k]) {
                         if (this.shots[t].stuck == 1) {
                             bombs++
@@ -53947,7 +54342,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -54103,7 +54501,10 @@ if (this.middlehand2.anchored == 1) {
             // }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -55437,7 +55838,8 @@ this.team = Math.random()
                 copy.mesh = this.mesh.freshClone(this.meshinputs)
                 // copy.mesh.mutate()
             }
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             copy.body.color = this.body.color
             if (this.inactive == 1) {
@@ -55570,12 +55972,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -56534,7 +56942,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
                     if (Math.abs(this.body.x - boys[t].body.x) > 1 && this.body.y > (boys[t].body.y + Math.max(this.body.radius, boys[t].body.radius))) {
                         this.wmove = 1
                     }
@@ -56691,7 +57102,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -56771,7 +57182,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -56903,7 +57314,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -57015,7 +57426,7 @@ if (this.middlehand2.anchored == 1) {
                 }
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -57307,7 +57718,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -57437,7 +57851,10 @@ if (this.middlehand2.anchored == 1) {
                 this.storeshield = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     if (boys[t].righthand.fired > 14) {
                         if (this.body.x > boys[t].body.x) {
                             if (Math.random() < .94) {
@@ -57456,7 +57873,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -58650,7 +59070,8 @@ this.team = Math.random()
             //////////////////////////////////console.log("caseF")
 
             const copy = new Kessler(this.controller)
-            copy.id = this.id
+              copy.id = this.id
+            copy.team = this.team
             copy.frame = this.frame
             if (this.inactive == 1) {
                 copy.inactive = this.inactive
@@ -58817,12 +59238,18 @@ const line = new LineOP(this.shots[t], boys[k].body)
 
 
             for (let f = 0; f < boys.length; f++) {
+                     if(boys[f].team == this.team){
+                            continue
+                     }
                 if (boys[f] && this != boys[f]) {
                      if(boys[f].team == this.team){
                             continue
                      }
                     for (let t = 0; t < boys.length; t++) {
-                        if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                           if (this != boys[t] && boys[t]){
                             for (let k = 0; k < boys[t].shots.length; k++) {
                                 if (boys[t].shots[k].marked != 1 && !this.shotIDs.includes(boys[t].shots[k].id)) {
                                     if (boys[t].shots[k].doesPerimeterTouch(this.body)) {
@@ -59552,7 +59979,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                if(this.team == boys[t].team){
+                    continue
+                }
+                   if (this != boys[t] && boys[t]){
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
@@ -59757,7 +60187,7 @@ if (this.middlehand2.anchored == 1) {
             this.exgrip = 0
             for (let t = 0; t < boys.length; t++) {
                 if (this.amomu <= 0 && this.dmomu <= 0) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].brick.center.y > this.brick.center.y) {
                             if (boys[t].body.x < this.body.x) {
                                 this.amomu = (Math.abs(this.brick.edgeleft.x - this.body.x)) / this.speed
@@ -59837,7 +60267,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.trapped == 0) {
                 this.tarmax = 0
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         if (boys[t].damage >= this.tarmax) {
                             if (boys[t].safe == 1 || boys[t].safesto == 2) {
                                 this.target = boys[t]
@@ -59968,7 +60398,7 @@ if (this.middlehand2.anchored == 1) {
             if (this.shield == 0) {
 
                 for (let t = 0; t < boys.length; t++) {
-                    if (this != boys[t] && boys[t]) {
+                       if (this != boys[t] && boys[t]){
                         for (let g = 0; g < boys[t].shots.length; g++) {
                             const link = new LineOP(this.body, boys[t].shots[g])
                             if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -60248,7 +60678,10 @@ if (this.middlehand2.anchored == 1) {
                 this.hortsmash = 0
             }
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
 
 
                     for (let g = 0; g < boys[t].shots.length; g++) {
@@ -60418,7 +60851,10 @@ if (this.middlehand2.anchored == 1) {
             }
 
             for (let t = 0; t < boys.length; t++) {
-                if (this != boys[t] && boys[t]) {
+                           if(boys[t].team == this.team){
+                                continue
+                            }
+                   if (this != boys[t] && boys[t]){
                     for (let g = 0; g < boys[t].shots.length; g++) {
                         const link = new LineOP(this.body, boys[t].shots[g])
                         if ((link.sqrDis()) / ((Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom)) * (Math.abs(boys[t].shots[g].xmom) + Math.abs(boys[t].shots[g].ymom))) < 32) {
@@ -61563,7 +61999,7 @@ let requiredElapsed=54; // desired interval is 54fps
                     selectors.push(selector)
 
                 }
-                if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1 || minigameSelected == 6 || minigameSelected == 12) {
+                if (campaignToggle == 1 || minigameSelected == 0 || minigameSelected == 1 || minigameSelected == 6 || minigameSelected == 12  || minigameSelected == 14) {
                     if (boys.length > 0) {
                         if(counter == 1){
                         if(minigameSelected == 0){
@@ -61621,7 +62057,7 @@ let requiredElapsed=54; // desired interval is 54fps
 
         if (counter == 1) {
             if (boys.length >= 1) {
-                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6|| minigameSelected == 12) {
+                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6|| minigameSelected == 12|| minigameSelected == 14) {
                     camerax = boys[0].body.x
                     cameray = boys[0].body.y
                     //translate relevant
@@ -61845,6 +62281,47 @@ let requiredElapsed=54; // desired interval is 54fps
                 }
             if(minigameSelected == 1 || minigameSelected == 6 || minigameSelected == 12){
 
+
+
+            }else if (minigameSelected == 14) { 
+                if(t == 0){
+
+                                            boys[t].team = .69
+                    if ((boys[t].body.y > (2440 * (invscale * .5)) || boys[t].body.x < 0)) {
+                        for(let k = 0;k<boys[t].nodes.length;k++){
+                            boys[t].nodes[k].x = 1000
+                            boys[t].nodes[k].y = 100
+                            boys[t].nodes[k].xmom = 0
+                            boys[t].nodes[k].ymom = 0
+                        }
+                    }
+                }else{
+                    if ((boys[t].body.y > (2440 * (invscale * .5)) || boys[t].body.x < 0)) {
+
+                                            boys[t] = genRandomFighter(boys.length)
+                                            boys[t].team = 60
+                        for(let k = 0;k<boys[t].nodes.length;k++){
+                            boys[t].nodes[k].x = boys[0].body.x + 700
+                            boys[t].nodes[k].y = 100
+                            boys[t].nodes[k].xmom = 0
+                            boys[t].nodes[k].ymom = 0
+                        }
+                        stage = new Stage(1014)
+                    }else if (boys[t].body.x < boys[0].body.x-2000){
+
+                                            boys[t] = genRandomFighter(boys.length)
+                                            boys[t].team = 60
+                        for(let k = 0;k<boys[t].nodes.length;k++){
+                            boys[t].nodes[k].x = boys[0].body.x + 700
+                            boys[t].nodes[k].y = boys[0].body.y - 500
+                            boys[t].nodes[k].xmom = 0
+                            boys[t].nodes[k].ymom = 0
+                        }
+                    }
+
+                }
+
+
             }else if(minigameSelected == 0){
                 const leftwall = new Line(-10, -10000, -10, 10000000, "#FF0000", 10)
                 const rightwall = new Line((2560 * (invscale * .5))+10, -10000, (2560 * (invscale * .5))+10, 10000000, "#FF0000", 10)
@@ -61897,10 +62374,12 @@ let requiredElapsed=54; // desired interval is 54fps
 
                             if (stock > 0) {
                                 if (drops[t] < stock) {
-                                     if(minigameSelected == 13){
+                                    if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -61915,10 +62394,12 @@ let requiredElapsed=54; // desired interval is 54fps
                                     boys[t].body.y = (canvas.height * invscale * 10)
                                 }
                             } else {
-                                 if(minigameSelected == 13){
+                                if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -61981,10 +62462,12 @@ let requiredElapsed=54; // desired interval is 54fps
 
                             if (stock > 0) {
                                 if (drops[t] < stock) {
-                                     if(minigameSelected == 13){
+                                    if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -62000,10 +62483,12 @@ let requiredElapsed=54; // desired interval is 54fps
                                     boys[t].drops = stock+1
                                 }
                             } else {
-                                 if(minigameSelected == 13){
+                                if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -62065,10 +62550,12 @@ let requiredElapsed=54; // desired interval is 54fps
                             if (stock > 0) {
                                 if (drops[t] < stock) {
                                     if (t == 0) {
-                                         if(minigameSelected == 13){
+                                        if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -62093,10 +62580,12 @@ let requiredElapsed=54; // desired interval is 54fps
                                 }
                             } else {
                                 if (t == 0) {
-                                     if(minigameSelected == 13){
+                                    if(minigameSelected == 13 || minigameSelected == 14){
                                         if(t == 0){
                                             boys[t] = boys[t].copy()
-                                            scores[0] = 0
+                                            if(minigameSelected == 13){
+                                               scores[0] = 0
+                                            }
 
                                         }else{
                                             if(scores[0] > worldscore.survivalscore){
@@ -62522,7 +63011,7 @@ let requiredElapsed=54; // desired interval is 54fps
             // gametheme.pause()
 
             if (boys.length >= 1) {
-                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12) {
+                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12 || minigameSelected == 14) {
                     if (cameraLocked == 0) {
                         // //////////console.log("whea")
                         cameraxsum += boys[0].body.x - camerax
@@ -63281,7 +63770,7 @@ let requiredElapsed=54; // desired interval is 54fps
                     campaigntimestart = now.getTime()
                 }
 
-                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12) {
+                if (campaignToggle == 1 || minigameSelected == 0  || minigameSelected == 1  || minigameSelected == 6 || minigameSelected == 12  || minigameSelected == 14) {
                     const now = new Date()
                     campaigntimestart = now.getTime()
 
@@ -63432,7 +63921,7 @@ let requiredElapsed=54; // desired interval is 54fps
             }else{
             this.x = this.boy.body.x
             this.y = this.boy.body.y - 300
-            this.circ = new Circle(this.x, this.y, 16, `rgb(${255-(this.r*64)}, ${255-(this.g*64)}, ${255-(this.b*64)}`)
+            this.circ = new Circle(this.x, this.y, 16, `rgb(${255-(this.r*64)}, ${255-(this.g*64)}, ${255-(this.b*64)})`)
             this.circ.draw()
             }
         }
