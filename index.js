@@ -29,6 +29,7 @@ const playerdataSchema = new mongoose.Schema({
     survivalscore  : Number,
     campaigncomplete  : Boolean,
     gegegegeedropminstr : String,
+    runscore : Number,
     playername : String
 })
 mongoose.model('PlayerRecords', playerdataSchema)

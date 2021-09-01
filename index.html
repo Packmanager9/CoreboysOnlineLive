@@ -7121,15 +7121,15 @@ let camerax = 0
         canvas_context.scale(scale, scale)
 
 // 
-    // requestAnimationFrame(main);
+    requestAnimationFrame(main);
 
     
-       window.setInterval(function () {
+    //    window.setInterval(function () {
 
 // for(let t = 0;t<10;t++){
-           main()
+        //    main()
 // }
-       }, 18) //jumpin()
+    //    }, 18) //jumpin()
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
             if (event.key == 'Backspace') {
@@ -61956,15 +61956,15 @@ let requiredElapsed=54; // desired interval is 54fps
                     if(keysPressed['Escape']){
                         tournamentDisplayMode = -10
                     }
-    // requestAnimationFrame(main);
+    requestAnimationFrame(main);
 
-    // if(!lastTime){lastTime=now;}
-    // var elapsed=lastTime-now;
+    if(!lastTime){lastTime=now;}
+    var elapsed=lastTime-now;
 
-    // if(elapsed>requiredElapsed){
-    //     // do stuff
-    //     lastTime=now;
-    // }
+    if(elapsed>requiredElapsed){
+        // do stuff
+        lastTime=now;
+    }
 
 
         worldscore.tally()
