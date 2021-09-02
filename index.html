@@ -7114,16 +7114,36 @@ let camerax = 0
             return color;
         }
     }
+
+var t = [];
+
     function setUp(canvas_pass, style = "#090909") {
         canvas = canvas_pass
         canvas_context = canvas.getContext('2d');
         canvas.style.background = style
         canvas_context.scale(scale, scale)
-
-// 
     requestAnimationFrame(main);
 
+    if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame =
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame;
+}
+
+// function animate(now) {
     
+//     t.unshift(now);
+//     if (t.length > 10) {
+//         var t0 = t.pop();
+//         var fps = Math.floor(1000 * 10 / (now - t0));
+//         console.log(fps);
+//     }
+
+//     window.requestAnimationFrame(animate);
+// };
+
+
+// window.requestAnimationFrame(animate);
     //    window.setInterval(function () {
 
 // for(let t = 0;t<10;t++){
@@ -61949,6 +61969,21 @@ let requiredElapsed=54; // desired interval is 54fps
 
 
     function main(now) {
+
+
+let fps 
+
+
+    t.unshift(now);
+    if (t.length > 10) {
+        var t0 = t.pop();
+         fps = Math.floor(1000 * 10 / (now - t0));
+        // console.log(fps);
+    }
+
+
+
+
         if(tournamentDisplayMode < 0){
             tournamentDisplayMode++
         }
@@ -61961,7 +61996,7 @@ let requiredElapsed=54; // desired interval is 54fps
     if(!lastTime){lastTime=now;}
     var elapsed=lastTime-now;
 
-    if(elapsed>requiredElapsed){
+    if(elapsed>fps){
         // do stuff
         lastTime=now;
     }
