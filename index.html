@@ -7122,7 +7122,7 @@ var t = [];
         canvas_context = canvas.getContext('2d');
         canvas.style.background = style
         canvas_context.scale(scale, scale)
-    requestAnimationFrame(main);
+    // requestAnimationFrame(main);
 
     if (!window.requestAnimationFrame) {
     window.requestAnimationFrame =
@@ -7144,12 +7144,12 @@ var t = [];
 
 
 // window.requestAnimationFrame(animate);
-    //    window.setInterval(function () {
+       window.setInterval(function () {
 
 // for(let t = 0;t<10;t++){
-        //    main()
+           main()
 // }
-    //    }, 18) //jumpin()
+       }, 18) //jumpin()
         document.addEventListener('keydown', (event) => {
             keysPressed[event.key] = true;
             if (event.key == 'Backspace') {
@@ -61988,7 +61988,7 @@ let fps
                     if(keysPressed['Escape']){
                         tournamentDisplayMode = -10
                     }
-    requestAnimationFrame(main);
+    // requestAnimationFrame(main);
 
     if(!lastTime){lastTime=now;}
     var elapsed=lastTime-now;
