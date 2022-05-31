@@ -12337,7 +12337,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -13564,7 +13564,7 @@ if (this.middlehand2.anchored == 1) {
                         }
                         this.mesh.changeInputs(this.meshinputs)
                         for (let t = 0; t < this.meshinputs.length; t++) {
-                            if (isNaN(this.meshinputs[t])) {
+                            if (isNyaN(this.meshinputs[t])) {
                                 this.meshinputs[t] = 0
                             }
                         }
@@ -14267,10 +14267,10 @@ if (this.middlehand2.anchored == 1) {
                                 this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                                 this.amove = Math.round(this.mesh.outputMagnitudes[1])
                                 this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                                if (isNaN(this.dmove)) {
+                                if (isNyaN(this.dmove)) {
                                     this.dmove = 0
                                 }
-                                if (isNaN(this.amove)) {
+                                if (isNyaN(this.amove)) {
                                     this.amove = 0
                                 }
                                 this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -14739,10 +14739,10 @@ if (this.middlehand2.anchored == 1) {
                         this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                         this.amove = Math.round(this.mesh.outputMagnitudes[1])
                         this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                        if (isNaN(this.dmove)) {
+                        if (isNyaN(this.dmove)) {
                             this.dmove = 0
                         }
-                        if (isNaN(this.amove)) {
+                        if (isNyaN(this.amove)) {
                             this.amove = 0
                         }
                         this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -14819,10 +14819,10 @@ if (this.middlehand2.anchored == 1) {
                             this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                             this.amove = Math.round(this.mesh.outputMagnitudes[1])
                             this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                            if (isNaN(this.dmove)) {
+                            if (isNyaN(this.dmove)) {
                                 this.dmove = 0
                             }
-                            if (isNaN(this.amove)) {
+                            if (isNyaN(this.amove)) {
                                 this.amove = 0
                             }
                             this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -14908,13 +14908,13 @@ if (this.middlehand2.anchored == 1) {
                     if (this.hasOwnProperty('meshinputs')) {
                         if (this.hasOwnProperty('errors')) {
                             for (let t = 0; t < this.meshinputs.length; t++) {
-                                if (isNaN(this.meshinputs[t])) {
+                                if (isNyaN(this.meshinputs[t])) {
                                     this.meshinputs[t] = 0
                                 }
                             }
                             this.mesh.longInputs.push([...this.meshinputs])
                             for (let t = 0; t < this.errors.length; t++) {
-                                if (isNaN(this.errors[t])) {
+                                if (isNyaN(this.errors[t])) {
                                     this.errors[t] = 0
                                 }
                             }
@@ -15161,10 +15161,10 @@ this.shots[t].move()
                             this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                             this.amove = Math.round(this.mesh.outputMagnitudes[1])
                             this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                            if (isNaN(this.dmove)) {
+                            if (isNyaN(this.dmove)) {
                                 this.dmove = 0
                             }
-                            if (isNaN(this.amove)) {
+                            if (isNyaN(this.amove)) {
                                 this.amove = 0
                             }
                             this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -16087,7 +16087,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -17787,10 +17787,10 @@ if (this.middlehand2.anchored == 1) {
                             this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                             this.amove = Math.round(this.mesh.outputMagnitudes[1])
                             this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                            if (isNaN(this.dmove)) {
+                            if (isNyaN(this.dmove)) {
                                 this.dmove = 0
                             }
-                            if (isNaN(this.amove)) {
+                            if (isNyaN(this.amove)) {
                                 this.amove = 0
                             }
                             this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -18210,10 +18210,10 @@ if (this.middlehand2.anchored == 1) {
                         this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                         this.amove = Math.round(this.mesh.outputMagnitudes[1])
                         this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                        if (isNaN(this.dmove)) {
+                        if (isNyaN(this.dmove)) {
                             this.dmove = 0
                         }
-                        if (isNaN(this.amove)) {
+                        if (isNyaN(this.amove)) {
                             this.amove = 0
                         }
                         this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -19119,7 +19119,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -22040,7 +22040,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotC(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -24809,7 +24809,7 @@ if(minigameSelected < 0){
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Shotb(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -26569,7 +26569,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotD(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -29298,7 +29298,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -32690,7 +32690,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotP(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -35688,7 +35688,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotR(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -38849,7 +38849,7 @@ this.team = Math.random()
                         this.nodes[t] = new Circle(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
 
                     }
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
@@ -42122,7 +42122,7 @@ this.team = Math.random()
                         this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, colors[this.controller], this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                         this.nodes[t].angle += this.armAngle
                     }
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
@@ -45821,7 +45821,7 @@ this.team = Math.random()
                         this.nodes[t] = new ShotFP(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
 
                     }
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
 
@@ -49371,7 +49371,7 @@ this.team = Math.random()
                     } else {
                         this.nodes[t] = new ShotE(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                     }
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -52453,7 +52453,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotZ(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -55617,7 +55617,7 @@ this.team = Math.random()
                             this.nodes[t] = new Shot(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired)
                         }
                     }
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -56874,7 +56874,7 @@ if (this.middlehand2.anchored == 1) {
                         }
                         this.mesh.changeInputs(this.meshinputs)
                         for (let t = 0; t < this.meshinputs.length; t++) {
-                            if (isNaN(this.meshinputs[t])) {
+                            if (isNyaN(this.meshinputs[t])) {
                                 this.meshinputs[t] = 0
                             }
                         }
@@ -57575,10 +57575,10 @@ if (this.middlehand2.anchored == 1) {
                                 this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                                 this.amove = Math.round(this.mesh.outputMagnitudes[1])
                                 this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                                if (isNaN(this.dmove)) {
+                                if (isNyaN(this.dmove)) {
                                     this.dmove = 0
                                 }
-                                if (isNaN(this.amove)) {
+                                if (isNyaN(this.amove)) {
                                     this.amove = 0
                                 }
                                 this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -58006,10 +58006,10 @@ if (this.middlehand2.anchored == 1) {
                         this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                         this.amove = Math.round(this.mesh.outputMagnitudes[1])
                         this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                        if (isNaN(this.dmove)) {
+                        if (isNyaN(this.dmove)) {
                             this.dmove = 0
                         }
-                        if (isNaN(this.amove)) {
+                        if (isNyaN(this.amove)) {
                             this.amove = 0
                         }
                         this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -58104,10 +58104,10 @@ if (this.middlehand2.anchored == 1) {
                             this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                             this.amove = Math.round(this.mesh.outputMagnitudes[1])
                             this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                            if (isNaN(this.dmove)) {
+                            if (isNyaN(this.dmove)) {
                                 this.dmove = 0
                             }
-                            if (isNaN(this.amove)) {
+                            if (isNyaN(this.amove)) {
                                 this.amove = 0
                             }
                             this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -58205,13 +58205,13 @@ if (this.middlehand2.anchored == 1) {
                     if (this.hasOwnProperty('meshinputs')) {
                         if (this.hasOwnProperty('errors')) {
                             for (let t = 0; t < this.meshinputs.length; t++) {
-                                if (isNaN(this.meshinputs[t])) {
+                                if (isNyaN(this.meshinputs[t])) {
                                     this.meshinputs[t] = 0
                                 }
                             }
                             this.mesh.longInputs.push([...this.meshinputs])
                             for (let t = 0; t < this.errors.length; t++) {
-                                if (isNaN(this.errors[t])) {
+                                if (isNyaN(this.errors[t])) {
                                     this.errors[t] = 0
                                 }
                             }
@@ -58485,10 +58485,10 @@ this.shots[t].move()
                             this.wmove = Math.round(this.mesh.outputMagnitudes[0])
                             this.amove = Math.round(this.mesh.outputMagnitudes[1])
                             this.dmove = Math.round(this.mesh.outputMagnitudes[2])
-                            if (isNaN(this.dmove)) {
+                            if (isNyaN(this.dmove)) {
                                 this.dmove = 0
                             }
-                            if (isNaN(this.amove)) {
+                            if (isNyaN(this.amove)) {
                                 this.amove = 0
                             }
                             this.exgrip = Math.round(this.mesh.outputMagnitudes[3])
@@ -58843,7 +58843,7 @@ this.team = Math.random()
                 for (let t = 0; t < this.nodes.length; t++) {
                     const idsto = this.nodes[t].id
                     this.nodes[t] = new ShotG(this.nodes[t].x, this.nodes[t].y, this.nodes[t].radius, this.nodes[t].color, this.nodes[t].xmom, this.nodes[t].ymom, this.nodes[t].friction, 0, this.nodes[t].fired, this.nodes[t].angle)
-                    if (isNaN(this.nodes[t].ymom) || isNaN(this.nodes[t].xmom)) {
+                    if (isNyaN(this.nodes[t].ymom) || isNyaN(this.nodes[t].xmom)) {
                         //////////////////////////////////console.log("vanish break", this.nodes[t])
                     }
                     this.nodes[t].id = idsto
@@ -63958,6 +63958,16 @@ let fps
             }
         }
     }
+
+function isNyaN(num){
+  if(isNaN(num)){
+    return false
+  }else if(isFinite(num)){
+    return true
+  }
+    return false
+}
+
 
 </script>
 <script>
