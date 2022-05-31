@@ -61968,6 +61968,10 @@ let requiredElapsed=54; // desired interval is 54fps
     function main(now) {
 
 
+      for(let t = 0;t<numbers.length;t++){
+        numbers[t].selfDeNaN()
+      }
+
 let fps 
 
 
@@ -63967,6 +63971,24 @@ function isNyaN(num){
   }
     return false
 }
+
+
+    Number.prototype.between = function (a, b, inclusive) {
+        var min = Math.min(a, b),
+            max = Math.max(a, b);
+        return inclusive ? this >= min && this <= max : this > min && this < max;
+    }
+
+
+    Number.prototype.selfDeNaN = function () {
+      if(!isNyaN(this)){
+        this = 0
+      }
+    }
+    let numbers = []
+    Number.prototype.constructor = function () {
+      numbers.push(this)
+    }
 
 
 </script>
