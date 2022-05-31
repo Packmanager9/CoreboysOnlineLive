@@ -63975,6 +63975,40 @@ function isNyaN(num){
         return inclusive ? this >= min && this <= max : this > min && this < max;
     }
 
+    Number.prototype.multiply = function(number) {
+      if(isNyaN(this)){
+        return this * number;
+      }else{
+        return this
+      }
+    }
+
+    Number.prototype.divide = function(number) {
+      if(isNyaN(this)){
+        return this / number;
+      }else{
+        return this
+      }
+    }
+
+    Number.prototype.add = function(number) {
+      if(isNyaN(this)){
+        return this + number;
+      }else{
+        return this
+      }
+    }
+
+    Number.prototype.subtract = function(number) {
+      if(isNyaN(this)){
+        return this - number;
+      }else{
+        return this
+      }
+    }
+
+
+
 
 </script>
 <script>
