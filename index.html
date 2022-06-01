@@ -63978,7 +63978,7 @@ function isNyaN(num){
     }
 
     Number.prototype.multiply = function(number) {
-      if(isNyaN(this)){
+      if(isNyaN(number)){
         return this * number;
       }else{
         return this
@@ -63986,7 +63986,7 @@ function isNyaN(num){
     }
 
     Number.prototype.divide = function(number) {
-      if(isNyaN(this)){
+      if(isNyaN(number)){
         return this / number;
       }else{
         return this
@@ -63994,7 +63994,7 @@ function isNyaN(num){
     }
 
     Number.prototype.add = function(number) {
-      if(isNyaN(this)){
+      if(isNyaN(number)){
         return this + number;
       }else{
         return this
@@ -64002,7 +64002,7 @@ function isNyaN(num){
     }
 
     Number.prototype.subtract = function(number) {
-      if(isNyaN(this)){
+      if(isNyaN(number)){
         return this - number;
       }else{
         return this
