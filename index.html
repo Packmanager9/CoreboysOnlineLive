@@ -63961,12 +63961,12 @@ let fps
 
 function isNyaN(num){
   if(isNaN(num)){
-    console.trace();
+    // console.trace();
     return false
   }else if(isFinite(num)){
     return true
   }
-    console.trace();
+    // console.trace();
     return false
 }
 
@@ -63978,34 +63978,50 @@ function isNyaN(num){
     }
 
     Number.prototype.multiply = function(number) {
-      if(isNyaN(number)){
+      if(isNyaN(number) && isNyaN(this)){
         return this * number;
       }else{
-        return this
+         if(isNyaN(number)){
+            return number
+         }else if(isNyaN(this)){
+            return this
+         }
       }
     }
 
     Number.prototype.divide = function(number) {
-      if(isNyaN(number)){
+      if(isNyaN(number) && isNyaN(this)){
         return this / number;
       }else{
-        return this
+         if(isNyaN(number)){
+            return number
+         }else if(isNyaN(this)){
+            return this
+         }
       }
     }
 
     Number.prototype.add = function(number) {
-      if(isNyaN(number)){
+      if(isNyaN(number) && isNyaN(this)){
         return this + number;
       }else{
-        return this
+         if(isNyaN(number)){
+            return number
+         }else if(isNyaN(this)){
+            return this
+         }
       }
     }
 
     Number.prototype.subtract = function(number) {
-      if(isNyaN(number)){
+      if(isNyaN(number) && isNyaN(this)){
         return this - number;
       }else{
-        return this
+         if(isNyaN(number)){
+            return number
+         }else if(isNyaN(this)){
+            return this
+         }
       }
     }
 
