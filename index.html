@@ -15067,7 +15067,22 @@ this.shots[t].move()
                 }
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
 
                 if (this.hasOwnProperty('mesh')) {
                     this.nodes[t].color = this.mesh.name
@@ -18749,7 +18764,22 @@ this.shots[t].move()
                 }
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 if (this.hasOwnProperty('mesh')) {
                     this.nodes[t].color = this.mesh.name
                 }
@@ -21664,7 +21694,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -24419,7 +24464,22 @@ if(this.dash > -1){
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -28883,7 +28943,22 @@ if(this.dash > -1){
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -32279,7 +32354,22 @@ this.shots[t].move()
             this.leftshoulder.color = invertColor(this.body.color)
             this.leftshoulder2.color = invertColor(this.body.color)
             this.leftshoulder3.color = invertColor(this.body.color)
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -35344,7 +35434,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     const link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -38467,7 +38572,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     const link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -41677,7 +41797,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     let link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -45222,7 +45357,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     const link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -48860,7 +49010,22 @@ if(this.dash > -1){
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     const link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
@@ -52089,7 +52254,22 @@ this.shots[t].move()
 
             canvas_context.stroke()
 
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -55190,7 +55370,22 @@ this.shots[t].move()
                     }
                 }
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
             }
 
@@ -58374,9 +58569,23 @@ this.shots[t].move()
                 this.links[t].draw()
             }
 
-
-
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
+
 
                 if (this.hasOwnProperty('mesh')) {
                     this.nodes[t].color = this.mesh.name
@@ -61465,7 +61674,22 @@ this.shots[t].move()
                 this.links[t].color = invertColor(this.body.color)
                 this.links[t].draw()
             }
+            if(isNaN(this.damage)){
+                this.damage = 999
+            }
             for (let t = 0; t < this.nodes.length; t++) {
+                      if(isNaN(this.nodes[t].x)){
+                        this.nodes[t].x = -1
+                      }
+                      if(isNaN(this.nodes[t].y)){
+                        this.nodes[t].y = -1
+                      }
+                      if(isNaN(this.nodes[t].xmom)){
+                        this.nodes[t].xmom = 0
+                      }
+                      if(isNaN(this.nodes[t].ymom)){
+                        this.nodes[t].ymom = 0
+                      }
                 this.nodes[t].draw()
                 if (this.nodes[t] == this.body) {
                     const link = new Line(this.body.x, this.body.y, this.body.x + (((this.body.radius * .8) * this.face)), this.body.y + Math.sin(this.screwangle), invertColor(this.body.color), this.body.radius * .2)
