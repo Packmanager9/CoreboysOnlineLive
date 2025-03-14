@@ -42,10 +42,10 @@ const server = express()
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 const wss = new Server({ server });
 
-express.get('/', (req, res) => {
-  console.log(`HTTP HIT: ${new Date().toISOString()} - IP: ${req.ip}`);
-  res.send('<html><body><div>CoreBoys</div></body></html>');
-});
+// express.get('/', (req, res) => {
+//   console.log(`HTTP HIT: ${new Date().toISOString()} - IP: ${req.ip}`);
+//   res.send('<html><body><div>CoreBoys</div></body></html>');
+// });
 
 let boys = []
 let games = []
