@@ -191,6 +191,7 @@ for (let t = 0; t < 565131; t++) { //535131 ++ is tournies
     games.push(new Game())
 }
 wss.on("connection", ws => {
+    console.log(`WS CONNECT: ${new Date().toISOString()} - IP: ${req.connection.remoteAddress}`);
 
     ws.lockout = -1
     ws.assigned = Math.round(Math.random()*0)
