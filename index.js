@@ -42,7 +42,7 @@ const server = express()
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 const wss = new Server({ server });
 
-app.get('/', (req, res) => {
+express.get('/', (req, res) => {
   console.log(`HTTP HIT: ${new Date().toISOString()} - IP: ${req.ip}`);
   res.send('<html><body><div>CoreBoys</div></body></html>');
 });
