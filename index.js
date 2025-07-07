@@ -42,10 +42,6 @@ const server = express()
     .listen(PORT, () => console.log(`Listening on ${PORT}`));
 const wss = new Server({ server });
 
-// express.get('/', (req, res) => {
-//   console.log(`HTTP HIT: ${new Date().toISOString()} - IP: ${req.ip}`);
-//   res.send('<html><body><div>CoreBoys</div></body></html>');
-// });
 
 let boys = []
 let games = []
@@ -195,7 +191,6 @@ for (let t = 0; t < 565131; t++) { //535131 ++ is tournies
     games.push(new Game())
 }
 wss.on("connection", ws => {
-    console.log(`WS CONNECT: ${new Date().toISOString()} - IP: ${req.connection.remoteAddress}`);
 
     ws.lockout = -1
     ws.assigned = Math.round(Math.random()*0)
